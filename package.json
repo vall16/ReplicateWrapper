@@ -1,0 +1,12 @@
+{
+  "name": "repli",
+  "version": "0.0.1",
+  "description": "Replicate.ai wrapper fullstack application",
+  "scripts": {
+    "dev": "echo 'Per avviare il progetto, esegui npm start nella cartella frontend/ e python run.py nella cartella backend/'",
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "keywords": ["replicate", "ai", "angular", "python", "fastapi"],
+  "author": "",
+  "license": "MIT"
+}
