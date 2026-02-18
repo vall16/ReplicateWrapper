@@ -9,7 +9,7 @@ class ReplicateWrapper:
 
     def __init__(self, api_token: Optional[str] = None):
         """
-        Inizializza il wrapper con il token API
+        Inizializza il wrapper con il token API..prova
 
         Args:
             api_token: Token API di Replicate (opzionale, usa variabile d'ambiente se non fornito)
