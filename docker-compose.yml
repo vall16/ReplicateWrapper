@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: repli-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./backend:/app
+    networks:
+      - repli-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: repli-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    environment:
+      - WEB_CONCURRENCY=1
+    networks:
+      - repli-network
+    restart: unless-stopped
+
+networks:
+  repli-network:
+    driver: bridge
