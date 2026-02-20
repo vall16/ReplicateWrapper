@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, HttpClientModule],
   template: `
     <div class="app-container">
-      <header>
+      <header *ngIf="showHeader">
         <h1>Repli</h1>
         <p>Replicate.ai Wrapper</p>
       </header>
@@ -47,4 +48,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'repli-frontend';
+  showHeader = false;
 }

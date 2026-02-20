@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
         <div class="info">
           <h3>Prossimi passi:</h3>
           <ul>
-            <li>Configurare il backend Python</li>
+            <li>Configurare il backendd Python</li>
             <li>Implementare le chiamate API a Replicate.ai</li>
             <li>Creare i componenti UI per l'interazione</li>
           </ul>

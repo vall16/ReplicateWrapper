@@ -1,33 +1,45 @@
-# Build stage
-FROM node:20-alpine as build
+# -----------------------------
+# Dockerfile frontend ottimizzato (Node 20 + Alpine)
+# -----------------------------
+
+# Stage 1: Build
+FROM node:20-alpine AS build
+
+# Installa dipendenze minime per build (bash, make, g++, python)
+RUN apk add --no-cache bash make g++ python3
 
 WORKDIR /app
 
-# Copy package files
+# Copia solo package.json e package-lock.json per sfruttare cache
 COPY package*.json ./
 
-# Install dependencies
+# Forza registry pubblico e rimuove proxy aziendali
+RUN npm config set registry https://registry.npmjs.org/ \
+    && npm config delete proxy || true \
+    && npm config delete https-proxy || true
+
+# Installa le dipendenze usando il lockfile
 RUN npm ci
 
-# Copy application code
+# Copia il resto del codice
 COPY . .
 
-# Build Angular application
-RUN npm run build
+# Compila Angular in produzione
+RUN npm run build --prod
 
-# Production stage
-FROM node:20-alpine
+# Stage 2: Server statico leggero
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Install serve to serve the static files
+# Installa serve globale leggero
 RUN npm install -g serve
 
-# Copy built application from build stage
-COPY --from=build /app/dist/repli-frontend /app/dist/repli-frontend
+# Copia la build dal stage precedente
+COPY --from=build /app/dist/replicate-frontend ./dist
 
-# Expose port
+# Espone la porta del server
 EXPOSE 4200
 
-# Serve the application
-CMD ["serve", "-s", "dist/repli-frontend", "-l", "4200"]
+# Avvia il server
+CMD ["serve", "-s", "dist", "-l", "4200"]
