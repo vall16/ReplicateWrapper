@@ -277,7 +277,7 @@ import { Router } from '@angular/router';
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2024 Repli. Tutti i diritti riservati.</p>
+          <p>&copy; 2026 Repli. Tutti i diritti riservati.</p>
         </div>
       </footer>
     </div>
