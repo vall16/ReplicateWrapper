@@ -10,6 +10,19 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
   },
   {
+    path: 'privacy',
+    loadComponent: () => import('./pages/login/privacy.component').then(m => m.PrivacyComponent)
+  },
+  {
+    path: 'terms',
+    loadComponent: () => import('./pages/login/terms.component').then(m => m.TermsComponent)
+  },
+  {
+    path: 'security',
+    loadComponent: () => import('./pages/login/security.component').then(m => m.SecurityComponent)
+  },
+  
+  {
     path: 'register',
     loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
   },

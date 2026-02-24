@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule],
+  // imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <div class="hero-wrapper">
       <!-- Navigation Menu -->
@@ -242,6 +245,64 @@ import { Router } from '@angular/router';
         </button>
       </section>
 
+      <!-- Privacy Section -->
+<!-- <section class="legal-section" id="privacy">
+  <div class="legal-container">
+    <h2>Privacy Policy</h2>
+    <p>
+      La tua privacy è importante per noi. Raccogliamo solo i dati necessari
+      per fornire il servizio e migliorare l’esperienza utente.
+    </p>
+
+    <h3>Dati Raccolti</h3>
+    <ul>
+      <li>Email e informazioni di registrazione</li>
+      <li>Dati di utilizzo API e consumo token</li>
+      <li>Log tecnici per sicurezza e debugging</li>
+    </ul>
+
+    <h3>Utilizzo dei Dati</h3>
+    <p>
+      I dati vengono utilizzati esclusivamente per fornire il servizio,
+      prevenire abusi e migliorare la piattaforma.
+    </p>
+  </div>
+</section>
+
+
+<section class="legal-section" id="terms">
+  <div class="legal-container">
+    <h2>Terms of Service</h2>
+    <p>
+      Utilizzando Repli accetti i seguenti termini.
+    </p>
+
+    <ul>
+      <li>L'utente è responsabile dell’uso dei modelli AI.</li>
+      <li>I token acquistati non sono rimborsabili.</li>
+      <li>È vietato utilizzare il servizio per attività illegali.</li>
+      <li>Ci riserviamo il diritto di sospendere account in caso di abuso.</li>
+    </ul>
+  </div>
+</section>
+
+<! Security Section -->
+<!-- <section class="legal-section" id="security">
+  <div class="legal-container">
+    <h2>Security</h2>
+    <p>
+      Implementiamo misure di sicurezza avanzate per proteggere i tuoi dati.
+    </p>
+
+    <ul>
+      <li>🔒 Connessioni HTTPS cifrate</li>
+      <li>🔐 Hashing sicuro delle password</li>
+      <li>🛡️ Monitoraggio continuo contro abusi</li>
+      <li>📊 Logging e audit trail</li>
+    </ul>
+  </div>
+</section>  -->
+
       <!-- Footer -->
       <footer class="footer">
         <div class="footer-content">
@@ -270,9 +331,23 @@ import { Router } from '@angular/router';
           <div class="footer-section">
             <h4>Legal</h4>
             <ul>
-              <li><a href="#contact">Privacy</a></li>
+              <!-- <li><a href="#contact">Privacy</a></li>
               <li><a href="#contact">Terms</a></li>
-              <li><a href="#contact">Security</a></li>
+              <li><a href="#contact">Security</a></li> -->
+
+              <!-- <li><a href="#privacy">Privacy</a></li>
+              <li><a href="#terms">Terms</a></li>
+              <li><a href="#security">Security</a></li> -->
+
+              <!-- <li><a routerLink="/privacy">Privacy</a></li> -->
+              
+              <li><a routerLink="/privacy">Privacy</a></li>
+              <li><a routerLink="/terms">Terms</a></li>
+              <li><a routerLink="/security">Security</a></li>
+
+              <!-- <button class="btn btn-login" (click)="navigateTo('login')">Accedi</button>
+              <button class="btn btn-signup" (click)="navigateTo('register')">Registrati</button> -->
+
             </ul>
           </div>
         </div>
@@ -876,6 +951,46 @@ import { Router } from '@angular/router';
 
       .pricing-card.featured {
         transform: scale(1);
+      }
+      /* Legal Sections */
+      .legal-section {
+        max-width: 1000px;
+        margin: 4rem auto;
+        padding: 4rem 2rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-top: 1px solid rgba(102, 126, 234, 0.2);
+      }
+
+      .legal-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .legal-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #667eea;
+      }
+
+      .legal-section h3 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .legal-section p {
+        color: #aaa;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+
+      .legal-section ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .legal-section li {
+        padding: 0.5rem 0;
+        color: #ccc;
       }
     }
   `]
