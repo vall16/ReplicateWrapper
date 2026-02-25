@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { StripeService } from '../../services/stripe.service';
+import { loadStripeJs } from '../../services/stripe-js.loader';
 
 @Component({
   selector: 'app-store',
@@ -88,6 +90,15 @@ import { AuthService } from '../../services/auth.service';
           <div class="badge-item">✓ PCI Compliant</div>
           <div class="badge-item">🔐 Dati Sicuri</div>
         </div>
+      </div>
+
+      <!-- Dialogo Stripe -->
+      <div *ngIf="paymentDialogOpen" class="stripe-dialog">
+        <h2>Pagamento Stripe</h2>
+        <div id="stripe-card-element" style="margin-bottom: 1rem;"></div>
+        <button class="btn btn-purchase" (click)="submitStripePayment()">Conferma Pagamento</button>
+        <button class="btn btn-small" (click)="paymentDialogOpen = false">Annulla</button>
+        <div *ngIf="error" class="error-message">{{ error }}</div>
       </div>
     </div>
   `,
@@ -377,10 +388,15 @@ export class StoreComponent implements OnInit {
   selectedPackage: any = null;
   error = '';
   success = '';
+  stripeLoaded = false;
+  stripe: any = null;
+  paymentDialogOpen = false;
+  clientSecret: string | null = null;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private stripeService: StripeService
   ) {}
 
   ngOnInit() {
@@ -388,8 +404,13 @@ export class StoreComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
-
     this.loadPackages();
+    // Carica Stripe.js
+    const publishableKey = 'your_stripe_publishable_key_here'; // Sostituisci con la tua chiave
+    loadStripeJs(publishableKey).then((stripe: any) => {
+      this.stripe = stripe;
+      this.stripeLoaded = true;
+    });
   }
 
   loadPackages() {
@@ -409,18 +430,28 @@ export class StoreComponent implements OnInit {
     this.error = '';
     this.success = '';
     this.selectedPackage = pkg;
-
-    this.authService.purchaseTokens(pkg.tokens).subscribe(
-      (response) => {
+    this.stripeService.createPaymentIntent(pkg.price * 100, 'eur').subscribe(
+      async (res) => {
+        if (res.clientSecret) {
+          this.clientSecret = res.clientSecret;
+          this.paymentDialogOpen = true;
+          this.success = '';
+          // Mostra dialog Stripe
+          if (this.stripeLoaded && this.stripe) {
+            const elements = this.stripe.elements();
+            const card = elements.create('card');
+            setTimeout(() => {
+              card.mount('#stripe-card-element');
+            }, 0);
+          }
+        } else {
+          this.error = 'Errore nella creazione del pagamento';
+        }
         this.isPurchasing = false;
-        this.success = `💳 Hai acquistato ${pkg.tokens} token per €${pkg.price}!`;
-        setTimeout(() => {
-          this.goToDashboard();
-        }, 2000);
       },
       (error) => {
         this.isPurchasing = false;
-        this.error = error.error?.detail || 'Errore durante l\'acquisto';
+        this.error = error.error?.error || 'Errore Stripe';
       }
     );
   }
@@ -431,5 +462,23 @@ export class StoreComponent implements OnInit {
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  async submitStripePayment() {
+    if (!this.stripe || !this.clientSecret) return;
+    const elements = this.stripe.elements();
+    const card = elements.getElement('card');
+    const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
+      payment_method: {
+        card: card,
+      }
+    });
+    if (error) {
+      this.error = error.message || 'Errore pagamento Stripe';
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      this.success = '✅ Pagamento completato!';
+      this.paymentDialogOpen = false;
+      // Qui puoi chiamare backend per accreditare i token
+    }
   }
 }

@@ -210,26 +210,26 @@ import { RouterModule } from '@angular/router';
         <div class="pricing-cards">
           <div class="pricing-card">
             <h3>Starter</h3>
-            <div class="price">100 🪙</div>
+            <div class="price">100 ⚡ </div>
             <p class="price-sub">€1.00</p>
             <button class="btn btn-outline" (click)="navigateTo('login')">Seleziona</button>
           </div>
           <div class="pricing-card featured">
             <div class="ribbon">Consigliato</div>
             <h3>Growth</h3>
-            <div class="price">500 🪙</div>
+            <div class="price">500 ⚡ </div>
             <p class="price-sub">€4.50 - Risparmia 10%</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
           </div>
           <div class="pricing-card">
             <h3>Pro</h3>
-            <div class="price">1000 🪙</div>
+            <div class="price">1000 ⚡ </div>
             <p class="price-sub">€8.00 - Risparmia 20%</p>
             <button class="btn btn-outline" (click)="navigateTo('login')">Seleziona</button>
           </div>
           <div class="pricing-card">
             <h3>Enterprise</h3>
-            <div class="price">5000 🪙</div>
+            <div class="price">5000 ⚡ </div>
             <p class="price-sub">€35.00 - Risparmia 30%</p>
             <button class="btn btn-outline" (click)="navigateTo('login')">Contattaci</button>
           </div>
@@ -302,7 +302,41 @@ import { RouterModule } from '@angular/router';
     </ul>
   </div>
 </section>  -->
+      <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="section-header">
+        <h2>Contattaci</h2>
+        <p>Hai domande o vuoi maggiori informazioni? Scrivici!</p>
+      </div>
 
+      <div class="contact-container">
+        <!-- Contact Info -->
+        <div class="contact-info">
+          <div class="info-item">
+            <span>📧</span>
+            <p>Email: <a href="mailto:support@repli.ai">support&#64;repli.ai</a></p>
+          </div>
+          <div class="info-item">
+            <span>📞</span>
+            <p>Telefono: <a href="tel:+390123456789">+39 012 345 6789</a></p>
+          </div>
+          <div class="info-item">
+            <span>🏢</span>
+            <p>Indirizzo: Via AI 42, Milano, Italia</p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+          <!-- <form (submit)="submitContact($event)">
+            <input type="text" name="name" placeholder="Nome" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <textarea name="message" rows="5" placeholder="Messaggio" required></textarea>
+            <button type="submit" class="btn btn-primary-small">Invia Messaggio</button>
+          </form> -->
+        </div>
+      </div>
+    </section>
       <!-- Footer -->
       <footer class="footer">
         <div class="footer-content">
@@ -993,6 +1027,76 @@ import { RouterModule } from '@angular/router';
         color: #ccc;
       }
     }
+    /* Contact Section */
+.contact-section {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 4rem 2rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 12px;
+}
+
+.contact-section .section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.info-item span {
+  font-size: 1.5rem;
+  color: #667eea;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #aaa;
+}
+
+.contact-form button {
+  align-self: flex-start;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+}
   `]
 })
 export class HeroComponent {
