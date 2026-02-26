@@ -8,6 +8,7 @@ from app.token_routes import router as token_router
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 
 app = FastAPI(
     title="Repli API",
@@ -51,6 +52,9 @@ from fastapi.responses import JSONResponse
 
 @app.post("/create-payment-intent")
 async def create_payment_intent(request: Request):
+    body = await request.body()
+    print("BODY RAW:", body)
+    
     data = await request.json()
     amount = data.get("amount")
     currency = data.get("currency", "eur")
