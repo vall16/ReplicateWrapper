@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { StripeService } from '../../services/stripe.service';
-import { loadStripeJs } from '../../services/stripe-js.loader';
 
 @Component({
   selector: 'app-store',
@@ -92,14 +91,6 @@ import { loadStripeJs } from '../../services/stripe-js.loader';
         </div>
       </div>
 
-      <!-- Dialogo Stripe -->
-      <div *ngIf="paymentDialogOpen" class="stripe-dialog">
-        <h2>Pagamento Stripe</h2>
-        <div id="stripe-card-element" style="margin-bottom: 1rem;"></div>
-        <button class="btn btn-purchase" (click)="submitStripePayment()">Conferma Pagamento</button>
-        <button class="btn btn-small" (click)="paymentDialogOpen = false">Annulla</button>
-        <div *ngIf="error" class="error-message">{{ error }}</div>
-      </div>
     </div>
   `,
   styles: [`
@@ -388,14 +379,12 @@ export class StoreComponent implements OnInit {
   selectedPackage: any = null;
   error = '';
   success = '';
-  stripeLoaded = false;
-  stripe: any = null;
-  paymentDialogOpen = false;
-  clientSecret: string | null = null;
+  // stripe properties no longer needed; we redirect to Checkout
 
   constructor(
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     private stripeService: StripeService
   ) {}
 
@@ -407,21 +396,38 @@ export class StoreComponent implements OnInit {
 
     this.loadPackages();
 
-    // Carica la chiave Stripe dal backend
-    this.stripeService.getPublishableKey().subscribe(
-        async (stripeKey: string) => {
-        if (stripeKey) {
-            this.stripe = await loadStripeJs(stripeKey);
-            this.stripeLoaded = true;
-        } else {
-            this.error = 'Chiave Stripe non disponibile';
-        }
-        },
-        (err) => {
-        this.error = 'Errore nel recupero della chiave Stripe';
-        console.error(err);
-        }
-    );
+    // se veniamo dalla pagina di successo/cancellazione di Stripe controlliamo i parametri
+    this.route.queryParams.subscribe(params => {
+      if (params['payment'] === 'success' && params['session_id']) {
+        const sessionId = params['session_id'];
+        // chiedi al backend di confermare e accreditare i token
+        this.authService.confirmCheckout(sessionId).subscribe(
+          (res: any) => {
+            this.success = `✅ Pagamento confermato, ${res.tokens_added} token accreditati!`;
+            // aggiorna il saldo utente nel localStorage (chiama getBalance per aggiornare)
+            this.authService.getBalance().subscribe(balance => {
+              const user = this.authService.getCurrentUser();
+              if (user) {
+                user.tokens = balance.tokens;
+                localStorage.setItem('user', JSON.stringify(user));
+              }
+            });
+
+            // pulisci i parametri dalla URL per non ripetere la procedura
+            this.router.navigate([], { queryParams: {} });
+          },
+          (err) => {
+            console.error('Errore conferma checkout', err);
+            this.error = 'Impossibile confermare il pagamento';
+          }
+        );
+      } else if (params['payment'] === 'cancel') {
+        this.error = 'Pagamento annullato';
+      }
+    });
+
+    // (non serviamo più la key lato client dato che usiamo redirect to checkout)
+    // se fosse necessario per redirectToCheckout possiamo recuperarla con getPublishableKey()
 }
 
   loadPackages() {
@@ -438,59 +444,31 @@ export class StoreComponent implements OnInit {
 
 
   purchasePackage(pkg: any) {
-    if (!this.stripeLoaded) {
-      this.error = 'Stripe non è pronto';
-      return;
-    }
-
     this.isPurchasing = true;
     this.selectedPackage = pkg;
     this.error = '';
     this.success = '';
 
-    this.stripeService.createPaymentIntent(pkg.price * 100, 'eur').subscribe(
-      async (res) => {
-        if (!res.clientSecret) {
-          this.error = 'Errore nella creazione del pagamento';
+    // chiediamo al backend di creare una sessione Checkout
+    this.stripeService.createCheckoutSession(pkg).subscribe(
+      (res) => {
+        if (res && res.url) {
+          // redirect alla pagina ufficiale di Stripe
+          window.location.href = res.url;
+        } else {
+          this.error = 'Impossibile iniziare il pagamento';
           this.isPurchasing = false;
-          return;
         }
-
-        this.clientSecret = res.clientSecret;
-        this.paymentDialogOpen = true;
-
-        // Carica e monta Elements solo se Stripe è pronto
-        const elements = this.stripe.elements();
-        const card = elements.create('card');
-        setTimeout(() => card.mount('#stripe-card-element'), 0);
-
-        this.isPurchasing = false;
       },
       (err) => {
         console.error(err);
-        this.error = err.error?.error || 'Errore Stripe';
+        this.error = err.error?.error || 'Errore durante l\'inizializzazione del checkout';
         this.isPurchasing = false;
       }
     );
   }
 
-  async submitStripePayment() {
-    if (!this.stripe || !this.clientSecret) return;
-
-    const elements = this.stripe.elements();
-    const card = elements.getElement('card');
-
-    const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
-      payment_method: { card }
-    });
-
-    if (error) {
-      this.error = error.message || 'Errore pagamento Stripe';
-    } else if (paymentIntent?.status === 'succeeded') {
-      this.success = '✅ Pagamento completato!';
-      this.paymentDialogOpen = false;
-    }
-  }
+  // non ci serve più gestire l'intento; la logica è rimossa
 
 
 
@@ -502,21 +480,5 @@ export class StoreComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-//   async submitStripePayment() {
-//     if (!this.stripe || !this.clientSecret) return;
 
-//     const elements = this.stripe.elements();
-//     const card = elements.getElement('card');
-
-//     const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
-//       payment_method: { card }
-//     });
-
-//     if (error) {
-//       this.error = error.message || 'Errore pagamento Stripe';
-//     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-//       this.success = '✅ Pagamento completato!';
-//       this.paymentDialogOpen = false;
-//     }
-//   }
 }

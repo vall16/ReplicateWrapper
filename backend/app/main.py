@@ -75,3 +75,39 @@ async def create_payment_intent(request: Request):
         return JSONResponse({"clientSecret": intent.client_secret})
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=400)
+
+
+# nuovo endpoint per generare una sessione di Checkout
+@app.post("/create-checkout-session")
+async def create_checkout_session(request: Request):
+    data = await request.json()
+    pkg = data.get("package") or {}
+    # costruisci il nome/prodotto a partire dal pacchetto
+    name = pkg.get("name", "Acquisto token")
+    tokens = pkg.get("tokens", 0)
+    price = pkg.get("price", 0)  # valore in euro
+    amount = int(price * 100)
+
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "eur",
+                    "product_data": {"name": name, "metadata": {"tokens": tokens}},
+                    "unit_amount": amount,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url="http://localhost:4200/store?payment=success&session_id={CHECKOUT_SESSION_ID}",
+            cancel_url="http://localhost:4200/store?payment=cancel",
+            metadata={
+                "package_id": pkg.get("id"),
+                "tokens": tokens
+            }
+        )
+        return {"id": session.id, "url": session.url}
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+

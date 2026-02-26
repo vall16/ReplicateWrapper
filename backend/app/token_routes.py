@@ -5,6 +5,7 @@ from app.schemas import TokenPurchase, StatusResponse, UserResponse
 from app.services import UserService
 from app.security import calculate_token_price, decode_token
 from typing import Optional
+import stripe
 
 router = APIRouter(prefix="/api/tokens", tags=["Tokens"])
 
@@ -110,4 +111,34 @@ def check_tokens(authorization: str = None, db: Session = Depends(get_db)):
         "tokens": user.tokens,
         "has_tokens": has_tokens,
         "status": status
+    }
+
+# conferma checkout Stripe: recupera sessione e accredita i token all'utente
+@router.get("/checkout/confirm")
+def confirm_checkout(
+    session_id: str,
+    user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Controlla lo stato della sessione Stripe e se pagata accredita i token"""
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Impossibile recuperare la sessione: {e}")
+
+    if session.payment_status != 'paid':
+        raise HTTPException(status_code=400, detail="Pagamento non completato")
+
+    # estrai i token dalla metadata (aggiunti in create_checkout_session)
+    tokens = int(session.metadata.get('tokens', 0))
+    if tokens <= 0:
+        raise HTTPException(status_code=400, detail="Informazioni pacchetto mancanti")
+
+    # aggiorna l'utente
+    user = UserService.purchase_tokens(db, user.id, tokens)
+
+    return {
+        "status": "success",
+        "tokens_added": tokens,
+        "new_balance": user.tokens
     }

@@ -115,6 +115,15 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/tokens/packages`);
   }
 
+  // Conferma checkout Stripe e accredita token (backend usa session_id per validare)
+  confirmCheckout(sessionId: string): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.apiUrl}/tokens/checkout/confirm?session_id=${sessionId}`, { headers });
+  }
+
   // Acquista token
   purchaseTokens(amount: number): Observable<any> {
     const token = this.getToken();
