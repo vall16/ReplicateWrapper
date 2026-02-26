@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StripeService {
@@ -14,6 +14,8 @@ export class StripeService {
 
   // Chiave pubblica caricata dinamicamente dal backend
   getPublishableKey(): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/stripe-publishable-key`);
-  }
+  return this.http.get<{ key: string }>(`${this.apiUrl}/stripe-publishable-key`).pipe(
+    map(res => res.key) // prende solo il valore della chiave
+  );
+}
 }

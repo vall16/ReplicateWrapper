@@ -50,6 +50,14 @@ async def health_check():
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
+@app.get("/stripe-publishable-key")
+def get_publishable_key():
+    # Leggi la chiave dal .env
+    stripe_key = os.getenv("STRIPE_PUBLISHABLE_KEY", "")
+    if not stripe_key:
+        return {"detail": "Chiave non configurata"}
+    return {"key": stripe_key}
+
 @app.post("/create-payment-intent")
 async def create_payment_intent(request: Request):
     body = await request.body()

@@ -401,31 +401,48 @@ export class StoreComponent implements OnInit {
 
   ngOnInit() {
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
+        this.router.navigate(['/login']);
+        return;
     }
+
     this.loadPackages();
-    // Carica Stripe.js
-    const publishableKey = 'your_stripe_publishable_key_here'; // Sostituisci con la tua chiave
-    loadStripeJs(publishableKey).then((stripe: any) => {
-      this.stripe = stripe;
-      this.stripeLoaded = true;
-    });
-  }
+
+    // Carica la chiave Stripe dal backend
+    this.stripeService.getPublishableKey().subscribe(
+        async (stripeKey: string) => {
+        if (stripeKey) {
+            this.stripe = await loadStripeJs(stripeKey);
+            this.stripeLoaded = true;
+        } else {
+            this.error = 'Chiave Stripe non disponibile';
+        }
+        },
+        (err) => {
+        this.error = 'Errore nel recupero della chiave Stripe';
+        console.error(err);
+        }
+    );
+}
 
   loadPackages() {
     this.authService.getTokenPackages().subscribe(
       (data) => {
         this.packages = data.packages || [];
       },
-      (error) => {
+      (err) => {
+        console.error(err);
         this.error = 'Errore nel caricamento dei pacchetti';
-        console.error(error);
       }
     );
   }
 
+
   purchasePackage(pkg: any) {
+    if (!this.stripeLoaded) {
+      this.error = 'Stripe non è pronto';
+      return;
+    }
+
     this.isPurchasing = true;
     this.selectedPackage = pkg;
     this.error = '';
@@ -433,34 +450,28 @@ export class StoreComponent implements OnInit {
 
     this.stripeService.createPaymentIntent(pkg.price * 100, 'eur').subscribe(
       async (res) => {
-        if (res.clientSecret) {
-          this.clientSecret = res.clientSecret;
-          this.paymentDialogOpen = true;
-
-          const stripePublishableKey = await this.stripeService.getPublishableKey().toPromise();
-          if (stripePublishableKey) {
-            this.stripe = await loadStripeJs(stripePublishableKey);
-            const elements = this.stripe.elements();
-            const card = elements.create('card');
-            setTimeout(() => card.mount('#stripe-card-element'), 0);
-          } else {
-            this.error = 'Errore nel caricamento della chiave Stripe';
-          }
-        } else {
+        if (!res.clientSecret) {
           this.error = 'Errore nella creazione del pagamento';
+          this.isPurchasing = false;
+          return;
         }
+
+        this.clientSecret = res.clientSecret;
+        this.paymentDialogOpen = true;
+
+        // Carica e monta Elements solo se Stripe è pronto
+        const elements = this.stripe.elements();
+        const card = elements.create('card');
+        setTimeout(() => card.mount('#stripe-card-element'), 0);
+
         this.isPurchasing = false;
       },
-      (err) => { this.error = err.error?.error || 'Errore Stripe'; this.isPurchasing = false; }
+      (err) => {
+        console.error(err);
+        this.error = err.error?.error || 'Errore Stripe';
+        this.isPurchasing = false;
+      }
     );
-  }
-
-  goBack() {
-    this.router.navigate(['/dashboard']);
-  }
-
-  goToDashboard() {
-    this.router.navigate(['/dashboard']);
   }
 
   async submitStripePayment() {
@@ -475,9 +486,37 @@ export class StoreComponent implements OnInit {
 
     if (error) {
       this.error = error.message || 'Errore pagamento Stripe';
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+    } else if (paymentIntent?.status === 'succeeded') {
       this.success = '✅ Pagamento completato!';
       this.paymentDialogOpen = false;
     }
   }
+
+
+
+  goBack() {
+    this.router.navigate(['/dashboard']);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
+//   async submitStripePayment() {
+//     if (!this.stripe || !this.clientSecret) return;
+
+//     const elements = this.stripe.elements();
+//     const card = elements.getElement('card');
+
+//     const { paymentIntent, error } = await this.stripe.confirmCardPayment(this.clientSecret, {
+//       payment_method: { card }
+//     });
+
+//     if (error) {
+//       this.error = error.message || 'Errore pagamento Stripe';
+//     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+//       this.success = '✅ Pagamento completato!';
+//       this.paymentDialogOpen = false;
+//     }
+//   }
 }

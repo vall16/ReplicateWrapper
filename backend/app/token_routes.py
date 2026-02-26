@@ -1,13 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas import TokenPurchase, StatusResponse, UserResponse
 from app.services import UserService
 from app.security import calculate_token_price, decode_token
+from typing import Optional
 
 router = APIRouter(prefix="/api/tokens", tags=["Tokens"])
 
-def get_current_user(authorization: str = None, db: Session = Depends(get_db)):
+def get_current_user(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     if not authorization:
         raise HTTPException(status_code=401, detail="Non autorizzato")
     
@@ -28,11 +29,10 @@ def get_current_user(authorization: str = None, db: Session = Depends(get_db)):
 @router.post("/purchase", response_model=StatusResponse)
 def purchase_tokens(
     purchase: TokenPurchase,
-    authorization: str = None,
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Acquista token"""
-    user = get_current_user(authorization, db)
     
     try:
         # Calcola il prezzo

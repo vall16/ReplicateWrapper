@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas import (
@@ -7,12 +7,12 @@ from app.schemas import (
 )
 from app.services import UserService
 from app.security import decode_token, calculate_token_price
-from typing import List
+from typing import List, Optional
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 # Funzione per ottenere l'utente verificando il token
-def get_current_user(authorization: str = None, db: Session = Depends(get_db)):
+def get_current_user(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     if not authorization:
         raise HTTPException(status_code=401, detail="Non autorizzato")
     
@@ -65,16 +65,14 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
 
 # PROFILO UTENTE
 @router.get("/profile", response_model=UserResponse)
-def get_profile(authorization: str = None, db: Session = Depends(get_db)):
+def get_profile(user = Depends(get_current_user)):
     """Restituisce il profilo dell'utente corrente"""
-    user = get_current_user(authorization, db)
     return UserResponse.from_orm(user)
 
 # SALDO TOKEN
 @router.get("/balance")
-def get_balance(authorization: str = None, db: Session = Depends(get_db)):
+def get_balance(user = Depends(get_current_user)):
     """Restituisce il saldo token dell'utente"""
-    user = get_current_user(authorization, db)
     return {
         "tokens": user.tokens,
         "user_id": user.id,
@@ -86,9 +84,8 @@ def get_balance(authorization: str = None, db: Session = Depends(get_db)):
 @router.get("/transactions", response_model=List[TokenTransaction])
 def get_transactions(
     limit: int = 50,
-    authorization: str = None,
+    user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Restituisce lo storico delle transazioni"""
-    user = get_current_user(authorization, db)
     return UserService.get_transactions(db, user.id, limit)
