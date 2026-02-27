@@ -5,10 +5,10 @@ services:
     container_name: repli-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass       # cambia con la tua password
+      MYSQL_ROOT_PASSWORD: vibe2025       # cambia con la tua password
       MYSQL_DATABASE: repli_db            # nome del DB
-      MYSQL_USER: repli_user              # utente DB
-      MYSQL_PASSWORD: replipass           # password utente
+      MYSQL_USER: trader              # utente DB
+      MYSQL_PASSWORD: vibe2025           # password utente
     ports:
       - "3306:3306"
     volumes:
