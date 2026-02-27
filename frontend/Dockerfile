@@ -36,7 +36,8 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copia la build dal stage precedente
-COPY --from=build /app/dist/replicate-frontend ./dist
+# COPY --from=build /app/dist/replicate-frontend ./dist
+COPY --from=build /app/dist ./dist
 
 # Espone la porta del server
 EXPOSE 4200
