@@ -5,5 +5,5 @@
 
 export const environment = {
   production: true,
-  API_URL: 'http://backend:8000/api'  // backend = nome servizio Docker
+  apiUrl: 'http://backend:8000/api'  // backend = nome servizio Docker
 };
