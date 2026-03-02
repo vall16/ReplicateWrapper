@@ -1,7 +1,8 @@
 from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, DateTime, Boolean
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
-from datetime import datetime, time
+from datetime import datetime
 import os
+import time
 from dotenv import load_dotenv
 load_dotenv()  # legge il .env nella root
 
