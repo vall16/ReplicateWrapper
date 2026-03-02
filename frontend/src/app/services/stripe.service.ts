@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class StripeService {
-  private apiUrl = 'http://localhost:8000'; // backend FastAPI
-
+  // private apiUrl = 'http://localhost:8000'; // backend FastAPI
+  private apiUrl = environment.apiUrl; // ← usa apiUrl dall'environment
   constructor(private http: HttpClient) {}
 
   createPaymentIntent(amount: number, currency: string = 'eur'): Observable<any> {
