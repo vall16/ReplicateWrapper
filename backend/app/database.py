@@ -1,7 +1,6 @@
 from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, DateTime, Boolean
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
-from datetime import datetime
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from datetime import datetime, time
 import os
 from dotenv import load_dotenv
 load_dotenv()  # legge il .env nella root
@@ -10,11 +9,24 @@ load_dotenv()  # legge il .env nella root
 # DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./repli.db")
 DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:@localhost/repli_db")
 
+for i in range(10):  # prova 10 volte
+    try:
+        engine = create_engine(DATABASE_URL)
+        # prova una connessione veloce
+        conn = engine.connect()
+        conn.close()
+        print("DB pronto!")
+        break
+    except Exception as e:
+        print("DB non pronto, retry in 3s...")
+        time.sleep(3)
+else:
+    raise Exception("Impossibile connettersi al DB")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
-)
+# engine = create_engine(
+#     DATABASE_URL,
+#     connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+# )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

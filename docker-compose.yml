@@ -21,6 +21,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: repli-backend
+    depends_on:
+      - db
     ports:
       - "8000:8000"
     environment:
