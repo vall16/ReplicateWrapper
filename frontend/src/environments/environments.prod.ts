@@ -1,4 +1,9 @@
+// export const environment = {
+//   production: true,
+//   apiUrl: 'http://gekohub.com:8000/api'  // dominio reale del backend
+// };
+
 export const environment = {
   production: true,
-  apiUrl: 'http://gekohub.com:8000/api'  // dominio reale del backend
+  API_URL: 'http://backend:8000/api'  // backend = nome servizio Docker
 };
