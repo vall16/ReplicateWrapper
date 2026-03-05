@@ -10,6 +10,12 @@ load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 
+# --- GESTIONE CORS DA ENV ---
+# Leggiamo la stringa dal .env, se non esiste usiamo una lista vuota come fallback
+cors_origins_raw = os.getenv("CORS_ORIGINS", "")
+# Trasformiamo la stringa "dom1,dom2" in una lista ["dom1", "dom2"]
+allowed_origins = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
+
 app = FastAPI(
     title="Repli API",
     description="Wrapper API per Replicate.ai con sistema token",
@@ -18,11 +24,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=["http://localhost:4200"],
-    allow_origins=[
-        "http://gekohub.com:4200",
-        "http://localhost:4200",
-    ],
+    # allow_origins=[
+    #     "http://gekohub.com:4200",
+    #     "http://localhost:4200",
+    # ],
+    allow_origins=allowed_origins, # Usiamo la lista dinamica
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
