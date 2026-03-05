@@ -68,7 +68,7 @@ def get_publishable_key():
         return {"detail": "Chiave non configurata"}
     return {"key": stripe_key}
 
-@app.post("/create-payment-intent")
+@app.post("/api/create-payment-intent")
 async def create_payment_intent(request: Request):
     body = await request.body()
     print("BODY RAW:", body)
@@ -88,7 +88,7 @@ async def create_payment_intent(request: Request):
 
 
 # nuovo endpoint per generare una sessione di Checkout
-@app.post("/create-checkout-session")
+@app.post("/api/create-checkout-session")
 async def create_checkout_session(request: Request):
     data = await request.json()
     pkg = data.get("package") or {}
