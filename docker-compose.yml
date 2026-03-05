@@ -5,10 +5,10 @@ services:
     container_name: repli-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: vibe2025       # cambia con la tua password
-      MYSQL_DATABASE: repli_db            # nome del DB
-      MYSQL_USER: trader              # utente DB
-      MYSQL_PASSWORD: vibe2025           # password utente
+      MYSQL_ROOT_PASSWORD: vibe2025
+      MYSQL_DATABASE: repli_db
+      MYSQL_USER: trader
+      MYSQL_PASSWORD: vibe2025
     ports:
       - "3306:3306"
     volumes:
@@ -32,6 +32,7 @@ services:
       - ./backend:/app
     networks:
       - repli-network
+      - shared-net
     restart: unless-stopped
 
   frontend:
@@ -47,11 +48,15 @@ services:
       - WEB_CONCURRENCY=1
     networks:
       - repli-network
+      - shared-net
     restart: unless-stopped
 
 networks:
   repli-network:
     driver: bridge
+  shared-net:
+    external: true
 
 volumes:
-    db_data:
+  db_data:
+# docker-compose allineato a quello del server, da lanciare solo in prod non in dev
