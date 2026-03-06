@@ -87,6 +87,8 @@ async def create_payment_intent(request: Request):
         return JSONResponse({"error": str(e)}, status_code=400)
 
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:4200")
+
 # nuovo endpoint per generare una sessione di Checkout
 @app.post("/api/create-checkout-session")
 async def create_checkout_session(request: Request):
@@ -110,8 +112,10 @@ async def create_checkout_session(request: Request):
                 "quantity": 1,
             }],
             mode="payment",
-            success_url="http://localhost:4200/store?payment=success&session_id={CHECKOUT_SESSION_ID}",
-            cancel_url="http://localhost:4200/store?payment=cancel",
+            # success_url="http://localhost:4200/store?payment=success&session_id={CHECKOUT_SESSION_ID}",
+            # cancel_url="http://localhost:4200/store?payment=cancel",
+            success_url=f"{FRONTEND_URL}/store?payment=success&session_id={{CHECKOUT_SESSION_ID}}",
+            cancel_url=f"{FRONTEND_URL}/store?payment=cancel",
             metadata={
                 "package_id": pkg.get("id"),
                 "tokens": tokens
