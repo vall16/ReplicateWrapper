@@ -59,4 +59,4 @@ networks:
 
 volumes:
   db_data:
-# docker-compose allineato a quello del server, da lanciare solo in prod non in dev
+# docker-compose allineato a quello del server, dda lanciare solo in prod non in dev
