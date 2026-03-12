@@ -199,215 +199,340 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="hero-login-bg">
-      <div class="hero-login-card">
-        <div class="hero-login-header">
-          <img src="assets/hero-logo.svg" alt="Logo" class="hero-logo" />
-          <h1 class="hero-title">Benvenuto su Repli!</h1>
-          <p class="hero-subtitle">Accedi per continuare la tua avventura</p>
-        </div>
+    <div class="login-shell">
+      <div class="login-grid">
+        <section class="login-hero">
+          <div class="logo-orb">
+            <div class="logo-inner">RW</div>
+          </div>
+          <h1 class="hero-title">Accedi al tuo spazio AI</h1>
+          <p class="hero-subtitle">
+            Gestisci crediti, transazioni e chiamate al wrapper Replicate da un’unica console.
+          </p>
+          <ul class="hero-points">
+            <li>Dashboard in tempo reale del saldo token</li>
+            <li>Pagamenti sicuri e trasparenti</li>
+            <li>Storico completo delle operazioni</li>
+          </ul>
+        </section>
 
-        <form (ngSubmit)="login()" *ngIf="!isLoading" class="hero-login-form">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              [(ngModel)]="email"
-              name="email"
-              placeholder="tua@email.com"
-              required
-            />
+        <section class="login-panel glass-card">
+          <header class="panel-header">
+            <h2>Login</h2>
+            <p>Entra con le tue credenziali per continuare.</p>
+          </header>
+
+          <form (ngSubmit)="login()" *ngIf="!isLoading" class="login-form">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="tuo@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                [(ngModel)]="password"
+                name="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn-primary">
+              Accedi
+            </button>
+          </form>
+
+          <div *ngIf="isLoading" class="loading">
+            Autenticazione in corso…
           </div>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              [(ngModel)]="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
+          <div *ngIf="error" class="feedback feedback-error">
+            {{ error }}
           </div>
 
-          <button type="submit" class="hero-btn">Accedi</button>
-        </form>
-
-        <div *ngIf="isLoading" class="loading">
-          ⏳ Autenticazione in corso...
-        </div>
-
-        <div *ngIf="error" class="error">
-          ❌ {{ error }}
-        </div>
-
-        <div class="divider">oppure</div>
-
-        <p class="register-link">
-          Non hai un account? <a (click)="goToRegister()">Registrati qui</a>
-        </p>
+          <div class="panel-footer">
+            <span>Non hai un account?</span>
+            <button class="btn-ghost" type="button" (click)="goToRegister()">
+              Registrati
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   `,
   styles: [`
-    .hero-login-bg {
+    :host {
+      display: block;
+      min-height: 100vh;
+      color: #f5f5ff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, #2b60ff 0, transparent 55%),
+                  radial-gradient(circle at bottom right, #8f3fff 0, #050816 55%);
+    }
+
+    .login-shell {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(120deg, #2563eb 0%, #6ee7b7 100%);
-      padding: 1rem;
+      padding: 2rem 1.5rem;
     }
 
-    .hero-login-card {
-      background: rgba(255,255,255,0.97);
-      border-radius: 1.5rem;
-      padding: 2.5rem 2rem 2rem 2rem;
+    .login-grid {
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      text-align: center;
-      position: relative;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
     }
 
-    .hero-login-header {
-      margin-bottom: 2rem;
+    .login-hero {
+      color: #e5e7eb;
     }
 
-    .hero-logo {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 0.5rem;
+    .logo-orb {
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      background: conic-gradient(from 180deg at 50% 50%, #3b82f6, #a855f7, #22d3ee, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.95);
+    }
+
+    .logo-inner {
+      width: 76%;
+      height: 76%;
+      border-radius: 999px;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #e5e7eb;
+      text-transform: uppercase;
     }
 
     .hero-title {
-      font-size: 2.2rem;
-      color: #2563eb;
-      font-weight: bold;
-      margin-bottom: 0.25rem;
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
     }
 
     .hero-subtitle {
-      font-size: 1.1rem;
-      color: #4b5563;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.8rem;
+      font-size: 0.95rem;
+      color: #cbd5f5;
+      max-width: 420px;
     }
 
-    .hero-login-form .form-group {
-      margin-bottom: 1.2rem;
-      text-align: left;
+    .hero-points {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.82rem;
+      color: #cbd5f5;
+    }
+
+    .hero-points li::before {
+      content: "•";
+      display: inline-block;
+      margin-right: 0.35rem;
+      color: #38bdf8;
+    }
+
+    .glass-card {
+      position: relative;
+      border-radius: 1.25rem;
+      padding: 1.4rem 1.5rem 1.3rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.08), transparent 58%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.12), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-panel {
+      max-width: 380px;
+      margin-left: auto;
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .panel-header p {
+      margin: 0.35rem 0 1.1rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
     }
 
     label {
-      display: block;
-      margin-bottom: 0.4rem;
-      color: #2563eb;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: #e5e7eb;
     }
 
     input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1.5px solid #e5e7eb;
-      border-radius: 0.75rem;
-      font-size: 1rem;
-      background: #f9fafb;
-      transition: border-color 0.3s;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+      font-size: 0.9rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    input::placeholder {
+      color: #64748b;
     }
 
     input:focus {
       outline: none;
-      border-color: #2563eb;
-      background: #fff;
+      border-color: rgba(59, 130, 246, 0.9);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
+      background: rgba(15, 23, 42, 0.95);
     }
 
-    .hero-btn {
-      margin-top: 0.5rem;
+    .btn-primary {
+      margin-top: 0.3rem;
       width: 100%;
-      padding: 0.75rem;
-      background: linear-gradient(120deg, #2563eb 0%, #6ee7b7 100%);
-      color: white;
+      padding: 0.65rem 0.9rem;
+      border-radius: 999px;
       border: none;
-      border-radius: 0.75rem;
-      font-size: 1.1rem;
-      font-weight: bold;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(37,99,235,0.10);
-      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.45);
+      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
     }
 
-    .hero-btn:hover {
-      background: linear-gradient(120deg, #1d4ed8 0%, #34d399 100%);
-      transform: translateY(-2px) scale(1.03);
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 50px rgba(56, 189, 248, 0.6);
+      filter: brightness(1.06);
     }
 
     .loading {
-      text-align: center;
-      color: #2563eb;
-      font-weight: 600;
-      margin: 1rem 0;
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #a5b4fc;
     }
 
-    .error {
-      background-color: #fee;
-      color: #c33;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      margin-bottom: 1rem;
-      border-left: 4px solid #c33;
-      font-weight: 500;
+    .feedback {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 0.8rem;
+      padding: 0.6rem 0.75rem;
     }
 
-    .divider {
-      text-align: center;
-      color: #999;
-      margin: 1.5rem 0 1rem 0;
-      position: relative;
-      background: white;
-      width: fit-content;
-      padding: 0 1rem;
-      margin-left: auto;
-      margin-right: auto;
+    .feedback-error {
+      background: rgba(127, 29, 29, 0.8);
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      color: #fee2e2;
     }
 
-    .divider:before {
-      content: '';
-      position: absolute;
-      left: -100px;
-      top: 50%;
-      width: 100px;
-      height: 1px;
-      background: #e5e7eb;
+    .panel-footer {
+      margin-top: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
     }
 
-    .divider:after {
-      content: '';
-      position: absolute;
-      right: -100px;
-      top: 50%;
-      width: 100px;
-      height: 1px;
-      background: #e5e7eb;
-    }
-
-    .register-link {
-      text-align: center;
-      color: #666;
-      font-size: 1rem;
-    }
-
-    .register-link a {
-      color: #2563eb;
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: transparent;
+      color: #e5e7eb;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.78rem;
       cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
-      transition: text-decoration 0.2s;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
     }
 
-    .register-link a:hover {
-      text-decoration: underline;
+    .btn-ghost:hover {
+      background: rgba(30, 64, 175, 0.9);
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      .login-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+      }
+
+      .login-panel {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .login-shell {
+        padding: 1.5rem 1.1rem;
+      }
+
+      .hero-title {
+        font-size: 1.6rem;
+      }
     }
   `]
 })

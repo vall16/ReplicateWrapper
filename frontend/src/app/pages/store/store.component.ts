@@ -9,367 +9,514 @@ import { StripeService } from '../../services/stripe.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="store-container">
-      <div class="store-header">
-        <h1>🛒 Negozio Token</h1>
-        <p>Acquista token per usare il tuo wrapper Replicate.ai</p>
-        <button class="btn btn-back" (click)="goBack()">← Torna al Dashboard</button>
-      </div>
+    <div class="store-shell">
+      <header class="store-topbar">
+        <div>
+          <h1 class="store-title">Token Store</h1>
+          <p class="store-subtitle">
+            Scegli il pacchetto di crediti AI perfetto per il tuo flusso su Replicate.
+          </p>
+        </div>
+        <button class="btn-ghost" (click)="goBack()">
+          Torna al dashboard
+        </button>
+      </header>
 
-      <div class="packages-grid">
-        <div *ngFor="let pkg of packages" class="package-card" [class.featured]="pkg.badge">
-          <div class="package-header">
-            <h2>{{ pkg.name }}</h2>
-            <div *ngIf="pkg.badge" class="badge">{{ pkg.badge }}</div>
+      <section class="store-main">
+        <div class="glass-card hero-card">
+          <div class="hero-copy">
+            <h2>Seleziona il tuo piano token</h2>
+            <p>
+              I crediti vengono scalati automaticamente a ogni chiamata API. Nessuna scadenza, massima
+              trasparenza.
+            </p>
+            <ul class="hero-list">
+              <li>Prezzo per token sempre visibile prima dell’acquisto</li>
+              <li>Checkout sicuro tramite provider di pagamento</li>
+              <li>Saldo aggiornato in tempo reale nel dashboard</li>
+            </ul>
           </div>
-
-          <p class="package-description">{{ pkg.description }}</p>
-
-          <div class="package-content">
-            <div class="token-amount">
-              <span class="number">{{ pkg.tokens }}</span>
-              <span class="label">🪙 Token</span>
+          <div class="hero-security">
+            <div class="security-chip-row">
+              <div class="security-chip">SSL 256-bit</div>
+              <div class="security-chip">PCI-DSS compliant</div>
             </div>
-
-            <div class="price-display">
-              <span class="currency">€</span>
-              <span class="amount">{{ pkg.price }}</span>
-              <span class="unit">/token: €{{ (pkg.price / pkg.tokens).toFixed(4) }}</span>
+            <div class="security-lock">
+              <div class="lock-ring">
+                <div class="lock-inner">✓</div>
+              </div>
+              <span>Pagamenti protetti end‑to‑end</span>
             </div>
           </div>
+        </div>
 
-          <button
-            class="btn btn-purchase"
-            (click)="purchasePackage(pkg)"
-            [disabled]="isPurchasing"
+        <div class="packages-grid" *ngIf="packages?.length; else emptyPackages">
+          <div
+            *ngFor="let pkg of packages"
+            class="glass-card package-card"
+            [class.package-featured]="pkg.badge"
           >
-            {{ isPurchasing && selectedPackage?.id === pkg.id ? '⏳ Elaborando...' : '💳 Acquista' }}
-          </button>
+            <div class="package-header">
+              <div>
+                <h3 class="package-name">{{ pkg.name }}</h3>
+                <p class="package-description">{{ pkg.description }}</p>
+              </div>
+              <span *ngIf="pkg.badge" class="package-badge">{{ pkg.badge }}</span>
+            </div>
+
+            <div class="package-body">
+              <div class="package-tokens">
+                <span class="tokens-value">{{ pkg.tokens }}</span>
+                <span class="tokens-label">token</span>
+              </div>
+              <div class="package-price">
+                <div class="price-main">
+                  <span class="price-currency">€</span>
+                  <span class="price-amount">{{ pkg.price }}</span>
+                </div>
+                <span class="price-unit">
+                  ≈ €{{ (pkg.price / pkg.tokens).toFixed(4) }} / token
+                </span>
+              </div>
+            </div>
+
+            <button
+              class="btn-primary"
+              (click)="purchasePackage(pkg)"
+              [disabled]="isPurchasing"
+            >
+              <span *ngIf="isPurchasing && selectedPackage?.id === pkg.id">Elaborazione…</span>
+              <span *ngIf="!(isPurchasing && selectedPackage?.id === pkg.id)">Procedi al checkout</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div *ngIf="error" class="error-message">
-        ❌ {{ error }}
-      </div>
+        <ng-template #emptyPackages>
+          <div class="glass-card empty-state">
+            Nessun pacchetto è attualmente configurato. Riprova più tardi o contatta
+            l’amministratore.
+          </div>
+        </ng-template>
 
-      <div *ngIf="success" class="success-message">
-        ✅ {{ success }}
-        <button class="btn btn-small" (click)="goToDashboard()">Torna al Dashboard</button>
-      </div>
-
-      <!-- Sezione FAQ -->
-      <div class="faq-section">
-        <h2>❓ Domande Frequenti</h2>
-        <div class="faq-grid">
-          <div class="faq-card">
-            <h3>💡 Come funziona il sistema token?</h3>
-            <p>Ogni chiamata all'API Replicate consuma 1 token. Acquista token per estendere il tuo account.</p>
-          </div>
-          <div class="faq-card">
-            <h3>🔄 Posso rimborso i token?</h3>
-            <p>I token non utilizzati rimangono nel tuo conto. Contatta il supporto per chiarimenti su rimborsi.</p>
-          </div>
-          <div class="faq-card">
-            <h3>⏰ Scadono i token?</h3>
-            <p>No, i token non hanno scadenza. Puoi utilizzarli quando vuoi.</p>
-          </div>
-          <div class="faq-card">
-            <h3>📊 Dove vedo le mie transazioni?</h3>
-            <p>Nel Dashboard puoi visualizzare lo storico di tutte le transazioni.</p>
-          </div>
+        <div *ngIf="error" class="feedback feedback-error">
+          {{ error }}
         </div>
-      </div>
 
-      <!-- Sezione Sicurezza -->
-      <div class="security-section">
-        <h2>🔒 Pagamenti Sicuri</h2>
-        <p>Tutti i pagamenti sono elaborati in modo sicuro tramite gateway crittografato.</p>
-        <div class="security-badges">
-          <div class="badge-item">🛡️ SSL Crittografato</div>
-          <div class="badge-item">✓ PCI Compliant</div>
-          <div class="badge-item">🔐 Dati Sicuri</div>
+        <div *ngIf="success" class="feedback feedback-success">
+          <span>{{ success }}</span>
+          <button class="btn-ghost" (click)="goToDashboard()">Vai al dashboard</button>
         </div>
-      </div>
 
+        <section class="faq-row">
+          <div class="glass-card faq-card">
+            <h3>Cosa sono i token?</h3>
+            <p>
+              Ogni chiamata all’API del tuo wrapper consuma un numero di token predefinito. I token
+              non scadono e puoi usarli quando vuoi.
+            </p>
+          </div>
+          <div class="glass-card faq-card">
+            <h3>Come funziona la fatturazione?</h3>
+            <p>
+              Paghi solo i pacchetti acquistati. Tutti i pagamenti passano tramite un provider
+              certificato che non espone i tuoi dati al backend.
+            </p>
+          </div>
+          <div class="glass-card faq-card">
+            <h3>Posso vedere lo storico degli acquisti?</h3>
+            <p>
+              Sì, nella sezione dashboard trovi tutte le transazioni con dettagli di data, importo e
+              tipo di operazione.
+            </p>
+          </div>
+        </section>
+      </section>
     </div>
   `,
   styles: [`
-    .store-container {
-      padding: 2rem 1rem;
-      max-width: 1200px;
+    :host {
+      display: block;
+      min-height: 100vh;
+      color: #f3f4ff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, #2b60ff 0, transparent 55%),
+                  radial-gradient(circle at bottom right, #8f3fff 0, #050816 55%);
+    }
+
+    .store-shell {
+      max-width: 1120px;
       margin: 0 auto;
+      padding: 1.75rem 1.5rem 2.5rem;
     }
 
-    .store-header {
-      text-align: center;
-      margin-bottom: 3rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      position: relative;
+    .store-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
     }
 
-    .store-header h1 {
-      font-size: 2rem;
-      margin: 0 0 0.5rem 0;
-    }
-
-    .store-header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-      margin: 0 0 1.5rem 0;
-    }
-
-    .btn-back {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
+    .store-title {
+      margin: 0;
+      font-size: 1.7rem;
       font-weight: 600;
-      transition: all 0.3s;
+      letter-spacing: 0.04em;
     }
 
-    .btn-back:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: white;
+    .store-subtitle {
+      margin: 0.35rem 0 0;
+      font-size: 0.86rem;
+      color: #cbd5f5;
+      max-width: 420px;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.6);
+      color: #e5e7eb;
+      padding: 0.42rem 0.9rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(30, 64, 175, 0.95);
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .store-main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .glass-card {
+      position: relative;
+      border-radius: 1.2rem;
+      padding: 1.25rem 1.3rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.76));
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.08), transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.14), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    .hero-copy h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+
+    .hero-copy p {
+      margin: 0.45rem 0 0.6rem;
+      font-size: 0.85rem;
+      color: #e5e7eb;
+    }
+
+    .hero-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.35rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      color: #cbd5f5;
+    }
+
+    .hero-list li::before {
+      content: "•";
+      display: inline-block;
+      margin-right: 0.4rem;
+      color: #38bdf8;
+    }
+
+    .hero-security {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      align-items: flex-end;
+    }
+
+    .security-chip-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .security-chip {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      font-size: 0.72rem;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .security-lock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      color: #cbd5f5;
+    }
+
+    .lock-ring {
+      width: 50px;
+      height: 50px;
+      border-radius: 999px;
+      background: conic-gradient(from 220deg, #22c55e, #22d3ee, #4f46e5, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.7);
+    }
+
+    .lock-inner {
+      width: 76%;
+      height: 76%;
+      border-radius: 999px;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #bbf7d0;
     }
 
     .packages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
     }
 
     .package-card {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border: 3px solid transparent;
-      transition: all 0.3s;
+      transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
       display: flex;
       flex-direction: column;
+      gap: 0.9rem;
     }
 
     .package-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 22px 50px rgba(37, 99, 235, 0.7);
+      border-color: rgba(129, 140, 248, 0.85);
     }
 
-    .package-card.featured {
-      border-color: #667eea;
-      background: linear-gradient(to bottom, #fafbff 0%, white 100%);
-      transform: scaleY(1.05);
+    .package-featured {
+      border-color: rgba(251, 191, 36, 0.8);
+      box-shadow: 0 22px 55px rgba(245, 158, 11, 0.5);
     }
 
     .package-header {
       display: flex;
       justify-content: space-between;
-      align-items: start;
-      margin-bottom: 1rem;
+      align-items: flex-start;
+      gap: 0.75rem;
     }
 
-    .package-header h2 {
-      color: #667eea;
+    .package-name {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 0.98rem;
+      font-weight: 600;
     }
 
-    .badge {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
+    .package-description {
+      margin: 0.25rem 0 0;
+      font-size: 0.78rem;
+      color: #9ca3af;
+    }
+
+    .package-badge {
+      padding: 0.16rem 0.6rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #111827;
+      font-size: 0.72rem;
       font-weight: 600;
       white-space: nowrap;
     }
 
-    .package-description {
-      color: #999;
-      margin: 0 0 1.5rem 0;
-      font-size: 0.95rem;
-    }
-
-    .package-content {
-      flex: 1;
-      margin-bottom: 1.5rem;
-    }
-
-    .token-amount {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .token-amount .number {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #667eea;
-    }
-
-    .token-amount .label {
-      color: #999;
-      font-weight: 600;
-    }
-
-    .price-display {
-      background: #f8f9fa;
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .price-display .currency {
-      font-size: 1.5rem;
-      color: #667eea;
-      font-weight: bold;
-    }
-
-    .price-display .amount {
-      font-size: 2rem;
-      color: #667eea;
-      font-weight: bold;
-      margin: 0 0.5rem;
-    }
-
-    .price-display .unit {
-      display: block;
-      color: #999;
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-    }
-
-    .btn-purchase {
-      width: 100%;
-      padding: 1rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .btn-purchase:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-purchase:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .error-message {
-      background-color: #fee;
-      color: #c33;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border-left: 4px solid #c33;
-    }
-
-    .success-message {
-      background-color: #efe;
-      color: #3c3;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border-left: 4px solid #3c3;
+    .package-body {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      gap: 0.75rem;
+      align-items: flex-end;
     }
 
-    .btn-small {
-      background: #3c3;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
+    .package-tokens {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .tokens-value {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .tokens-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+    }
+
+    .package-price {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .price-main {
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-end;
+    }
+
+    .price-currency {
+      font-size: 0.95rem;
+      color: #a5b4fc;
+      margin-right: 0.15rem;
+    }
+
+    .price-amount {
+      font-size: 1.4rem;
       font-weight: 600;
-      transition: all 0.3s;
     }
 
-    .btn-small:hover {
-      opacity: 0.9;
+    .price-unit {
+      font-size: 0.72rem;
+      color: #9ca3af;
     }
 
-    .faq-section {
-      margin-bottom: 3rem;
+    .btn-primary {
+      margin-top: 0.2rem;
+      align-self: stretch;
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.45);
+      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
     }
 
-    .faq-section h2 {
-      color: #667eea;
-      margin-bottom: 1.5rem;
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 50px rgba(56, 189, 248, 0.6);
+      filter: brightness(1.06);
     }
 
-    .faq-grid {
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .empty-state {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #e5e7eb;
+    }
+
+    .feedback {
+      border-radius: 0.9rem;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .feedback-error {
+      background: rgba(127, 29, 29, 0.8);
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      color: #fee2e2;
+    }
+
+    .feedback-success {
+      background: rgba(22, 101, 52, 0.85);
+      border: 1px solid rgba(74, 222, 128, 0.8);
+      color: #dcfce7;
+    }
+
+    .faq-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .faq-card {
-      background: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      border-left: 4px solid #667eea;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.1rem;
     }
 
     .faq-card h3 {
-      color: #333;
-      margin: 0 0 0.5rem 0;
-      font-size: 1rem;
+      margin: 0 0 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
     .faq-card p {
-      color: #666;
       margin: 0;
-      font-size: 0.95rem;
+      font-size: 0.78rem;
+      color: #d1d5db;
     }
 
-    .security-section {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
+    @media (max-width: 900px) {
+      .hero-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-security {
+        align-items: flex-start;
+      }
     }
 
-    .security-section h2 {
-      color: white;
-      margin: 0 0 1rem 0;
-    }
+    @media (max-width: 640px) {
+      .store-shell {
+        padding: 1.3rem 1rem 2rem;
+      }
 
-    .security-section p {
-      margin: 0 0 1.5rem 0;
-      font-size: 1rem;
-    }
-
-    .security-badges {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .badge-item {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      font-weight: 600;
+      .store-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   `]
 })
