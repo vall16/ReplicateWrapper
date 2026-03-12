@@ -5,5 +5,9 @@
     "types": []
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.d.ts"]
+  
+  "include": [
+    "src/**/*.ts",    // <--- Add this to include all your components/services
+    "src/**/*.d.ts"
+  ]
 }
