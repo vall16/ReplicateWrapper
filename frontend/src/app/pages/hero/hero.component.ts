@@ -34,45 +34,68 @@ import { RouterModule } from '@angular/router';
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-content">
-          <h1 class="hero-title">Accedi al Potere di <span class="highlight">Replicate.ai</span></h1>
+          <div class="hero-label">AI Credit Console · Replicate</div>
+          <h1 class="hero-title">
+            Collega <span class="gradient-text">Replicate.ai</span>
+            alle tue app in pochi minuti
+          </h1>
           <p class="hero-subtitle">
-            Semplifica l'utilizzo dei modelli AI più avanzati con il nostro wrapper intelligente
+            Un unico wrapper moderno per orchestrare modelli, token e chiamate API in modo sicuro,
+            con una UX pensata per il 2026.
           </p>
           <div class="hero-buttons">
             <button class="btn btn-primary-large" (click)="navigateTo('register')">
-              Inizia Gratuitamente
+              Inizia gratuitamente
             </button>
-            <button class="btn btn-secondary-large">
-              Scopri di più →
+            <button class="btn btn-secondary-large" (click)="scrollTo('features')">
+              Guarda cosa puoi fare →
             </button>
           </div>
+          <div class="hero-meta">
+            <span>Latency monitorata in tempo reale</span>
+            <span class="dot"></span>
+            <span>Token e costi sempre sotto controllo</span>
+          </div>
           <div class="hero-stats">
-            <div class="stat">
-              <span class="stat-number">10K+</span>
-              <span class="stat-label">Utenti Attivi</span>
+            <div class="stat-chip">
+              <span class="stat-label">Team attivi</span>
+              <span class="stat-value">10K+</span>
             </div>
-            <div class="stat">
-              <span class="stat-number">50+</span>
-              <span class="stat-label">Modelli Disponibili</span>
+            <div class="stat-chip">
+              <span class="stat-label">Modelli plug‑and‑play</span>
+              <span class="stat-value">50+</span>
             </div>
-            <div class="stat">
-              <span class="stat-number">99.9%</span>
-              <span class="stat-label">Uptime Garantito</span>
+            <div class="stat-chip">
+              <span class="stat-label">Uptime</span>
+              <span class="stat-value">99.9%</span>
             </div>
           </div>
         </div>
         <div class="hero-image">
-          <div class="floating-card card-1">
-            <div class="card-icon">🤖</div>
-            <div class="card-text">Modelli AI</div>
-          </div>
-          <div class="floating-card card-2">
-            <div class="card-icon">⚡</div>
-            <div class="card-text">Veloce</div>
-          </div>
-          <div class="floating-card card-3">
-            <div class="card-icon">🔒</div>
-            <div class="card-text">Sicuro</div>
+          <div class="hero-glass">
+            <div class="hero-glass-header">
+              <span class="pill pill-live">Live pipeline</span>
+              <span class="pill pill-safe">Secure backend</span>
+            </div>
+            <div class="hero-flow">
+              <div class="hero-step hero-step-in">
+                <span class="hero-step-label">Prompt · Input</span>
+                <span class="hero-step-meta">Text · Image · Audio</span>
+              </div>
+              <div class="hero-connector"></div>
+              <div class="hero-step hero-step-model">
+                <span class="hero-step-label">Replicate Model</span>
+                <span class="hero-step-meta">Version controllata · Logs</span>
+              </div>
+              <div class="hero-connector"></div>
+              <div class="hero-step hero-step-out">
+                <span class="hero-step-label">Output · Preview</span>
+                <span class="hero-step-meta">Share · Iterate · Ship</span>
+              </div>
+            </div>
+            <div class="hero-footnote">
+              Nessuna chiave nel frontend · orchestrazione solo lato server
+            </div>
           </div>
         </div>
       </section>
@@ -516,36 +539,53 @@ import { RouterModule } from '@angular/router';
 
     .hero-content {
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
-
+    
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: radial-gradient(circle at 0% 0%, rgba(96, 165, 250, 0.16), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #9ca3af;
+    }
+    
     .hero-title {
-      font-size: clamp(2.4rem, 3.2vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-      line-height: 1.1;
+      font-size: clamp(2.3rem, 3vw, 2.8rem);
+      font-weight: 650;
+      margin: 0;
+      line-height: 1.08;
       letter-spacing: -0.04em;
       color: #f9fafb;
     }
-
-    .highlight {
+    
+    .gradient-text {
       background: linear-gradient(120deg, #22c55e, #22d3ee, #6366f1);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
+      color: transparent;
     }
-
+    
     .hero-subtitle {
       font-size: 0.98rem;
       color: #cbd5f5;
-      margin-bottom: 2rem;
       line-height: 1.6;
-      max-width: 32rem;
+      max-width: 34rem;
     }
-
+    
     .hero-buttons {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 0.25rem;
     }
 
     .btn {
@@ -584,27 +624,47 @@ import { RouterModule } from '@angular/router';
       border-color: rgba(248, 250, 252, 0.9);
     }
 
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+    
+    .hero-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 999px;
+      background-color: #4b5563;
+    }
+    
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
     }
-
-    .stat {
+    
+    .stat-chip {
+      border-radius: 0.85rem;
+      padding: 0.6rem 0.7rem;
+      background: radial-gradient(circle at top, rgba(129, 140, 248, 0.3), transparent 60%);
+      border: 1px solid rgba(148, 163, 184, 0.6);
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .stat-number {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #a5b4fc;
-    }
-
-    .stat-label {
-      color: #9ca3af;
+      gap: 0.15rem;
       font-size: 0.78rem;
+    }
+    
+    .stat-label {
+      color: #cbd5f5;
+    }
+    
+    .stat-value {
+      font-size: 0.98rem;
+      font-weight: 600;
     }
 
     .hero-image {
@@ -614,54 +674,115 @@ import { RouterModule } from '@angular/router';
       align-items: center;
       justify-content: center;
     }
-
-    .floating-card {
-      position: absolute;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8));
+    
+    .hero-glass {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 1.3rem;
+      padding: 1.2rem 1.1rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.82));
       border: 1px solid rgba(148, 163, 184, 0.45);
-      border-radius: 16px;
-      padding: 1.3rem 1.4rem;
+      box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+    
+    .hero-glass::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.22), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    
+    .hero-glass > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-glass-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+    }
+    
+    .pill {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(191, 219, 254, 0.9);
+      background-color: rgba(15, 23, 42, 0.9);
+      color: #bfdbfe;
+      white-space: nowrap;
+    }
+    
+    .pill-live {
+      border-color: rgba(52, 211, 153, 0.85);
+      color: #bbf7d0;
+    }
+    
+    .pill-safe {
+      border-color: rgba(59, 130, 246, 0.85);
+    }
+    
+    .hero-flow {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 0.45rem;
-      backdrop-filter: blur(16px);
-      box-shadow:
-        0 18px 40px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
-      animation: float 3s ease-in-out infinite;
+      margin-bottom: 0.9rem;
     }
-
-    .card-1 {
-      top: 50px;
-      left: 20px;
-      animation-delay: 0s;
+    
+    .hero-step {
+      border-radius: 0.9rem;
+      padding: 0.55rem 0.65rem;
+      background-color: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      font-size: 0.78rem;
     }
-
-    .card-2 {
-      top: 150px;
-      right: 40px;
-      animation-delay: 1s;
+    
+    .hero-step-in {
+      border-style: dashed;
     }
-
-    .card-3 {
-      bottom: 40px;
-      left: 100px;
-      animation-delay: 2s;
+    
+    .hero-step-model {
+      background: linear-gradient(120deg, rgba(22, 163, 74, 0.1), rgba(96, 165, 250, 0.5));
     }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
+    
+    .hero-step-out {
+      opacity: 0.95;
+      border-style: dashed;
     }
-
-    .card-icon {
-      font-size: 2rem;
+    
+    .hero-step-label {
+      font-weight: 500;
+      color: #f9fafb;
     }
-
-    .card-text {
-      font-size: 0.82rem;
-      color: #cbd5f5;
+    
+    .hero-step-meta {
+      color: #9ca3af;
+    }
+    
+    .hero-connector {
+      height: 10px;
+      margin-left: 1.1rem;
+      border-left: 2px dashed rgba(148, 163, 184, 0.7);
+    }
+    
+    .hero-footnote {
+      font-size: 0.72rem;
+      color: #9ca3af;
     }
 
     /* Products Section */
