@@ -9,12 +9,18 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="register-container">
-      <div class="register-card">
-        <h1>📝 Registrazione</h1>
-        <p>Crea un nuovo account Repli</p>
+    <div class="register-shell">
+      <div class="register-card glass-card">
+        <header class="card-header">
+          <div>
+            <h1>Registrazione</h1>
+            <p class="subtitle">
+              Crea il tuo account per iniziare a gestire i token dei modelli Replicate.
+            </p>
+          </div>
+        </header>
 
-        <form (ngSubmit)="register()" *ngIf="!isLoading">
+        <form (ngSubmit)="register()" *ngIf="!isLoading" class="form-body">
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -22,7 +28,7 @@ import { AuthService } from '../../services/auth.service';
               type="email"
               [(ngModel)]="email"
               name="email"
-              placeholder="tua@email.com"
+              placeholder="tuoindirizzo@email.com"
               required
             />
           </div>
@@ -39,192 +45,268 @@ import { AuthService } from '../../services/auth.service';
             />
           </div>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              [(ngModel)]="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-            <small>Minimo 8 caratteri</small>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                [(ngModel)]="password"
+                name="password"
+                placeholder="••••••••"
+                required
+              />
+              <small>Minimo 8 caratteri</small>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Conferma password</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                placeholder="••••••••"
+                required
+              />
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="confirmPassword">Conferma Password</label>
-            <input
-              id="confirmPassword"
-              type="password"
-              [(ngModel)]="confirmPassword"
-              name="confirmPassword"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-
-          <button type="submit" class="btn btn-primary">Registrati</button>
+          <button type="submit" class="btn-primary">Crea account</button>
         </form>
 
         <div *ngIf="isLoading" class="loading">
-          ⏳ Registrazione in corso...
+          Registrazione in corso…
         </div>
 
-        <div *ngIf="error" class="error">
-          ❌ {{ error }}
+        <div *ngIf="error" class="feedback feedback-error">
+          {{ error }}
         </div>
 
-        <div *ngIf="success" class="success">
-          ✅ {{ success }}
+        <div *ngIf="success" class="feedback feedback-success">
+          {{ success }}
         </div>
 
-        <div class="divider">oppure</div>
+        <div class="divider">
+          <span>oppure</span>
+        </div>
 
         <p class="login-link">
-          Hai già un account? <a (click)="goToLogin()">Accedi qui</a>
+          Hai già un account?
+          <button type="button" class="link-button" (click)="goToLogin()">Accedi qui</button>
         </p>
       </div>
     </div>
   `,
   styles: [`
-    .register-container {
+    .register-shell {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 1rem;
+      padding: 1.75rem 1.2rem;
+      background: radial-gradient(circle at top left, #2b60ff 0, transparent 55%),
+                  radial-gradient(circle at bottom right, #8f3fff 0, #050816 55%);
+      color: #f9fafb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
     .register-card {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      max-width: 440px;
     }
 
-    h1 {
-      color: #667eea;
-      margin-bottom: 0.5rem;
-      font-size: 1.8rem;
+    .glass-card {
+      position: relative;
+      border-radius: 1.25rem;
+      padding: 1.6rem 1.7rem 1.5rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78));
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.95);
+      overflow: hidden;
     }
 
-    p {
-      color: #999;
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.09), transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.16), transparent 60%);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      margin: 0.4rem 0 0;
+      font-size: 0.86rem;
+      color: #cbd5f5;
+    }
+
+    .form-body {
+      margin-top: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .form-group {
-      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
     }
 
     label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #333;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: #e5e7eb;
     }
 
     small {
-      display: block;
-      color: #999;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
+      font-size: 0.75rem;
+      color: #9ca3af;
     }
 
     input {
       width: 100%;
-      padding: 0.75rem;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       box-sizing: border-box;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #667eea;
+    input::placeholder {
+      color: #6b7280;
     }
 
-    .btn {
-      width: 100%;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
+    input:focus {
+      border-color: rgba(129, 140, 248, 0.95);
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.9);
+      background: rgba(15, 23, 42, 0.95);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      margin-top: 0.25rem;
+      width: 100%;
+      border-radius: 999px;
+      border: none;
+      padding: 0.75rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: #f9fafb;
+      box-shadow: 0 18px 45px rgba(56, 189, 248, 0.6);
+      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 24px 55px rgba(56, 189, 248, 0.7);
+      filter: brightness(1.05);
     }
 
     .loading {
+      margin-top: 1rem;
       text-align: center;
-      color: #667eea;
-      font-weight: 600;
+      font-size: 0.85rem;
+      color: #cbd5f5;
     }
 
-    .error {
-      background-color: #fee;
-      color: #c33;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border-left: 4px solid #c33;
+    .feedback {
+      margin-top: 0.9rem;
+      border-radius: 0.8rem;
+      padding: 0.65rem 0.8rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
 
-    .success {
-      background-color: #efe;
-      color: #3c3;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border-left: 4px solid #3c3;
+    .feedback-error {
+      background: rgba(127, 29, 29, 0.82);
+      border: 1px solid rgba(248, 113, 113, 0.9);
+      color: #fee2e2;
+    }
+
+    .feedback-success {
+      background: rgba(22, 101, 52, 0.85);
+      border: 1px solid rgba(74, 222, 128, 0.9);
+      color: #dcfce7;
     }
 
     .divider {
-      text-align: center;
-      color: #999;
-      margin: 1.5rem 0;
-      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 1.4rem 0 0.9rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
     }
 
-    .divider {
-      background: white;
-      width: fit-content;
-      margin: 1.5rem auto;
-      padding: 0 1rem;
-      position: relative;
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: radial-gradient(circle, rgba(148, 163, 184, 0.5), transparent);
     }
 
     .login-link {
       text-align: center;
-      color: #666;
+      font-size: 0.82rem;
+      color: #cbd5f5;
     }
 
-    .login-link a {
-      color: #667eea;
+    .link-button {
+      border: none;
+      background: transparent;
+      color: #a5b4fc;
       cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 0.18rem;
     }
 
-    .login-link a:hover {
-      text-decoration: underline;
+    @media (max-width: 640px) {
+      .register-shell {
+        padding: 1.5rem 1rem;
+      }
+
+      .glass-card {
+        padding: 1.4rem 1.4rem 1.3rem;
+      }
+
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   `]
 })
