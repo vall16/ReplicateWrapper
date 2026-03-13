@@ -67,6 +67,21 @@ export class AuthService {
     );
   }
 
+  // Login con Google (ID token da Google Identity Services)
+  loginWithGoogle(idToken: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/google-login`, {
+      id_token: idToken
+    }).pipe(
+      tap(response => {
+        if (response.access_token) {
+          localStorage.setItem('token', response.access_token);
+          localStorage.setItem('user', JSON.stringify(response.user));
+          this.currentUserSubject.next(response.user);
+        }
+      })
+    );
+  }
+
   // Logout
   logout() {
     localStorage.removeItem('token');

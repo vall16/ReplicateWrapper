@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environments';
 
 // @Component({
 //   selector: 'app-login',
@@ -260,6 +261,15 @@ import { AuthService } from '../../services/auth.service';
             {{ error }}
           </div>
 
+          <div class="oauth-divider">
+            <span>oppure</span>
+          </div>
+
+          <button type="button" class="btn-google" (click)="loginWithGoogle()">
+            <span class="google-logo"></span>
+            Continua con Google
+          </button>
+
           <div class="panel-footer">
             <span>Non hai un account?</span>
             <button class="btn-ghost" type="button" (click)="goToRegister()">
@@ -486,6 +496,60 @@ import { AuthService } from '../../services/auth.service';
       color: #fee2e2;
     }
 
+        .oauth-divider {
+          margin: 1rem 0 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          font-size: 0.78rem;
+          color: #9ca3af;
+        }
+
+        .oauth-divider::before,
+        .oauth-divider::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: radial-gradient(circle, rgba(148, 163, 184, 0.6), transparent);
+        }
+
+        .btn-google {
+          margin-top: 0.25rem;
+          width: 100%;
+          padding: 0.6rem 0.9rem;
+          border-radius: 999px;
+          border: 1px solid rgba(148, 163, 184, 0.5);
+          background: #0f172a;
+          color: #e5e7eb;
+          font-size: 0.88rem;
+          font-weight: 500;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+        }
+
+        .btn-google:hover {
+          background: #020617;
+          box-shadow: 0 16px 36px rgba(15, 23, 42, 0.85);
+          transform: translateY(-1px);
+        }
+
+        .google-logo {
+          width: 16px;
+          height: 16px;
+          border-radius: 3px;
+          background:
+            linear-gradient(45deg, #4285f4 0 50%, transparent 50%),
+            linear-gradient(-45deg, #34a853 0 50%, transparent 50%),
+            radial-gradient(circle at 30% 30%, #fbbc05 0 40%, transparent 41%),
+            radial-gradient(circle at 70% 70%, #ea4335 0 40%, transparent 41%);
+          box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+        }
+
     .panel-footer {
       margin-top: 1.1rem;
       display: flex;
@@ -562,6 +626,38 @@ export class LoginComponent {
         this.error = error.error?.detail || 'Errore durante il login';
       }
     );
+  }
+
+  loginWithGoogle() {
+    const google = (window as any).google;
+
+    if (!google || !google.accounts || !google.accounts.id) {
+      this.error = 'Google Sign-In non è configurato correttamente.';
+      return;
+    }
+
+    this.isLoading = true;
+    this.error = '';
+
+    google.accounts.id.initialize({
+      client_id: environment.googleClientId,
+      callback: (response: any) => {
+        const idToken = response.credential;
+
+        this.authService.loginWithGoogle(idToken).subscribe(
+          () => {
+            this.isLoading = false;
+            this.router.navigate(['/dashboard']);
+          },
+          (error: any) => {
+            this.isLoading = false;
+            this.error = error.error?.detail || 'Errore durante il login con Google.';
+          }
+        );
+      }
+    });
+
+    google.accounts.id.prompt();
   }
 
   goToRegister() {

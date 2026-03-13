@@ -45,6 +45,10 @@ class TokenResponse(BaseModel):
     token_type: str
     user: UserResponse
 
+
+class GoogleLoginRequest(BaseModel):
+    id_token: str
+
 # Status Response
 class StatusResponse(BaseModel):
     message: str
