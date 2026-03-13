@@ -542,6 +542,9 @@ import { RouterModule } from '@angular/router';
       display: flex;
       flex-direction: column;
       gap: 1.4rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: hero-fade-up 0.85s ease-out forwards;
     }
     
     .hero-label {
@@ -673,6 +676,9 @@ import { RouterModule } from '@angular/router';
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: hero-fade-up 0.95s ease-out 0.1s forwards;
     }
     
     .hero-glass {
@@ -687,6 +693,17 @@ import { RouterModule } from '@angular/router';
         0 18px 45px rgba(15, 23, 42, 0.95),
         0 0 0 1px rgba(15, 23, 42, 0.9);
       overflow: hidden;
+    }
+
+    @keyframes hero-fade-up {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .hero-glass::before {
