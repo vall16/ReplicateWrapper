@@ -167,7 +167,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
       display: flex;
       align-items: stretch;
       justify-content: center;
-      padding: 1.75rem 1.25rem 2.5rem;
+      padding: 0;
       position: relative;
     }
 
@@ -201,15 +201,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
       z-index: 1;
       width: 100%;
       max-width: 1120px;
-      margin: 0 auto;
-      border-radius: 24px;
-      padding: 1.5rem;
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.94), rgba(15, 23, 42, 0.86));
-      box-shadow:
-        0 30px 80px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(148, 163, 184, 0.35);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      backdrop-filter: blur(24px);
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      border: none;
+      backdrop-filter: none;
       display: flex;
       flex-direction: column;
     }
@@ -233,12 +231,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
       }
 
       .app-main {
-        padding-inline: 1rem;
+        padding-inline: 0;
       }
 
       .content-surface {
-        padding: 1.25rem;
-        border-radius: 18px;
+        padding: 0;
+        border-radius: 0;
       }
     }
   `]
