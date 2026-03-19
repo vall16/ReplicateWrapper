@@ -137,10 +137,8 @@ import { StripeService } from '../../services/stripe.service';
     :host {
       display: block;
       min-height: 100vh;
-      color: #f3f4ff;
+      color: #1f2937;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top left, #2b60ff 0, transparent 55%),
-                  radial-gradient(circle at bottom right, #8f3fff 0, #050816 55%);
     }
 
     .store-shell {
@@ -167,15 +165,15 @@ import { StripeService } from '../../services/stripe.service';
     .store-subtitle {
       margin: 0.35rem 0 0;
       font-size: 0.86rem;
-      color: #cbd5f5;
+      color: #6b7280;
       max-width: 420px;
     }
 
     .btn-ghost {
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.6);
-      color: #e5e7eb;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #4b5563;
       padding: 0.42rem 0.9rem;
       font-size: 0.8rem;
       cursor: pointer;
@@ -184,8 +182,8 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .btn-ghost:hover {
-      background: rgba(30, 64, 175, 0.95);
-      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+      background: #f3f4f6;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       transform: translateY(-1px);
     }
 
@@ -199,23 +197,14 @@ import { StripeService } from '../../services/stripe.service';
       position: relative;
       border-radius: 1.2rem;
       padding: 1.25rem 1.3rem;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.76));
-      border: 1px solid rgba(148, 163, 184, 0.32);
-      box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       overflow: hidden;
     }
 
     .glass-card::before {
-      content: "";
-      position: absolute;
-      inset: -35%;
-      background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.08), transparent 60%),
-        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.14), transparent 60%);
-      opacity: 0.9;
-      pointer-events: none;
+      display: none;
     }
 
     .glass-card > * {
@@ -236,12 +225,13 @@ import { StripeService } from '../../services/stripe.service';
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-weight: 600;
+      color: #1f2937;
     }
 
     .hero-copy p {
       margin: 0.45rem 0 0.6rem;
       font-size: 0.85rem;
-      color: #e5e7eb;
+      color: #4b5563;
     }
 
     .hero-list {
@@ -252,14 +242,14 @@ import { StripeService } from '../../services/stripe.service';
       flex-direction: column;
       gap: 0.25rem;
       font-size: 0.8rem;
-      color: #cbd5f5;
+      color: #6b7280;
     }
 
     .hero-list li::before {
       content: "•";
       display: inline-block;
       margin-right: 0.4rem;
-      color: #38bdf8;
+      color: #6366f1;
     }
 
     .hero-security {
@@ -279,10 +269,10 @@ import { StripeService } from '../../services/stripe.service';
     .security-chip {
       padding: 0.25rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.65);
+      border: 1px solid #d1d5db;
       font-size: 0.72rem;
-      color: #e5e7eb;
-      background: rgba(15, 23, 42, 0.9);
+      color: #374151;
+      background: #ffffff;
     }
 
     .security-lock {
@@ -291,31 +281,31 @@ import { StripeService } from '../../services/stripe.service';
       align-items: center;
       gap: 0.35rem;
       font-size: 0.75rem;
-      color: #cbd5f5;
+      color: #4b5563;
     }
 
     .lock-ring {
       width: 50px;
       height: 50px;
       border-radius: 999px;
-      background: conic-gradient(from 220deg, #22c55e, #22d3ee, #4f46e5, #22c55e);
+      background: conic-gradient(from 220deg, #10b981, #6366f1, #10b981);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.7);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
     }
 
     .lock-inner {
       width: 76%;
       height: 76%;
       border-radius: 999px;
-      background: #020617;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1rem;
       font-weight: 700;
-      color: #bbf7d0;
+      color: #10b981;
     }
 
     .packages-grid {
@@ -333,13 +323,14 @@ import { StripeService } from '../../services/stripe.service';
 
     .package-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 22px 50px rgba(37, 99, 235, 0.7);
-      border-color: rgba(129, 140, 248, 0.85);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-color: #6366f1;
     }
 
     .package-featured {
-      border-color: rgba(251, 191, 36, 0.8);
-      box-shadow: 0 22px 55px rgba(245, 158, 11, 0.5);
+      border-color: #f59e0b;
+      box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.1);
+      background: #fffbeb;
     }
 
     .package-header {
@@ -358,14 +349,14 @@ import { StripeService } from '../../services/stripe.service';
     .package-description {
       margin: 0.25rem 0 0;
       font-size: 0.78rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .package-badge {
       padding: 0.16rem 0.6rem;
       border-radius: 999px;
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      color: #111827;
+      background: #f59e0b;
+      color: #ffffff;
       font-size: 0.72rem;
       font-weight: 600;
       white-space: nowrap;
@@ -394,7 +385,7 @@ import { StripeService } from '../../services/stripe.service';
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .package-price {
@@ -412,7 +403,7 @@ import { StripeService } from '../../services/stripe.service';
 
     .price-currency {
       font-size: 0.95rem;
-      color: #a5b4fc;
+      color: #6366f1;
       margin-right: 0.15rem;
     }
 
@@ -423,28 +414,27 @@ import { StripeService } from '../../services/stripe.service';
 
     .price-unit {
       font-size: 0.72rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .btn-primary {
       margin-top: 0.2rem;
       align-self: stretch;
       padding: 0.6rem 0.9rem;
-      border-radius: 999px;
+      border-radius: 6px;
       border: none;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: #6366f1;
       color: white;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.45);
-      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+      transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease, background 0.15s ease;
     }
 
     .btn-primary:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 22px 50px rgba(56, 189, 248, 0.6);
-      filter: brightness(1.06);
+      background: #4f46e5;
     }
 
     .btn-primary:disabled {
@@ -455,7 +445,7 @@ import { StripeService } from '../../services/stripe.service';
     .empty-state {
       text-align: center;
       font-size: 0.85rem;
-      color: #e5e7eb;
+      color: #4b5563;
     }
 
     .feedback {
@@ -469,15 +459,15 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .feedback-error {
-      background: rgba(127, 29, 29, 0.8);
-      border: 1px solid rgba(248, 113, 113, 0.8);
-      color: #fee2e2;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #ef4444;
     }
 
     .feedback-success {
-      background: rgba(22, 101, 52, 0.85);
-      border: 1px solid rgba(74, 222, 128, 0.8);
-      color: #dcfce7;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #10b981;
     }
 
     .faq-row {
@@ -490,12 +480,13 @@ import { StripeService } from '../../services/stripe.service';
       margin: 0 0 0.4rem;
       font-size: 0.9rem;
       font-weight: 600;
+      color: #1f2937;
     }
 
     .faq-card p {
       margin: 0;
       font-size: 0.78rem;
-      color: #d1d5db;
+      color: #4b5563;
     }
 
     @media (max-width: 900px) {

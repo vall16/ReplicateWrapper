@@ -96,7 +96,7 @@ import { AuthService } from '../../services/auth.service';
       max-width: 1120px;
       margin: 0 auto;
       padding: 1.75rem 1.5rem 2.5rem;
-      color: #f9fafb;
+      color: #1f2937;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
@@ -118,15 +118,15 @@ import { AuthService } from '../../services/auth.service';
     .header-subtitle {
       margin: 0.35rem 0 0;
       font-size: 0.85rem;
-      color: #cbd5f5;
+      color: #6b7280;
       max-width: 460px;
     }
 
     .btn-back {
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.7);
-      color: #e5e7eb;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #4b5563;
       padding: 0.45rem 0.9rem;
       font-size: 0.8rem;
       font-weight: 500;
@@ -135,8 +135,8 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .btn-back:hover {
-      background: rgba(30, 64, 175, 0.95);
-      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.45);
+      background: #f3f4f6;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
       transform: translateY(-1px);
     }
 
@@ -151,23 +151,14 @@ import { AuthService } from '../../services/auth.service';
       position: relative;
       border-radius: 1.15rem;
       padding: 1.1rem 1.2rem;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78));
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.9),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       overflow: hidden;
     }
 
     .glass-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.09), transparent 60%),
-        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.15), transparent 60%);
-      opacity: 0.95;
-      pointer-events: none;
+      display: none;
     }
 
     .glass-card > * {
@@ -178,7 +169,7 @@ import { AuthService } from '../../services/auth.service';
     .stat-card h3 {
       margin: 0 0 0.45rem;
       font-size: 0.85rem;
-      color: #cbd5f5;
+      color: #6b7280;
       text-transform: uppercase;
       letter-spacing: 0.09em;
     }
@@ -191,11 +182,11 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .stat-number.negative {
-      color: #fecaca;
+      color: #ef4444;
     }
 
     .stat-number.positive {
-      color: #bbf7d0;
+      color: #10b981;
     }
 
     .table-card {
@@ -213,8 +204,8 @@ import { AuthService } from '../../services/auth.service';
     .table-wrapper {
       border-radius: 0.85rem;
       overflow: hidden;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
     }
 
     table {
@@ -224,18 +215,18 @@ import { AuthService } from '../../services/auth.service';
     }
 
     thead {
-      background: rgba(15, 23, 42, 0.98);
+      background: #f9fafb;
     }
 
     th {
       padding: 0.7rem 0.9rem;
       text-align: left;
-      color: #a5b4fc;
+      color: #6b7280;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       font-size: 0.72rem;
-      border-bottom: 1px solid rgba(31, 41, 55, 0.95);
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .amount-col {
@@ -243,31 +234,31 @@ import { AuthService } from '../../services/auth.service';
     }
 
     tbody tr {
-      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      border-bottom: 1px solid #e5e7eb;
       transition: background 0.15s ease;
     }
 
     tbody tr:hover {
-      background: rgba(15, 23, 42, 0.9);
+      background: #f9fafb;
     }
 
     tbody tr.consume {
-      border-left: 3px solid rgba(248, 113, 113, 0.9);
+      border-left: 3px solid #fca5a5;
     }
 
     tbody tr.purchase {
-      border-left: 3px solid rgba(74, 222, 128, 0.9);
+      border-left: 3px solid #86efac;
     }
 
     td {
       padding: 0.7rem 0.9rem;
-      color: #e5e7eb;
+      color: #374151;
       vertical-align: middle;
     }
 
     .cell-date {
       white-space: nowrap;
-      color: #cbd5f5;
+      color: #6b7280;
     }
 
     .cell-description {
@@ -280,11 +271,11 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .cell-amount.positive {
-      color: #bbf7d0;
+      color: #10b981;
     }
 
     .cell-amount.negative {
-      color: #fecaca;
+      color: #ef4444;
     }
 
     .type-badge {
@@ -295,20 +286,23 @@ import { AuthService } from '../../services/auth.service';
       border-radius: 999px;
       font-weight: 500;
       font-size: 0.72rem;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: #e5e7eb;
+      border: 1px solid #d1d5db;
+      color: #374151;
+      background: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
 
     .type-badge.consume {
-      border-color: rgba(248, 113, 113, 0.8);
-      background: rgba(127, 29, 29, 0.55);
+      border-color: #fca5a5;
+      background: #fef2f2;
+      color: #ef4444;
     }
 
     .type-badge.purchase {
-      border-color: rgba(74, 222, 128, 0.8);
-      background: rgba(22, 101, 52, 0.55);
+      border-color: #86efac;
+      background: #f0fdf4;
+      color: #10b981;
     }
 
     .empty-state {
@@ -317,28 +311,27 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .empty-state p {
-      color: #cbd5f5;
+      color: #6b7280;
       font-size: 0.9rem;
       margin-bottom: 1rem;
     }
 
     .btn-primary {
-      border-radius: 999px;
+      border-radius: 6px;
       border: none;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      background: #6366f1;
       color: white;
       padding: 0.6rem 1.5rem;
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.5);
-      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+      transition: transform 0.1s ease, background 0.15s ease;
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 22px 50px rgba(56, 189, 248, 0.65);
-      filter: brightness(1.05);
+      background: #4f46e5;
     }
 
     .error-message {
@@ -346,9 +339,9 @@ import { AuthService } from '../../services/auth.service';
       border-radius: 0.9rem;
       padding: 0.65rem 0.9rem;
       font-size: 0.8rem;
-      background: rgba(127, 29, 29, 0.8);
-      border: 1px solid rgba(248, 113, 113, 0.9);
-      color: #fee2e2;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #ef4444;
     }
 
     @media (max-width: 768px) {
