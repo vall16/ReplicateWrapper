@@ -16,8 +16,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
           <div class="logo">
             <span class="logo-mark">R</span>
             <div class="logo-text">
-              <span class="logo-title">Repli</span>
-              <span class="logo-subtitle">Replicate Wrapper</span>
+              <span class="logo-title">Replicate Wrapper</span>
+              <span class="logo-subtitle"></span>
             </div>
           </div>
         </div>

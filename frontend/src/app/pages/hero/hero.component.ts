@@ -15,8 +15,8 @@ import { RouterModule } from '@angular/router';
       <nav class="navbar">
         <div class="nav-container">
           <div class="logo">
-            <span class="logo-icon">🚀</span>
-            <span class="logo-text">Repli</span>
+            <!-- <span class="logo-icon">🚀</span>
+            <span class="logo-text">Repli</span> -->
           </div>
           <ul class="nav-menu">
             <li><a href="#features">Prodotti</a></li>
