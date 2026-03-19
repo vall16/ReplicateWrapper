@@ -15,16 +15,10 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, sans-serif;
   line-height: 1.6;
-  color: #e5e7eb;
-  background-color: #020617;
+  color: #1f2937;
+  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-body {
-  background:
-    radial-gradient(circle at top left, #1f2933 0%, #020617 45%, #020617 100%),
-    radial-gradient(circle at bottom right, #020617 0%, #020617 100%);
 }
 
 button {

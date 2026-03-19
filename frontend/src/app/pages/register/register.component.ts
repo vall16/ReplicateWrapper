@@ -105,9 +105,10 @@ import { AuthService } from '../../services/auth.service';
       align-items: center;
       justify-content: center;
       padding: 1.75rem 1.2rem;
-      background: radial-gradient(circle at top left, #2b60ff 0, transparent 55%),
-                  radial-gradient(circle at bottom right, #8f3fff 0, #050816 55%);
-      color: #f9fafb;
+      background-color: #ffffff;
+      background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+      background-size: 32px 32px;
+      color: #1f2937;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
@@ -120,23 +121,14 @@ import { AuthService } from '../../services/auth.service';
       position: relative;
       border-radius: 1.25rem;
       padding: 1.6rem 1.7rem 1.5rem;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78));
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow:
-        0 20px 50px rgba(15, 23, 42, 0.95),
-        0 0 0 1px rgba(15, 23, 42, 0.95);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
       overflow: hidden;
     }
 
     .glass-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.09), transparent 60%),
-        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.16), transparent 60%);
-      opacity: 0.95;
-      pointer-events: none;
+      display: none;
     }
 
     .glass-card > * {
@@ -146,6 +138,7 @@ import { AuthService } from '../../services/auth.service';
 
     .card-header h1 {
       margin: 0;
+      color: #1f2937;
       font-size: 1.6rem;
       letter-spacing: 0.03em;
       font-weight: 600;
@@ -154,7 +147,7 @@ import { AuthService } from '../../services/auth.service';
     .subtitle {
       margin: 0.4rem 0 0;
       font-size: 0.86rem;
-      color: #cbd5f5;
+      color: #4b5563;
     }
 
     .form-body {
@@ -178,68 +171,67 @@ import { AuthService } from '../../services/auth.service';
 
     label {
       font-size: 0.8rem;
-      color: #e5e7eb;
+      color: #374151;
+      font-weight: 500;
     }
 
     small {
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     input {
       width: 100%;
       padding: 0.65rem 0.75rem;
-      border-radius: 0.7rem;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: #f9fafb;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #1f2937;
       font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
       box-sizing: border-box;
     }
 
     input::placeholder {
-      color: #6b7280;
+      color: #9ca3af;
     }
 
     input:focus {
-      border-color: rgba(129, 140, 248, 0.95);
-      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.9);
-      background: rgba(15, 23, 42, 0.95);
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px #6366f1;
     }
 
     .btn-primary {
       margin-top: 0.25rem;
       width: 100%;
-      border-radius: 999px;
+      border-radius: 6px;
       border: none;
       padding: 0.75rem 1.2rem;
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      background: linear-gradient(135deg, #4f46e5, #06b6d4);
-      color: #f9fafb;
-      box-shadow: 0 18px 45px rgba(56, 189, 248, 0.6);
-      transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      background: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+      transition: background-color 0.15s ease, transform 0.1s ease;
     }
 
     .btn-primary:hover {
+      background-color: #4f46e5;
       transform: translateY(-1px);
-      box-shadow: 0 24px 55px rgba(56, 189, 248, 0.7);
-      filter: brightness(1.05);
     }
 
     .loading {
       margin-top: 1rem;
       text-align: center;
       font-size: 0.85rem;
-      color: #cbd5f5;
+      color: #6b7280;
     }
 
     .feedback {
       margin-top: 0.9rem;
-      border-radius: 0.8rem;
+      border-radius: 6px;
       padding: 0.65rem 0.8rem;
       font-size: 0.8rem;
       display: flex;
@@ -249,15 +241,15 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .feedback-error {
-      background: rgba(127, 29, 29, 0.82);
-      border: 1px solid rgba(248, 113, 113, 0.9);
-      color: #fee2e2;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
     }
 
     .feedback-success {
-      background: rgba(22, 101, 52, 0.85);
-      border: 1px solid rgba(74, 222, 128, 0.9);
-      color: #dcfce7;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
     }
 
     .divider {
@@ -267,7 +259,7 @@ import { AuthService } from '../../services/auth.service';
       gap: 0.75rem;
       margin: 1.4rem 0 0.9rem;
       font-size: 0.8rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .divider::before,
@@ -275,19 +267,19 @@ import { AuthService } from '../../services/auth.service';
       content: "";
       flex: 1;
       height: 1px;
-      background: radial-gradient(circle, rgba(148, 163, 184, 0.5), transparent);
+      background: #e5e7eb;
     }
 
     .login-link {
       text-align: center;
       font-size: 0.82rem;
-      color: #cbd5f5;
+      color: #4b5563;
     }
 
     .link-button {
       border: none;
       background: transparent;
-      color: #a5b4fc;
+      color: #6366f1;
       cursor: pointer;
       font-size: 0.82rem;
       font-weight: 500;
