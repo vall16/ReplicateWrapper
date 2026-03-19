@@ -432,13 +432,14 @@ import { RouterModule } from '@angular/router';
 
     /* Navbar */
     .navbar {
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
       padding: 0.9rem 0;
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
     }
 
     .nav-container {

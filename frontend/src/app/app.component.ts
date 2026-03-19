@@ -61,9 +61,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 2.5rem;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.85);
-      border-bottom: 1px solid #f3f4f6;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
     }
 
     .logo {
