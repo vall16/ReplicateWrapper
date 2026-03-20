@@ -361,55 +361,50 @@ import { RouterModule } from '@angular/router';
       </div>
     </section>
       <!-- Footer -->
-      <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>Repli</h4>
-            <p>Il tuo wrapper intelligente per Replicate.ai</p>
+      <footer class="app-footer">
+        <div class="footer-container">
+          <div class="footer-top">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <span class="logo-mark footer-logo-mark">RW</span>
+                <span class="footer-logo-title">Replicate Wrapper</span>
+              </div>
+              <p class="footer-description">
+                La piattaforma AI più avanzata per utilizzare facilmente le Api di Replicate
+              </p>
+              <div class="social-links-footer">
+                <a href="#" class="social-btn" aria-label="Twitter">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.6 6.6 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15z"/>
+                  </svg>
+                </a>
+                <a href="#" class="social-btn" aria-label="Twitter">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.6 6.6 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15z"/>
+                  </svg>
+                </a>
+                <a href="#" class="social-btn" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S1.2 3.226 1.2 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            <div class="footer-links-group">
+              <h3 class="footer-links-title">Link Rapidi</h3>
+              <ul class="footer-links-list">
+                <li><a href="#features">Funzionalità</a></li>
+                <li><a href="#pricing">Prezzi</a></li>
+                <li><a href="#how-it-works">Come Funziona</a></li>
+                <li><a href="javascript:void(0)" (click)="navigateTo('register')">Registrati</a></li>
+              </ul>
+            </div>
           </div>
-          <div class="footer-section">
-            <h4>Prodotti</h4>
-            <ul>
-              <li><a href="#features">Generative</a></li>
-              <li><a href="#features">Vision</a></li>
-              <li><a href="#features">Language</a></li>
-              <li><a href="#features">Audio</a></li>
-            </ul>
+          
+          <div class="footer-bottom">
+            <p>&copy; 2026 Vibe srl. Tutti i diritti riservati.</p>
           </div>
-          <div class="footer-section">
-            <h4>Supporto</h4>
-            <ul>
-              <li><a href="#contact">Documentazione</a></li>
-              <li><a href="#contact">API Reference</a></li>
-              <li><a href="#contact">FAQ</a></li>
-              <li><a href="#contact">Support</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h4>Legal</h4>
-            <ul>
-              <!-- <li><a href="#contact">Privacy</a></li>
-              <li><a href="#contact">Terms</a></li>
-              <li><a href="#contact">Security</a></li> -->
-
-              <!-- <li><a href="#privacy">Privacy</a></li>
-              <li><a href="#terms">Terms</a></li>
-              <li><a href="#security">Security</a></li> -->
-
-              <!-- <li><a routerLink="/privacy">Privacy</a></li> -->
-              
-              <li><a routerLink="/privacy">Privacy</a></li>
-              <li><a routerLink="/terms">Terms</a></li>
-              <li><a routerLink="/security">Security</a></li>
-
-              <!-- <button class="btn btn-login" (click)="navigateTo('login')">Accedi</button>
-              <button class="btn btn-signup" (click)="navigateTo('register')">Registrati</button> -->
-
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 Repli. Tutti i diritti riservati.</p>
         </div>
       </footer>
     </div>
@@ -1096,57 +1091,128 @@ import { RouterModule } from '@angular/router';
       font-size: 0.95rem;
     }
 
-    /* Footer */
-    .footer {
-      margin-top: 4rem;
-      background: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      padding: 2.5rem 0 1.2rem;
+    /* Footer Styles */
+    .app-footer {
+      background-color: #1e2634;
+      color: #e2e8f0;
+      padding: 4rem 2.5rem 1.5rem;
+      margin-top: auto;
+      font-family: inherit;
     }
 
-    .footer-content {
-      max-width: 1200px;
+    .footer-container {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
+      width: 100%;
     }
 
-    .footer-section h4 {
-      margin-bottom: 1rem;
-      color: #374151;
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
     }
 
-    .footer-section p {
-      color: #6b7280;
-      font-size: 0.86rem;
+    .footer-brand {
+      max-width: 600px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-logo-mark {
+      font-size: 0.95rem;
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .footer-logo-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-description {
+      color: #cbd5e1;
+      font-size: 1.05rem;
       line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
-    .footer-section ul {
-      list-style: none;
+    .social-links-footer {
+      display: flex;
+      gap: 0.75rem;
     }
 
-    .footer-section a {
-      color: #6b7280;
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 0.35rem;
+      background-color: #334155;
+      color: #ffffff;
       text-decoration: none;
-      font-size: 0.86rem;
-      transition: color 0.2s ease;
-      display: block;
-      padding: 0.4rem 0;
+      transition: background-color 0.2s ease, transform 0.2s ease;
     }
 
-    .footer-section a:hover {
-      color: #6366f1;
+    .social-btn:hover {
+      background-color: #475569;
+      transform: translateY(-2px);
+    }
+
+    .footer-links-group {
+      min-width: 200px;
+    }
+
+    .footer-links-title {
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .footer-links-list a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links-list a:hover {
+      color: #ffffff;
     }
 
     .footer-bottom {
-      text-align: center;
-      color: #9ca3af;
-      padding-top: 2rem;
-      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid #334155;
+      padding-top: 1.5rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      text-align: left;
     }
 
     /* Responsive */
