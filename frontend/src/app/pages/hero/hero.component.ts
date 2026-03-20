@@ -400,6 +400,15 @@ import { RouterModule } from '@angular/router';
                 <li><a href="javascript:void(0)" (click)="navigateTo('register')">Registrati</a></li>
               </ul>
             </div>
+
+            <div class="footer-links-group">
+              <h3 class="footer-links-title">Note Legali</h3>
+              <ul class="footer-links-list">
+                <li><a routerLink="/privacy">Privacy Policy</a></li>
+                <li><a routerLink="/terms">Termini di Servizio</a></li>
+                <li><a routerLink="/security">Sicurezza</a></li>
+              </ul>
+            </div>
           </div>
           
           <div class="footer-bottom">
