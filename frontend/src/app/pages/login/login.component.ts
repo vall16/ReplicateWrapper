@@ -98,9 +98,6 @@ import { environment } from '../../../environments/environments';
       min-height: 100vh;
       color: #1f2937;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background-color: #ffffff;
-      background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
-      background-size: 32px 32px;
     }
 
     .login-shell {
@@ -109,6 +106,29 @@ import { environment } from '../../../environments/environments';
       align-items: center;
       justify-content: center;
       padding: 2rem 1.5rem;
+      position: relative;
+      background-color: #f1f5f9;
+      overflow: hidden;
+    }
+
+    .login-shell::before {
+      content: '';
+      position: absolute;
+      inset: -5%; /* Slightly larger to avoid unblurred edges */
+      background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+    }
+
+    .login-shell::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.75) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      pointer-events: none;
     }
 
     .login-grid {
@@ -116,8 +136,10 @@ import { environment } from '../../../environments/environments';
       max-width: 980px;
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 2rem;
+      gap: 3rem; /* Aumentato leggermente per dare respire */
       align-items: center;
+      position: relative;
+      z-index: 10;
     }
 
     .login-hero {
@@ -153,14 +175,15 @@ import { environment } from '../../../environments/environments';
 
     .hero-title {
       margin: 0 0 0.5rem;
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .hero-subtitle {
-      margin: 0 0 0.8rem;
-      font-size: 0.95rem;
+      margin: 0 0 1rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
       color: #4b5563;
       max-width: 420px;
     }
@@ -171,25 +194,27 @@ import { environment } from '../../../environments/environments';
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
-      font-size: 0.82rem;
+      gap: 0.5rem;
+      font-size: 0.9rem;
       color: #4b5563;
     }
 
     .hero-points li::before {
       content: "•";
       display: inline-block;
-      margin-right: 0.35rem;
+      margin-right: 0.4rem;
       color: #6366f1;
+      font-size: 1.2rem;
+      vertical-align: middle;
     }
 
     .glass-card {
       position: relative;
-      border-radius: 1.25rem;
-      padding: 1.4rem 1.5rem 1.3rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2.2rem;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
       overflow: hidden;
     }
 
