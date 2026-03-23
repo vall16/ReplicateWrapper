@@ -203,19 +203,19 @@ import { RouterModule } from '@angular/router';
         </div>
 
         <div class="steps">
-          <div class="step">
+          <div class="step step-1">
             <div class="step-number">1</div>
             <h3>Registrati</h3>
             <p>Crea il tuo account Repli gratuitamente in pochi secondi</p>
           </div>
           <div class="step-arrow">→</div>
-          <div class="step">
+          <div class="step step-2">
             <div class="step-number">2</div>
             <h3>Acquista Token</h3>
             <p>Compra token per accedere ai modelli Replicate.ai</p>
           </div>
           <div class="step-arrow">→</div>
-          <div class="step">
+          <div class="step step-3">
             <div class="step-number">3</div>
             <h3>Inizia a Creare</h3>
             <p>Usa la nostra API per integrare i modelli AI nel tuo progetto</p>
@@ -689,13 +689,28 @@ import { RouterModule } from '@angular/router';
       animation: hero-fade-up 0.95s ease-out 0.1s forwards;
     }
     
-    .hero-glass {
+    /* .hero-glass {
       position: relative;
       width: 100%;
       max-width: 360px;
       border-radius: 1.3rem;
       padding: 1.2rem 1.1rem;
       background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    } */
+
+    .hero-glass {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 1.3rem;
+      padding: 1.2rem 1.1rem;
+
+      /* QUI la versione migliorata */
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+
       border: 1px solid #e5e7eb;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
       overflow: hidden;
@@ -719,6 +734,17 @@ import { RouterModule } from '@angular/router';
     .hero-glass > * {
       position: relative;
       z-index: 1;
+    }
+
+    .hero-glass::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 1.5rem;
+      background: linear-gradient(120deg, #6366f1, #8b5cf6, #10b981);
+      opacity: 0.15;
+      filter: blur(18px);
+      z-index: -1;
     }
     
     .hero-glass-header {
@@ -770,15 +796,31 @@ import { RouterModule } from '@angular/router';
       gap: 0.1rem;
       font-size: 0.78rem;
     }
+
+    .hero-step {
+  transition: all 0.2s ease;
+}
+
+.hero-step:hover {
+  transform: translateX(4px) scale(1.02);
+  border-color: #6366f1;
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.15);
+}
     
     .hero-step-in {
       border-style: dashed;
     }
     
-    .hero-step-model {
+    /* .hero-step-model {
       background: #f0fdf4;
       border-color: #86efac;
-    }
+    } */
+
+    .hero-step-model {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border-color: #34d399;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
+}
     
     .hero-step-out {
       opacity: 0.95;
@@ -794,11 +836,36 @@ import { RouterModule } from '@angular/router';
       color: #6b7280;
     }
     
-    .hero-connector {
+    /* .hero-connector {
       height: 10px;
       margin-left: 1.1rem;
       border-left: 2px dashed #d1d5db;
-    }
+    } */
+
+    .hero-connector {
+  height: 10px;
+  margin-left: 1.1rem;
+  border-left: 2px dashed #d1d5db;
+  position: relative;
+}
+
+.hero-connector::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  background: #6366f1;
+  border-radius: 50%;
+  animation: flow 1.5s linear infinite;
+}
+
+@keyframes flow {
+  0% { top: 0; opacity: 0; }
+  30% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
     
     .hero-footnote {
       font-size: 0.72rem;
@@ -1355,6 +1422,32 @@ import { RouterModule } from '@angular/router';
     .contact-form button {
       align-self: flex-start;
     }
+
+    /* STEP COLORS */
+
+/* STEP 1 - Blu */
+.step-1 .step-number {
+  background: #3b82f6;
+}
+.step-1 h3 {
+  color: #1d4ed8;
+}
+
+/* STEP 2 - Viola */
+.step-2 .step-number {
+  background: #8b5cf6;
+}
+.step-2 h3 {
+  color: #6d28d9;
+}
+
+/* STEP 3 - Verde */
+.step-3 .step-number {
+  background: #10b981;
+}
+.step-3 h3 {
+  color: #047857;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
