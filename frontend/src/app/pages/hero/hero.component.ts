@@ -349,6 +349,8 @@ import { RouterModule } from '@angular/router';
           </div>
         </div>
 
+        
+
         <!-- Contact Form -->
         <div class="contact-form">
           <!-- <form (submit)="submitContact($event)">

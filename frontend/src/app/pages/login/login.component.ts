@@ -325,58 +325,58 @@ import { environment } from '../../../environments/environments';
       color: #b91c1c;
     }
 
-        .oauth-divider {
-          margin: 1rem 0 0.75rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.75rem;
-          font-size: 0.78rem;
-          color: #6b7280;
-        }
+    .oauth-divider {
+      margin: 1rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
 
-        .oauth-divider::before,
-        .oauth-divider::after {
-          content: "";
-          flex: 1;
-          height: 1px;
-          background: #e5e7eb;
-        }
+    .oauth-divider::before,
+    .oauth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
 
-        .btn-google {
-          margin-top: 0.25rem;
-          width: 100%;
-          padding: 0.6rem 0.9rem;
-          border-radius: 6px;
-          border: 1px solid #d1d5db;
-          background: #ffffff;
-          color: #374151;
-          font-size: 0.88rem;
-          font-weight: 500;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          transition: background-color 0.15s ease, transform 0.1s ease;
-        }
+    .btn-google {
+      margin-top: 0.25rem;
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #374151;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+    }
 
-        .btn-google:hover {
-          background-color: #f9fafb;
-          transform: translateY(-1px);
-        }
+    .btn-google:hover {
+      background-color: #f9fafb;
+      transform: translateY(-1px);
+    }
 
-        .google-logo {
-          width: 16px;
-          height: 16px;
-          border-radius: 3px;
-          background:
-            linear-gradient(45deg, #4285f4 0 50%, transparent 50%),
-            linear-gradient(-45deg, #34a853 0 50%, transparent 50%),
-            radial-gradient(circle at 30% 30%, #fbbc05 0 40%, transparent 41%),
-            radial-gradient(circle at 70% 70%, #ea4335 0 40%, transparent 41%);
-          box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
-        }
+    .google-logo {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background:
+        linear-gradient(45deg, #4285f4 0 50%, transparent 50%),
+        linear-gradient(-45deg, #34a853 0 50%, transparent 50%),
+        radial-gradient(circle at 30% 30%, #fbbc05 0 40%, transparent 41%),
+        radial-gradient(circle at 70% 70%, #ea4335 0 40%, transparent 41%);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
 
     .panel-footer {
       margin-top: 1.1rem;
