@@ -238,7 +238,7 @@ import { RouterModule } from '@angular/router';
             <h3>Starter</h3>
             <div class="price">100 ⚡ </div>
             <p class="price-sub">€1.00</p>
-            <button class="btn btn-outline" (click)="navigateTo('login')">Seleziona</button>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
           </div>
           <div class="pricing-card featured">
             <div class="ribbon">Consigliato</div>
@@ -251,13 +251,13 @@ import { RouterModule } from '@angular/router';
             <h3>Pro</h3>
             <div class="price">1000 ⚡ </div>
             <p class="price-sub">€8.00 - Risparmia 20%</p>
-            <button class="btn btn-outline" (click)="navigateTo('login')">Seleziona</button>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
           </div>
           <div class="pricing-card">
             <h3>Enterprise</h3>
             <div class="price">5000 ⚡ </div>
             <p class="price-sub">€35.00 - Risparmia 30%</p>
-            <button class="btn btn-outline" (click)="navigateTo('login')">Contattaci</button>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
           </div>
         </div>
       </section>
@@ -379,14 +379,10 @@ import { RouterModule } from '@angular/router';
                 La piattaforma AI più avanzata per utilizzare facilmente le Api di Replicate
               </p>
               <div class="social-links-footer">
-                <a href="#" class="social-btn" aria-label="Twitter">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.6 6.6 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15z"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-btn" aria-label="Twitter">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.6 6.6 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15z"/>
+                
+                <a href="#" class="social-btn" aria-label="X">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2H21l-6.56 7.49L22.5 22h-6.63l-5.19-6.77L4.9 22H2l7.02-8.02L1.5 2h6.63l4.7 6.2L18.244 2zm-2.32 18h1.85L7.08 4H5.1l10.824 16z"/>
                   </svg>
                 </a>
                 <a href="#" class="social-btn" aria-label="LinkedIn">
