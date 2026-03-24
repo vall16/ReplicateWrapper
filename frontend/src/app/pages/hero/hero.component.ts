@@ -25,7 +25,10 @@ import { RouterModule } from '@angular/router';
             <li><a href="#contact">Contatti</a></li>
           </ul>
           <div class="nav-buttons">
-            <button class="btn btn-login" (click)="navigateTo('login')">Accedi</button>
+            <button class="btn btn-login" (click)="navigateTo('login')">Accedi
+
+
+            </button>
             <button class="btn btn-signup" (click)="navigateTo('register')">Registrati</button>
           </div>
         </div>
@@ -337,6 +340,7 @@ import { RouterModule } from '@angular/router';
         <div class="contact-info">
           <div class="info-item">
             <span>📧</span>
+            
             <p>Email: <a href="mailto:support@repli.ai">support&#64;repli.ai</a></p>
           </div>
           <div class="info-item">
@@ -1424,6 +1428,11 @@ import { RouterModule } from '@angular/router';
     .contact-form button {
       align-self: flex-start;
     }
+    .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4rem; /* distanza tra testo e icona */
+}
 
     /* STEP COLORS */
 
@@ -1449,6 +1458,24 @@ import { RouterModule } from '@angular/router';
 }
 .step-3 h3 {
   color: #047857;
+}
+
+.btn-product {
+  width: 100%;
+  background: #6366f1;
+  color: #ffffff;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-product:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
 }
 
 /* Responsive */

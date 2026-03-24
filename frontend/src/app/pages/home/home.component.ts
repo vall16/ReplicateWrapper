@@ -14,8 +14,8 @@ import { AuthService, User } from '../../services/auth.service';
         <div class="brand">
           <div class="brand-logo">RW</div>
           <div class="brand-text">
-            <span class="brand-title">Replicate Wrapper</span>
-            <span class="brand-subtitle">AI Credit Console</span>
+            <span class="brand-title">AI Credit Console</span>
+            <!-- <span class="brand-subtitle">AI Credit Console</span> -->
           </div>
         </div>
 
