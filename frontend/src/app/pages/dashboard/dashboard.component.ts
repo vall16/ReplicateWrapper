@@ -236,30 +236,52 @@ import { FormsModule } from '@angular/forms';
             <div class="card-header">
               <div>
                 <h2>Generazione Immagine AI</h2>
-                <p class="card-subtitle">Inserisci un prompt e genera un’immagine con i tuoi token</p>
+                <p class="card-subtitle">Inserisci un prompt dettagliato e genera un’immagine con i tuoi token</p>
               </div>
             </div>
 
             <div class="t2i-body">
               <textarea
                 [(ngModel)]="t2iPrompt"
-                placeholder="Scrivi qui il prompt..."
-                rows="3"
+                placeholder="Descrivi la scena, lo stile, l’atmosfera..."
+                rows="5"
                 class="t2i-input"
               ></textarea>
 
-              <button class="btn-primary" (click)="generateImage()">Genera Immagine</button>
+              <div class="t2i-options">
+                <!-- eventualmente opzioni aggiuntive -->
+                <label>
+                  Stile:
+                  <select [(ngModel)]="t2iStyle">
+                    <option value="photorealistic">Photorealistic</option>
+                    <option value="digital-art">Digital Art</option>
+                    <option value="anime">Anime</option>
+                    <option value="sketch">Sketch</option>
+                  </select>
+                </label>
+                <label>
+                  Risoluzione:
+                  <select [(ngModel)]="t2iResolution">
+                    <option value="1MP">1MP</option>
+                    <option value="2MP">2MP</option>
+                    <option value="4MP">4MP</option>
+                  </select>
+                </label>
+              </div>
 
-              <div *ngIf="t2iLoading" class="t2i-loading">Generazione in corso...</div>
+              <button class="btn-primary" (click)="generateImage()" [disabled]="t2iLoading || !t2iPrompt.trim()">
+                {{ t2iLoading ? 'Generazione...' : 'Genera Immagine' }}
+              </button>
 
-              <div *ngIf="t2iResult">
+              <div *ngIf="t2iError" class="t2i-error">{{ t2iError }}</div>
+
+              <div *ngIf="t2iResult" class="t2i-result">
                 <h3>Risultato:</h3>
                 <img [src]="t2iResult" alt="Generated Image" class="t2i-image" />
               </div>
             </div>
           </div>
         </section>
-
       </main>
     </div>
   `,
@@ -938,7 +960,11 @@ export class DashboardComponent implements OnInit {
   totalPurchased = 0;
   t2iPrompt: string = '';
   t2iResult: string | null = null;
+  t2iError: string | null = null;
   t2iLoading: boolean = false;
+  t2iStyle = 'photorealistic';      // default
+  t2iResolution = '1MP';            // default
+
 
 
   constructor(
@@ -996,6 +1022,9 @@ export class DashboardComponent implements OnInit {
     if (!this.t2iPrompt.trim()) return;
 
     this.t2iLoading = true;
+    this.t2iResult = null;
+    this.t2iError = null;
+
     this.authService.generateImage(this.t2iPrompt).subscribe(
       (res: any) => {
         this.t2iResult = res.image_url; // backend deve restituire { image_url: string }

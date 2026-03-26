@@ -1,3 +1,5 @@
+from http.client import HTTPException
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -107,26 +109,46 @@ if not replicate_token:
     raise Exception("REPLICATE_API_TOKEN non trovato nel .env!")
 
 # ✅ Crea un'istanza della classe
-replicate_wrapper = ReplicateWrapper(api_token="replicate_token")
-
+replicate_wrapper = ReplicateWrapper(api_token=replicate_token)
+SDXL_VERSION ="7762fd07"
 
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style)
     
     output = await replicate_wrapper.run_model(
-        "stability-ai/sdxl:latest",
+        "black-forest-labs/flux-2-pro",
         input_params={
             "prompt": prompt,
-            "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
-            "width": 1024,
-            "height": 768
+            "resolution": "1 MP",
+            "aspect_ratio": "1:1",
+            "input_images": [],
+            "output_format": "webp",
+            "output_quality": 80,
+            "safety_tolerance": 2
         },
         user_id=user.id,
         db=db
     )
 
-    return {"prompt": prompt, "image_url": output[0]}
+    # 🔥 DEBUG (tienilo finché non funziona)
+    print("OUTPUT RAW:", output)
+
+    # Estrazione URL dall'output
+    image_url = None
+    if isinstance(output, list) and len(output) > 0:
+        first = output[0]
+        if isinstance(first, str):
+            image_url = first
+        elif isinstance(first, dict):
+            image_url = first.get("url") or first.get("uri")
+
+    if not image_url:
+        raise HTTPException(500, "Impossibile ottenere URL immagine")
+
+
+    return image_url
+
 
 @app.get("/")
 async def root():
