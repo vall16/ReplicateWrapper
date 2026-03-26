@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   template: `
     <div class="dashboard-shell">
       <!-- Left rail -->
@@ -228,6 +230,36 @@ import { AuthService, User } from '../../services/auth.service';
             </ng-template>
           </div>
         </section>
+
+        <section class="t2i-row">
+          <div class="glass-card t2i-card">
+            <div class="card-header">
+              <div>
+                <h2>Generazione Immagine AI</h2>
+                <p class="card-subtitle">Inserisci un prompt e genera un’immagine con i tuoi token</p>
+              </div>
+            </div>
+
+            <div class="t2i-body">
+              <textarea
+                [(ngModel)]="t2iPrompt"
+                placeholder="Scrivi qui il prompt..."
+                rows="3"
+                class="t2i-input"
+              ></textarea>
+
+              <button class="btn-primary" (click)="generateImage()">Genera Immagine</button>
+
+              <div *ngIf="t2iLoading" class="t2i-loading">Generazione in corso...</div>
+
+              <div *ngIf="t2iResult">
+                <h3>Risultato:</h3>
+                <img [src]="t2iResult" alt="Generated Image" class="t2i-image" />
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   `,
@@ -904,6 +936,10 @@ export class DashboardComponent implements OnInit {
   packages: any[] = [];
   totalConsumed = 0;
   totalPurchased = 0;
+  t2iPrompt: string = '';
+  t2iResult: string | null = null;
+  t2iLoading: boolean = false;
+
 
   constructor(
     private authService: AuthService,
@@ -955,7 +991,23 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  
+  generateImage() {
+    if (!this.t2iPrompt.trim()) return;
 
+    this.t2iLoading = true;
+    this.authService.generateImage(this.t2iPrompt).subscribe(
+      (res: any) => {
+        this.t2iResult = res.image_url; // backend deve restituire { image_url: string }
+        this.t2iLoading = false;
+      },
+      (err: any) => {
+        console.error('Errore generazione immagine', err);
+        this.t2iLoading = false;
+      }
+    );
+  }
+  // ciao...
   calculateStats() {
     this.totalConsumed = 0;
     this.totalPurchased = 0;

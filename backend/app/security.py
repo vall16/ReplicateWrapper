@@ -1,7 +1,11 @@
 from passlib.context import CryptContext
 from jose import JWTError, jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime, timedelta
 from typing import Optional
+from sqlalchemy.orm import Session
+from app.database import get_db, User
 import os
 
 # Configurazione
@@ -47,3 +51,33 @@ TOKEN_PRICE_MULTIPLIER = 0.01  # €0.01 per token
 def calculate_token_price(amount: float) -> float:
     """Calcola il prezzo dei token"""
     return amount * TOKEN_PRICE_MULTIPLIER
+
+security = HTTPBearer()
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
+):
+    token = credentials.credentials
+
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token non valido"
+        )
+
+    email = payload.get("email")
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token non valido"
+        )
+
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Utente non trovato"
+        )
+
+    return user

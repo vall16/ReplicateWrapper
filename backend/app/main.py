@@ -2,9 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
+
+from fastapi.params import Depends
+from pydantic import BaseModel
+from app import replicate_wrapper
 import stripe
+import replicate
 from app.auth_routes import router as auth_router
 from app.token_routes import router as token_router
+from app.auth_routes import get_current_user 
+from app.database import get_db
+from app.replicate_wrapper import ReplicateWrapper
+
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -37,6 +46,87 @@ app.add_middleware(
 # Includi le rotte
 app.include_router(auth_router)
 app.include_router(token_router)
+
+# mapping stili (fondamentale per vendere)
+STYLE_MAP = {
+    "moderno": "modern italian apartment, minimal design, bright light",
+    "lusso": "luxury italian apartment, marble, elegant, high-end furniture",
+    "scandinavo": "scandinavian interior, wood, cozy, soft light"
+}
+
+class ImageRequest(BaseModel):
+    description: str
+    style: str = "moderno"
+
+
+def build_prompt(description: str, style: str):
+    base_style = STYLE_MAP.get(style, STYLE_MAP["moderno"])
+    
+    return f"""
+    {description},
+    {base_style},
+    real estate photography, wide angle, ultra realistic, 4k
+    """
+
+
+@app.post("/generate")
+def generate_image(req: ImageRequest):
+    prompt = build_prompt(req.description, req.style)
+
+    output = replicate.run(
+        "stability-ai/sdxl:latest",
+        input={
+            "prompt": prompt,
+            "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
+            "width": 1024,
+            "height": 768
+        }
+    )
+
+    return {
+        "prompt": prompt,
+        "image_url": output[0]
+    }
+# @app.post("/api/generate-paid")
+# def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
+#     prompt = build_prompt(req.description, req.style)
+#     output = replicate_wrapper.run_model(
+#         "stability-ai/sdxl:latest",
+#         input_params={
+#             "prompt": prompt,
+#             "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
+#             "width": 1024,
+#             "height": 768
+#         },
+#         user_id=user.id,
+#         db=db
+#     )
+#     return {"prompt": prompt, "image_url": output[0]}
+replicate_token = os.getenv("REPLICATE_API_TOKEN")
+if not replicate_token:
+    raise Exception("REPLICATE_API_TOKEN non trovato nel .env!")
+
+# ✅ Crea un'istanza della classe
+replicate_wrapper = ReplicateWrapper(api_token="replicate_token")
+
+
+@app.post("/api/generate-paid")
+async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
+    prompt = build_prompt(req.description, req.style)
+    
+    output = await replicate_wrapper.run_model(
+        "stability-ai/sdxl:latest",
+        input_params={
+            "prompt": prompt,
+            "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
+            "width": 1024,
+            "height": 768
+        },
+        user_id=user.id,
+        db=db
+    )
+
+    return {"prompt": prompt, "image_url": output[0]}
 
 @app.get("/")
 async def root():

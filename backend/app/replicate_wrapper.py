@@ -2,7 +2,7 @@ import os
 from typing import Optional, Dict, Any
 import replicate
 from sqlalchemy.orm import Session
-
+# la “macchina” che genera l’immagine.
 class ReplicateWrapper:
     """
     Wrapper class per gestire le interazioni con Replicate.ai con sistema token

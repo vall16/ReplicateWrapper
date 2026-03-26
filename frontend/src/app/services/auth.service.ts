@@ -189,4 +189,23 @@ export class AuthService {
       observer.complete();
     });
   }
+
+  // Generazione immagine (con token)
+generateImage(description: string, style: string = 'moderno'): Observable<any> {
+    const token = this.getToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<any>(
+      `${this.apiUrl}/generate-paid`,
+      {
+        description,
+        style
+      },
+      { headers }
+    );
+  }
 }
+

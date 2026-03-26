@@ -1,5 +1,10 @@
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, DateTime, Boolean
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy.orm import Session
+
 from datetime import datetime
 import os
 import time
@@ -85,3 +90,4 @@ def get_db():
         yield db
     finally:
         db.close()
+
