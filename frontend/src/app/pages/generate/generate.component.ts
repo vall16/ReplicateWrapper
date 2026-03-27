@@ -11,24 +11,39 @@ import { FormsModule } from '@angular/forms';
 
       <!-- SIDEBAR -->
       <aside class="sidebar">
-        <h3>Impostazioni generali</h3>
+        <!-- Impostazioni generali -->
+        <div class="section">
+          <div class="section-header" (click)="toggleSection('general')">
+            <span>Impostazioni generali</span>
+            <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span>
+          </div>
+          <div class="section-body" *ngIf="openSections.general">
+            <label>Modello</label>
+            <select [(ngModel)]="model">
+              <option value="flux">FLUX.1 Kontext [max]</option>
+              <option value="sdxl">SDXL</option>
+            </select>
 
-        <label>Modello</label>
-        <select [(ngModel)]="model">
-          <option value="flux">FLUX.1 Kontext [max]</option>
-          <option value="sdxl">SDXL</option>
-        </select>
+            <label>Proporzioni</label>
+            <select [(ngModel)]="ratio">
+              <option value="1:1">Quadrato (1:1)</option>
+              <option value="4:3">Orizzontale (4:3)</option>
+              <option value="9:16">Verticale (9:16)</option>
+            </select>
+          </div>
+        </div>
 
-        <label>Proporzioni</label>
-        <select [(ngModel)]="ratio">
-          <option value="1:1">Quadrato (1:1)</option>
-          <option value="4:3">Orizzontale (4:3)</option>
-          <option value="9:16">Verticale (9:16)</option>
-        </select>
-
-        <div class="upload-box">
-          <p>Immagini di riferimento (0/4)</p>
-          <div class="upload-placeholder">+</div>
+        <!-- Immagini di riferimento -->
+        <div class="section">
+          <div class="section-header" (click)="toggleSection('refs')">
+            <span>Immagini di riferimento ({{ referenceImages.length }}/4)</span>
+            <span class="arrow">{{ openSections.refs ? '▲' : '▼' }}</span>
+          </div>
+          <div class="section-body" *ngIf="openSections.refs">
+            <div class="upload-box" (click)="addReferenceImage()">
+              <div class="upload-placeholder">+</div>
+            </div>
+          </div>
         </div>
       </aside>
 
@@ -62,47 +77,70 @@ import { FormsModule } from '@angular/forms';
     </div>
   `,
   styles: [`
+
+    :host {
+      display: block;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
     .generate-shell {
       display: grid;
       grid-template-columns: 280px 1fr;
       height: 100%;
       gap: 1rem;
+      padding: 1rem;
     }
 
     /* SIDEBAR */
     .sidebar {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      background: #fff;
       border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
-    .sidebar h3 {
-      font-size: 0.9rem;
+    .section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
       font-weight: 600;
+      cursor: pointer;
+      font-size: 0.875rem;
     }
 
-    .sidebar label {
+    .section-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .section-body label {
       font-size: 0.75rem;
       color: #6b7280;
     }
 
-    .sidebar select {
+    .section-body select {
       padding: 0.4rem;
       border-radius: 6px;
       border: 1px solid #e5e7eb;
     }
 
     .upload-box {
-      margin-top: 1rem;
-      font-size: 0.75rem;
+      margin-top: 0.5rem;
     }
 
     .upload-placeholder {
-      margin-top: 0.5rem;
       border: 2px dashed #d1d5db;
       height: 80px;
       border-radius: 8px;
@@ -111,6 +149,7 @@ import { FormsModule } from '@angular/forms';
       justify-content: center;
       font-size: 1.5rem;
       color: #9ca3af;
+      cursor: pointer;
     }
 
     /* MAIN */
@@ -142,7 +181,6 @@ import { FormsModule } from '@angular/forms';
       font-size: 0.9rem;
     }
 
-    /* PROMPT */
     .prompt-box {
       border: 1px solid #e5e7eb;
       border-radius: 12px;
@@ -195,6 +233,7 @@ import { FormsModule } from '@angular/forms';
         order: 2;
       }
     }
+
   `]
 })
 export class GenerateComponent {
@@ -204,12 +243,28 @@ export class GenerateComponent {
   image: string | null = null;
   loading = false;
 
+  referenceImages: string[] = [];
+  openSections = {
+    general: true,
+    refs: true
+  };
+
+  toggleSection(section: 'general' | 'refs') {
+    this.openSections[section] = !this.openSections[section];
+  }
+
+  addReferenceImage() {
+    if (this.referenceImages.length < 4) {
+      this.referenceImages.push('dummy.png');
+    }
+  }
+
   generate() {
     if (!this.prompt.trim()) return;
 
     this.loading = true;
 
-    // MOCK (poi colleghi API)
+    // MOCK API call
     setTimeout(() => {
       this.image = 'https://picsum.photos/600';
       this.loading = false;
