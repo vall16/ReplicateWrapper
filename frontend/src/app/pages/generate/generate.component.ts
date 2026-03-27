@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-generate',
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
           <div class="section-body" *ngIf="openSections.general">
             <label>Modello</label>
             <select [(ngModel)]="model">
-              <option value="flux">FLUX.1 Kontext [max]</option>
+              <option value="flux-pro">FLUX.1 Pro</option>
+              <option value="flux-dev">FLUX.1 Dev</option>
               <option value="sdxl">SDXL</option>
             </select>
 
@@ -70,6 +72,9 @@ import { FormsModule } from '@angular/forms';
             <button (click)="generate()" [disabled]="loading">
               {{ loading ? 'Generazione...' : 'Genera' }}
             </button>
+            <div *ngIf="error" style="color: #ef4444; font-size: 0.8rem; margin-top: 6px;">
+              {{ error }}
+            </div>
           </div>
         </div>
 
@@ -257,6 +262,8 @@ export class GenerateComponent {
   model = 'flux';
   ratio = '1:1';
   image: string | null = null;
+  error: string | null = null;
+
   loading = false;
 
   referenceImages: string[] = [];
@@ -264,6 +271,11 @@ export class GenerateComponent {
     general: true,
     refs: true
   };
+
+  constructor(
+      private authService: AuthService,
+      // private router: Router
+    ) {}
 
   toggleSection(section: 'general' | 'refs') {
     this.openSections[section] = !this.openSections[section];
@@ -279,11 +291,56 @@ export class GenerateComponent {
     if (!this.prompt.trim()) return;
 
     this.loading = true;
+    this.image = null;
+    this.error = null;
 
-    // MOCK API call
-    setTimeout(() => {
-      this.image = 'https://picsum.photos/600';
-      this.loading = false;
-    }, 1500);
+    const styleMap: any = {
+    "flux-pro": "ultra realistic",
+    "flux-dev": "realistic",
+    "sdxl": "digital art"
+  };
+
+  const style = styleMap[this.model] || "moderno";
+  const finalPrompt = this.buildPrompt();
+
+
+  this.authService.generateImage(finalPrompt, style).subscribe(
+
+      (res: any) => {
+        this.loading = false;
+
+        if (res.error) {
+          this.error = res.error;
+        } else if (res.image_url) {
+          this.image = res.image_url;
+        } else {
+          this.error = "Errore sconosciuto dal server.";
+        }
+      },
+      (err: any) => {
+        console.error('Errore generazione immagine', err);
+        this.loading = false;
+        this.error = "Errore di rete o server non raggiungibile.";
+      }
+    );
+  }
+
+
+  buildPrompt(): string {
+    let finalPrompt = this.prompt;
+
+    // mapping ratio → descrizione utile per AI
+    const ratioMap: any = {
+      "1:1": "square composition",
+      "4:3": "landscape composition",
+      "9:16": "vertical composition"
+    };
+
+    finalPrompt += `, ${ratioMap[this.ratio] || ''}`;
+
+    // qualità base
+    finalPrompt += ", high quality, detailed";
+
+    return finalPrompt;
   }
 }

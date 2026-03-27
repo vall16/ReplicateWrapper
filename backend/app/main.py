@@ -16,6 +16,8 @@ from app.auth_routes import get_current_user
 from app.database import get_db
 from app.replicate_wrapper import ReplicateWrapper
 from fastapi.responses import JSONResponse
+from app.model_mapper import map_model
+
 
 
 load_dotenv()
