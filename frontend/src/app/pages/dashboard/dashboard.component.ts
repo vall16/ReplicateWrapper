@@ -231,7 +231,7 @@ import { FormsModule } from '@angular/forms';
           </div>
         </section>
 
-        <section class="t2i-row">
+        <!-- <section class="t2i-row">
           <div class="glass-card t2i-card">
             <div class="card-header">
               <div>
@@ -249,8 +249,8 @@ import { FormsModule } from '@angular/forms';
               ></textarea>
 
               <div class="t2i-options">
-                <!-- eventualmente opzioni aggiuntive -->
-                <label>
+                <!eventualmente opzioni aggiuntive -->
+                <!-- <label>
                   Stile:
                   <select [(ngModel)]="t2iStyle">
                     <option value="photorealistic">Photorealistic</option>
@@ -281,7 +281,7 @@ import { FormsModule } from '@angular/forms';
               </div>
             </div>
           </div>
-        </section>
+        </section>  -->
       </main>
     </div>
   `,

@@ -19,7 +19,7 @@ import { AuthService } from '../../services/auth.service';
             <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span>
           </div>
           <div class="section-body" *ngIf="openSections.general">
-            <label>Modello</label>
+            <label>Modello Replicate</label>
             <select [(ngModel)]="model">
               <option value="flux-pro">FLUX.1 Pro</option>
               <option value="flux-dev">FLUX.1 Dev</option>
