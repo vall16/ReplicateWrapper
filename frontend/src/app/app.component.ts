@@ -27,7 +27,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
             <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
             <a routerLink="/store" routerLinkActive="active">Store</a>
           </nav>
-          <button class="primary-cta" type="button">
+          <button class="primary-cta" type="button" routerLink="/generate"> 
             Avvia generazione
           </button>
         </div>

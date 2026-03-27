@@ -119,20 +119,20 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
     
     try:
         output = await replicate_wrapper.run_model(
-            "black-forest-labs/flux-2-pro",
+            "google/imagen-4",
+
             input_params={
                 "prompt": prompt,
-                "resolution": "1 MP",
-                "aspect_ratio": "1:1",
-                "input_images": [],
-                "output_format": "webp",
-                "output_quality": 80,
-                "safety_tolerance": 2
+                "image_size": "1K",
+                "aspect_ratio": "16:9",
+                "output_format": "jpg",
+                "safety_filter_level": "block_medium_and_above"
             },
             user_id=user.id,
             db=db
         )
-
+        
+    
         # 🔥 DEBUG (tienilo finché non funziona)
         print("OUTPUT RAW:", output)
 
