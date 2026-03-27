@@ -24,6 +24,7 @@ for i in range(10):  # prova 10 volte
         print("DB pronto!")
         break
     except Exception as e:
+        print("ERRORE DB:", str(e))
         print("DB non pronto, retry in 3s...")
         time.sleep(3)
 else:
