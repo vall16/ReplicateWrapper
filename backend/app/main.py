@@ -62,6 +62,8 @@ STYLE_MAP = {
 class ImageRequest(BaseModel):
     description: str
     style: str = "moderno"
+    model: str = "stability-ai/sdxl:latest"  # default
+
 
 
 def build_prompt(description: str, style: str):
@@ -115,13 +117,26 @@ if not replicate_token:
 replicate_wrapper = ReplicateWrapper(api_token=replicate_token)
 SDXL_VERSION ="7762fd07"
 
+MODEL_MAP = {
+    "sdxl": "stability-ai/sdxl:7762fd07",
+    "flux-pro": "black-forest-labs/flux-2-pro",
+    "flux-dev": "black-forest-labs/flux-2-dev"
+}
+
+
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style)
+
+    # fallback se model non passato
+    model_to_use = req.model or "stability-ai/sdxl:latest"
+    # seleziona modello completo
+    model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
+
     
     try:
         output = await replicate_wrapper.run_model(
-            "google/imagen-4",
+            model_version,   # modello dinamico
 
             input_params={
                 "prompt": prompt,
@@ -129,6 +144,8 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
                 "aspect_ratio": "16:9",
                 "output_format": "jpg",
                 "safety_filter_level": "block_medium_and_above"
+
+
             },
             user_id=user.id,
             db=db

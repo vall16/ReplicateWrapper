@@ -191,21 +191,44 @@ export class AuthService {
   }
 
   // Generazione immagine (con token)
-generateImage(description: string, style: string = 'moderno'): Observable<any> {
+// generateImage(description: string, style: string = 'moderno'): Observable<any> {
+//     const token = this.getToken();
+
+//     const headers = new HttpHeaders({
+//       'Authorization': `Bearer ${token}`
+//     });
+
+//     return this.http.post<any>(
+//       `${this.apiUrl}/generate-paid`,
+//       {
+//         description,
+//         style
+//       },
+//       { headers }
+//     );
+//   }
+// }
+
+  generateImage(
+    description: string, 
+    style: string = 'moderno', 
+    model: string = 'stability-ai/sdxl:latest'
+  ): Observable<any> {
     const token = this.getToken();
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
 
     return this.http.post<any>(
       `${this.apiUrl}/generate-paid`,
       {
         description,
-        style
+        style,
+        model   // <-- nuovo parametro inviato al backend
       },
       { headers }
     );
   }
 }
-

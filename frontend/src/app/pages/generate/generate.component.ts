@@ -287,14 +287,52 @@ export class GenerateComponent {
     }
   }
 
+  // generate() {
+  //   if (!this.prompt.trim()) return;
+
+  //   this.loading = true;
+  //   this.image = null;
+  //   this.error = null;
+
+  //   const styleMap: any = {
+  //   "flux-pro": "ultra realistic",
+  //   "flux-dev": "realistic",
+  //   "sdxl": "digital art"
+  // };
+
+  // const style = styleMap[this.model] || "moderno";
+  // const finalPrompt = this.buildPrompt();
+
+
+  // this.authService.generateImage(finalPrompt, style).subscribe(
+
+  //     (res: any) => {
+  //       this.loading = false;
+
+  //       if (res.error) {
+  //         this.error = res.error;
+  //       } else if (res.image_url) {
+  //         this.image = res.image_url;
+  //       } else {
+  //         this.error = "Errore sconosciuto dal server.";
+  //       }
+  //     },
+  //     (err: any) => {
+  //       console.error('Errore generazione immagine', err);
+  //       this.loading = false;
+  //       this.error = "Errore di rete o server non raggiungibile.";
+  //     }
+  //   );
+  // }
+
   generate() {
-    if (!this.prompt.trim()) return;
+  if (!this.prompt.trim()) return;
 
-    this.loading = true;
-    this.image = null;
-    this.error = null;
+  this.loading = true;
+  this.image = null;
+  this.error = null;
 
-    const styleMap: any = {
+  const styleMap: any = {
     "flux-pro": "ultra realistic",
     "flux-dev": "realistic",
     "sdxl": "digital art"
@@ -303,27 +341,26 @@ export class GenerateComponent {
   const style = styleMap[this.model] || "moderno";
   const finalPrompt = this.buildPrompt();
 
+  this.authService.generateImage(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
 
-  this.authService.generateImage(finalPrompt, style).subscribe(
+    (res: any) => {
+      this.loading = false;
 
-      (res: any) => {
-        this.loading = false;
-
-        if (res.error) {
-          this.error = res.error;
-        } else if (res.image_url) {
-          this.image = res.image_url;
-        } else {
-          this.error = "Errore sconosciuto dal server.";
-        }
-      },
-      (err: any) => {
-        console.error('Errore generazione immagine', err);
-        this.loading = false;
-        this.error = "Errore di rete o server non raggiungibile.";
+      if (res.error) {
+        this.error = res.error;
+      } else if (res.image_url) {
+        this.image = res.image_url;
+      } else {
+        this.error = "Errore sconosciuto dal server.";
       }
-    );
-  }
+    },
+    (err: any) => {
+      console.error('Errore generazione immagine', err);
+      this.loading = false;
+      this.error = "Errore di rete o server non raggiungibile.";
+    }
+  );
+}
 
 
   buildPrompt(): string {
