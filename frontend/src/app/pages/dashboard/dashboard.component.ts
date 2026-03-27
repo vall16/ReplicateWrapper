@@ -1017,8 +1017,38 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  
+
   generateImage() {
+    if (!this.t2iPrompt.trim()) return;
+
+    this.t2iLoading = true;
+    this.t2iResult = null;
+    this.t2iError = null;
+
+    this.authService.generateImage(this.t2iPrompt).subscribe(
+      (res: any) => {
+        this.t2iLoading = false;
+
+        if (res.error) {
+          // Mostra l’errore sotto la textarea
+          this.t2iError = res.error;
+        } else if (res.image_url) {
+          // Mostra l’immagine se tutto ok
+          this.t2iResult = res.image_url;
+        } else {
+          // Caso imprevisto
+          this.t2iError = "Errore sconosciuto dal server.";
+        }
+      },
+      (err: any) => {
+        console.error('Errore generazione immagine', err);
+        this.t2iLoading = false;
+        this.t2iError = "Errore di rete o server non raggiungibile.";
+      }
+    );
+  }
+  
+  generateImage_old() {
     if (!this.t2iPrompt.trim()) return;
 
     this.t2iLoading = true;

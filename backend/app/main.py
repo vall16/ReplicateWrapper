@@ -15,6 +15,7 @@ from app.token_routes import router as token_router
 from app.auth_routes import get_current_user 
 from app.database import get_db
 from app.replicate_wrapper import ReplicateWrapper
+from fastapi.responses import JSONResponse
 
 
 load_dotenv()
@@ -116,38 +117,34 @@ SDXL_VERSION ="7762fd07"
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style)
     
-    output = await replicate_wrapper.run_model(
-        "black-forest-labs/flux-2-pro",
-        input_params={
-            "prompt": prompt,
-            "resolution": "1 MP",
-            "aspect_ratio": "1:1",
-            "input_images": [],
-            "output_format": "webp",
-            "output_quality": 80,
-            "safety_tolerance": 2
-        },
-        user_id=user.id,
-        db=db
-    )
+    try:
+        output = await replicate_wrapper.run_model(
+            "black-forest-labs/flux-2-pro",
+            input_params={
+                "prompt": prompt,
+                "resolution": "1 MP",
+                "aspect_ratio": "1:1",
+                "input_images": [],
+                "output_format": "webp",
+                "output_quality": 80,
+                "safety_tolerance": 2
+            },
+            user_id=user.id,
+            db=db
+        )
 
-    # 🔥 DEBUG (tienilo finché non funziona)
-    print("OUTPUT RAW:", output)
+        # 🔥 DEBUG (tienilo finché non funziona)
+        print("OUTPUT RAW:", output)
 
-    # Estrazione URL dall'output
-    image_url = None
-    if isinstance(output, list) and len(output) > 0:
-        first = output[0]
-        if isinstance(first, str):
-            image_url = first
-        elif isinstance(first, dict):
-            image_url = first.get("url") or first.get("uri")
-
-    if not image_url:
-        raise HTTPException(500, "Impossibile ottenere URL immagine")
-
-
-    return image_url
+        # Estrazione URL dall'output
+        image_url = output
+        
+    except Exception as e:
+        # cattura l’errore e ritornalo a frontend
+        return JSONResponse(
+            status_code=200,  # 200 così Angular riceve la risposta e può mostrare l'errore
+            content={"error": str(e)}
+        )
 
 
 @app.get("/")
