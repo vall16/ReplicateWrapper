@@ -86,19 +86,27 @@ import { FormsModule } from '@angular/forms';
       font-family: 'Inter', sans-serif;
     }
 
+    
+
     .generate-shell {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 280px 1fr; /* puoi anche ridurre la sidebar, es. 240px */
       height: 100%;
+      width: 100%;
       gap: 1rem;
-      padding: 1rem;
+      padding: 0.5rem; /* meno spazio a sinistra/destra */
+      max-width: 100vw;   /* non oltre la larghezza finestra */
+
     }
 
     /* SIDEBAR */
     .sidebar {
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      /* bordo più marcato e ombra più profonda */
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
       padding: 1rem;
       display: flex;
       flex-direction: column;
@@ -162,12 +170,18 @@ import { FormsModule } from '@angular/forms';
     .preview-box {
       flex: 1;
       border-radius: 12px;
-      border: 1px solid #e5e7eb;
+      /* bordo più marcato e ombra più profonda */
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
       background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+
+      width: 80%;         /* Riduce la larghezza al 80% */
+      margin-right: auto;  
     }
 
     .preview-box img {
@@ -186,6 +200,8 @@ import { FormsModule } from '@angular/forms';
       border-radius: 12px;
       padding: 0.6rem;
       background: #ffffff;
+      width: 80%;         /* Riduce la larghezza al 80% */
+      margin-right: auto;  
     }
 
     textarea {
