@@ -209,10 +209,15 @@ export class AuthService {
 //   }
 // }
 
+  // Carica i modelli disponibili
+  getAvailableModels(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/models`);
+  }
+
 // CLICK DI GENERAZIONE
   generateImage(
-    description: string, 
-    style: string = 'moderno', 
+    description: string,
+    style: string = 'moderno',
     model: string = 'stability-ai/sdxl:latest'
   ): Observable<any> {
     const token = this.getToken();

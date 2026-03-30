@@ -120,7 +120,8 @@ SDXL_VERSION ="7762fd07"
 MODEL_MAP = {
     "sdxl": "stability-ai/sdxl:7762fd07",
     "flux-pro": "black-forest-labs/flux-2-pro",
-    "flux-dev": "black-forest-labs/flux-2-dev"
+    "flux-dev": "black-forest-labs/flux-2-dev",
+    "flux-schnell": "black-forest-labs/flux-schnell"
 }
 
 # GENERAZIONE DELL'IMMAGINE
@@ -182,6 +183,18 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+@app.get("/api/models")
+async def get_available_models():
+    """Ritorna la lista di modelli disponibili"""
+    return {
+        "models": [
+            {"id": "flux-pro", "name": "FLUX.1 Pro", "description": "Modello ad alta qualità"},
+            {"id": "flux-dev", "name": "FLUX.1 Dev", "description": "Modello veloce e versatile"},
+            {"id": "sdxl", "name": "SDXL", "description": "Modello stabile e affidabile"},
+            {"id": "flux-schnell", "name": "FLUX Schnell", "description": "Generazione ultrarapida"}
+        ]
+    }
 
 
 # Endpoint Stripe Payment Intent

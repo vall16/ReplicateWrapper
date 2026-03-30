@@ -21,11 +21,12 @@ import { Router } from '@angular/router';
           </div>
           <div class="section-body" *ngIf="openSections.general">
             <label>Modello Replicate</label>
-            <select [(ngModel)]="model">
-              <option value="flux-pro">FLUX.1 Pro</option>
-              <option value="flux-dev">FLUX.1 Dev</option>
-              <option value="sdxl">SDXL</option>
+            <select [(ngModel)]="model" [disabled]="loadingModels">
+              <option *ngFor="let m of availableModels" [value]="m.id">
+                {{ m.name }}
+              </option>
             </select>
+            <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
 
             <label>Proporzioni</label>
             <select [(ngModel)]="ratio">
@@ -260,14 +261,16 @@ import { Router } from '@angular/router';
 })
 export class GenerateComponent {
   prompt = '';
-  model = 'flux';
+  model = 'flux-pro';
   ratio = '1:1';
   image: string | null = null;
   error: string | null = null;
 
   loading = false;
+  loadingModels = true;
 
   referenceImages: string[] = [];
+  availableModels: any[] = [];
   openSections = {
     general: true,
     refs: true
@@ -284,6 +287,28 @@ export class GenerateComponent {
       this.router.navigate(['/login']);
       return;
     }
+
+    // Carica i modelli disponibili
+    this.authService.getAvailableModels().subscribe(
+      (response: any) => {
+        this.availableModels = response.models || [];
+        this.loadingModels = false;
+        // Imposta il primo modello come default se disponibile
+        if (this.availableModels.length > 0) {
+          this.model = this.availableModels[0].id;
+        }
+      },
+      (error: any) => {
+        console.error('Errore nel caricamento dei modelli', error);
+        this.loadingModels = false;
+        // Fallback ai modelli di default
+        this.availableModels = [
+          { id: 'flux-pro', name: 'FLUX.1 Pro', description: 'Modello ad alta qualità' },
+          { id: 'flux-dev', name: 'FLUX.1 Dev', description: 'Modello veloce e versatile' },
+          { id: 'sdxl', name: 'SDXL', description: 'Modello stabile e affidabile' }
+        ];
+      }
+    );
   }
 
   toggleSection(section: 'general' | 'refs') {
