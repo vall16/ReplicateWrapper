@@ -1048,24 +1048,24 @@ export class DashboardComponent implements OnInit {
     );
   }
   
-  generateImage_old() {
-    if (!this.t2iPrompt.trim()) return;
+  // generateImage_old() {
+  //   if (!this.t2iPrompt.trim()) return;
 
-    this.t2iLoading = true;
-    this.t2iResult = null;
-    this.t2iError = null;
+  //   this.t2iLoading = true;
+  //   this.t2iResult = null;
+  //   this.t2iError = null;
 
-    this.authService.generateImage(this.t2iPrompt).subscribe(
-      (res: any) => {
-        this.t2iResult = res.image_url; // backend deve restituire { image_url: string }
-        this.t2iLoading = false;
-      },
-      (err: any) => {
-        console.error('Errore generazione immagine', err);
-        this.t2iLoading = false;
-      }
-    );
-  }
+  //   this.authService.generateImage(this.t2iPrompt).subscribe(
+  //     (res: any) => {
+  //       this.t2iResult = res.image_url; // backend deve restituire { image_url: string }
+  //       this.t2iLoading = false;
+  //     },
+  //     (err: any) => {
+  //       console.error('Errore generazione immagine', err);
+  //       this.t2iLoading = false;
+  //     }
+  //   );
+  // }
   // ciao...
   calculateStats() {
     this.totalConsumed = 0;

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate',
@@ -274,8 +275,16 @@ export class GenerateComponent {
 
   constructor(
       private authService: AuthService,
-      // private router: Router
+      private router: Router
     ) {}
+
+    ngOnInit() {
+    // Controllo login all'inizio
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  }
 
   toggleSection(section: 'general' | 'refs') {
     this.openSections[section] = !this.openSections[section];

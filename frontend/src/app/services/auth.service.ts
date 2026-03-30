@@ -209,6 +209,7 @@ export class AuthService {
 //   }
 // }
 
+// CLICK DI GENERAZIONE
   generateImage(
     description: string, 
     style: string = 'moderno', 

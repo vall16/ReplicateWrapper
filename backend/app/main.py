@@ -123,7 +123,7 @@ MODEL_MAP = {
     "flux-dev": "black-forest-labs/flux-2-dev"
 }
 
-
+# GENERAZIONE DELL'IMMAGINE
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style)
