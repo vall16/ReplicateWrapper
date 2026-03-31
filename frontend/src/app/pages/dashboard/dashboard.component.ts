@@ -231,57 +231,6 @@ import { FormsModule } from '@angular/forms';
           </div>
         </section>
 
-        <!-- <section class="t2i-row">
-          <div class="glass-card t2i-card">
-            <div class="card-header">
-              <div>
-                <h2>Generazione Immagine AI</h2>
-                <p class="card-subtitle">Inserisci un prompt dettagliato e genera un’immagine con i tuoi token</p>
-              </div>
-            </div>
-
-            <div class="t2i-body">
-              <textarea
-                [(ngModel)]="t2iPrompt"
-                placeholder="Descrivi la scena, lo stile, l’atmosfera..."
-                rows="5"
-                class="t2i-input"
-              ></textarea>
-
-              <div class="t2i-options">
-                <!eventualmente opzioni aggiuntive -->
-                <!-- <label>
-                  Stile:
-                  <select [(ngModel)]="t2iStyle">
-                    <option value="photorealistic">Photorealistic</option>
-                    <option value="digital-art">Digital Art</option>
-                    <option value="anime">Anime</option>
-                    <option value="sketch">Sketch</option>
-                  </select>
-                </label>
-                <label>
-                  Risoluzione:
-                  <select [(ngModel)]="t2iResolution">
-                    <option value="1MP">1MP</option>
-                    <option value="2MP">2MP</option>
-                    <option value="4MP">4MP</option>
-                  </select>
-                </label>
-              </div>
-
-              <button class="btn-primary" (click)="generateImage()" [disabled]="t2iLoading || !t2iPrompt.trim()">
-                {{ t2iLoading ? 'Generazione...' : 'Genera Immagine' }}
-              </button>
-
-              <div *ngIf="t2iError" class="t2i-error">{{ t2iError }}</div>
-
-              <div *ngIf="t2iResult" class="t2i-result">
-                <h3>Risultato:</h3>
-                <img [src]="t2iResult" alt="Generated Image" class="t2i-image" />
-              </div>
-            </div>
-          </div>
-        </section>  -->
       </main>
     </div>
   `,
@@ -1018,54 +967,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  generateImage() {
-    if (!this.t2iPrompt.trim()) return;
-
-    this.t2iLoading = true;
-    this.t2iResult = null;
-    this.t2iError = null;
-
-    this.authService.generateImage(this.t2iPrompt).subscribe(
-      (res: any) => {
-        this.t2iLoading = false;
-
-        if (res.error) {
-          // Mostra l’errore sotto la textarea
-          this.t2iError = res.error;
-        } else if (res.image_url) {
-          // Mostra l’immagine se tutto ok
-          this.t2iResult = res.image_url;
-        } else {
-          // Caso imprevisto
-          this.t2iError = "Errore sconosciuto dal server.";
-        }
-      },
-      (err: any) => {
-        console.error('Errore generazione immagine', err);
-        this.t2iLoading = false;
-        this.t2iError = "Errore di rete o server non raggiungibile.";
-      }
-    );
-  }
   
-  // generateImage_old() {
-  //   if (!this.t2iPrompt.trim()) return;
-
-  //   this.t2iLoading = true;
-  //   this.t2iResult = null;
-  //   this.t2iError = null;
-
-  //   this.authService.generateImage(this.t2iPrompt).subscribe(
-  //     (res: any) => {
-  //       this.t2iResult = res.image_url; // backend deve restituire { image_url: string }
-  //       this.t2iLoading = false;
-  //     },
-  //     (err: any) => {
-  //       console.error('Errore generazione immagine', err);
-  //       this.t2iLoading = false;
-  //     }
-  //   );
-  // }
   // ciao...
   calculateStats() {
     this.totalConsumed = 0;

@@ -2,8 +2,12 @@ from http.client import HTTPException
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 import os
+import uuid
+import httpx
+from pathlib import Path
 
 from fastapi.params import Depends
 from pydantic import BaseModel
@@ -12,8 +16,8 @@ import stripe
 import replicate
 from app.auth_routes import router as auth_router
 from app.token_routes import router as token_router
-from app.auth_routes import get_current_user 
-from app.database import get_db
+from app.auth_routes import get_current_user
+from app.database import get_db, GeneratedImage
 from app.replicate_wrapper import ReplicateWrapper
 from fastapi.responses import JSONResponse
 from app.model_mapper import map_model
@@ -23,6 +27,10 @@ from app.model_mapper import map_model
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
+
+# --- SETUP UPLOADS FOLDER ---
+UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
+UPLOADS_DIR.mkdir(exist_ok=True)
 
 # --- GESTIONE CORS DA ENV ---
 # Leggiamo la stringa dal .env, se non esiste usiamo una lista vuota come fallback
@@ -35,6 +43,9 @@ app = FastAPI(
     description="Wrapper API per Replicate.ai con sistema token",
     version="0.1.0"
 )
+
+# Mount uploads folder
+app.mount("/images", StaticFiles(directory=UPLOADS_DIR), name="images")
 
 app.add_middleware(
     CORSMiddleware,
@@ -94,21 +105,7 @@ def generate_image(req: ImageRequest):
         "prompt": prompt,
         "image_url": output[0]
     }
-# @app.post("/api/generate-paid")
-# def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
-#     prompt = build_prompt(req.description, req.style)
-#     output = replicate_wrapper.run_model(
-#         "stability-ai/sdxl:latest",
-#         input_params={
-#             "prompt": prompt,
-#             "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
-#             "width": 1024,
-#             "height": 768
-#         },
-#         user_id=user.id,
-#         db=db
-#     )
-#     return {"prompt": prompt, "image_url": output[0]}
+
 replicate_token = os.getenv("REPLICATE_API_TOKEN")
 if not replicate_token:
     raise Exception("REPLICATE_API_TOKEN non trovato nel .env!")
@@ -124,7 +121,34 @@ MODEL_MAP = {
     "flux-schnell": "black-forest-labs/flux-schnell"
 }
 
-# GENERAZIONE DELL'IMMAGINE
+async def download_and_save_image(image_url: str) -> str:
+    """
+    Scarica un'immagine da un URL e la salva su disco.
+
+    Returns:
+        Percorso relativo: /images/abc123.png
+    """
+    try:
+        # Genera un nome univoco
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{unique_id}.png"
+        filepath = UPLOADS_DIR / filename
+
+        # Scarica l'immagine
+        async with httpx.AsyncClient(follow_redirects=True) as client:
+            response = await client.get(image_url, timeout=30.0)
+            response.raise_for_status()
+
+        # Salva su disco
+        with open(filepath, "wb") as f:
+            f.write(response.content)
+
+        return f"/images/{filename}"
+    except Exception as e:
+        print(f"Errore nel download dell'immagine: {e}")
+        raise Exception(f"Errore nel salvataggio dell'immagine: {str(e)}")
+
+# GENERAZIONE DELL’IMMAGINE
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style)
@@ -134,7 +158,7 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
     # seleziona modello completo
     model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
-    
+
     try:
         output = await replicate_wrapper.run_model(
             model_version,   # modello dinamico
@@ -151,22 +175,96 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
             user_id=user.id,
             db=db
         )
-        
-    
+
+
         # 🔥 DEBUG (tienilo finché non funziona)
         print("OUTPUT RAW:", output)
 
-        # Estrazione URL dall'output
-        image_url = output
-        
+        # Estrazione URL dall’output (potrebbe essere stringa o lista)
+        if isinstance(output, list):
+            image_url_remote = output[0]
+        else:
+            image_url_remote = output
+
+        # Scarica e salva l’immagine su disco
+        local_image_url = await download_and_save_image(image_url_remote)
+
+        # Salva i metadata nel DB
+        generated_image = GeneratedImage(
+            user_id=user.id,
+            prompt=req.description,
+            model=req.model,
+            style=req.style,
+            image_url=local_image_url,
+            tokens_used=1
+        )
+        db.add(generated_image)
+        db.commit()
+        db.refresh(generated_image)
+
+        return {
+            "image_url": local_image_url,
+            "id": generated_image.id
+        }
+
+
     except Exception as e:
         # cattura l’errore e ritornalo a frontend
         return JSONResponse(
-            status_code=200,  # 200 così Angular riceve la risposta e può mostrare l'errore
+            status_code=200,  # 200 così Angular riceve la risposta e può mostrare l’errore
             content={"error": str(e)}
         )
 
 
+import random
+
+FAKE_IMAGES = [
+    "https://picsum.photos/1024/768?random=1",
+    "https://picsum.photos/1024/768?random=2",
+    "https://picsum.photos/1024/768?random=3",
+    "https://picsum.photos/1024/768?random=4",
+    "https://picsum.photos/1024/768?random=5",
+]
+
+@app.post("/api/generate-paid2")
+async def generate_image_paid_fake(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
+    prompt = build_prompt(req.description, req.style)
+
+    try:
+        # Scegli un'immagine fake random
+        image_url_remote = random.choice(FAKE_IMAGES)
+        print(f"[FAKE GENERATE] Remote URL scelto: {image_url_remote}")
+
+
+        # Scarica e salva l’immagine su disc
+        local_image_url = await download_and_save_image(image_url_remote)
+        print(f"[FAKE GENERATE] Local URL salvato: {local_image_url}")
+
+
+        # Salva i metadata nel DB
+        generated_image = GeneratedImage(
+            user_id=user.id,
+            prompt=req.description,
+            model=req.model,
+            style=req.style,
+            image_url=local_image_url,
+            tokens_used=0  # 0 perché non ha consumato token reali
+        )
+        db.add(generated_image)
+        db.commit()
+        db.refresh(generated_image)
+
+        return {
+            "image_url": local_image_url,
+            "id": generated_image.id,
+            "fake": True
+        }
+
+    except Exception as e:
+        return JSONResponse(
+            status_code=200,
+            content={"error": str(e)}
+        )
 @app.get("/")
 async def root():
     return {

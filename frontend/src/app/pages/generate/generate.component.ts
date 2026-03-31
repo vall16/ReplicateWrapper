@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environments';
 
 @Component({
   selector: 'app-generate',
@@ -321,80 +322,47 @@ export class GenerateComponent {
     }
   }
 
-  // generate() {
-  //   if (!this.prompt.trim()) return;
-
-  //   this.loading = true;
-  //   this.image = null;
-  //   this.error = null;
-
-  //   const styleMap: any = {
-  //   "flux-pro": "ultra realistic",
-  //   "flux-dev": "realistic",
-  //   "sdxl": "digital art"
-  // };
-
-  // const style = styleMap[this.model] || "moderno";
-  // const finalPrompt = this.buildPrompt();
-
-
-  // this.authService.generateImage(finalPrompt, style).subscribe(
-
-  //     (res: any) => {
-  //       this.loading = false;
-
-  //       if (res.error) {
-  //         this.error = res.error;
-  //       } else if (res.image_url) {
-  //         this.image = res.image_url;
-  //       } else {
-  //         this.error = "Errore sconosciuto dal server.";
-  //       }
-  //     },
-  //     (err: any) => {
-  //       console.error('Errore generazione immagine', err);
-  //       this.loading = false;
-  //       this.error = "Errore di rete o server non raggiungibile.";
-  //     }
-  //   );
-  // }
 
   generate() {
-  if (!this.prompt.trim()) return;
+    if (!this.prompt.trim()) return;
 
-  this.loading = true;
-  this.image = null;
-  this.error = null;
+    this.loading = true;
+    this.image = null;
+    this.error = null;
 
-  const styleMap: any = {
-    "flux-pro": "ultra realistic",
-    "flux-dev": "realistic",
-    "sdxl": "digital art"
-  };
+    const styleMap: any = {
+      "flux-pro": "ultra realistic",
+      "flux-dev": "realistic",
+      "sdxl": "digital art",
+      "flux-schnell": "clean, modern, slightly stylized"
+    };
 
-  const style = styleMap[this.model] || "moderno";
-  const finalPrompt = this.buildPrompt();
+    const style = styleMap[this.model] || "moderno";
+    const finalPrompt = this.buildPrompt();
 
-  this.authService.generateImage(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
+    this.authService.generateImage2(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
 
-    (res: any) => {
-      this.loading = false;
+      (res: any) => {
+        this.loading = false;
 
-      if (res.error) {
-        this.error = res.error;
-      } else if (res.image_url) {
-        this.image = res.image_url;
-      } else {
-        this.error = "Errore sconosciuto dal server.";
+        console.log('RISPOSTA BACKEND:', res);            // 👈 TUTTO
+        console.log('IMAGE URL:', res?.image_url);        
+
+        if (res.error) {
+          this.error = res.error;  
+        } else if (res.image_url) {
+          this.image = environment.apiBaseUrl + res.image_url;;
+        } else {
+          this.error = "Errore sconosciuto dal server.";
+        }
+      },
+      (err: any) => {
+        console.error('Errore generazione immagine', err);
+        this.loading = false;
+        this.error = "Errore di rete o server non raggiungibile.";
       }
-    },
-    (err: any) => {
-      console.error('Errore generazione immagine', err);
-      this.loading = false;
-      this.error = "Errore di rete o server non raggiungibile.";
-    }
-  );
-}
+    );
+  }
 
 
   buildPrompt(): string {
