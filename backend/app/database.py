@@ -81,6 +81,25 @@ class TokenTransaction(Base):
 
     user = relationship("User", back_populates="transactions")
 
+class GeneratedImage(Base):
+    __tablename__ = "generated_images"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    prompt = Column(String(500))
+    model = Column(String(100))
+    style = Column(String(100))
+
+    image_url = Column(String(500))
+
+    tokens_used = Column(Float, default=0.0)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # relazione opzionale
+    user = relationship("User")
+
 
 # Create tables
 Base.metadata.create_all(bind=engine)

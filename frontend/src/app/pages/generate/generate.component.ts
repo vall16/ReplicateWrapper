@@ -190,6 +190,11 @@ import { environment } from '../../../environments/environments';
 
       width: 80%;         /* Riduce la larghezza al 80% */
       margin-right: auto;  
+
+
+      height: 100%;
+      max-height: 70vh;
+
     }
 
     .preview-box img {
