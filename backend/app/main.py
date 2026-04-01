@@ -1,4 +1,5 @@
 from http.client import HTTPException
+from typing import Optional
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -292,6 +293,46 @@ async def get_available_models():
             {"id": "sdxl", "name": "SDXL", "description": "Modello stabile e affidabile"},
             {"id": "flux-schnell", "name": "FLUX Schnell", "description": "Generazione ultrarapida"}
         ]
+    }
+
+
+@app.get("/api/generated-images")
+def get_generated_images(
+    style: Optional[str] = None,
+    model: Optional[str] = None,
+    prompt: Optional[str] = None,
+    limit: int = 50,
+    user=Depends(get_current_user),
+    db=Depends(get_db)
+):
+    query = db.query(GeneratedImage).filter(GeneratedImage.user_id == user.id)
+
+    if style:
+        query = query.filter(GeneratedImage.style.ilike(f"%{style}%"))
+    if model:
+        query = query.filter(GeneratedImage.model.ilike(f"%{model}%"))
+    if prompt:
+        query = query.filter(GeneratedImage.prompt.ilike(f"%{prompt}%"))
+
+    limit = min(max(limit, 1), 200)
+    results = query.order_by(GeneratedImage.created_at.desc()).limit(limit).all()
+
+    items = [
+        {
+            "id": img.id,
+            "prompt": img.prompt,
+            "style": img.style,
+            "model": img.model,
+            "image_url": img.image_url,
+            "tokens_used": img.tokens_used,
+            "created_at": img.created_at.isoformat()
+        }
+        for img in results
+    ]
+
+    return {
+        "total": len(items),
+        "items": items
     }
 
 

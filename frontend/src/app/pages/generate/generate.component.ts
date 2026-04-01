@@ -75,6 +75,9 @@ import { environment } from '../../../environments/environments';
             <button (click)="generate()" [disabled]="loading">
               {{ loading ? 'Generazione...' : 'Genera' }}
             </button>
+            <button class="btn-link" (click)="goToGallery()" [disabled]="loading" style="margin-left:0.7rem;">
+              Vai alla galleria
+            </button>
             <div *ngIf="error" style="color: #ef4444; font-size: 0.8rem; margin-top: 6px;">
               {{ error }}
             </div>
@@ -247,6 +250,14 @@ import { environment } from '../../../environments/environments';
       cursor: pointer;
     }
 
+    .btn-link {
+      background: transparent;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.5rem;
+    }
+
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
@@ -369,6 +380,10 @@ export class GenerateComponent {
     );
   }
 
+
+  goToGallery() {
+    this.router.navigate(['/gallery']);
+  }
 
   buildPrompt(): string {
     let finalPrompt = this.prompt;

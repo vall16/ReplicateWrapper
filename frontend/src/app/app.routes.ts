@@ -45,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'generate',
     loadComponent: () => import('./pages/generate/generate.component').then(m => m.GenerateComponent)
+  },
+  {
+    path: 'gallery',
+    loadComponent: () => import('./pages/gallery/gallery.component').then(m => m.GalleryComponent)
   }
 
 ];
