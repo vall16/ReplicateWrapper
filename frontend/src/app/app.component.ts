@@ -23,12 +23,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
         </div>
         <div class="header-right">
           <nav class="nav-links">
-            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-            <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-            <a routerLink="/store" routerLinkActive="active">Store</a>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">🏠 Home</a>
+            <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
+            <a routerLink="/gallery" routerLinkActive="active">🖼️ Galleria</a>
+            <a routerLink="/store" routerLinkActive="active">🛒 Store</a>
           </nav>
           <button class="primary-cta" type="button" routerLink="/generate"> 
-            Avvia generazione
+            ✨ AI Image
+          </button>
+          <button class="primary-cta" type="button" routerLink="/generate"> 
+            🎬 AI Video
           </button>
         </div>
       </header>
@@ -176,7 +180,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'; // Importt
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1120px;
+      /* max-width: 1120px; */
       margin: 0;
       border-radius: 0;
       padding: 0;

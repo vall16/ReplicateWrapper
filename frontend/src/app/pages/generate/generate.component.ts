@@ -21,12 +21,52 @@ import { environment } from '../../../environments/environments';
             <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span>
           </div>
           <div class="section-body" *ngIf="openSections.general">
-            <label>Modello Replicate</label>
-            <select [(ngModel)]="model" [disabled]="loadingModels">
-              <option *ngFor="let m of availableModels" [value]="m.id">
-                {{ m.name }}
-              </option>
-            </select>
+            <label>Modello Text-to-Image</label>
+            <!-- <select [(ngModel)]="model" [disabled]="loadingModels">
+              <optgroup *ngFor="let group of availableModelGroups" [label]="group.provider">
+                <option *ngFor="let item of group.models" [value]="item.id">
+                  {{ item.name }}
+                </option>
+              </optgroup>
+            </select> -->
+            <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
+
+          <!-- SELECTED -->
+          <div class="selected">
+            <span class="icon">{{ selectedModel?.icon }}</span>
+            <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+            <span class="arrow">▼</span>
+          </div>
+
+          <!-- DROPDOWN -->
+          <div class="dropdown" *ngIf="openDropdown">
+
+            <div class="group" *ngFor="let group of availableModelGroups">
+
+              <!-- GROUP TITLE (CLICKABLE TO TOGGLE) -->
+              <div class="group-title" (click)="toggleGroup(group, $event)">
+                <span class="icon">{{ group.icon }}</span>
+                <span>{{ group.provider }}</span>
+                <span class="arrow" [class.expanded]="group.expanded">▶</span>
+              </div>
+
+              <!-- OPTIONS (SHOWN ONLY IF GROUP EXPANDED) -->
+              <div
+                class="option"
+                *ngFor="let item of group.models"
+                [class.hidden]="!group.expanded"
+                (click)="selectModel(item, $event)"
+              >
+                <span class="icon">{{ item.icon }}</span>
+                <span>{{ item.name }}</span>
+              </div>
+
+            </div>
+
+          </div>
+          </div> <!-- ✅ chiude custom-select -->
+
+
             <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
 
             <label>Proporzioni</label>
@@ -263,6 +303,112 @@ import { environment } from '../../../environments/environments';
       cursor: not-allowed;
     }
 
+    /* CUSTOM SELECT & DROPDOWN */
+    .custom-select {
+      position: relative;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      min-width: 200px;
+    }
+
+    .custom-select.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .selected {
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .selected .icon {
+      font-size: 1.2rem;
+    }
+
+    .selected .arrow {
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .group-title {
+      padding: 0.6rem;
+      font-weight: 600;
+      background: #f9fafb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      user-select: none;
+      border-bottom: 1px solid #e5e7eb;
+      transition: background-color 0.15s ease;
+    }
+
+    .group-title:hover {
+      background: #f3f4f6;
+    }
+
+    .group-title .icon {
+      font-size: 1.1rem;
+    }
+
+    .group-title .arrow {
+      margin-left: auto;
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .group-title .arrow.expanded {
+      transform: rotate(90deg);
+    }
+
+    .option {
+      padding: 0.5rem 0.6rem;
+      padding-left: 1.8rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #374151;
+      transition: background-color 0.15s ease;
+    }
+
+    .option:hover {
+      background: #f3f4f6;
+    }
+
+    .option .icon {
+      font-size: 1rem;
+    }
+
+    .option.hidden {
+      display: none;
+    }
+
     /* MOBILE */
     @media (max-width: 900px) {
       .generate-shell {
@@ -286,8 +432,12 @@ export class GenerateComponent {
   loading = false;
   loadingModels = true;
 
+  openDropdown = false;
+selectedModel: any = null;
+
   referenceImages: string[] = [];
   availableModels: any[] = [];
+  availableModelGroups: any[] = [];
   openSections = {
     general: true,
     refs: true
@@ -305,15 +455,93 @@ export class GenerateComponent {
       return;
     }
 
-    // Carica i modelli disponibili
+    // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
+    this.availableModelGroups = [
+      {
+        provider: 'Pollo AI',
+        icon: '🐣',
+        expanded: true,
+        models: [
+          { id: 'pollo-v1', name: 'Pollo v1', icon: '🐣' },
+          { id: 'pollo-v2', name: 'Pollo v2', icon: '🐣' }
+        ]
+      },
+      {
+        provider: 'Google',
+        icon: 'G',
+        expanded: false,
+        models: [
+          { id: 'google-umi', name: 'Umi', icon: '🌐' },
+          { id: 'google-m51', name: 'M51', icon: '🌐' }
+        ]
+      },
+      {
+        provider: 'Seedream',
+        icon: '📊',
+        expanded: false,
+        models: [
+          { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: '📊' },
+          { id: 'seedream-4-5', name: 'Seedream 4.5', icon: '📊' },
+          { id: 'seedream-4-0', name: 'Seedream 4.0', icon: '📊' }
+        ]
+      },
+      {
+        provider: 'Midjourney',
+        icon: '🎨',
+        expanded: false,
+        models: [
+          { id: 'midjourney-v5', name: 'Midjourney v5', icon: '🎨' },
+          { id: 'midjourney-v6', name: 'Midjourney v6', icon: '🎨' }
+        ]
+      },
+      {
+        provider: 'Flux AI',
+        icon: '⚡',
+        expanded: false,
+        models: [
+          { id: 'flux-pro', name: 'Flux Pro', icon: '⚡' },
+          { id: 'flux-dev', name: 'Flux Dev', icon: '⚡' },
+          { id: 'flux-schnell', name: 'Flux Schnell', icon: '⚡' }
+        ]
+      },
+      {
+        provider: 'OpenAI',
+        icon: '🤖',
+        expanded: false,
+        models: [
+          { id: 'dalle-3', name: 'DALL·E 3', icon: '🤖' }
+        ]
+      },
+      {
+        provider: 'Kling AI',
+        icon: '🎬',
+        expanded: false,
+        models: [
+          { id: 'kling-alpha', name: 'Kling Alpha', icon: '🎬' }
+        ]
+      }
+    ];
+
+    this.model = this.availableModelGroups[0].models[0].id;
+    this.selectedModel = this.availableModelGroups[0].models[0];
+    this.loadingModels = false;
+
+    // Avvia comunque fallback per modelli dal backend (popola un gruppo generico)
     this.authService.getAvailableModels().subscribe(
       (response: any) => {
-        this.availableModels = response.models || [];
-        this.loadingModels = false;
-        // Imposta il primo modello come default se disponibile
-        if (this.availableModels.length > 0) {
-          this.model = this.availableModels[0].id;
-        }
+        const remote = (response.models || []).map((m: any) => ({
+          id: m.id,
+          name: m.name
+        }));
+        // if (remote.length) {
+        //   this.availableModelGroups = [
+        //     {
+        //       provider: 'Provider remoto',
+        //       models: remote
+        //     }
+        //   ];
+        //   this.model = this.availableModelGroups[0].models[0].id;
+        // }
       },
       (error: any) => {
         console.error('Errore nel caricamento dei modelli', error);
@@ -331,6 +559,23 @@ export class GenerateComponent {
   toggleSection(section: 'general' | 'refs') {
     this.openSections[section] = !this.openSections[section];
   }
+
+  toggleDropdown() {
+  if (this.loadingModels) return;
+  this.openDropdown = !this.openDropdown;
+}
+
+toggleGroup(group: any, event: Event) {
+  event.stopPropagation();
+  group.expanded = !group.expanded;
+}
+
+selectModel(item: any, event: Event) {
+  event.stopPropagation();
+  this.model = item.id;
+  this.selectedModel = item;
+  this.openDropdown = false;
+}
 
   addReferenceImage() {
     if (this.referenceImages.length < 4) {
@@ -350,7 +595,10 @@ export class GenerateComponent {
       "flux-pro": "ultra realistic",
       "flux-dev": "realistic",
       "sdxl": "digital art",
-      "flux-schnell": "clean, modern, slightly stylized"
+      "flux-schnell": "clean, modern, slightly stylized",
+      "stable-diffusion-1-5": "photorealistic",
+      "dalle-3": "creative illustration",
+      "midjourney": "epic cinematic"
     };
 
     const style = styleMap[this.model] || "moderno";

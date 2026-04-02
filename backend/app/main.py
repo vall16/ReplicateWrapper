@@ -119,7 +119,19 @@ MODEL_MAP = {
     "sdxl": "stability-ai/sdxl:7762fd07",
     "flux-pro": "black-forest-labs/flux-2-pro",
     "flux-dev": "black-forest-labs/flux-2-dev",
-    "flux-schnell": "black-forest-labs/flux-schnell"
+    "flux-schnell": "black-forest-labs/flux-schnell",
+    "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
+    "dalle-3": "openai/dall-e-3",
+    "midjourney-v5": "stability-ai/sdxl:7762fd07",
+    "midjourney-v6": "stability-ai/sdxl:7762fd07",
+    "seedream-5-lite": "seedream/stable-model:5.0",          # esempio
+    "seedream-4-5": "seedream/stable-model:4.5",          # esempio
+    "seedream-4-0": "seedream/stable-model:4.0",          # esempio
+    "pollo-v1": "pollo/ai-v1",                            # placeholder
+    "pollo-v2": "pollo/ai-v2",                            # placeholder
+    "google-umi": "google/umi-model",                     # placeholder
+    "google-m51": "google/m51-model",                     # placeholder
+    "kling-alpha": "kling/alpha-model",                   # placeholder
 }
 
 async def download_and_save_image(image_url: str) -> str:

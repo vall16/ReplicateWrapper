@@ -25,15 +25,19 @@ import { FormsModule } from '@angular/forms';
         <nav class="nav">
           <button class="nav-item nav-item-active">
             <span class="nav-dot"></span>
-            <span>Dashboard</span>
+            <span>📊 Dashboard</span>
           </button>
           <button class="nav-item" (click)="goToStore()">
-            <span class="nav-icon">🪙</span>
+            <span class="nav-icon">🛒</span>
             <span>Token Store</span>
           </button>
           <button class="nav-item" (click)="goToTransactions()">
             <span class="nav-icon">📈</span>
             <span>Storico</span>
+          </button>
+          <button class="nav-item" (click)="router.navigate(['/gallery'])">
+            <span class="nav-icon">🖼️</span>
+            <span>Galleria</span>
           </button>
         </nav>
 
@@ -918,7 +922,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit() {
