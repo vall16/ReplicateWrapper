@@ -16,12 +16,12 @@ import { environment } from '../../../environments/environments';
       <aside class="sidebar">
         <!-- Impostazioni generali -->
         <div class="section">
-          <div class="section-header" (click)="toggleSection('general')">
-            <span>Impostazioni generali</span>
-            <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span>
-          </div>
+          <!-- <div class="section-header" (click)="toggleSection('general')">
+            <!- <span>Impostazioni generali</span> -->
+            <!-- <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span> -->
+          <!-- </div> --> 
           <div class="section-body" *ngIf="openSections.general">
-            <label>Modello Text-to-Image</label>
+            <!-- <label>Modello Text-to-Image</label> -->
             <!-- <select [(ngModel)]="model" [disabled]="loadingModels">
               <optgroup *ngFor="let group of availableModelGroups" [label]="group.provider">
                 <option *ngFor="let item of group.models" [value]="item.id">
@@ -33,7 +33,8 @@ import { environment } from '../../../environments/environments';
 
           <!-- SELECTED -->
           <div class="selected">
-            <span class="icon">{{ selectedModel?.icon }}</span>
+            <img *ngIf="isSvgPath(selectedModel?.icon)" [src]="selectedModel?.icon" class="icon icon-svg" />
+            <span *ngIf="!isSvgPath(selectedModel?.icon)" class="icon">{{ selectedModel?.icon }}</span>
             <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
             <span class="arrow">▼</span>
           </div>
@@ -45,7 +46,8 @@ import { environment } from '../../../environments/environments';
 
               <!-- GROUP TITLE (CLICKABLE TO TOGGLE) -->
               <div class="group-title" (click)="toggleGroup(group, $event)">
-                <span class="icon">{{ group.icon }}</span>
+                <img *ngIf="isSvgPath(group.icon)" [src]="group.icon" class="icon icon-svg" />
+                <span *ngIf="!isSvgPath(group.icon)" class="icon">{{ group.icon }}</span>
                 <span>{{ group.provider }}</span>
                 <span class="arrow" [class.expanded]="group.expanded">▶</span>
               </div>
@@ -57,7 +59,8 @@ import { environment } from '../../../environments/environments';
                 [class.hidden]="!group.expanded"
                 (click)="selectModel(item, $event)"
               >
-                <span class="icon">{{ item.icon }}</span>
+                <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
+                <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
                 <span>{{ item.name }}</span>
               </div>
 
@@ -69,7 +72,7 @@ import { environment } from '../../../environments/environments';
 
             <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
 
-            <label>Proporzioni</label>
+            <!-- <label>Proporzioni</label> -->
             <select [(ngModel)]="ratio">
               <option value="1:1">Quadrato (1:1)</option>
               <option value="4:3">Orizzontale (4:3)</option>
@@ -405,6 +408,12 @@ import { environment } from '../../../environments/environments';
       font-size: 1rem;
     }
 
+    .icon-svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      object-fit: contain;
+    }
+
     .option.hidden {
       display: none;
     }
@@ -457,56 +466,56 @@ selectedModel: any = null;
 
     // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
     this.availableModelGroups = [
-      {
-        provider: 'Pollo AI',
-        icon: '🐣',
-        expanded: true,
-        models: [
-          { id: 'pollo-v1', name: 'Pollo v1', icon: '🐣' },
-          { id: 'pollo-v2', name: 'Pollo v2', icon: '🐣' }
-        ]
-      },
+      // {
+      //   provider: 'Pollo AI',
+      //   icon: '🐣',
+      //   expanded: true,
+      //   models: [
+      //     { id: 'pollo-v1', name: 'Pollo v1', icon: '🐣' },
+      //     { id: 'pollo-v2', name: 'Pollo v2', icon: '🐣' }
+      //   ]
+      // },
       {
         provider: 'Google',
-        icon: 'G',
+        icon: 'assets/google.png',
         expanded: false,
         models: [
-          { id: 'google-umi', name: 'Umi', icon: '🌐' },
-          { id: 'google-m51', name: 'M51', icon: '🌐' }
+          { id: 'google-umi', name: 'Umi', icon: 'assets/google.png' },
+          { id: 'google-m51', name: 'M51', icon: 'assets/google.png' }
         ]
       },
       {
         provider: 'Seedream',
-        icon: '📊',
+        icon: 'assets/seedream.png',
         expanded: false,
         models: [
-          { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: '📊' },
-          { id: 'seedream-4-5', name: 'Seedream 4.5', icon: '📊' },
-          { id: 'seedream-4-0', name: 'Seedream 4.0', icon: '📊' }
+          { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png' },
+          { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
+          { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
         ]
       },
       {
         provider: 'Midjourney',
-        icon: '🎨',
+        icon: 'assets/midjourney.png',
         expanded: false,
         models: [
-          { id: 'midjourney-v5', name: 'Midjourney v5', icon: '🎨' },
-          { id: 'midjourney-v6', name: 'Midjourney v6', icon: '🎨' }
+          { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png' },
+          { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png' }
         ]
       },
       {
         provider: 'Flux AI',
-        icon: '⚡',
+        icon: 'assets/flux.png',
         expanded: false,
         models: [
-          { id: 'flux-pro', name: 'Flux Pro', icon: '⚡' },
-          { id: 'flux-dev', name: 'Flux Dev', icon: '⚡' },
-          { id: 'flux-schnell', name: 'Flux Schnell', icon: '⚡' }
+          { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png' },
+          { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png' },
+          { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png' }
         ]
       },
       {
         provider: 'OpenAI',
-        icon: '🤖',
+        icon: 'assets/openai.svg',
         expanded: false,
         models: [
           { id: 'dalle-3', name: 'DALL·E 3', icon: '🤖' }
@@ -514,10 +523,10 @@ selectedModel: any = null;
       },
       {
         provider: 'Kling AI',
-        icon: '🎬',
+        icon: 'assets/kling.jpg',
         expanded: false,
         models: [
-          { id: 'kling-alpha', name: 'Kling Alpha', icon: '🎬' }
+          { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
         ]
       }
     ];
@@ -575,6 +584,10 @@ selectModel(item: any, event: Event) {
   this.model = item.id;
   this.selectedModel = item;
   this.openDropdown = false;
+}
+
+isSvgPath(icon: string): boolean {
+  return typeof icon === 'string' && (icon.endsWith('.svg') || icon.includes('assets/'));
 }
 
   addReferenceImage() {
