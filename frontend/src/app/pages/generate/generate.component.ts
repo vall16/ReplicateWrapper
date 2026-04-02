@@ -73,10 +73,23 @@ import { environment } from '../../../environments/environments';
             <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
 
             <!-- <label>Proporzioni</label> -->
-            <select [(ngModel)]="ratio">
-              <option value="1:1">Quadrato (1:1)</option>
-              <option value="4:3">Orizzontale (4:3)</option>
-              <option value="9:16">Verticale (9:16)</option>
+            <div class="ratio-grid">
+              <button type="button" class="ratio-button" [class.active]="ratio === '1:1'" (click)="ratio='1:1'">1:1</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '16:9'" (click)="ratio='16:9'">16:9</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '3:2'" (click)="ratio='3:2'">3:2</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '2:3'" (click)="ratio='2:3'">2:3</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '3:4'" (click)="ratio='3:4'">3:4</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '4:3'" (click)="ratio='4:3'">4:3</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '21:9'" (click)="ratio='21:9'">21:9</button>
+            </div>
+            <select [(ngModel)]="ratio" class="ratio-select" aria-label="Seleziona proporzione">
+              <option value="1:1">1:1</option>
+              <option value="16:9">16:9</option>
+              <option value="3:2">3:2</option>
+              <option value="2:3">2:3</option>
+              <option value="3:4">3:4</option>
+              <option value="4:3">4:3</option>
+              <option value="21:9">21:9</option>
             </select>
           </div>
         </div>
@@ -299,6 +312,50 @@ import { environment } from '../../../environments/environments';
       color: #2563eb;
       padding: 0.3rem 0.6rem;
       border-radius: 0.5rem;
+    }
+
+    .ratio-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .ratio-button {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.45rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      min-width: 56px;
+      text-align: center;
+      transition: all 0.18s ease;
+    }
+
+    .ratio-button:hover {
+      border-color: #94a3b8;
+      background: #e2e8f0;
+    }
+
+    .ratio-button.active {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .ratio-select {
+      display: block;
+      margin-top: 0.25rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 0.45rem;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 0.85rem;
+      width: fit-content;
     }
 
     button:disabled {
