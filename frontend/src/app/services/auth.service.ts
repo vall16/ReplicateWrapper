@@ -225,7 +225,8 @@ export class AuthService {
   generateImage(
     description: string,
     style: string = 'moderno',
-    model: string = 'stability-ai/sdxl:latest'
+    model: string = 'stability-ai/sdxl:latest',
+    ratio: string = '16:9'
   ): Observable<any> {
     const token = this.getToken();
 
@@ -239,7 +240,8 @@ export class AuthService {
       {
         description,
         style,
-        model   // <-- nuovo parametro inviato al backend
+        model,
+        ratio
       },
       { headers }
     );
@@ -248,7 +250,8 @@ export class AuthService {
   generateImage2(
     description: string,
     style: string = 'moderno',
-    model: string = 'stability-ai/sdxl:latest'
+    model: string = 'stability-ai/sdxl:latest',
+    ratio: string = '16:9'
   ): Observable<any> {
     const token = this.getToken();
 
@@ -262,40 +265,41 @@ export class AuthService {
       {
         description,
         style,
-        model   // <-- nuovo parametro inviato al backend
+        model,
+        ratio
       },
       { headers }
     );
   }
 
-  generateImage_old(prompt: string,  style: string = 'moderno',
-    model: string = 'stability-ai/sdxl:latest'
-  ) {
-    return new Observable((observer) => {
+  // generateImage_old(prompt: string,  style: string = 'moderno',
+  //   model: string = 'stability-ai/sdxl:latest'
+  // ) {
+  //   return new Observable((observer) => {
 
-      console.log('FAKE CALL →', { prompt});
+  //     console.log('FAKE CALL →', { prompt});
 
-      // Simula delay tipo API reale
-      setTimeout(() => {
+  //     // Simula delay tipo API reale
+  //     setTimeout(() => {
 
-        // puoi usare immagini random
-        const fakeImages = [
-          'https://picsum.photos/800/800'
-          // 'https://source.unsplash.com/800x800/?ai,art',
-          // 'https://source.unsplash.com/800x800/?cyberpunk',
-          // 'https://source.unsplash.com/800x800/?fantasy'
-        ];
+  //       // puoi usare immagini random
+  //       const fakeImages = [
+  //         'https://picsum.photos/800/800'
+  //         // 'https://source.unsplash.com/800x800/?ai,art',
+  //         // 'https://source.unsplash.com/800x800/?cyberpunk',
+  //         // 'https://source.unsplash.com/800x800/?fantasy'
+  //       ];
 
-        const randomImage = fakeImages[Math.floor(Math.random() * fakeImages.length)];
+  //       const randomImage = fakeImages[Math.floor(Math.random() * fakeImages.length)];
 
-        observer.next({
-          image_url: randomImage
-        });
+  //       observer.next({
+  //         image_url: randomImage
+  //       });
 
-        observer.complete();
+  //       observer.complete();
 
-      }, 1500); // 1.5 sec
+  //     }, 1500); // 1.5 sec
 
-    });
-  }
+  //   });
+  // }
 }

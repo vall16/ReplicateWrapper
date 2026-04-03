@@ -75,15 +75,25 @@ class ImageRequest(BaseModel):
     description: str
     style: str = "moderno"
     model: str = "stability-ai/sdxl:latest"  # default
+    ratio: str = "16:9"
 
 
-
-def build_prompt(description: str, style: str):
+def build_prompt(description: str, style: str, ratio: str = "16:9"):
     base_style = STYLE_MAP.get(style, STYLE_MAP["moderno"])
-    
+    ratio_description = {
+        "1:1": "square composition",
+        "16:9": "landscape composition",
+        "3:2": "landscape composition",
+        "2:3": "portrait composition",
+        "3:4": "portrait composition",
+        "4:3": "landscape composition",
+        "21:9": "cinematic composition"
+    }.get(ratio, "landscape composition")
+
     return f"""
     {description},
     {base_style},
+    {ratio_description},
     real estate photography, wide angle, ultra realistic, 4k
     """
 
@@ -164,13 +174,16 @@ async def download_and_save_image(image_url: str) -> str:
 # GENERAZIONE DELL’IMMAGINE
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
-    prompt = build_prompt(req.description, req.style)
+    prompt = build_prompt(req.description, req.style, req.ratio)
 
     # fallback se model non passato
     model_to_use = req.model or "stability-ai/sdxl:latest"
     # seleziona modello completo
     model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
+    # valida ratio input
+    allowed_ratios = ["1:1", "16:9", "3:2", "2:3", "3:4", "4:3", "21:9"]
+    aspect_ratio = req.ratio if req.ratio in allowed_ratios else "16:9"
 
     try:
         output = await replicate_wrapper.run_model(
@@ -179,10 +192,9 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
             input_params={
                 "prompt": prompt,
                 "image_size": "1K",
-                "aspect_ratio": "16:9",
+                "aspect_ratio": aspect_ratio,
                 "output_format": "jpg",
                 "safety_filter_level": "block_medium_and_above"
-
 
             },
             user_id=user.id,
@@ -241,7 +253,7 @@ FAKE_IMAGES = [
 
 @app.post("/api/generate-paid2")
 async def generate_image_paid_fake(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
-    prompt = build_prompt(req.description, req.style)
+    prompt = build_prompt(req.description, req.style, req.ratio)
 
     try:
         # Scegli un'immagine fake random

@@ -726,14 +726,17 @@ isSvgPath(icon: string): boolean {
 
     const style = styleMap[this.model] || "moderno";
     const finalPrompt = this.buildPrompt();
+    console.log("FINALPROMPT",finalPrompt)
 
-    this.authService.generateImage2(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
+    // this.authService.generateImage2(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
+    this.authService.generateImage(finalPrompt, style, this.model, this.ratio).subscribe(  // <-- passiamo model + ratio
 
       (res: any) => {
         this.loading = false;
 
         console.log('RISPOSTA BACKEND:', res);            // 👈 TUTTO
-        console.log('IMAGE URL:', res?.image_url);        
+        console.log('IMAGE URL:', res?.image_url);
+        console.log('MODEL:', this.model);          
 
         if (res.error) {
           this.error = res.error;  
@@ -762,11 +765,21 @@ isSvgPath(icon: string): boolean {
     // mapping ratio → descrizione utile per AI
     const ratioMap: any = {
       "1:1": "square composition",
+      "16:9": "wide cinematic composition",
+      "3:2": "landscape composition",
+      "2:3": "portrait composition",
+      "3:4": "portrait composition",
       "4:3": "landscape composition",
-      "9:16": "vertical composition"
-    };
+      "21:9": "ultra wide cinematic"
+   };
+
 
     finalPrompt += `, ${ratioMap[this.ratio] || ''}`;
+
+    // 👉 AGGIUNTA STILE
+    if (this.style) {
+      finalPrompt += `, ${this.style}`;
+    }
 
     // qualità base
     finalPrompt += ", high quality, detailed";
