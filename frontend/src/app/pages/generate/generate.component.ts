@@ -91,6 +91,15 @@ import { environment } from '../../../environments/environments';
               <option value="4:3">4:3</option>
               <option value="21:9">21:9</option>
             </select>
+            <!-- <label>Stile immagine</label> -->
+            <div class="style-grid">
+              <button type="button" class="style-button"
+                *ngFor="let s of styles"
+                [class.active]="style === s.value"
+                (click)="style = s.value">
+                {{ s.label }}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -475,6 +484,36 @@ import { environment } from '../../../environments/environments';
       display: none;
     }
 
+    .style-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.style-button {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.45rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.style-button:hover {
+  border-color: #94a3b8;
+  background: #e2e8f0;
+}
+
+.style-button.active {
+  border-color: #7c3aed;
+  background: #f5f3ff;
+  color: #5b21b6;
+  font-weight: 600;
+}
+
     /* MOBILE */
     @media (max-width: 900px) {
       .generate-shell {
@@ -508,6 +547,20 @@ selectedModel: any = null;
     general: true,
     refs: true
   };
+
+  style = 'realistic';
+
+  styles = [
+    { label: 'Realistico', value: 'realistic' },
+    { label: 'Ultra-realistic', value: 'ultra realistic' },
+    { label: 'Ghibli', value: 'studio ghibli style' },
+    { label: 'Anime', value: 'anime style' },
+    { label: 'Cartoon', value: 'cartoon style' },
+    { label: 'Cinematic', value: 'cinematic lighting' },
+    { label: 'Fantasy', value: 'fantasy art' },
+    { label: '3D Render', value: '3d render' },
+    { label: 'Minimal', value: 'minimalist' }
+  ];
 
   constructor(
       private authService: AuthService,
