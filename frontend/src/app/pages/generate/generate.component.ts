@@ -136,9 +136,18 @@ import { environment } from '../../../environments/environments';
           ></textarea>
 
           <div class="prompt-actions">
-            <span class="free-label">Gratis</span>
-            <button (click)="generate()" [disabled]="loading">
+            <!-- <span class="free-label">Gratis</span> -->
+            <!-- <button (click)="generate()" [disabled]="loading">
               {{ loading ? 'Generazione...' : 'Genera' }}
+            </button> -->
+            <button (click)="generate()" [disabled]="loading" class="generate-btn">
+              <span *ngIf="!loading">Genera</span>
+              <span *ngIf="loading" class="loading-indicator">
+                Generazione
+                <span class="dots">
+                  <span></span><span></span><span></span>
+                </span>
+              </span>
             </button>
             <button class="btn-link" (click)="goToGallery()" [disabled]="loading" style="margin-left:0.7rem;">
               Vai alla galleria
@@ -514,6 +523,61 @@ import { environment } from '../../../environments/environments';
   font-weight: 600;
 }
 
+.generate-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.generate-btn:hover:not(:disabled) {
+  background: #1d4ed8; /* scurisce leggermente al passaggio */
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Indicator dei tre puntini animati */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 500;
+}
+
+.dots span {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* Pulsazione sfumata del pulsante durante caricamento */
+.generate-btn:disabled {
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7); }
+  100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
+}
+
     /* MOBILE */
     @media (max-width: 900px) {
       .generate-shell {
@@ -576,70 +640,80 @@ selectedModel: any = null;
 
     // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
     this.availableModelGroups = [
-      // {
-      //   provider: 'Pollo AI',
-      //   icon: '🐣',
-      //   expanded: true,
-      //   models: [
-      //     { id: 'pollo-v1', name: 'Pollo v1', icon: '🐣' },
-      //     { id: 'pollo-v2', name: 'Pollo v2', icon: '🐣' }
-      //   ]
-      // },
-      {
-        provider: 'Google',
-        icon: 'assets/google.png',
-        expanded: false,
-        models: [
-          { id: 'google-umi', name: 'Umi', icon: 'assets/google.png' },
-          { id: 'google-m51', name: 'M51', icon: 'assets/google.png' }
-        ]
-      },
-      {
-        provider: 'Seedream',
-        icon: 'assets/seedream.png',
-        expanded: false,
-        models: [
-          { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png' },
-          { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
-          { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
-        ]
-      },
-      {
-        provider: 'Midjourney',
-        icon: 'assets/midjourney.png',
-        expanded: false,
-        models: [
-          { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png' },
-          { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png' }
-        ]
-      },
-      {
-        provider: 'Flux AI',
-        icon: 'assets/flux.png',
-        expanded: false,
-        models: [
-          { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png' },
-          { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png' },
-          { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png' }
-        ]
-      },
-      {
-        provider: 'OpenAI',
-        icon: 'assets/openai.svg',
-        expanded: false,
-        models: [
-          { id: 'dalle-3', name: 'DALL·E 3', icon: '🤖' }
-        ]
-      },
-      {
-        provider: 'Kling AI',
-        icon: 'assets/kling.jpg',
-        expanded: false,
-        models: [
-          { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
-        ]
-      }
-    ];
+    {
+      provider: 'Flux AI',
+      icon: 'assets/flux.png',
+      expanded: false,
+      models: [
+        { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png' },
+        { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png' },
+        { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png' }
+      ]
+    },
+    {
+      provider: 'Google',
+      icon: 'assets/google.png',
+      expanded: false,
+      models: [
+        // 🔵 IMAGEN (qualità alta)
+        { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png' },
+        { id: 'imagen-4-fast', name: 'Imagen Fast ⚡', icon: 'assets/google.png' },
+
+        // 🟣 GEMINI IMAGE (multimodale)
+        { id: 'gemini-image-pro', name: 'Gemini Image Pro', icon: 'assets/google.png' },
+
+        // 🍌 MARKETING (stile Pollo AI)
+        { id: 'nano-banana', name: 'Nano Banana ⚡', icon: 'assets/google.png' },
+        { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png' }
+
+      ]
+    },
+    {
+      provider: 'Kling AI',
+      icon: 'assets/kling.jpg',
+      expanded: false,
+      models: [
+        { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
+      ]
+    },
+    {
+      provider: 'Midjourney',
+      icon: 'assets/midjourney.png',
+      expanded: false,
+      models: [
+        { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png' },
+        { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png' }
+      ]
+    },
+    {
+      provider: 'OpenAI',
+      icon: 'assets/openai.svg',
+      expanded: false,
+      models: [
+        { id: 'dalle-3', name: 'DALL·E 3', icon: '🤖' }
+      ]
+    },
+    {
+      provider: 'Seedream',
+      icon: 'assets/seedream.png',
+      expanded: false,
+      models: [
+        { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png' },
+        { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
+        { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
+      ]
+    },
+    {
+      provider: 'Stable AI',
+      icon: 'assets/stability.svg',
+      expanded: false,
+      models: [
+        { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg' },
+        { id: 'stable-diffusion-1-5', name: 'Stable Diffusion 1.5', icon: 'assets/stability.svg' }
+      ]
+    },
+
+  ];
 
     this.model = this.availableModelGroups[0].models[0].id;
     this.selectedModel = this.availableModelGroups[0].models[0];

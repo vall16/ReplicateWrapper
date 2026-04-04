@@ -126,7 +126,13 @@ replicate_wrapper = ReplicateWrapper(api_token=replicate_token)
 SDXL_VERSION ="7762fd07"
 
 MODEL_MAP = {
-    "sdxl": "stability-ai/sdxl:7762fd07",
+    # 🔵 STABLE DIFFUSION / SDXL
+    "sdxl": "stability-ai/sdxl:7762fd07",                # SDXL 1.0
+    "sdxl-0.9": "stability-ai/sdxl:0.9.0",              # SDXL v0.9
+    "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
+    "stable-diffusion-2-1": "stability-ai/stable-diffusion:2.1",  # SD 2.1 (opzionale)
+    "stable-diffusion-xl-1024-v1-0": "stability-ai/stable-diffusion-xl-1024-v1-0", # SDXL 1.0 HD
+    # 🔥 FLUX (alcuni endpoint non richiedono hash, ma meglio fissarli)
     "flux-pro": "black-forest-labs/flux-2-pro",
     "flux-dev": "black-forest-labs/flux-2-dev",
     "flux-schnell": "black-forest-labs/flux-schnell",
@@ -139,9 +145,18 @@ MODEL_MAP = {
     "seedream-4-0": "seedream/stable-model:4.0",          # esempio
     "pollo-v1": "pollo/ai-v1",                            # placeholder
     "pollo-v2": "pollo/ai-v2",                            # placeholder
-    "google-umi": "google/umi-model",                     # placeholder
-    "google-m51": "google/m51-model",                     # placeholder
-    "kling-alpha": "kling/alpha-model",                   # placeholder
+    # Imagen (reali)
+    "imagen-4": "google/imagen-4",
+    "imagen-4-fast": "google/imagen-4-fast",
+
+    # Gemini image (reali)
+    "gemini-image-pro": "gemini-3-pro-image",
+
+    # marketing → mapping reale
+    "nano-banana": "gemini-3.1-flash-image",
+    "nano-banana-pro": "gemini-3-pro-image",
+                   # placeholder
+    "kling-alpha": "kling/alpha-model"                  # placeholder
 }
 
 async def download_and_save_image(image_url: str) -> str:
