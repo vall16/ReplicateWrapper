@@ -127,34 +127,31 @@ SDXL_VERSION ="7762fd07"
 
 MODEL_MAP = {
     # 🔵 STABLE DIFFUSION / SDXL
-    "sdxl": "stability-ai/sdxl:7762fd07",                # SDXL 1.0
-    "sdxl-0.9": "stability-ai/sdxl:0.9.0",              # SDXL v0.9
-    "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
-    "stable-diffusion-2-1": "stability-ai/stable-diffusion:2.1",  # SD 2.1 (opzionale)
-    "stable-diffusion-xl-1024-v1-0": "stability-ai/stable-diffusion-xl-1024-v1-0", # SDXL 1.0 HD
+    "sdxl": "stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",                # ok
+    "stable-diffusion-3": "stability-ai/stable-diffusion-3",
     # 🔥 FLUX (alcuni endpoint non richiedono hash, ma meglio fissarli)
     "flux-pro": "black-forest-labs/flux-2-pro",
     "flux-dev": "black-forest-labs/flux-2-dev",
     "flux-schnell": "black-forest-labs/flux-schnell",
-    "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
-    "dalle-3": "openai/dall-e-3",
+    # "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
+    "dalle-3": "openai/dall-e-3",  #ok
     "midjourney-v5": "stability-ai/sdxl:7762fd07",
     "midjourney-v6": "stability-ai/sdxl:7762fd07",
-    "seedream-5-lite": "seedream/stable-model:5.0",          # esempio
-    "seedream-4-5": "seedream/stable-model:4.5",          # esempio
-    "seedream-4-0": "seedream/stable-model:4.0",          # esempio
+    "seedream-5-lite": "bytedance/seedream-5-lite",          # esempio
+    "seedream-4-5": "bytedance/seedream-4.5",          # esempio
+    "seedream-4-0": "bytedance/seedream-4.0",          # esempio
     "pollo-v1": "pollo/ai-v1",                            # placeholder
     "pollo-v2": "pollo/ai-v2",                            # placeholder
     # Imagen (reali)
-    "imagen-4": "google/imagen-4",
+    "imagen-4": "google/imagen-4",  #ok
     "imagen-4-fast": "google/imagen-4-fast",
 
     # Gemini image (reali)
     "gemini-image-pro": "gemini-3-pro-image",
 
     # marketing → mapping reale
-    "nano-banana": "gemini-3.1-flash-image",
-    "nano-banana-pro": "gemini-3-pro-image",
+    "nano-banana": "google/nano-banana",
+    "nano-banana-pro": "google/nano-banana-pro", #ok
                    # placeholder
     "kling-alpha": "kling/alpha-model"                  # placeholder
 }

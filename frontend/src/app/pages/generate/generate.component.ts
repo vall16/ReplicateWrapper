@@ -690,7 +690,7 @@ selectedModel: any = null;
       icon: 'assets/openai.svg',
       expanded: false,
       models: [
-        { id: 'dalle-3', name: 'DALL·E 3', icon: '🤖' }
+        { id: 'dalle-3', name: 'DALL·E 3', icon: 'assets/openai.svg' }
       ]
     },
     {
@@ -709,7 +709,7 @@ selectedModel: any = null;
       expanded: false,
       models: [
         { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg' },
-        { id: 'stable-diffusion-1-5', name: 'Stable Diffusion 1.5', icon: 'assets/stability.svg' }
+        { id: 'stable-diffusion-3', name: 'Stable Diffusion 3', icon: 'assets/stability.svg' }
       ]
     },
 
@@ -793,7 +793,7 @@ isSvgPath(icon: string): boolean {
       "flux-dev": "realistic",
       "sdxl": "digital art",
       "flux-schnell": "clean, modern, slightly stylized",
-      "stable-diffusion-1-5": "photorealistic",
+      "stable-diffusion-3": "photorealistic",
       "dalle-3": "creative illustration",
       "midjourney": "epic cinematic"
     };
