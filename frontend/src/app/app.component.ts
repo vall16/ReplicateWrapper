@@ -41,7 +41,7 @@ import { Component } from '@angular/core';
             class="primary-cta" 
             [class.active]="activeCTA === 'video'" 
             (click)="setActiveCTA('video')" 
-            routerLink="/generate"> 
+            routerLink="/video-generate"> 
             🎬 AI Video
           </button>
         </div>
