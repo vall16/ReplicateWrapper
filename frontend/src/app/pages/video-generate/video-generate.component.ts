@@ -16,12 +16,58 @@ import { environment } from '../../../environments/environments';
         <!-- Impostazioni video -->
         <div class="section">
           <div class="section-header">
-            <span>Impostazioni Video</span>
+            <!-- <span>Impostazioni Video</span> -->
           </div>
           <div class="section-body">
-            
+            <!-- MODELLO VIDEO -->
+            <label>Modello Video</label>
+            <!-- <small class="field-caption">Seleziona il modello che vuoi usare per la generazione.</small> -->
+            <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
+              <div class="selected">
+                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="dropdown" *ngIf="openDropdown">
+                <div
+                  class="option"
+                  *ngFor="let item of availableVideoModels"
+                  (click)="selectModel(item, $event)"
+                >
+                  <span>{{ item.name }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RISOLUZIONE -->
+            <label>Risoluzione</label>
+            <!-- <small class="field-caption">Imposta la qualità del video in uscita.</small> -->
+            <div class="resolution-options">
+              <button 
+                type="button" 
+                class="resolution-button" 
+                [class.active]="resolution === '720p'" 
+                (click)="resolution='720p'">
+                🔹 720p
+              </button>
+              <button 
+                type="button" 
+                class="resolution-button" 
+                [class.active]="resolution === '1080p'" 
+                (click)="resolution='1080p'">
+                🔸 1080p
+              </button>
+              <button 
+                type="button" 
+                class="resolution-button" 
+                [class.active]="resolution === '4k'" 
+                (click)="resolution='4k'">
+                🔴 4K
+              </button>
+            </div>
+
             <!-- DURATA VIDEO -->
             <label>Durata Video (secondi)</label>
+            <!-- <small class="field-caption">Scegli quanto deve durare il filmato generato.</small> -->
             <div class="duration-options">
               <button 
                 type="button" 
@@ -52,51 +98,6 @@ import { environment } from '../../../environments/environments';
                 60s
               </button>
             </div>
-            
-            <!-- RISOLUZIONE -->
-            <label style="margin-top: 1rem;">Risoluzione</label>
-            <div class="resolution-options">
-              <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '720p'" 
-                (click)="resolution='720p'">
-                🔹 720p
-              </button>
-              <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '1080p'" 
-                (click)="resolution='1080p'">
-                🔸 1080p
-              </button>
-              <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '4k'" 
-                (click)="resolution='4k'">
-                🔴 4K
-              </button>
-            </div>
-
-            <!-- MODELLO VIDEO -->
-            <label style="margin-top: 1rem;">Modello Video</label>
-            <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
-              <div class="selected">
-                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="dropdown" *ngIf="openDropdown">
-                <div
-                  class="option"
-                  *ngFor="let item of availableVideoModels"
-                  (click)="selectModel(item, $event)"
-                >
-                  <span>{{ item.name }}</span>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </aside>
@@ -192,7 +193,7 @@ import { environment } from '../../../environments/environments';
     .section-body {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.75rem;
       margin-top: 0.5rem;
     }
 
@@ -200,6 +201,14 @@ import { environment } from '../../../environments/environments';
       font-size: 0.75rem;
       color: #6b7280;
       font-weight: 600;
+    }
+
+    .field-caption {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      line-height: 1.4;
+      margin-top: -0.2rem;
+      margin-bottom: 0.65rem;
     }
 
     /* DURATION & RESOLUTION BUTTONS */

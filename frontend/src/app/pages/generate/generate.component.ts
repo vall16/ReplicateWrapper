@@ -21,58 +21,8 @@ import { environment } from '../../../environments/environments';
             <!-- <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span> -->
           <!-- </div> --> 
           <div class="section-body" *ngIf="openSections.general">
-            <!-- <label>Modello Text-to-Image</label> -->
-            <!-- <select [(ngModel)]="model" [disabled]="loadingModels">
-              <optgroup *ngFor="let group of availableModelGroups" [label]="group.provider">
-                <option *ngFor="let item of group.models" [value]="item.id">
-                  {{ item.name }}
-                </option>
-              </optgroup>
-            </select> -->
-            <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
-
-          <!-- SELECTED -->
-          <div class="selected">
-            <img *ngIf="isSvgPath(selectedModel?.icon)" [src]="selectedModel?.icon" class="icon icon-svg" />
-            <span *ngIf="!isSvgPath(selectedModel?.icon)" class="icon">{{ selectedModel?.icon }}</span>
-            <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
-            <span class="arrow">▼</span>
-          </div>
-
-          <!-- DROPDOWN -->
-          <div class="dropdown" *ngIf="openDropdown">
-
-            <div class="group" *ngFor="let group of availableModelGroups">
-
-              <!-- GROUP TITLE (CLICKABLE TO TOGGLE) -->
-              <div class="group-title" (click)="toggleGroup(group, $event)">
-                <img *ngIf="isSvgPath(group.icon)" [src]="group.icon" class="icon icon-svg" />
-                <span *ngIf="!isSvgPath(group.icon)" class="icon">{{ group.icon }}</span>
-                <span>{{ group.provider }}</span>
-                <span class="arrow" [class.expanded]="group.expanded">▶</span>
-              </div>
-
-              <!-- OPTIONS (SHOWN ONLY IF GROUP EXPANDED) -->
-              <div
-                class="option"
-                *ngFor="let item of group.models"
-                [class.hidden]="!group.expanded"
-                (click)="selectModel(item, $event)"
-              >
-                <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
-                <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
-                <span>{{ item.name }}</span>
-              </div>
-
-            </div>
-
-          </div>
-          </div> <!-- ✅ chiude custom-select -->
-
-
-            <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
-
-            <!-- <label>Proporzioni</label> -->
+            <label>Proporzioni</label>
+            
             <div class="ratio-grid">
               <button type="button" class="ratio-button" [class.active]="ratio === '1:1'" (click)="ratio='1:1'">1:1</button>
               <button type="button" class="ratio-button" [class.active]="ratio === '16:9'" (click)="ratio='16:9'">16:9</button>
@@ -91,7 +41,9 @@ import { environment } from '../../../environments/environments';
               <option value="4:3">4:3</option>
               <option value="21:9">21:9</option>
             </select>
-            <!-- <label>Stile immagine</label> -->
+
+            <label>Stile immagine</label>
+            <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small>
             <div class="style-grid">
               <button type="button" class="style-button"
                 *ngFor="let s of styles"
@@ -100,6 +52,50 @@ import { environment } from '../../../environments/environments';
                 {{ s.label }}
               </button>
             </div>
+
+            <label>Modello Text-to-Image</label>
+            <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small>
+            <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
+
+              <!-- SELECTED -->
+              <div class="selected">
+                <img *ngIf="isSvgPath(selectedModel?.icon)" [src]="selectedModel?.icon" class="icon icon-svg" />
+                <span *ngIf="!isSvgPath(selectedModel?.icon)" class="icon">{{ selectedModel?.icon }}</span>
+                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+                <span class="arrow">▼</span>
+              </div>
+
+              <!-- DROPDOWN -->
+              <div class="dropdown" *ngIf="openDropdown">
+
+                <div class="group" *ngFor="let group of availableModelGroups">
+
+                  <!-- GROUP TITLE (CLICKABLE TO TOGGLE) -->
+                  <div class="group-title" (click)="toggleGroup(group, $event)">
+                    <img *ngIf="isSvgPath(group.icon)" [src]="group.icon" class="icon icon-svg" />
+                    <span *ngIf="!isSvgPath(group.icon)" class="icon">{{ group.icon }}</span>
+                    <span>{{ group.provider }}</span>
+                    <span class="arrow" [class.expanded]="group.expanded">▶</span>
+                  </div>
+
+                  <!-- OPTIONS (SHOWN ONLY IF GROUP EXPANDED) -->
+                  <div
+                    class="option"
+                    *ngFor="let item of group.models"
+                    [class.hidden]="!group.expanded"
+                    (click)="selectModel(item, $event)"
+                  >
+                    <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
+                    <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                </div>
+
+              </div>
+            </div> <!-- ✅ chiude custom-select -->
+
+            <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
           </div>
         </div>
 
@@ -221,6 +217,14 @@ import { environment } from '../../../environments/environments';
     .section-body label {
       font-size: 0.75rem;
       color: #6b7280;
+    }
+
+    .field-caption {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      line-height: 1.4;
+      margin-top: -0.2rem;
+      margin-bottom: 0.5rem;
     }
 
     .section-body select {
