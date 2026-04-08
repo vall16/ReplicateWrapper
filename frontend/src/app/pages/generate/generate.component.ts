@@ -43,7 +43,7 @@ import { environment } from '../../../environments/environments';
             </select>
 
             <label>Stile immagine</label>
-            <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small>
+            <!-- <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small> -->
             <div class="style-grid">
               <button type="button" class="style-button"
                 *ngFor="let s of styles"
@@ -54,7 +54,7 @@ import { environment } from '../../../environments/environments';
             </div>
 
             <label>Modello Text-to-Image</label>
-            <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small>
+            <!-- <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small> -->
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
 
               <!-- SELECTED -->

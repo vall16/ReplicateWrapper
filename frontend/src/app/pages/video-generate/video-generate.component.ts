@@ -45,24 +45,31 @@ import { environment } from '../../../environments/environments';
               <button 
                 type="button" 
                 class="resolution-button" 
-                [class.active]="resolution === '720p'" 
-                (click)="resolution='720p'">
-                🔹 720p
+                [class.active]="resolution === '480p'" 
+                (click)="resolution='480p'">
+                480p
               </button>
               <button 
                 type="button" 
                 class="resolution-button" 
+                [class.active]="resolution === '720p'" 
+                (click)="resolution='720p'">
+                720p
+              </button>
+              <!-- <button 
+                type="button" 
+                class="resolution-button" 
                 [class.active]="resolution === '1080p'" 
                 (click)="resolution='1080p'">
-                🔸 1080p
-              </button>
-              <button 
+                1080p
+              </button> -->
+              <!-- <button 
                 type="button" 
                 class="resolution-button" 
                 [class.active]="resolution === '4k'" 
                 (click)="resolution='4k'">
                 🔴 4K
-              </button>
+              </button> -->
             </div>
 
             <!-- DURATA VIDEO -->
@@ -451,7 +458,7 @@ import { environment } from '../../../environments/environments';
 export class VideoGenerateComponent {
   prompt = '';
   duration: 5 | 10 | 30 | 60 = 10;
-  resolution: '720p' | '1080p' | '4k' = '1080p';
+  resolution: '480p'| '720p' | '1080p'  = '480p';
   videoUrl: string | null = null;
   error: string | null = null;
   loading = false;
