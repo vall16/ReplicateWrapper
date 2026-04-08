@@ -42,21 +42,38 @@ import { Component } from '@angular/core';
  Store</a>
           </nav>
 
-          <button 
-            class="primary-cta" 
-            [class.active]="activeCTA === 'image'" 
-            (click)="setActiveCTA('image')" 
-            routerLink="/generate"> 
-            ✨ AI Image
-          </button>
+          <!-- <div class="cta-group">
+            <button 
+              class="primary-cta" 
+              [class.active]="activeCTA === 'image'" 
+              (click)="setActiveCTA('image')" 
+              routerLink="/generate"> 
+              ✨ AI Image
+            </button>
 
-          <button 
-            class="primary-cta" 
-            [class.active]="activeCTA === 'video'" 
-            (click)="setActiveCTA('video')" 
-            routerLink="/video-generate"> 
-            🎬 AI Video
-          </button>
+            <button 
+              class="primary-cta" 
+              [class.active]="activeCTA === 'video'" 
+              (click)="setActiveCTA('video')" 
+              routerLink="/video-generate"> 
+              🎬 AI Video
+            </button>
+
+            
+          </div> -->
+          <div class="ai-switch">
+            <button [class.active]="activeCTA==='image'" (click)="setActiveCTA('image')" routerLink="/generate">
+              ✨ Image
+            </button>
+            <button [class.active]="activeCTA==='video'" (click)="setActiveCTA('video')" routerLink="/video-generate">
+              🎬 Video
+            </button>
+          </div>
+
+          <div class="auth-buttons">
+            <button class="btn-login" routerLink="/login">Login</button>
+            <button class="btn-register" routerLink="/register">Sign up</button>
+          </div>
         </div>
       </header>
 
@@ -70,33 +87,107 @@ import { Component } from '@angular/core';
   styles: [`
     /* --- base styles --- */
     .app-shell { min-height: 100vh; display: flex; flex-direction: column; background-color: #ffffff; background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px); background-size: 32px 32px; color: #1f2937; position: relative; overflow: hidden; }
-    .app-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.92); border-bottom: 1px solid rgba(229, 231, 235, 0.8); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08); }
+    /* .app-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; backdrop-filter: blur(16px); background: rgba(255, 255, 255, 0.92); border-bottom: 1px solid rgba(229, 231, 235, 0.8); box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08); } */
+    .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 2rem;
+
+  .ai-switch {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.ai-switch button {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-switch button.active {
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+}
+
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.75);
+
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+
+  /* ✨ glow moderno */
+  box-shadow: 
+    0 8px 30px rgba(0,0,0,0.08),
+    0 0 40px rgba(99,102,241,0.15);
+}
     .logo { display: flex; align-items: center; gap: 0.75rem; }
-    .logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 8px; background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); font-weight: 700; color: #ffffff; font-size: 1.25rem; }
+    /* .logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 8px; background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); font-weight: 700; color: #ffffff; font-size: 1.25rem; } */
+    .logo-mark {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #3b82f6);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
     .logo-text { display: flex; flex-direction: column; gap: 0.1rem; }
     .logo-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; color: #6366f1; }
     .logo-subtitle { font-size: 0.75rem; color: #6b7280; }
-    .header-left, .header-right { display: flex; align-items: center; gap: 1.5rem; }
-    .nav-links { display: flex; align-items: center; gap: 1.8rem; font-size: 0.95rem; }
-    /* .nav-links a { color: #4b5563; text-decoration: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-weight: 500; transition: color 0.2s ease, background-color 0.2s ease; } */
-    .nav-links a {
+    .header-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .header-right { display: flex; align-items: center; gap: 0.85rem; }
+    /* .nav-links { display: flex; align-items: center; gap: 1.8rem; font-size: 0.95rem; } */
+    /* aggiungi questo nel tuo styles array */
+.nav-links {
   display: flex;
-  align-items: flex-end; /* 👈 QUESTO è il trucco */
-  gap: 6px;
-  text-decoration: none; 
+  align-items: center;
+  gap: 1.8rem;   /* già presente */
+  margin-right: 2rem; /* spazio extra verso il gruppo AI */
 }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #4b5563;
+      text-decoration: none;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
     .nav-links a:hover { color: #111827; background-color: #f3f4f6; }
-    .nav-links a.active { color: #3b82f6; background: transparent; }
-    .icon {
-  width: 1.4em;   /* più grande */
-  height: 1.4em;
-  position: relative;
-  top: 1px; /* micro-adjust (opzionale) */
-}
+    .nav-links a.active { color: #3b82f6; background-color: rgba(99, 102, 241, 0.08); }
+    .icon { width: 1.4em; height: 1.4em; position: relative; top: 1px; }
+    .cta-group { display: flex; align-items: center; gap: 0.75rem; }
+    .auth-buttons { display: flex; align-items: center; gap: 0.75rem; margin-left: 0.75rem; }
     /* --- CTA buttons --- */
     .primary-cta { border: none; border-radius: 6px; padding: 0.55rem 1.4rem; font-size: 0.9rem; font-weight: 500; color: #ffffff; cursor: pointer; background: #6366f1; transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease; white-space: nowrap; }
     .primary-cta:hover { background-color: #4f46e5; transform: translateY(-1px); }
     .primary-cta:active { transform: translateY(0); background-color: #4338ca; }
+    .btn-login, .btn-register { border-radius: 6px; padding: 0.55rem 1rem; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease, transform 0.15s ease; }
+    .btn-login { border: 1px solid #d1d5db; background: transparent; color: #4b5563; }
+    .btn-login:hover { background: #f3f4f6; transform: translateY(-1px); }
+    /* .btn-register { background: #6366f1; color: #ffffff; border: none; }
+    .btn-register:hover { background: #4f46e5; transform: translateY(-1px); } */
+
+    .btn-register {
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  box-shadow: 0 6px 18px rgba(99,102,241,0.4);
+  font-weight: 600;
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99,102,241,0.5);
+}
 
     /* --- active CTA style --- */
     .primary-cta.active {

@@ -24,13 +24,13 @@ import { RouterModule } from '@angular/router';
             <li><a href="#pricing">Prezzi</a></li>
             <li><a href="#contact">Contatti</a></li>
           </ul>
-          <div class="nav-buttons">
+          <!-- <div class="nav-buttons">
             <button class="btn btn-login" (click)="navigateTo('login')">Accedi
 
 
             </button>
             <button class="btn btn-signup" (click)="navigateTo('register')">Registrati</button>
-          </div>
+          </div> -->
         </div>
       </nav>
 

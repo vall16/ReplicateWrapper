@@ -32,7 +32,7 @@ import { environment } from '../../../environments/environments';
               <button type="button" class="ratio-button" [class.active]="ratio === '4:3'" (click)="ratio='4:3'">4:3</button>
               <button type="button" class="ratio-button" [class.active]="ratio === '21:9'" (click)="ratio='21:9'">21:9</button>
             </div>
-            <select [(ngModel)]="ratio" class="ratio-select" aria-label="Seleziona proporzione">
+            <!-- <select [(ngModel)]="ratio" class="ratio-select" aria-label="Seleziona proporzione">
               <option value="1:1">1:1</option>
               <option value="16:9">16:9</option>
               <option value="3:2">3:2</option>
@@ -40,7 +40,7 @@ import { environment } from '../../../environments/environments';
               <option value="3:4">3:4</option>
               <option value="4:3">4:3</option>
               <option value="21:9">21:9</option>
-            </select>
+            </select> -->
 
             <label>Stile immagine</label>
             <!-- <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small> -->
@@ -217,6 +217,7 @@ import { environment } from '../../../environments/environments';
     .section-body label {
       font-size: 0.75rem;
       color: #6b7280;
+      font-weight: 600;
     }
 
     .field-caption {
