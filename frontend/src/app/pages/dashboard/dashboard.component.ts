@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
       <!-- Left rail -->
       <aside class="sidebar">
         <div class="brand">
-          <div class="brand-logo">RW</div>
+          <div class="brand-logo">RX</div>
           <div class="brand-text">
             <!-- <span class="brand-title">Replicate Wrapper</span>
             <span class="brand-subtitle">AI Credit Console</span> -->

@@ -39,12 +39,11 @@ import { RouterModule } from '@angular/router';
         <div class="hero-content">
           <div class="hero-label">AI Credit Console · Replicate</div>
           <h1 class="hero-title">
-            Collega <span class="gradient-text">Replicate.ai</span>
-            alle tue app in pochi minuti
+            Trasforma <span class="gradient-text">Testo in Immagini e Video</span>
+            in pochi secondi
           </h1>
           <p class="hero-subtitle">
-            Un unico wrapper moderno per orchestrare modelli, token e chiamate API in modo sicuro,
-            con una UX pensata per il 2026.
+            Hai un’idea? Trasformala subito in immagini e video spettacolari, senza bisogno di competenze tecniche.
           </p>
           <div class="hero-buttons">
             <button class="btn btn-primary-large" (click)="navigateTo('register')">
@@ -372,8 +371,8 @@ import { RouterModule } from '@angular/router';
           <div class="footer-top">
             <div class="footer-brand">
               <div class="footer-logo">
-                <span class="logo-mark footer-logo-mark">RW</span>
-                <span class="footer-logo-title">Replicate Wrapper</span>
+                <span class="logo-mark footer-logo-mark">RX</span>
+                <span class="footer-logo-title">ReplicateXpress</span>
               </div>
               <p class="footer-description">
                 La piattaforma AI più avanzata per utilizzare facilmente le Api di Replicate

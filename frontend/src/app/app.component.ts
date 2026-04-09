@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
           <div class="logo">
             <span class="logo-mark">R</span>
             <div class="logo-text">
-              <span class="logo-title">Replicate Wrapper</span>
+              <span class="logo-title">ReplicateXpress</span>
               <span class="logo-subtitle"></span>
             </div>
           </div>
