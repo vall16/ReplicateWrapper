@@ -21,38 +21,6 @@ import { environment } from '../../../environments/environments';
             <!-- <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span> -->
           <!-- </div> --> 
           <div class="section-body" *ngIf="openSections.general">
-            <label>Proporzioni</label>
-            
-            <div class="ratio-grid">
-              <button type="button" class="ratio-button" [class.active]="ratio === '1:1'" (click)="ratio='1:1'">1:1</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '16:9'" (click)="ratio='16:9'">16:9</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '3:2'" (click)="ratio='3:2'">3:2</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '2:3'" (click)="ratio='2:3'">2:3</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '3:4'" (click)="ratio='3:4'">3:4</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '4:3'" (click)="ratio='4:3'">4:3</button>
-              <button type="button" class="ratio-button" [class.active]="ratio === '21:9'" (click)="ratio='21:9'">21:9</button>
-            </div>
-            <!-- <select [(ngModel)]="ratio" class="ratio-select" aria-label="Seleziona proporzione">
-              <option value="1:1">1:1</option>
-              <option value="16:9">16:9</option>
-              <option value="3:2">3:2</option>
-              <option value="2:3">2:3</option>
-              <option value="3:4">3:4</option>
-              <option value="4:3">4:3</option>
-              <option value="21:9">21:9</option>
-            </select> -->
-
-            <label>Stile immagine</label>
-            <!-- <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small> -->
-            <div class="style-grid">
-              <button type="button" class="style-button"
-                *ngFor="let s of styles"
-                [class.active]="style === s.value"
-                (click)="style = s.value">
-                {{ s.label }}
-              </button>
-            </div>
-
             <label>Modello Text-to-Image</label>
             <!-- <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small> -->
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
@@ -95,6 +63,82 @@ import { environment } from '../../../environments/environments';
               </div>
             </div> <!-- ✅ chiude custom-select -->
 
+
+
+            <label>Proporzioni</label>
+            
+            <div class="ratio-grid">
+              <button type="button" class="ratio-button" [class.active]="ratio === '1:1'" (click)="ratio='1:1'">1:1</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '16:9'" (click)="ratio='16:9'">16:9</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '3:2'" (click)="ratio='3:2'">3:2</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '2:3'" (click)="ratio='2:3'">2:3</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '3:4'" (click)="ratio='3:4'">3:4</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '4:3'" (click)="ratio='4:3'">4:3</button>
+              <button type="button" class="ratio-button" [class.active]="ratio === '21:9'" (click)="ratio='21:9'">21:9</button>
+            </div>
+            <!-- <select [(ngModel)]="ratio" class="ratio-select" aria-label="Seleziona proporzione">
+              <option value="1:1">1:1</option>
+              <option value="16:9">16:9</option>
+              <option value="3:2">3:2</option>
+              <option value="2:3">2:3</option>
+              <option value="3:4">3:4</option>
+              <option value="4:3">4:3</option>
+              <option value="21:9">21:9</option>
+            </select> -->
+
+            <label>Stile immagine</label>
+            <!-- <small class="field-caption">Seleziona il mood, il tipo di rendering e l'atmosfera visiva.</small> -->
+            <div class="style-grid">
+              <button type="button" class="style-button"
+                *ngFor="let s of styles"
+                [class.active]="style === s.value"
+                (click)="style = s.value">
+                {{ s.label }}
+              </button>
+            </div>
+
+            <!-- <label>Modello Text-to-Image</label>
+            <!- <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small> -->
+            <!-- <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
+
+              <!- SELECTED -->
+              <!-- <div class="selected">
+                <img *ngIf="isSvgPath(selectedModel?.icon)" [src]="selectedModel?.icon" class="icon icon-svg" />
+                <span *ngIf="!isSvgPath(selectedModel?.icon)" class="icon">{{ selectedModel?.icon }}</span>
+                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+                <span class="arrow">▼</span>
+              </div> --> 
+
+              <!-- DROPDOWN -->
+              <!-- <div class="dropdown" *ngIf="openDropdown">
+
+                <div class="group" *ngFor="let group of availableModelGroups">
+
+                  <!- GROUP TITLE (CLICKABLE TO TOGGLE) -->
+                  <!-- <div class="group-title" (click)="toggleGroup(group, $event)">
+                    <img *ngIf="isSvgPath(group.icon)" [src]="group.icon" class="icon icon-svg" />
+                    <span *ngIf="!isSvgPath(group.icon)" class="icon">{{ group.icon }}</span>
+                    <span>{{ group.provider }}</span>
+                    <span class="arrow" [class.expanded]="group.expanded">▶</span>
+                  </div>
+
+                  < OPTIONS (SHOWN ONLY IF GROUP EXPANDED) -->
+                  <!-- <div
+                    class="option"
+                    *ngFor="let item of group.models"
+                    [class.hidden]="!group.expanded"
+                    (click)="selectModel(item, $event)"
+                  >
+                    <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
+                    <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
+                    <span>{{ item.name }}</span>
+                  </div>
+
+                </div> -->
+
+              <!-- </div>
+            </div> ✅ chiude custom-select  -->
+  
             <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
           </div>
         </div>
@@ -702,17 +746,25 @@ selectedModel: any = null;
       ]
     },
     {
+      provider: 'Qwen',
+      icon: 'assets/qwen.jpg',
+      expanded: false,
+      models: [
+        { id: 'qwen-image', name: 'qwen-image', icon: 'assets/qwen.jpg' }
+      ]
+    },
+    {
       provider: 'Seedream',
       icon: 'assets/seedream.png',
       expanded: false,
       models: [
         { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png' },
-        { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
-        { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
+        // { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
+        // { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
       ]
     },
     {
-      provider: 'Stable AI',
+      provider: 'Stability AI',
       icon: 'assets/stability.svg',
       expanded: false,
       models: [

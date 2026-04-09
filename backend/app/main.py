@@ -138,13 +138,16 @@ MODEL_MAP = {
     "midjourney-v5": "stability-ai/sdxl:7762fd07",
     "midjourney-v6": "stability-ai/sdxl:7762fd07",
     "seedream-5-lite": "bytedance/seedream-5-lite",          # esempio
-    "seedream-4-5": "bytedance/seedream-4.5",          # esempio
-    "seedream-4-0": "bytedance/seedream-4.0",          # esempio
+    # "seedream-4-5": "bytedance/seedream-4.5",          # esempio
+    # "seedream-4-0": "bytedance/seedream-4.0",          # esempio
     "pollo-v1": "pollo/ai-v1",                            # placeholder
     "pollo-v2": "pollo/ai-v2",                            # placeholder
     # Imagen (reali)
     "imagen-4": "google/imagen-4",  #ok
     "imagen-4-fast": "google/imagen-4-fast",
+
+    # qwen image (reali)
+    "qwen-image": "qwen/qwen-image",             
 
     # Gemini image (reali)
     "gemini-image-pro": "gemini-3-pro-image",
@@ -203,9 +206,9 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
 
             input_params={
                 "prompt": prompt,
-                "image_size": "1K",
+                # "image_size": "1K",
                 "aspect_ratio": aspect_ratio,
-                "output_format": "jpeg",
+                # "output_format": "jpeg",
                 "safety_filter_level": "block_medium_and_above"
 
             },
