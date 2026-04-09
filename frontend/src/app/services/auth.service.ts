@@ -10,7 +10,7 @@ import { environment } from '../../environments/environments';
 export interface User {
   id: number;
   email: string;
-  username: string;
+  username?: string;
   tokens: number;
   is_active: boolean;
 }

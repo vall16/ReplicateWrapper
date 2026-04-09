@@ -134,7 +134,7 @@ MODEL_MAP = {
     "flux-dev": "black-forest-labs/flux-2-dev",
     "flux-schnell": "black-forest-labs/flux-schnell",
     # "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
-    "dalle-3": "openai/dall-e-3",  #ok
+    "gpt-image-1.5": "openai/gpt-image-1.5",  #ok
     "midjourney-v5": "stability-ai/sdxl:7762fd07",
     "midjourney-v6": "stability-ai/sdxl:7762fd07",
     "seedream-5-lite": "bytedance/seedream-5-lite",          # esempio
@@ -205,7 +205,7 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
                 "prompt": prompt,
                 "image_size": "1K",
                 "aspect_ratio": aspect_ratio,
-                "output_format": "jpg",
+                "output_format": "jpeg",
                 "safety_filter_level": "block_medium_and_above"
 
             },

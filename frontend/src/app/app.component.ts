@@ -150,7 +150,8 @@ import { Component } from '@angular/core';
   display: flex;
   align-items: center;
   gap: 1.8rem;   /* già presente */
-  margin-right: 2rem; /* spazio extra verso il gruppo AI */
+  /* margin-right: 2rem; spazio extra verso il gruppo AI */
+  margin-right: auto; 
 }
     .nav-links a {
       display: flex;
@@ -167,26 +168,58 @@ import { Component } from '@angular/core';
     .nav-links a.active { color: #3b82f6; background-color: rgba(99, 102, 241, 0.08); }
     .icon { width: 1.4em; height: 1.4em; position: relative; top: 1px; }
     .cta-group { display: flex; align-items: center; gap: 0.75rem; }
-    .auth-buttons { display: flex; align-items: center; gap: 0.75rem; margin-left: 0.75rem; }
+    .auth-buttons { display: flex; align-items: center; gap: 0.75rem; margin-left: 1.5rem; }
     /* --- CTA buttons --- */
     .primary-cta { border: none; border-radius: 6px; padding: 0.55rem 1.4rem; font-size: 0.9rem; font-weight: 500; color: #ffffff; cursor: pointer; background: #6366f1; transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease; white-space: nowrap; }
     .primary-cta:hover { background-color: #4f46e5; transform: translateY(-1px); }
     .primary-cta:active { transform: translateY(0); background-color: #4338ca; }
     .btn-login, .btn-register { border-radius: 6px; padding: 0.55rem 1rem; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s ease, transform 0.15s ease; }
-    .btn-login { border: 1px solid #d1d5db; background: transparent; color: #4b5563; }
+    /* .btn-login { border: 1px solid #d1d5db; background: transparent; color: #4b5563; }
     .btn-login:hover { background: #f3f4f6; transform: translateY(-1px); }
+     */
+    .btn-login {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.btn-login:hover {
+  color: #111827;
+  background: rgba(0,0,0,0.05);
+}
     /* .btn-register { background: #6366f1; color: #ffffff; border: none; }
     .btn-register:hover { background: #4f46e5; transform: translateY(-1px); } */
+
 
     .btn-register {
   background: linear-gradient(135deg, #6366f1, #3b82f6);
   box-shadow: 0 6px 18px rgba(99,102,241,0.4);
   font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px; /* 🔥 pill shape */
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-register:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(99,102,241,0.5);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.6);
+}
+
+.btn-register::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: 0.5s;
+}
+
+.btn-register:hover::after {
+  left: 100%;
 }
 
     /* --- active CTA style --- */

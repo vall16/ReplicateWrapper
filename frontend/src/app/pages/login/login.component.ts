@@ -78,7 +78,9 @@ import { environment } from '../../../environments/environments';
           </div>
 
           <button type="button" class="btn-google" (click)="loginWithGoogle()">
-            <span class="google-logo"></span>
+            <!-- <span class="google-logo"></span> -->
+            <img src="assets/google.png"  />
+
             Continua con Google
           </button>
 
@@ -359,6 +361,12 @@ import { environment } from '../../../environments/environments';
       justify-content: center;
       gap: 0.5rem;
       transition: background-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .btn-google img {
+      width: 16px;   /* 👈 più piccola */
+      height: 16px;
+      object-fit: contain;
     }
 
     .btn-google:hover {

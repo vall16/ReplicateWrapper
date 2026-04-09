@@ -620,16 +620,19 @@ selectedModel: any = null;
   style = 'realistic';
 
   styles = [
-    { label: 'Realistico', value: 'realistic' },
-    { label: 'Ultra-realistic', value: 'ultra realistic' },
-    { label: 'Ghibli', value: 'studio ghibli style' },
-    { label: 'Anime', value: 'anime style' },
-    { label: 'Cartoon', value: 'cartoon style' },
-    { label: 'Cinematic', value: 'cinematic lighting' },
-    { label: 'Fantasy', value: 'fantasy art' },
-    { label: '3D Render', value: '3d render' },
-    { label: 'Minimal', value: 'minimalist' }
-  ];
+  { label: 'Realistico', value: 'photorealistic, ultra detailed, 8k' },
+  { label: 'Ultra-realistic', value: 'hyper realistic, ultra detailed, cinematic lighting, 8k' },
+  
+  { label: 'Ghibli', value: 'soft anime illustration, pastel colors, hand drawn animation style, whimsical, detailed background, japanese animation style' },
+  
+  { label: 'Anime', value: 'anime illustration, sharp lines, vibrant colors, japanese anime style, high detail' },
+  
+  { label: 'Cartoon', value: 'cartoon style, clean lines, colorful, stylized' },
+  { label: 'Cinematic', value: 'cinematic lighting, dramatic shadows, movie still' },
+  { label: 'Fantasy', value: 'fantasy art, epic scene, highly detailed' },
+  { label: '3D Render', value: '3d render, octane render, realistic lighting' },
+  { label: 'Minimal', value: 'minimalist, simple shapes, clean design' }
+];
 
   constructor(
       private authService: AuthService,
@@ -662,25 +665,25 @@ selectedModel: any = null;
       models: [
         // 🔵 IMAGEN (qualità alta)
         { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png' },
-        { id: 'imagen-4-fast', name: 'Imagen Fast ⚡', icon: 'assets/google.png' },
+        { id: 'imagen-4-fast', name: 'Imagen Fast', icon: 'assets/google.png' },
 
         // 🟣 GEMINI IMAGE (multimodale)
-        { id: 'gemini-image-pro', name: 'Gemini Image Pro', icon: 'assets/google.png' },
+        // { id: 'gemini-image-pro', name: 'Gemini Image Pro', icon: 'assets/google.png' },
 
         // 🍌 MARKETING (stile Pollo AI)
-        { id: 'nano-banana', name: 'Nano Banana ⚡', icon: 'assets/google.png' },
+        { id: 'nano-banana', name: 'Nano Banana', icon: 'assets/google.png' },
         { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png' }
 
       ]
     },
-    {
-      provider: 'Kling AI',
-      icon: 'assets/kling.jpg',
-      expanded: false,
-      models: [
-        { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
-      ]
-    },
+    // {
+    //   provider: 'Kling AI',
+    //   icon: 'assets/kling.jpg',
+    //   expanded: false,
+    //   models: [
+    //     { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
+    //   ]
+    // },
     {
       provider: 'Midjourney',
       icon: 'assets/midjourney.png',
@@ -695,7 +698,7 @@ selectedModel: any = null;
       icon: 'assets/openai.svg',
       expanded: false,
       models: [
-        { id: 'dalle-3', name: 'DALL·E 3', icon: 'assets/openai.svg' }
+        { id: 'gpt-image-1.5', name: 'Gpt-image-1.5', icon: 'assets/openai.svg' }
       ]
     },
     {
