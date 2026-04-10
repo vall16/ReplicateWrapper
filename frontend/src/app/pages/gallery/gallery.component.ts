@@ -13,11 +13,12 @@ import { environment } from '../../../environments/environments';
     <div class="gallery-shell">
       <header class="gallery-header">
         <div>
-          <h1>Le mie immagini generate</h1>
-          <p>Filtra per stile, modello o testo del prompt.</p>
+          <h1>I miei contenuti generati</h1>
+          <p>Visualizza tutte le tue immagini e video generati. Filtra per stile, modello o testo del prompt.</p>
         </div>
         <div class="header-actions">
-          <button class="btn" (click)="goToGenerate()">Torna a Genera</button>
+          <button class="btn" (click)="goToGenerate()">Genera Immagine</button>
+          <button class="btn" (click)="goToVideoGenerate()">Genera Video</button>
           <button class="btn btn-primary" (click)="loadImages()">Aggiorna</button>
         </div>
       </header>
@@ -44,16 +45,24 @@ import { environment } from '../../../environments/environments';
       </section>
 
       <section class="gallery-content">
-        <div class="empty-state" *ngIf="!images.length && !loading">Nessuna immagine trovata.</div>
-        <div class="grid" *ngIf="images.length">
-          <div class="card" *ngFor="let image of images">
-            <img [src]="baseImageUrl + image.image_url" [alt]="image.prompt" />
+        <div class="empty-state" *ngIf="!media.length && !loading">Nessun contenuto trovato.</div>
+        <div class="grid" *ngIf="media.length">
+          <div class="card" *ngFor="let item of media">
+            <!-- IMMAGINE -->
+            <img *ngIf="item.type === 'image'" [src]="baseImageUrl + item.media_url" [alt]="item.prompt" />
+            
+            <!-- VIDEO -->
+            <video *ngIf="item.type === 'video'" [src]="baseImageUrl + item.media_url" controls preload="metadata" class="video-preview"></video>
+            
             <div class="card-meta">
-              <div><strong>Prompt:</strong> {{ image.prompt }}</div>
-              <div><strong>Stile:</strong> {{ image.style || '-' }}</div>
-              <div><strong>Modello:</strong> {{ image.model || '-' }}</div>
-              <div><strong>Token:</strong> {{ image.tokens_used }}</div>
-              <div><small>{{ image.created_at | date:'short' }}</small></div>
+              <div><strong>Prompt:</strong> {{ item.prompt }}</div>
+              <div *ngIf="item.type === 'image'"><strong>Stile:</strong> {{ item.style || '-' }}</div>
+              <div *ngIf="item.type === 'video'"><strong>Risoluzione:</strong> {{ item.resolution || '-' }}</div>
+              <div *ngIf="item.type === 'video'"><strong>Durata:</strong> {{ item.duration }}s</div>
+              <div><strong>Modello:</strong> {{ item.model || '-' }}</div>
+              <div><strong>Token:</strong> {{ item.tokens_used }}</div>
+              <div><small>{{ item.created_at | date:'short' }}</small></div>
+              <div class="media-type">{{ item.type === 'image' ? '🖼️ Immagine' : '🎬 Video' }}</div>
             </div>
           </div>
         </div>
@@ -78,14 +87,16 @@ import { environment } from '../../../environments/environments';
     .gallery-content .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.9rem;}
     .card{background:#fff;border:1px solid #e2e8f0;border-radius:.8rem;overflow:hidden;display:flex;flex-direction:column;}
     .card img{width:100%;aspect-ratio:16/9;object-fit:cover;}
+    .card video.video-preview{width:100%;aspect-ratio:16/9;object-fit:cover;}
     .card-meta{padding:.55rem;font-size:.82rem;line-height:1.25;}
+    .media-type{font-size:.75rem;color:#64748b;margin-top:.25rem;}
     .empty-state{padding:2rem;text-align:center;color:#64748b;}
     .loading-overlay{position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#2563eb;}
     .error-message{margin-top:.8rem;color:#ef4444;font-weight:600;}
   `]
 })
 export class GalleryComponent {
-  images: any[] = [];
+  media: any[] = []; // Cambiato da images a media
   loading = false;
   error = '';
 
@@ -115,7 +126,10 @@ export class GalleryComponent {
           { id: 'flux-pro', name: 'FLUX.1 Pro' },
           { id: 'flux-dev', name: 'FLUX.1 Dev' },
           { id: 'sdxl', name: 'SDXL' },
-          { id: 'flux-schnell', name: 'FLUX Schnell' }
+          { id: 'flux-schnell', name: 'FLUX Schnell' },
+          { id: 'kling-video', name: 'Kling AI Video' },
+          { id: 'runway-ml', name: 'Runway ML' },
+          { id: 'pika-1', name: 'Pika 1.0' }
         ];
       }
     );
@@ -127,23 +141,27 @@ export class GalleryComponent {
     this.router.navigate(['/generate']);
   }
 
+  goToVideoGenerate() {
+    this.router.navigate(['/video-generate']);
+  }
+
   loadImages() {
     this.error = '';
     this.loading = true;
 
-    this.authService.getGeneratedImages({
+    this.authService.getGeneratedMedia({
       style: this.styleFilter,
       model: this.modelFilter,
       prompt: this.promptFilter,
       limit: 100
     }).subscribe(
       (res: any) => {
-        this.images = res.items || [];
+        this.media = res.items || [];
         this.loading = false;
       },
       (err: any) => {
-        console.error('Errore caricamento immagini generate', err);
-        this.error = 'Impossibile caricare le immagini. Riprova più tardi.';
+        console.error('Errore caricamento media generati', err);
+        this.error = 'Impossibile caricare i contenuti. Riprova più tardi.';
         this.loading = false;
       }
     );

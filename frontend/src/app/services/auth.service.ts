@@ -221,6 +221,53 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/generated-images${queryString}`, { headers });
   }
 
+  // Lista video generati dall'utente, con filtri
+  getGeneratedVideos(filters: { model?: string; prompt?: string; limit?: number } = {}): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    const params: string[] = [];
+    if (filters.model) {
+      params.push(`model=${encodeURIComponent(filters.model)}`);
+    }
+    if (filters.prompt) {
+      params.push(`prompt=${encodeURIComponent(filters.prompt)}`);
+    }
+    if (filters.limit) {
+      params.push(`limit=${filters.limit}`);
+    }
+
+    const queryString = params.length ? `?${params.join('&')}` : '';
+    return this.http.get(`${this.apiUrl}/generated-videos${queryString}`, { headers });
+  }
+
+  // Lista combinata immagini e video generati dall'utente, con filtri
+  getGeneratedMedia(filters: { style?: string; model?: string; prompt?: string; limit?: number } = {}): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    const params: string[] = [];
+    if (filters.style) {
+      params.push(`style=${encodeURIComponent(filters.style)}`);
+    }
+    if (filters.model) {
+      params.push(`model=${encodeURIComponent(filters.model)}`);
+    }
+    if (filters.prompt) {
+      params.push(`prompt=${encodeURIComponent(filters.prompt)}`);
+    }
+    if (filters.limit) {
+      params.push(`limit=${filters.limit}`);
+    }
+
+    const queryString = params.length ? `?${params.join('&')}` : '';
+    return this.http.get(`${this.apiUrl}/generated-media${queryString}`, { headers });
+  }
+
 // CLICK DI GENERAZIONE
   generateImage(
     description: string,

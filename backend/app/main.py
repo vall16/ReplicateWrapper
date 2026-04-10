@@ -186,7 +186,7 @@ async def download_and_save_image(image_url: str) -> str:
         # Genera un nome univoco
         unique_id = str(uuid.uuid4())[:8]
         filename = f"{unique_id}.png"
-        filepath = UPLOADS_DIR / filename
+        filepath = IMAGES_DIR / filename
 
         # Scarica l'immagine
         async with httpx.AsyncClient(follow_redirects=True) as client:
@@ -525,6 +525,112 @@ def get_generated_images(
     return {
         "total": len(items),
         "items": items
+    }
+
+@app.get("/api/generated-videos")
+def get_generated_videos(
+    model: Optional[str] = None,
+    prompt: Optional[str] = None,
+    limit: int = 50,
+    user=Depends(get_current_user),
+    db=Depends(get_db)
+):
+    query = db.query(GeneratedVideo).filter(GeneratedVideo.user_id == user.id)
+
+    if model:
+        query = query.filter(GeneratedVideo.model.ilike(f"%{model}%"))
+    if prompt:
+        query = query.filter(GeneratedVideo.prompt.ilike(f"%{prompt}%"))
+
+    limit = min(max(limit, 1), 200)
+    results = query.order_by(GeneratedVideo.created_at.desc()).limit(limit).all()
+
+    items = [
+        {
+            "id": vid.id,
+            "prompt": vid.prompt,
+            "model": vid.model,
+            "resolution": vid.resolution,
+            "duration": vid.duration,
+            "video_url": vid.video_url,
+            "tokens_used": vid.tokens_used,
+            "created_at": vid.created_at.isoformat(),
+            "type": "video"
+        }
+        for vid in results
+    ]
+
+    return {
+        "total": len(items),
+        "items": items
+    }
+
+@app.get("/api/generated-media")
+def get_generated_media(
+    style: Optional[str] = None,
+    model: Optional[str] = None,
+    prompt: Optional[str] = None,
+    limit: int = 50,
+    user=Depends(get_current_user),
+    db=Depends(get_db)
+):
+    # Recupera immagini
+    images_query = db.query(GeneratedImage).filter(GeneratedImage.user_id == user.id)
+    if style:
+        images_query = images_query.filter(GeneratedImage.style.ilike(f"%{style}%"))
+    if model:
+        images_query = images_query.filter(GeneratedImage.model.ilike(f"%{model}%"))
+    if prompt:
+        images_query = images_query.filter(GeneratedImage.prompt.ilike(f"%{prompt}%"))
+
+    images = images_query.order_by(GeneratedImage.created_at.desc()).limit(limit).all()
+
+    # Recupera video
+    videos_query = db.query(GeneratedVideo).filter(GeneratedVideo.user_id == user.id)
+    if model:
+        videos_query = videos_query.filter(GeneratedVideo.model.ilike(f"%{model}%"))
+    if prompt:
+        videos_query = videos_query.filter(GeneratedVideo.prompt.ilike(f"%{prompt}%"))
+
+    videos = videos_query.order_by(GeneratedVideo.created_at.desc()).limit(limit).all()
+
+    # Combina e ordina per data di creazione
+    all_items = []
+
+    # Aggiungi immagini
+    for img in images:
+        all_items.append({
+            "id": img.id,
+            "prompt": img.prompt,
+            "style": img.style,
+            "model": img.model,
+            "media_url": img.image_url,
+            "tokens_used": img.tokens_used,
+            "created_at": img.created_at.isoformat(),
+            "type": "image"
+        })
+
+    # Aggiungi video
+    for vid in videos:
+        all_items.append({
+            "id": vid.id,
+            "prompt": vid.prompt,
+            "model": vid.model,
+            "resolution": vid.resolution,
+            "duration": vid.duration,
+            "media_url": vid.video_url,
+            "tokens_used": vid.tokens_used,
+            "created_at": vid.created_at.isoformat(),
+            "type": "video"
+        })
+
+    # Ordina per data decrescente e limita
+    all_items.sort(key=lambda x: x["created_at"], reverse=True)
+    all_items = all_items[:limit]
+
+    return {
+        "total": len(all_items),
+        "items": all_items
     }
 
 
