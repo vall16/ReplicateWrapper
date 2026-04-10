@@ -661,10 +661,10 @@ selectedModel: any = null;
     refs: true
   };
 
-  style = 'realistic';
+  style = '';
 
   styles = [
-  { label: 'Realistico', value: 'photorealistic, ultra detailed, 8k' },
+  { label: 'Realistic', value: 'photorealistic, ultra detailed, 8k' },
   { label: 'Ultra-realistic', value: 'hyper realistic, ultra detailed, cinematic lighting, 8k' },
   
   { label: 'Ghibli', value: 'soft anime illustration, pastel colors, hand drawn animation style, whimsical, detailed background, japanese animation style' },
@@ -684,11 +684,15 @@ selectedModel: any = null;
     ) {}
 
     ngOnInit() {
+
     // Controllo login all'inizio
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.style = this.styles[0].value; //
+    
 
     // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
     this.availableModelGroups = [
