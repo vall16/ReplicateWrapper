@@ -101,6 +101,27 @@ class GeneratedImage(Base):
     user = relationship("User")
 
 
+class GeneratedVideo(Base):
+    __tablename__ = "generated_videos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+
+    prompt = Column(String(500))
+    model = Column(String(100))
+    resolution = Column(String(50))  # "480p", "720p"
+    duration = Column(Integer)  # 5, 10, 30, 60 secondi
+
+    video_url = Column(String(500))
+
+    tokens_used = Column(Float, default=0.0)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    # relazione opzionale
+    user = relationship("User")
+
+
 # Create tables
 Base.metadata.create_all(bind=engine)
 

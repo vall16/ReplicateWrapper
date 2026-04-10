@@ -247,11 +247,12 @@ export class AuthService {
     );
   }
 
-  generateImage2(
-    description: string,
-    style: string = 'moderno',
-    model: string = 'stability-ai/sdxl:latest',
-    ratio: string = '16:9'
+  // GENERAZIONE VIDEO
+  generateVideo(
+    prompt: string,
+    duration: number,
+    resolution: string,
+    model: string
   ): Observable<any> {
     const token = this.getToken();
 
@@ -261,45 +262,15 @@ export class AuthService {
     });
 
     return this.http.post<any>(
-      `${this.apiUrl}/generate-paid2`,
+      `${this.apiUrl}/generate-video`,
       {
-        description,
-        style,
-        model,
-        ratio
+        prompt,
+        duration,
+        resolution,
+        model
       },
       { headers }
     );
   }
 
-  // generateImage_old(prompt: string,  style: string = 'moderno',
-  //   model: string = 'stability-ai/sdxl:latest'
-  // ) {
-  //   return new Observable((observer) => {
-
-  //     console.log('FAKE CALL →', { prompt});
-
-  //     // Simula delay tipo API reale
-  //     setTimeout(() => {
-
-  //       // puoi usare immagini random
-  //       const fakeImages = [
-  //         'https://picsum.photos/800/800'
-  //         // 'https://source.unsplash.com/800x800/?ai,art',
-  //         // 'https://source.unsplash.com/800x800/?cyberpunk',
-  //         // 'https://source.unsplash.com/800x800/?fantasy'
-  //       ];
-
-  //       const randomImage = fakeImages[Math.floor(Math.random() * fakeImages.length)];
-
-  //       observer.next({
-  //         image_url: randomImage
-  //       });
-
-  //       observer.complete();
-
-  //     }, 1500); // 1.5 sec
-
-  //   });
-  // }
 }

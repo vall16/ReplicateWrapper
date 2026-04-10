@@ -18,8 +18,9 @@ import replicate
 from app.auth_routes import router as auth_router
 from app.token_routes import router as token_router
 from app.auth_routes import get_current_user
-from app.database import get_db, GeneratedImage
+from app.database import get_db, GeneratedImage, GeneratedVideo
 from app.replicate_wrapper import ReplicateWrapper
+from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
 from app.model_mapper import map_model
 
@@ -32,6 +33,13 @@ print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 # --- SETUP UPLOADS FOLDER ---
 UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
 UPLOADS_DIR.mkdir(exist_ok=True)
+
+# Crea sottocartelle per immagini e video
+IMAGES_DIR = UPLOADS_DIR / "images"
+IMAGES_DIR.mkdir(exist_ok=True)
+
+VIDEOS_DIR = UPLOADS_DIR / "videos"
+VIDEOS_DIR.mkdir(exist_ok=True)
 
 # --- GESTIONE CORS DA ENV ---
 # Leggiamo la stringa dal .env, se non esiste usiamo una lista vuota come fallback
@@ -46,7 +54,8 @@ app = FastAPI(
 )
 
 # Mount uploads folder
-app.mount("/images", StaticFiles(directory=UPLOADS_DIR), name="images")
+app.mount("/images", StaticFiles(directory=IMAGES_DIR), name="images")
+app.mount("/videos", StaticFiles(directory=VIDEOS_DIR), name="videos")
 
 app.add_middleware(
     CORSMiddleware,
@@ -159,6 +168,13 @@ MODEL_MAP = {
     "kling-alpha": "kling/alpha-model"                  # placeholder
 }
 
+# 🎬 MODELLI VIDEO (per generazione video)
+VIDEO_MODEL_MAP = {
+    "kling-video": "kwaivgi/kling-v3-video",              # modello video principale
+    "runway-ml": "runway-ml/text-to-video",             # alternativa video
+    "pika-1": "pika-labs/pika-1.0"                      # alternativa pika
+}
+
 async def download_and_save_image(image_url: str) -> str:
     """
     Scarica un'immagine da un URL e la salva su disco.
@@ -185,7 +201,32 @@ async def download_and_save_image(image_url: str) -> str:
     except Exception as e:
         print(f"Errore nel download dell'immagine: {e}")
         raise Exception(f"Errore nel salvataggio dell'immagine: {str(e)}")
+async def download_and_save_video(video_url: str) -> str:
+    """
+    Scarica un video da un URL e lo salva su disco.
 
+    Returns:
+        Percorso relativo: /videos/abc123.mp4
+    """
+    try:
+        # Genera un nome univoco
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{unique_id}.mp4"
+        filepath = VIDEOS_DIR / filename
+
+        # Scarica il video (timeout più lungo perché è un file pesante)
+        async with httpx.AsyncClient(follow_redirects=True) as client:
+            response = await client.get(video_url, timeout=120.0)
+            response.raise_for_status()
+
+        # Salva su disco
+        with open(filepath, "wb") as f:
+            f.write(response.content)
+
+        return f"/videos/{filename}"
+    except Exception as e:
+        print(f"Errore nel download del video: {e}")
+        raise Exception(f"Errore nel salvataggio del video: {str(e)}")
 # GENERAZIONE DELL’IMMAGINE
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
@@ -266,45 +307,157 @@ FAKE_IMAGES = [
     "https://picsum.photos/1024/768?random=5",
 ]
 
-@app.post("/api/generate-paid2")
-async def generate_image_paid_fake(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
-    prompt = build_prompt(req.description, req.style, req.ratio)
+# @app.post("/api/generate-paid2")
+# async def generate_image_paid_fake(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
+#     prompt = build_prompt(req.description, req.style, req.ratio)
 
-    try:
-        # Scegli un'immagine fake random
-        image_url_remote = random.choice(FAKE_IMAGES)
-        print(f"[FAKE GENERATE] Remote URL scelto: {image_url_remote}")
-
-
-        # Scarica e salva l’immagine su disc
-        local_image_url = await download_and_save_image(image_url_remote)
-        print(f"[FAKE GENERATE] Local URL salvato: {local_image_url}")
+#     try:
+#         # Scegli un'immagine fake random
+#         image_url_remote = random.choice(FAKE_IMAGES)
+#         print(f"[FAKE GENERATE] Remote URL scelto: {image_url_remote}")
 
 
-        # Salva i metadata nel DB
-        generated_image = GeneratedImage(
-            user_id=user.id,
-            prompt=req.description,
-            model=req.model,
-            style=req.style,
-            image_url=local_image_url,
-            tokens_used=0  # 0 perché non ha consumato token reali
+#         # Scarica e salva l’immagine su disc
+#         local_image_url = await download_and_save_image(image_url_remote)
+#         print(f"[FAKE GENERATE] Local URL salvato: {local_image_url}")
+
+
+#         # Salva i metadata nel DB
+#         generated_image = GeneratedImage(
+#             user_id=user.id,
+#             prompt=req.description,
+#             model=req.model,
+#             style=req.style,
+#             image_url=local_image_url,
+#             tokens_used=0  # 0 perché non ha consumato token reali
+#         )
+#         db.add(generated_image)
+#         db.commit()
+#         db.refresh(generated_image)
+
+#         return {
+#             "image_url": local_image_url,
+#             "id": generated_image.id,
+#             "fake": True
+#         }
+
+#     except Exception as e:
+#         return JSONResponse(
+#             status_code=200,
+#             content={"error": str(e)}
+#         )
+
+# Helper per mappare resolution a aspect_ratio per video
+def map_resolution_to_aspect_ratio(resolution: str) -> str:
+    """
+    Mappa la risoluzione (480p, 720p) a aspect_ratio per Replicate.
+    
+    Returns:
+        Aspect ratio string (es. "16:9", "9:16")
+    """
+    resolution_map = {
+        "480p": "16:9",   # Paesaggio standard
+        "720p": "16:9",   # Paesaggio HD
+        "1080p": "16:9",  # Paesaggio Full HD
+        "4k": "16:9"      # Paesaggio 4K
+    }
+    return resolution_map.get(resolution, "16:9")
+
+# 🎬 GENERAZIONE DEL VIDEO
+@app.post("/api/generate-video")
+async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=Depends(get_db)):
+    """
+    Endpoint per generare video AI.
+    
+    Parametri:
+    - prompt: Descrizione del video da generare
+    - duration: Durata in secondi (5, 10, 30, 60)
+    - resolution: Risoluzione (480p, 720p)
+    - model: Modello video (kling-video, runway-ml, pika-1)
+    
+    Ritorna:
+    - video_url: URL locale del video generato
+    - id: ID della generazione nel DB
+    """
+    
+    # Valida che il modello sia supportato
+    if req.model not in VIDEO_MODEL_MAP:
+        return JSONResponse(
+            status_code=200,
+            content={"error": f"Modello video non supportato: {req.model}. Disponibili: {list(VIDEO_MODEL_MAP.keys())}"}
         )
-        db.add(generated_image)
-        db.commit()
-        db.refresh(generated_image)
-
-        return {
-            "image_url": local_image_url,
-            "id": generated_image.id,
-            "fake": True
+    
+    # Valida durata
+    allowed_durations = [5, 10, 30, 60]
+    if req.duration not in allowed_durations:
+        return JSONResponse(
+            status_code=200,
+            content={"error": f"Durata non supportata: {req.duration}. Disponibili: {allowed_durations}"}
+        )
+    
+    try:
+        # Seleziona modello completo
+        model_version = VIDEO_MODEL_MAP[req.model]
+        aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
+        
+        # Prepara i parametri per Replicate
+        video_input_params = {
+            "prompt": req.prompt,
+            "duration": req.duration,
+            "aspect_ratio": aspect_ratio,
+            "fps": 24,  # Frame per secondo
         }
-
+        
+        # Se il modello è Kling, aggiungi parametri specifici
+        if req.model == "kling-video":
+            video_input_params["cfg_scale"] = 7.5  # Guidance scale
+        
+        # Chiama Replicate per generare il video
+        output = await replicate_wrapper.run_model(
+            model_version,
+            input_params=video_input_params,
+            user_id=user.id,
+            db=db
+        )
+        
+        print(f"OUTPUT VIDEO RAW: {output}")
+        
+        # Estrazione URL del video dall'output
+        if isinstance(output, list):
+            video_url_remote = output[0]
+        else:
+            video_url_remote = output
+        
+        # Scarica e salva il video su disco
+        local_video_url = await download_and_save_video(video_url_remote)
+        
+        # Salva i metadata nel DB
+        generated_video = GeneratedVideo(
+            user_id=user.id,
+            prompt=req.prompt,
+            model=req.model,
+            resolution=req.resolution,
+            duration=req.duration,
+            video_url=local_video_url,
+            tokens_used=3  # I video costano 3 token (vs 1 per immagini)
+        )
+        db.add(generated_video)
+        db.commit()
+        db.refresh(generated_video)
+        
+        return {
+            "video_url": local_video_url,
+            "id": generated_video.id
+        }
+    
     except Exception as e:
+        # Cattura errore e ritornalo
+        print(f"Errore generazione video: {str(e)}")
         return JSONResponse(
             status_code=200,
             content={"error": str(e)}
         )
+
 @app.get("/")
 async def root():
     return {

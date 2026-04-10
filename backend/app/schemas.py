@@ -54,3 +54,10 @@ class StatusResponse(BaseModel):
     message: str
     status: str
     data: Optional[dict] = None
+
+# Video Models
+class VideoRequest(BaseModel):
+    prompt: str
+    duration: int  # 5, 10, 30, 60 secondi
+    resolution: str  # "480p", "720p"
+    model: str  # "kling-video", "runway-ml", "pika-1"

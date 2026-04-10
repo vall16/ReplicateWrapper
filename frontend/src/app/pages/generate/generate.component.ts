@@ -750,7 +750,7 @@ selectedModel: any = null;
       icon: 'assets/qwen.jpg',
       expanded: false,
       models: [
-        { id: 'qwen-image', name: 'qwen-image', icon: 'assets/qwen.jpg' }
+        { id: 'qwen-image', name: 'Qwen-image', icon: 'assets/qwen.jpg' }
       ]
     },
     {

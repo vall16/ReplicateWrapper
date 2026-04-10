@@ -457,7 +457,7 @@ import { environment } from '../../../environments/environments';
 })
 export class VideoGenerateComponent {
   prompt = '';
-  duration: 5 | 10 | 30 | 60 = 10;
+  duration: 5 | 10 | 30 | 60 = 5;
   resolution: '480p'| '720p' | '1080p'  = '480p';
   videoUrl: string | null = null;
   error: string | null = null;
@@ -516,14 +516,28 @@ export class VideoGenerateComponent {
 
     console.log('Generando video con:', payload);
 
-    // TODO: Implementare la chiamata al backend per generare il video
-    // questo è un placeholder per la logica futura
-    
-    // Simulazione di una risposta (rimuovere in produzione)
-    setTimeout(() => {
-      this.loading = false;
-      this.error = 'Generazione video in fase di sviluppo. Contatta il supporto.';
-    }, 2000);
+    this.authService.generateVideo(
+      this.prompt,
+      this.duration,
+      this.resolution,
+      this.selectedModel.id
+    ).subscribe(
+      (res: any) => {
+        this.loading = false;
+
+        if (res.error) {
+          this.error = res.error;
+        } else if (res.video_url) {
+          // Concatena base URL con percorso video
+          this.videoUrl = environment.apiBaseUrl + res.video_url;
+        }
+      },
+      (err: any) => {
+        this.loading = false;
+        this.error = "Errore di rete o server non raggiungibile.";
+        console.error('Errore generazione video:', err);
+      }
+    );
   }
 
   goToGallery() {

@@ -82,7 +82,8 @@ import { RouterModule } from '@angular/router';
             <div class="hero-flow">
               <div class="hero-step hero-step-in">
                 <span class="hero-step-label">Prompt · Input</span>
-                <span class="hero-step-meta">Text · Image · Audio</span>
+                <!-- <span class="hero-step-meta">Text · Image · Audio</span> -->
+                <span class="hero-step-meta">Text</span>
               </div>
               <div class="hero-connector"></div>
               <div class="hero-step hero-step-model">
@@ -105,94 +106,142 @@ import { RouterModule } from '@angular/router';
       <!-- Products Section -->
       <section class="products" id="features">
         <div class="section-header">
-          <h2>Prodotti Replicate.ai Disponibili</h2>
-          <p>Accedi a una vasta gamma di modelli AI per ogni esigenza</p>
+          <h2>Modelli Generativi Disponibili</h2>
+          <p>Accedi ai migliori modelli di text-to-image al mondo, tutti in un'unica piattaforma</p>
         </div>
 
         <div class="products-grid">
-          <!-- Generative Models -->
-          <div class="product-card">
-            <div class="product-icon">🎨</div>
-            <h3>Generative Models</h3>
-            <p>Crea immagini, testi e contenuti con i modelli generativi più avanzati</p>
-            <ul class="product-features">
-              <li>✨ Stable Diffusion XL</li>
-              <li>🎬 DALL-E 3</li>
-              <li>📝 GPT-4</li>
-              <li>🎵 MusicGen</li>
-            </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
-          </div>
-
-          <!-- Vision Models -->
+          <!-- Flux Pro -->
           <div class="product-card featured">
-            <div class="badge">⭐ Più Popolare</div>
-            <div class="product-icon">👁️</div>
-            <h3>Vision Models</h3>
-            <p>Analizza immagini e video con i migliori modelli di computer vision</p>
+            <div class="badge-lightning">Istantaneo & Adattivo</div>
+            <div class="product-logo">
+              <img src="assets/flux.png" alt="Flux" class="logo-img" />
+            </div>
+            <h3>Flux AI</h3>
+            <p>Qualità fotografica ultrareale con la velocità del fulmine</p>
             <ul class="product-features">
-              <li>🔍 CLIP</li>
-              <li>📸 ResNet</li>
-              <li>🎯 YOLOv8</li>
-              <li>🧠 Vision Transformers</li>
+              <li>🔥 Qualità premium</li>
+              <li>⚡ Generazione ultra-rapida</li>
+              <li>🎨 Dettagli straordinari</li>
+              <li>✨ Miglior rapporto qualità/velocità</li>
+            </ul>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Inizia Subito</button>
+          </div>
+
+          <!-- SDXL Stability -->
+          <div class="product-card">
+            <div class="badge-lightning">Robusto</div>
+            <div class="product-logo">
+              <img src="assets/stability.svg" alt="Stability" class="logo-img" />
+            </div>
+            <h3>Stable Diffusion XL</h3>
+            <p>Il classico affidabile per generazioni consistenti e creative</p>
+            <ul class="product-features">
+              <li>🎯 Altamente affidabile</li>
+              <li>🖼️ Stile personalizzabile</li>
+              <li>💰 Economico</li>
+              <li>📚 Migliori prompt comunali</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
           </div>
 
-          <!-- Language Models -->
+          <!-- Midjourney -->
           <div class="product-card">
-            <div class="product-icon">💬</div>
-            <h3>Language Models</h3>
-            <p>Elabora testo, traduzioni e comprensione del linguaggio naturale</p>
+            <div class="product-logo">
+              <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" />
+            </div>
+            <h3>Midjourney</h3>
+            <p>Stile artistico unico e raffinato, perfetto per concetti creativi</p>
             <ul class="product-features">
-              <li>📚 LLaMA 2</li>
-              <li>🌐 Mistral</li>
-              <li>💡 Llama-2-Chat</li>
-              <li>🔤 Code Llama</li>
+              <li>🎭 Stile estetico distintivo</li>
+              <li>🌈 Vibrant e vivace</li>
+              <li>✏️ Ottimo per concetti</li>
+              <li>🏆 Vincitore di premi</li>
+            </ul>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
+          </div>
+
+          <!-- OpenAI DALL-E -->
+          <div class="product-card">
+            <div class="badge-lightning">Creativo & Espressivo</div>
+            <div class="product-logo">
+              <img src="assets/openai.svg" alt="OpenAI" class="logo-img" />
+            </div>
+            <h3>OpenAI GPT-image-1.5</h3>
+            <p>Interpretazione precisa del testo con risultati naturali e realistici</p>
+            <ul class="product-features">
+              <li>📖 Comprensione testuale</li>
+              <li>🎯 Esecuzione precisa</li>
+              <li>🌍 Ampia conoscenza</li>
+              <li>✅ Affidabilità premium</li>
+            </ul>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Accedi</button>
+          </div>
+
+          <!-- Kling -->
+          <div class="product-card">
+            <div class="product-logo">
+              <img src="assets/kling.jpg" alt="Kling" class="logo-img" />
+            </div>
+            <h3>Kling Video</h3>
+            <p>Trasforma immagini e testo in video straordinari e fluidi</p>
+            <ul class="product-features">
+              <li>🎬 Video alta qualità</li>
+              <li>🎞️ Movimento naturale</li>
+              <li>🚀 Tecnologia emergente</li>
+              <li>✨ Effetti cinematografici</li>
+            </ul>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Genera Video</button>
+          </div>
+
+          <!-- Google Gemini -->
+          <div class="product-card">
+            <div class="badge-lightning">Istantaneo & Leggero</div>
+            <div class="product-logo">
+              <img src="assets/google.png" alt="Google" class="logo-img" />
+            </div>
+            <h3>Google Nano-banana</h3>
+            <p>Potenza multimodale di Google con comprensione avanzata del contesto</p>
+            <ul class="product-features">
+              <li>🧠 Intelligenza avanzata</li>
+              <li>🌐 Comprensione multimodale</li>
+              <li>🔍 Ricerca integrata</li>
+              <li>⚡ Risposte rapide e accurate</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
           </div>
 
-          <!-- Audio Models -->
+          <!-- Seedream -->
           <div class="product-card">
-            <div class="product-icon">🎧</div>
-            <h3>Audio Models</h3>
-            <p>Elabora audio, testo-a-voce e riconoscimento vocale</p>
+            <div class="product-logo">
+              <img src="assets/seedream.png" alt="Seedream" class="logo-img" />
+            </div>
+            <h3>Seedream</h3>
+            <p>Generazione artistica con stili unici e creatività illimitata</p>
             <ul class="product-features">
-              <li>🎙️ Whisper</li>
-              <li>🔊 Text-to-Speech</li>
-              <li>🎵 Voice Cloning</li>
-              <li>🔉 Audio Enhancement</li>
+              <li>🎨 Stili artistici unici</li>
+              <li>🌈 Creatività illimitata</li>
+              <li>✨ Risultati sorprendenti</li>
+              <li>🎭 Espressione artistica</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Crea Arte</button>
           </div>
 
-          <!-- API & Integration -->
+          <!-- Qwen -->
           <div class="product-card">
-            <div class="product-icon">⚙️</div>
-            <h3>API & Integration</h3>
-            <p>Integra facilmente nel tuo progetto con le nostre API robuste</p>
+            <div class="badge-lightning">Versatile, Omnisciente</div>
+            <div class="product-logo">
+              <img src="assets/qwen.jpg" alt="Qwen" class="logo-img" />
+            </div>
+            <h3>Qwen</h3>
+            <p>Modello linguistico avanzato con eccellente comprensione del linguaggio</p>
             <ul class="product-features">
-              <li>🔌 REST API</li>
-              <li>📦 SDK Python</li>
-              <li>🌐 Webhooks</li>
-              <li>📊 Analytics</li>
+              <li>📝 Comprensione eccellente</li>
+              <li>🌍 Supporto multilingue</li>
+              <li>🧠 Ragionamento avanzato</li>
+              <li>📚 Conoscenza approfondita</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
-          </div>
-
-          <!-- Enterprise Solutions -->
-          <div class="product-card">
-            <div class="product-icon">🏢</div>
-            <h3>Enterprise Solutions</h3>
-            <p>Soluzioni personalizzate per applicazioni mission-critical</p>
-            <ul class="product-features">
-              <li>🔐 SLA Garantito</li>
-              <li>👥 Supporto 24/7</li>
-              <li>⚡ Infrastruttura Dedicata</li>
-              <li>📈 Custom Models</li>
-            </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Contattaci</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
           </div>
         </div>
       </section>
@@ -907,7 +956,7 @@ import { RouterModule } from '@angular/router';
       border: 1px solid #e5e7eb;
       border-radius: 12px;
       padding: 1.8rem 1.9rem;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -915,13 +964,27 @@ import { RouterModule } from '@angular/router';
 
     .product-card:hover {
       border-color: #6366f1;
-      transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-6px);
+      box-shadow: 0 15px 25px -3px rgba(0, 0, 0, 0.12);
     }
 
     .product-card.featured {
-      border-color: #3b82f6;
-      background: #f0fdfa;
+  border: 1px solid #6366f1;
+  background: #ffffff;
+  position: relative;
+}
+
+    @media (min-width: 1024px) {
+      .product-card.featured {
+        /* grid-column: span 2; */
+        grid-row: span 1;
+      }
+    }
+
+    .product-card.featured:hover {
+      border-color: #4f46e5;
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.3);
     }
 
     .badge {
@@ -936,21 +999,82 @@ import { RouterModule } from '@angular/router';
       color: #ffffff;
     }
 
+    .badge-lightning {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5);
+      }
+    }
+
     .product-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
+      display: none;
+    }
+
+    .product-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #f3f4f6, #ffffff);
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-logo {
+      background: linear-gradient(135deg, #f0f4ff, #f3f4f6);
+      border-color: #6366f1;
+      transform: scale(1.05);
+    }
+
+    .logo-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
     }
 
     .product-card h3 {
       font-size: 1.5rem;
       color: #1f2937;
       margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .product-card.featured h3 {
+      background: linear-gradient(120deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .product-card p {
       color: #4b5563;
       margin-bottom: 1.5rem;
       line-height: 1.6;
+      font-size: 0.95rem;
     }
 
     .product-features {
@@ -962,6 +1086,11 @@ import { RouterModule } from '@angular/router';
       padding: 0.45rem 0;
       color: #374151;
       font-size: 0.85rem;
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover .product-features li {
+      transform: translateX(4px);
     }
 
     .btn-product {
@@ -1471,6 +1600,19 @@ import { RouterModule } from '@angular/router';
 .btn-product:hover {
   background: #4f46e5;
   transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+  cursor: pointer;
+}
+
+.product-card.featured .btn-product {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+  font-weight: 600;
+}
+
+.product-card.featured .btn-product:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4);
 }
 
 /* Responsive */
