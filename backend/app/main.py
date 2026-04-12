@@ -175,6 +175,31 @@ VIDEO_MODEL_MAP = {
     "pika-1": "pika-labs/pika-1.0"                      # alternativa pika
 }
 
+# 💰 COSTI TOKEN PER MODELLO (immagini)
+IMAGE_MODEL_COSTS = {
+    "flux-pro": 8,
+    "flux-dev": 5,
+    "flux-schnell": 2,
+    "imagen-4": 7,
+    "imagen-4-fast": 3,
+    "nano-banana": 2,
+    "nano-banana-pro": 5,
+    "midjourney-v5": 6,
+    "midjourney-v6": 8,
+    "gpt-image-1.5": 7,
+    "qwen-image": 3,
+    "seedream-5-lite": 4,
+    "sdxl": 3,
+    "stable-diffusion-3": 5,
+}
+
+# 💰 COSTI TOKEN PER MODELLO (video)
+VIDEO_MODEL_COSTS = {
+    "kling-video": 10,
+    "runway-ml": 12,
+    "pika-1": 10,
+}
+
 async def download_and_save_image(image_url: str) -> str:
     """
     Scarica un'immagine da un URL e la salva su disco.
@@ -237,11 +262,15 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
     # seleziona modello completo
     model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
+    # Ottieni il costo token per questo modello
+    token_cost = IMAGE_MODEL_COSTS.get(req.model, 1)
+
     # valida ratio input
     allowed_ratios = ["1:1", "16:9", "3:2", "2:3", "3:4", "4:3", "21:9"]
     aspect_ratio = req.ratio if req.ratio in allowed_ratios else "16:9"
 
     try:
+        # Passa il costo token personalizzato al wrapper
         output = await replicate_wrapper.run_model(
             model_version,   # modello dinamico
 
@@ -254,9 +283,9 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
 
             },
             user_id=user.id,
-            db=db
+            db=db,
+            token_cost=token_cost  # Passa il costo token
         )
-
 
         # 🔥 DEBUG (tienilo finché non funziona)
         print("OUTPUT RAW:", output)
@@ -277,15 +306,21 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
             model=req.model,
             style=req.style,
             image_url=local_image_url,
-            tokens_used=1
+            tokens_used=token_cost
         )
         db.add(generated_image)
         db.commit()
         db.refresh(generated_image)
 
+        # Recupera il saldo token aggiornato dell'utente
+        from app.services import UserService
+        updated_user = UserService.get_user(db, user.id)
+
         return {
             "image_url": local_image_url,
-            "id": generated_image.id
+            "id": generated_image.id,
+            "tokens_used": token_cost,
+            "tokens_remaining": updated_user.tokens
         }
 
 

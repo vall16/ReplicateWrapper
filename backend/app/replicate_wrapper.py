@@ -27,7 +27,8 @@ class ReplicateWrapper:
         model_version: str,
         input_params: Dict[str, Any],
         user_id: Optional[int] = None,
-        db: Optional[Session] = None
+        db: Optional[Session] = None,
+        token_cost: Optional[float] = None
     ) -> Any:
         """
         Esegue un modello su Replicate con controllo token
@@ -37,18 +38,22 @@ class ReplicateWrapper:
             input_params: Parametri di input per il modello
             user_id: ID dell'utente (per controllo token)
             db: Sessione database (per aggiornamento saldo)
+            token_cost: Costo token personalizzato (default: TOKEN_COST_PER_CALL)
 
         Returns:
             Output del modello
         """
+        # Usa il costo token personalizzato o il default
+        cost = token_cost if token_cost is not None else self.TOKEN_COST_PER_CALL
+        
         # Verifica token se user_id è fornito
         if user_id and db:
             from app.services import UserService
             user = UserService.get_user(db, user_id)
             if not user:
                 raise Exception("Utente non trovato")
-            if user.tokens < self.TOKEN_COST_PER_CALL:
-                raise Exception(f"❌ Token insufficienti! Hai {user.tokens} token, servono {self.TOKEN_COST_PER_CALL}")
+            if user.tokens < cost:
+                raise Exception(f"❌ Token insufficienti! Hai {user.tokens} token, servono {cost}")
         
         try:
             output = replicate.run(
@@ -59,7 +64,7 @@ class ReplicateWrapper:
             # Consuma i token se l'operazione è riuscita
             if user_id and db:
                 from app.services import UserService
-                UserService.consume_tokens(db, user_id, self.TOKEN_COST_PER_CALL)
+                UserService.consume_tokens(db, user_id, cost)
             
             return output
         except Exception as e:

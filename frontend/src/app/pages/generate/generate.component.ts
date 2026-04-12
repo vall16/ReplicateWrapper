@@ -14,6 +14,35 @@ import { environment } from '../../../environments/environments';
 
       <!-- SIDEBAR -->
       <aside class="sidebar">
+        <!-- Saldo Token -->
+        <div class="section">
+          <div class="section-header">
+            <span>💰 Saldo Token</span>
+          </div>
+          <div class="section-body">
+            <div class="token-display">
+              <div class="token-current">{{ currentTokens | number:'1.0-0' }}</div>
+              <div class="token-label">Token disponibili</div>
+              <div *ngIf="selectedModel" class="token-info">
+                Questo modello costerà <span class="cost-highlight">{{ selectedModel.cost }} token</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mostra transazione se c'è stata -->
+        <div class="section" *ngIf="tokensUsed > 0">
+          <div class="section-header" style="color: #059669;">
+            <span>✅ Ultima generazione</span>
+          </div>
+          <div class="section-body">
+            <div class="token-transaction">
+              <div>Token usati: <span class="token-minus">-{{ tokensUsed }}</span></div>
+              <div>Rimasti: <span class="token-remaining">{{ tokensRemaining }}</span></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Impostazioni generali -->
         <div class="section">
           <!-- <div class="section-header" (click)="toggleSection('general')">
@@ -56,6 +85,12 @@ import { environment } from '../../../environments/environments';
                     <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
                     <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
                     <span>{{ item.name }}</span>
+                    <!-- 👇 AGGIUNTA COSTO -->
+                    <span class="model-cost">
+                      {{ item.cost }} tokens
+                    </span>
+
+
                   </div>
 
                 </div>
@@ -262,6 +297,58 @@ import { environment } from '../../../environments/environments';
       font-size: 0.75rem;
       color: #6b7280;
       font-weight: 600;
+    }
+
+    .token-display {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid #93c5fd;
+    }
+
+    .token-current {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+    }
+
+    .token-label {
+      font-size: 0.75rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .token-info {
+      font-size: 0.8rem;
+      color: #1e40af;
+      margin-top: 0.5rem;
+    }
+
+    .cost-highlight {
+      font-weight: 700;
+      color: #dc2626;
+      font-size: 0.9rem;
+    }
+
+    .token-transaction {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      border-radius: 4px;
+      padding: 0.6rem;
+      font-size: 0.8rem;
+      color: #166534;
+    }
+
+    .token-minus {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .token-remaining {
+      color: #059669;
+      font-weight: 700;
     }
 
     .field-caption {
@@ -512,6 +599,15 @@ import { environment } from '../../../environments/environments';
       transform: rotate(90deg);
     }
 
+    .model-cost {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.4rem;
+}
+
     .option {
       padding: 0.5rem 0.6rem;
       padding-left: 1.8rem;
@@ -662,6 +758,11 @@ selectedModel: any = null;
   };
 
   style = '';
+  
+  // Token
+  currentTokens: number = 0;
+  tokensUsed: number = 0;
+  tokensRemaining: number = 0;
 
   styles = [
   { label: 'Realistic', value: 'photorealistic, ultra detailed, 8k' },
@@ -693,91 +794,84 @@ selectedModel: any = null;
 
     this.style = this.styles[0].value; //
     
+    // Carica il saldo token corrente
+    this.authService.getBalance().subscribe(
+      (res: any) => {
+        this.currentTokens = res.tokens || 0;
+      },
+      (err) => {
+        console.error('Errore caricamento saldo token', err);
+        this.currentTokens = 0;
+      }
+    );
+    
 
     // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
     this.availableModelGroups = [
-    {
-      provider: 'Flux AI',
-      icon: 'assets/flux.png',
-      expanded: false,
-      models: [
-        { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png' },
-        { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png' },
-        { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png' }
-      ]
-    },
-    {
-      provider: 'Google',
-      icon: 'assets/google.png',
-      expanded: false,
-      models: [
-        // 🔵 IMAGEN (qualità alta)
-        { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png' },
-        { id: 'imagen-4-fast', name: 'Imagen Fast', icon: 'assets/google.png' },
-
-        // 🟣 GEMINI IMAGE (multimodale)
-        // { id: 'gemini-image-pro', name: 'Gemini Image Pro', icon: 'assets/google.png' },
-
-        // 🍌 MARKETING (stile Pollo AI)
-        { id: 'nano-banana', name: 'Nano Banana', icon: 'assets/google.png' },
-        { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png' }
-
-      ]
-    },
-    // {
-    //   provider: 'Kling AI',
-    //   icon: 'assets/kling.jpg',
-    //   expanded: false,
-    //   models: [
-    //     { id: 'kling-alpha', name: 'Kling Alpha', icon: 'assets/kling.jpg' }
-    //   ]
-    // },
-    {
-      provider: 'Midjourney',
-      icon: 'assets/midjourney.png',
-      expanded: false,
-      models: [
-        { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png' },
-        { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png' }
-      ]
-    },
-    {
-      provider: 'OpenAI',
-      icon: 'assets/openai.svg',
-      expanded: false,
-      models: [
-        { id: 'gpt-image-1.5', name: 'Gpt-image-1.5', icon: 'assets/openai.svg' }
-      ]
-    },
-    {
-      provider: 'Qwen',
-      icon: 'assets/qwen.jpg',
-      expanded: false,
-      models: [
-        { id: 'qwen-image', name: 'Qwen-image', icon: 'assets/qwen.jpg' }
-      ]
-    },
-    {
-      provider: 'Seedream',
-      icon: 'assets/seedream.png',
-      expanded: false,
-      models: [
-        { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png' },
-        // { id: 'seedream-4-5', name: 'Seedream 4.5', icon: 'assets/seedream.png' },
-        // { id: 'seedream-4-0', name: 'Seedream 4.0', icon: 'assets/seedream.png' }
-      ]
-    },
-    {
-      provider: 'Stability AI',
-      icon: 'assets/stability.svg',
-      expanded: false,
-      models: [
-        { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg' },
-        { id: 'stable-diffusion-3', name: 'Stable Diffusion 3', icon: 'assets/stability.svg' }
-      ]
-    },
-
-  ];
+  {
+    provider: 'Flux AI',
+    icon: 'assets/flux.png',
+    expanded: false,
+    models: [
+      { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png', cost: 8 },
+      { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png', cost: 5 },
+      { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png', cost: 2 }
+    ]
+  },
+  {
+    provider: 'Google',
+    icon: 'assets/google.png',
+    expanded: false,
+    models: [
+      { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png', cost: 7 },
+      { id: 'imagen-4-fast', name: 'Imagen Fast', icon: 'assets/google.png', cost: 3 },
+      { id: 'nano-banana', name: 'Nano Banana', icon: 'assets/google.png', cost: 2 },
+      { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png', cost: 5 }
+    ]
+  },
+  {
+    provider: 'Midjourney',
+    icon: 'assets/midjourney.png',
+    expanded: false,
+    models: [
+      { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png', cost: 6 },
+      { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png', cost: 8 }
+    ]
+  },
+  {
+    provider: 'OpenAI',
+    icon: 'assets/openai.svg',
+    expanded: false,
+    models: [
+      { id: 'gpt-image-1.5', name: 'GPT Image 1.5', icon: 'assets/openai.svg', cost: 7 }
+    ]
+  },
+  {
+    provider: 'Qwen',
+    icon: 'assets/qwen.jpg',
+    expanded: false,
+    models: [
+      { id: 'qwen-image', name: 'Qwen Image', icon: 'assets/qwen.jpg', cost: 3 }
+    ]
+  },
+  {
+    provider: 'Seedream',
+    icon: 'assets/seedream.png',
+    expanded: false,
+    models: [
+      { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png', cost: 4 }
+    ]
+  },
+  {
+    provider: 'Stability AI',
+    icon: 'assets/stability.svg',
+    expanded: false,
+    models: [
+      { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg', cost: 3 },
+      { id: 'stable-diffusion-3', name: 'Stable Diffusion 3', icon: 'assets/stability.svg', cost: 5 }
+    ]
+  }
+];
 
     this.model = this.availableModelGroups[0].models[0].id;
     this.selectedModel = this.availableModelGroups[0].models[0];
@@ -851,6 +945,8 @@ isSvgPath(icon: string): boolean {
     this.loading = true;
     this.image = null;
     this.error = null;
+    this.tokensUsed = 0;
+    this.tokensRemaining = 0;
 
     const styleMap: any = {
       "flux-pro": "ultra realistic",
@@ -874,12 +970,19 @@ isSvgPath(icon: string): boolean {
 
         console.log('RISPOSTA BACKEND:', res);            // 👈 TUTTO
         console.log('IMAGE URL:', res?.image_url);
-        console.log('MODEL:', this.model);          
+        console.log('MODEL:', this.model);
+        console.log('TOKENS USED:', res?.tokens_used);
+        console.log('TOKENS REMAINING:', res?.tokens_remaining);
 
         if (res.error) {
           this.error = res.error;  
         } else if (res.image_url) {
-          this.image = environment.apiBaseUrl + res.image_url;;
+          this.image = environment.apiBaseUrl + res.image_url;
+          
+          // Mostra i token scalati
+          this.tokensUsed = res.tokens_used || 0;
+          this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
+          this.currentTokens = this.tokensRemaining;
         } else {
           this.error = "Errore sconosciuto dal server.";
         }
