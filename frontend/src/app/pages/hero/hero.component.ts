@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -112,7 +112,7 @@ import { RouterModule } from '@angular/router';
 
         <div class="products-grid">
           <!-- Flux Pro -->
-          <div class="product-card featured">
+          <div class="product-card featured" [class.visible]="visibleCards[0]" [style.--card-index]="0" style="--card-index: 0">
             <div class="badge-lightning">Istantaneo & Adattivo</div>
             <div class="product-logo">
               <img src="assets/flux.png" alt="Flux" class="logo-img" />
@@ -129,7 +129,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- SDXL Stability -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[1]" [style.--card-index]="1" style="--card-index: 1">
             <div class="badge-lightning">Robusto</div>
             <div class="product-logo">
               <img src="assets/stability.svg" alt="Stability" class="logo-img" />
@@ -146,7 +146,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- Midjourney -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[2]" [style.--card-index]="2" style="--card-index: 2">
             <div class="product-logo">
               <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" />
             </div>
@@ -162,7 +162,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- OpenAI DALL-E -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[3]" [style.--card-index]="3" style="--card-index: 3">
             <div class="badge-lightning">Creativo & Espressivo</div>
             <div class="product-logo">
               <img src="assets/openai.svg" alt="OpenAI" class="logo-img" />
@@ -179,7 +179,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- Kling -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[4]" [style.--card-index]="4" style="--card-index: 4">
             <div class="product-logo">
               <img src="assets/kling.jpg" alt="Kling" class="logo-img" />
             </div>
@@ -195,7 +195,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- Google Gemini -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[5]" [style.--card-index]="5" style="--card-index: 5">
             <div class="badge-lightning">Istantaneo & Leggero</div>
             <div class="product-logo">
               <img src="assets/google.png" alt="Google" class="logo-img" />
@@ -212,7 +212,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- Seedream -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[6]" [style.--card-index]="6" style="--card-index: 6">
             <div class="product-logo">
               <img src="assets/seedream.png" alt="Seedream" class="logo-img" />
             </div>
@@ -228,7 +228,7 @@ import { RouterModule } from '@angular/router';
           </div>
 
           <!-- Qwen -->
-          <div class="product-card">
+          <div class="product-card" [class.visible]="visibleCards[7]" [style.--card-index]="7" style="--card-index: 7">
             <div class="badge-lightning">Versatile, Omnisciente</div>
             <div class="product-logo">
               <img src="assets/qwen.jpg" alt="Qwen" class="logo-img" />
@@ -960,6 +960,41 @@ import { RouterModule } from '@angular/router';
       position: relative;
       overflow: hidden;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      
+      /* Animazione di reveal */
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      animation: revealCard 0.6s ease-out forwards;
+      animation-delay: calc(var(--card-index, 0) * 0.08s);
+    }
+
+    @keyframes revealCard {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
 
     .product-card:hover {
@@ -970,9 +1005,30 @@ import { RouterModule } from '@angular/router';
 
     .product-card.featured {
   border: 1px solid #6366f1;
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
   position: relative;
+  background-attachment: fixed;
 }
+
+    .product-card.featured::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 1px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-out;
+      pointer-events: none;
+      opacity: 0;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
 
     @media (min-width: 1024px) {
       .product-card.featured {
@@ -1009,18 +1065,28 @@ import { RouterModule } from '@angular/router';
       font-size: 0.8rem;
       font-weight: 700;
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-      animation: pulse-badge 2s ease-in-out infinite;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.2);
+      animation: pulse-badge 2s ease-in-out infinite, float-badge 3s ease-in-out infinite;
+      z-index: 10;
     }
 
     @keyframes pulse-badge {
       0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        transform: translateY(0) scale(1);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.2);
       }
       50% {
-        transform: scale(1.05);
-        box-shadow: 0 6px 16px rgba(245, 158, 11, 0.5);
+        transform: translateY(-2px) scale(1.08);
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5), 0 0 30px rgba(245, 158, 11, 0.4);
+      }
+    }
+
+    @keyframes float-badge {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
       }
     }
 
@@ -1041,12 +1107,28 @@ import { RouterModule } from '@angular/router';
       border: 1px solid #e5e7eb;
       padding: 1rem;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-logo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .product-card:hover .product-logo {
       background: linear-gradient(135deg, #f0f4ff, #f3f4f6);
       border-color: #6366f1;
-      transform: scale(1.05);
+      transform: scale(1.12) rotateZ(2deg);
+      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.15);
+    }
+
+    .product-card:hover .product-logo::before {
+      opacity: 1;
     }
 
     .logo-img {
@@ -1054,6 +1136,12 @@ import { RouterModule } from '@angular/router';
       max-height: 100%;
       object-fit: contain;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    .product-card:hover .logo-img {
+      transform: scale(1.08) rotateZ(-2deg);
     }
 
     .product-card h3 {
@@ -1623,8 +1711,47 @@ import { RouterModule } from '@angular/router';
 }
   `]
 })
-export class HeroComponent {
+export class HeroComponent implements OnInit, OnDestroy {
+  visibleCards: boolean[] = [false, false, false, false, false, false, false, false];
+  private intersectionObserver: IntersectionObserver | null = null;
+
   constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.setupIntersectionObserver();
+  }
+
+  ngOnDestroy() {
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+    }
+  }
+
+  private setupIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    };
+
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target as HTMLElement;
+          const cardIndex = parseInt(element.style.getPropertyValue('--card-index'), 10);
+          
+          setTimeout(() => {
+            this.visibleCards[cardIndex] = true;
+          }, cardIndex * 100); // Stagger effect
+        }
+      });
+    }, options);
+
+    // Osserva tutte le product-card
+    document.querySelectorAll('.product-card').forEach(card => {
+      this.intersectionObserver?.observe(card);
+    });
+  }
 
   navigateTo(route: string) {
     this.router.navigate([`/${route}`]);
