@@ -13,6 +13,35 @@ import { environment } from '../../../environments/environments';
     <div class="video-generate-shell">
       <!-- SIDEBAR -->
       <aside class="sidebar">
+        <!-- Saldo Token -->
+        <div class="section">
+          <div class="section-header">
+            <span>Saldo Token</span>
+          </div>
+          <div class="section-body">
+            <div class="token-display">
+              <div class="token-current">{{ currentTokens | number:'1.0-0' }}</div>
+              <div class="token-label">Token disponibili</div>
+              <div *ngIf="selectedModel" class="token-info">
+                Questo modello costerà <span class="cost-highlight">{{ selectedModel.cost }} token</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mostra transazione se c'è stata -->
+        <div class="section" *ngIf="tokensUsed > 0">
+          <div class="section-header" style="color: #059669;">
+            <span>✅ Ultima generazione</span>
+          </div>
+          <div class="section-body">
+            <div class="token-transaction">
+              <div>Token usati: <span class="token-minus">-{{ tokensUsed }}</span></div>
+              <div>Rimasti: <span class="token-remaining">{{ tokensRemaining }}</span></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Impostazioni video -->
         <div class="section">
           <div class="section-header">
@@ -34,6 +63,10 @@ import { environment } from '../../../environments/environments';
                   (click)="selectModel(item, $event)"
                 >
                   <span>{{ item.name }}</span>
+                  <!-- 👇 AGGIUNTA COSTO -->
+                  <span class="model-cost">
+                    {{ item.cost }} tokens
+                  </span>
                 </div>
               </div>
             </div>
@@ -210,6 +243,58 @@ import { environment } from '../../../environments/environments';
       font-weight: 600;
     }
 
+    .token-display {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid #93c5fd;
+    }
+
+    .token-current {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 0.25rem;
+    }
+
+    .token-label {
+      font-size: 0.75rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .token-info {
+      font-size: 0.8rem;
+      color: #1e40af;
+      margin-top: 0.5rem;
+    }
+
+    .cost-highlight {
+      font-weight: 700;
+      color: #dc2626;
+      font-size: 0.9rem;
+    }
+
+    .token-transaction {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      border-radius: 4px;
+      padding: 0.6rem;
+      font-size: 0.8rem;
+      color: #166534;
+    }
+
+    .token-minus {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .token-remaining {
+      color: #059669;
+      font-weight: 700;
+    }
+
     .field-caption {
       font-size: 0.78rem;
       color: #9ca3af;
@@ -300,6 +385,15 @@ import { environment } from '../../../environments/environments';
 
     .option:hover {
       background: #f3f4f6;
+    }
+
+    .model-cost {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #6b7280;
+      background: #f3f4f6;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.4rem;
     }
 
     /* MAIN */
@@ -467,10 +561,15 @@ export class VideoGenerateComponent {
   openDropdown = false;
   selectedModel: any = null;
 
+  // Token
+  currentTokens: number = 0;
+  tokensUsed: number = 0;
+  tokensRemaining: number = 0;
+
   availableVideoModels = [
-    { id: 'kling-video', name: 'Kling AI Video' },
-    { id: 'runway-ml', name: 'Runway ML' },
-    { id: 'pika-1', name: 'Pika 1.0' }
+    { id: 'kling-video', name: 'Kwaivgi', cost: 20 },
+    { id: 'seedance-2', name: 'Bytedance', cost: 25 },
+    { id: 'pika-1', name: 'Pika 1.0', cost: 30 }
   ];
 
   constructor(
@@ -484,6 +583,17 @@ export class VideoGenerateComponent {
       this.router.navigate(['/login']);
       return;
     }
+
+    // Carica il saldo token corrente
+    this.authService.getBalance().subscribe(
+      (res: any) => {
+        this.currentTokens = res.tokens || 0;
+      },
+      (err) => {
+        console.error('Errore caricamento saldo token', err);
+        this.currentTokens = 0;
+      }
+    );
 
     // Seleziona il primo modello come default
     this.selectedModel = this.availableVideoModels[0];
@@ -506,6 +616,8 @@ export class VideoGenerateComponent {
     this.loading = true;
     this.videoUrl = null;
     this.error = null;
+    this.tokensUsed = 0;
+    this.tokensRemaining = 0;
 
     const payload = {
       prompt: this.prompt,
@@ -525,11 +637,24 @@ export class VideoGenerateComponent {
       (res: any) => {
         this.loading = false;
 
+        console.log('RISPOSTA BACKEND:', res);
+        console.log('VIDEO URL:', res?.video_url);
+        console.log('MODEL:', this.selectedModel.id);
+        console.log('TOKENS USED:', res?.tokens_used);
+        console.log('TOKENS REMAINING:', res?.tokens_remaining);
+
         if (res.error) {
           this.error = res.error;
         } else if (res.video_url) {
           // Concatena base URL con percorso video
           this.videoUrl = environment.apiBaseUrl + res.video_url;
+          
+          // Mostra i token scalati
+          this.tokensUsed = res.tokens_used || 0;
+          this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
+          this.currentTokens = this.tokensRemaining;
+        } else {
+          this.error = "Errore sconosciuto dal server.";
         }
       },
       (err: any) => {

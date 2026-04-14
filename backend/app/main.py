@@ -171,7 +171,7 @@ MODEL_MAP = {
 # 🎬 MODELLI VIDEO (per generazione video)
 VIDEO_MODEL_MAP = {
     "kling-video": "kwaivgi/kling-v3-video",              # modello video principale
-    "runway-ml": "runway-ml/text-to-video",             # alternativa video
+    "seedance-2": "bytedance/seedance-2.0",             # alternativa video
     "pika-1": "pika-labs/pika-1.0"                      # alternativa pika
 }
 
@@ -195,10 +195,11 @@ IMAGE_MODEL_COSTS = {
 
 # 💰 COSTI TOKEN PER MODELLO (video)
 VIDEO_MODEL_COSTS = {
-    "kling-video": 10,
-    "runway-ml": 12,
-    "pika-1": 10,
+    "kling-video": 20,
+    "seedance-2": 25,
+    "pika-1": 30,
 }
+
 
 async def download_and_save_image(image_url: str) -> str:
     """
@@ -435,12 +436,15 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         model_version = VIDEO_MODEL_MAP[req.model]
         aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
         
+        # Ottieni il costo token per questo modello
+        token_cost = VIDEO_MODEL_COSTS.get(req.model, 10)
+        
         # Prepara i parametri per Replicate
         video_input_params = {
             "prompt": req.prompt,
             "duration": req.duration,
             "aspect_ratio": aspect_ratio,
-            "fps": 24,  # Frame per secondo
+            # "fps": 24,  # Frame per secondo
         }
         
         # Se il modello è Kling, aggiungi parametri specifici
@@ -452,7 +456,8 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
             model_version,
             input_params=video_input_params,
             user_id=user.id,
-            db=db
+            db=db,
+            token_cost=token_cost  # Passa il costo token
         )
         
         print(f"OUTPUT VIDEO RAW: {output}")
@@ -474,15 +479,21 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
             resolution=req.resolution,
             duration=req.duration,
             video_url=local_video_url,
-            tokens_used=3  # I video costano 3 token (vs 1 per immagini)
+            tokens_used=token_cost
         )
         db.add(generated_video)
         db.commit()
         db.refresh(generated_video)
         
+        # Recupera il saldo token aggiornato dell'utente
+        from app.services import UserService
+        updated_user = UserService.get_user(db, user.id)
+        
         return {
             "video_url": local_video_url,
-            "id": generated_video.id
+            "id": generated_video.id,
+            "tokens_used": token_cost,
+            "tokens_remaining": updated_user.tokens
         }
     
     except Exception as e:

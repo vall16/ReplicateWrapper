@@ -17,7 +17,7 @@ import { environment } from '../../../environments/environments';
         <!-- Saldo Token -->
         <div class="section">
           <div class="section-header">
-            <span>💰 Saldo Token</span>
+            <span>Saldo Token</span>
           </div>
           <div class="section-body">
             <div class="token-display">
