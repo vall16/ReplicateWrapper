@@ -378,39 +378,167 @@ import { RouterModule } from '@angular/router';
 </section>  -->
       <!-- Contact Section -->
     <section class="contact-section" id="contact">
-      <div class="section-header">
-        <h2>Contattaci</h2>
-        <p>Hai domande o vuoi maggiori informazioni? Scrivici!</p>
+      <div class="contact-background">
+        <div class="contact-overlay"></div>
+        <div class="floating-shapes">
+          <div class="shape shape-1"></div>
+          <div class="shape shape-2"></div>
+          <div class="shape shape-3"></div>
+        </div>
       </div>
 
-      <div class="contact-container">
-        <!-- Contact Info -->
-        <div class="contact-info">
-          <div class="info-item">
-            <span>📧</span>
-            
-            <p>Email: <a href="mailto:support@repli.ai">support&#64;repli.ai</a></p>
+      <div class="contact-wrapper">
+        <div class="contact-header">
+          <div class="contact-badge">
+            <span class="badge-icon">💬</span>
+            <span class="badge-text">Contattaci</span>
           </div>
-          <div class="info-item">
-            <span>📞</span>
-            <p>Telefono: <a href="tel:+390123456789">+39 012 345 6789</a></p>
+          <h2 class="contact-title">
+            Hai una domanda?<br>
+            <span class="gradient-highlight">Siamo qui per aiutarti</span>
+          </h2>
+          <p class="contact-subtitle">
+            Il nostro team è pronto a rispondere a tutte le tue domande sui nostri servizi AI
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Cards -->
+          <div class="contact-cards">
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 8L10.5 13.5L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <h3>Email Support</h3>
+              <p>Risposta entro 24 ore</p>
+              <a href="mailto:support@repli.ai" class="contact-link">
+                support&#64;repli.ai
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10L10 6M10 6H7M10 6V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 16.92V19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21C16.13 21 12.46 19.5 9.5 16.92M22 16.92C22 16.3896 21.7893 15.8809 21.4142 15.5058C21.0391 15.1307 20.5304 15 20 15C16.13 15 12.46 16.5 9.5 19.08M22 16.92C19.5 16.92 17.32 15.5 15.5 13.92M9.5 19.08C9.5 19.08 9.5 19.08 9.5 19.08C7.68 17.5 5.5 16.08 3 16.08C2.46957 16.08 1.96086 15.8693 1.58579 15.4942C1.21071 15.1191 1 14.6104 1 14.08V11C1 10.4696 1.21071 9.96086 1.58579 9.58579C1.96086 9.21071 2.46957 9 3 9C6.87 9 10.54 10.5 13.5 13.08" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Telefono</h3>
+              <p>Lun-Ven 9:00-18:00 CET</p>
+              <a href="tel:+390123456789" class="contact-link">
+                +39 012 345 6789
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 10L10 6M10 6H7M10 6V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.657 16.657L13.414 20.9C13.2284 21.0857 13.0081 21.233 12.7657 21.3335C12.5233 21.434 12.2641 21.4857 12.0015 21.4857C11.7389 21.4857 11.4797 21.434 11.2373 21.3335C10.9949 21.233 10.7746 21.0857 10.589 20.9L6.343 16.657C5.22422 15.5382 4.46234 14.1127 4.15369 12.5608C3.84504 11.0089 4.00349 9.40047 4.60901 7.93863C5.21452 6.47679 6.2399 5.2275 7.55548 4.3484C8.87106 3.4693 10.4178 3 12 3C13.5822 3 15.1289 3.4693 16.4445 4.3484C17.7601 5.2275 18.7855 6.47679 19.391 7.93863C19.9965 9.40047 20.155 11.0089 19.8463 12.5608C19.5377 14.1127 18.7758 15.5382 17.657 16.657V16.657Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 9C12.5523 9 13 8.55228 13 8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8C11 8.55228 11.4477 9 12 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Ufficio</h3>
+              <p>Milano, Italia</p>
+              <div class="contact-address">
+                Via AI 42<br>
+                20100 Milano
+              </div>
+            </div>
           </div>
-          <div class="info-item">
-            <span>🏢</span>
-            <p>Indirizzo: Via AI 42, Milano, Italia</p>
+
+          <!-- Contact Form -->
+          <div class="contact-form-container" data-aos="fade-up" data-aos-delay="400">
+            <div class="form-header">
+              <h3>Invia un messaggio</h3>
+              <p>Compila il form e ti risponderemo presto</p>
+            </div>
+
+            <form class="contact-form" (submit)="submitContact($event)">
+              <div class="form-group">
+                <label for="name">Nome completo</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Il tuo nome"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="tua@email.com"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="subject">Oggetto</label>
+                <select id="subject" name="subject" class="form-select" required>
+                  <option value="">Seleziona un argomento</option>
+                  <option value="support">Supporto tecnico</option>
+                  <option value="billing">Fatturazione</option>
+                  <option value="partnership">Partnership</option>
+                  <option value="general">Informazioni generali</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Messaggio</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Descrivi la tua richiesta..."
+                  required
+                  class="form-textarea"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit">
+                <span>Invia messaggio</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
 
-        
-
-        <!-- Contact Form -->
-        <div class="contact-form">
-          <!-- <form (submit)="submitContact($event)">
-            <input type="text" name="name" placeholder="Nome" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <textarea name="message" rows="5" placeholder="Messaggio" required></textarea>
-            <button type="submit" class="btn btn-primary-small">Invia Messaggio</button>
-          </form> -->
+        <!-- Social Links -->
+        <div class="social-section">
+          <h3>Seguici sui social</h3>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2H21l-6.56 7.49L22.5 22h-6.63l-5.19-6.77L4.9 22H2l7.02-8.02L1.5 2h6.63l4.7 6.2L18.244 2zm-2.32 18h1.85L7.08 4H5.1l10.824 16z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1578,67 +1706,347 @@ import { RouterModule } from '@angular/router';
     }
     /* Contact Section */
     .contact-section {
+      position: relative;
+      padding: 6rem 2rem;
+      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .contact-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    .contact-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(1px);
+    }
+
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 80px;
+      height: 80px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape-2 {
+      width: 60px;
+      height: 60px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .shape-3 {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .contact-wrapper {
       max-width: 1200px;
-      margin: 4rem auto;
-      padding: 4rem 2rem;
-      background: #f9fafb;
-      border-radius: 12px;
-      border: 1px solid #f3f4f6;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
 
-    .contact-section .section-header {
+    .contact-header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
     }
 
-    .contact-container {
+    .contact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .badge-icon {
+      font-size: 1rem;
+    }
+
+    .contact-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .gradient-highlight {
+      background: linear-gradient(135deg, #ffd700, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      gap: 4rem;
       align-items: start;
+      margin-bottom: 4rem;
     }
 
-    .contact-info {
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-card p {
+      color: #6b7280;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: #5a67d8;
+      transform: translateX(3px);
+    }
+
+    .contact-address {
+      color: #6b7280;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .contact-form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+    }
+
+    .form-header h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .contact-form {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .info-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 1rem;
-      color: #4b5563;
-    }
-
-    .info-item span {
-      font-size: 1.5rem;
-      color: #6366f1;
-    }
-
-    .contact-form form {
+    .form-group {
       display: flex;
       flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 0.875rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #1f2937;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem 2rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+    }
+
+    .social-section {
+      text-align: center;
+    }
+
+    .social-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
       gap: 1rem;
     }
 
-    .contact-form input,
-    .contact-form textarea {
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #1f2937;
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
 
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder {
-      color: #9ca3af;
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
     }
 
-    .contact-form button {
-      align-self: flex-start;
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .contact-title {
+        font-size: 2rem;
+      }
+
+      .contact-section {
+        padding: 4rem 1rem;
+      }
+
+      .contact-card,
+      .contact-form-container {
+        padding: 1.5rem;
+      }
     }
     .btn-icon {
   display: inline-flex;
@@ -1762,5 +2170,27 @@ export class HeroComponent implements OnInit, OnDestroy {
       const element = document.getElementById(id);
       element?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
+  }
+
+  submitContact(event: Event) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const contactData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message')
+    };
+
+    // Here you would typically send the data to your backend
+    console.log('Contact form submitted:', contactData);
+
+    // For now, just show a success message
+    alert('Grazie per il tuo messaggio! Ti risponderemo presto.');
+
+    // Reset the form
+    form.reset();
   }
 }
