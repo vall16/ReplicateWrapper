@@ -34,7 +34,7 @@ import { AuthService, User } from '../../services/auth.service';
           </button>
           <button class="nav-item" (click)="goToTransactions()">
             <span class="nav-icon">📈</span>
-            <span>Storico</span>
+            <span>History</span>
           </button>
         </nav>
 
@@ -57,7 +57,7 @@ import { AuthService, User } from '../../services/auth.service';
           <div class="topbar-left">
             <h1 class="page-title">Home</h1>
             <p class="page-subtitle">
-              Benvenuto nella console di gestione crediti per i tuoi modelli Replicate.
+              Welcome to the credit management console for your Replicate models.
             </p>
           </div>
         </header>
@@ -67,37 +67,37 @@ import { AuthService, User } from '../../services/auth.service';
           <section class="hero">
             <div class="hero-label">AI Pipelines · Replicate</div>
             <h2 class="hero-title">
-              Trasforma i tuoi modelli
-              <span class="gradient-text">in esperienze pronte all'uso</span>
+              Transform Your Models
+              <span class="gradient-text">Into Ready-to-Use Experiences</span>
             </h2>
             <p class="hero-subtitle">
-              Repli ti permette di collegare rapidamente i modelli Replicate ai tuoi prodotti:
-              prompt puliti, parametri salvati e preview consistenti in un'unica interfaccia.
+              Repli lets you quickly connect Replicate models to your products:
+              clean prompts, saved parameters, and consistent previews in one interface.
             </p>
             <div class="hero-actions">
               <button type="button" class="hero-primary" (click)="goToDashboard()">
-                Crea una nuova sessione
+                Create New Session
               </button>
               <button type="button" class="hero-secondary" (click)="goToDashboard()">
-                Esplora i tuoi modelli
+                Explore Your Models
               </button>
             </div>
             <div class="hero-meta">
-              <span>Latency monitorata in tempo reale</span>
+              <span>Real-time latency monitoring</span>
               <span class="dot"></span>
-              <span>Storico delle generazioni incluso</span>
+              <span>Generation history included</span>
             </div>
           </section>
 
-          <section class="panel-grid" aria-label="Funzionalità principali">
+          <section class="panel-grid" aria-label="Key Features">
             <article class="panel primary">
               <header>
-                <h2>Flow visivo di generazione</h2>
+                <h2>Visual Generation Flow</h2>
                 <span class="badge">Live</span>
               </header>
               <p>
-                Disegna un flusso di inferenza chiaro: input, modello, output e
-                post-processing in un solo pannello, pronto per essere condiviso.
+                Create a clear inference flow: input, model, output and
+                post-processing in one panel, ready to share.
               </p>
               <div class="panel-preview">
                 <div class="step -in">Prompt · Input</div>
@@ -108,11 +108,11 @@ import { AuthService, User } from '../../services/auth.service';
 
             <article class="panel">
               <header>
-                <h3>Preset di prompt</h3>
+                <h3>Prompt Presets</h3>
               </header>
               <p>
-                Salva preset riutilizzabili per i tuoi use-case: marketing, prodotto,
-                immagini, audio e molto altro.
+                Save reusable presets for your use cases: marketing, product,
+                images, audio and more.
               </p>
               <ul class="chips">
                 <li>Product shot</li>
@@ -123,15 +123,15 @@ import { AuthService, User } from '../../services/auth.service';
 
             <article class="panel">
               <header>
-                <h3>Ambiente sicuro</h3>
+                <h3>Secure Environment</h3>
               </header>
               <p>
-                Tutte le chiavi restano sul backend, il frontend si limita a orchestrare
-                le chiamate verso Replicate in modo sicuro.
+                All keys remain on the backend, the frontend only orchestrates
+                calls to Replicate securely.
               </p>
               <div class="status-pill">
                 <span class="status-dot"></span>
-                Backend collegato
+                Backend Connected
               </div>
             </article>
           </section>

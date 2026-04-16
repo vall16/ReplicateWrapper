@@ -13,47 +13,38 @@ import { environment } from '../../../environments/environments';
     <div class="video-generate-shell">
       <!-- SIDEBAR -->
       <aside class="sidebar">
-        <!-- Saldo Token -->
         <div class="section">
           <div class="section-header">
-            <span>Saldo Token</span>
+            <span>Token Balance</span>
           </div>
           <div class="section-body">
             <div class="token-display">
               <div class="token-current">{{ currentTokens | number:'1.0-0' }}</div>
-              <div class="token-label">Token disponibili</div>
+              <div class="token-label">Available Tokens</div>
               <div *ngIf="selectedModel" class="token-info">
-                Questo modello costerà <span class="cost-highlight">{{ selectedModel.cost }} token</span>
+                This model will cost <span class="cost-highlight">{{ selectedModel.cost }} tokens</span>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Mostra transazione se c'è stata -->
         <div class="section" *ngIf="tokensUsed > 0">
           <div class="section-header" style="color: #059669;">
-            <span>✅ Ultima generazione</span>
+            <span>✅ Last Generation</span>
           </div>
           <div class="section-body">
             <div class="token-transaction">
-              <div>Token usati: <span class="token-minus">-{{ tokensUsed }}</span></div>
-              <div>Rimasti: <span class="token-remaining">{{ tokensRemaining }}</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Impostazioni video -->
-        <div class="section">
+              <div>Tokens used: <span class="token-minus">-{{ tokensUsed }}</span></div>
+              <div>Remaining: <span class="token-remaining">{{ tokensRemaining }}</span></div>
+            </div> </div> </div> <div class="section">
           <div class="section-header">
-            <!-- <span>Impostazioni Video</span> -->
+             <span>Video Settings</span>
           </div>
           <div class="section-body">
-            <!-- MODELLO VIDEO -->
-            <label>Modello Video</label>
-            <!-- <small class="field-caption">Seleziona il modello che vuoi usare per la generazione.</small> -->
+            <label>Video Model</label>
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
               <div class="selected">
-                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+                <span>{{ selectedModel?.name || 'Select model' }}</span>
                 <span class="arrow">▼</span>
               </div>
               <div class="dropdown" *ngIf="openDropdown">
@@ -63,17 +54,12 @@ import { environment } from '../../../environments/environments';
                   (click)="selectModel(item, $event)"
                 >
                   <span>{{ item.name }}</span>
-                  <!-- 👇 AGGIUNTA COSTO -->
-                  <span class="model-cost">
-                    {{ item.cost }} tokens
-                  </span>
+                  <span class="model-cost">{{ item.cost }} tokens</span>
                 </div>
               </div>
             </div>
 
-            <!-- RISOLUZIONE -->
-            <label>Risoluzione</label>
-            <!-- <small class="field-caption">Imposta la qualità del video in uscita.</small> -->
+            <label>Resolution</label>
             <div class="resolution-options">
               <button 
                 type="button" 
@@ -89,25 +75,9 @@ import { environment } from '../../../environments/environments';
                 (click)="resolution='720p'">
                 720p
               </button>
-              <!-- <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '1080p'" 
-                (click)="resolution='1080p'">
-                1080p
-              </button> -->
-              <!-- <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '4k'" 
-                (click)="resolution='4k'">
-                🔴 4K
-              </button> -->
             </div>
 
-            <!-- DURATA VIDEO -->
-            <label>Durata Video (secondi)</label>
-            <!-- <small class="field-caption">Scegli quanto deve durare il filmato generato.</small> -->
+            <label>Video Duration (seconds)</label>
             <div class="duration-options">
               <button 
                 type="button" 
@@ -153,7 +123,7 @@ import { environment } from '../../../environments/environments';
             class="video-player">
           </video>
           <div *ngIf="!videoUrl" class="placeholder">
-            Nessun video generato
+            No video generated
           </div>
         </div>
 
@@ -161,21 +131,21 @@ import { environment } from '../../../environments/environments';
         <div class="prompt-box">
           <textarea
             [(ngModel)]="prompt"
-            placeholder="Descrivi il video che vuoi generare..."
+            placeholder="Describe the video you want to generate..."
           ></textarea>
 
           <div class="prompt-actions">
             <button (click)="generate()" [disabled]="loading" class="generate-btn">
-              <span *ngIf="!loading">Genera Video</span>
+              <span *ngIf="!loading">Generate Video</span>
               <span *ngIf="loading" class="loading-indicator">
-                Generazione
+                Generating
                 <span class="dots">
                   <span></span><span></span><span></span>
                 </span>
               </span>
             </button>
             <button class="btn-link" (click)="goToGallery()" [disabled]="loading" style="margin-left:0.7rem;">
-              Vai alla galleria
+              Go to Gallery
             </button>
             <div *ngIf="error" style="color: #ef4444; font-size: 0.8rem; margin-top: 6px;">
               {{ error }}
@@ -590,12 +560,12 @@ export class VideoGenerateComponent {
         this.currentTokens = res.tokens || 0;
       },
       (err) => {
-        console.error('Errore caricamento saldo token', err);
+        console.error('Error loading token balance', err);
         this.currentTokens = 0;
       }
     );
 
-    // Seleziona il primo modello come default
+    // Select the first model as default
     this.selectedModel = this.availableVideoModels[0];
   }
 
@@ -649,18 +619,18 @@ export class VideoGenerateComponent {
           // Concatena base URL con percorso video
           this.videoUrl = environment.apiBaseUrl + res.video_url;
           
-          // Mostra i token scalati
+          // Show scaled tokens
           this.tokensUsed = res.tokens_used || 0;
           this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
           this.currentTokens = this.tokensRemaining;
         } else {
-          this.error = "Errore sconosciuto dal server.";
+          this.error = "Unknown error from server.";
         }
       },
       (err: any) => {
         this.loading = false;
-        this.error = "Errore di rete o server non raggiungibile.";
-        console.error('Errore generazione video:', err);
+        this.error = "Network error or server unreachable.";
+        console.error('Error generating video:', err);
       }
     );
   }

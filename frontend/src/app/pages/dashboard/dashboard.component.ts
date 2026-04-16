@@ -33,11 +33,11 @@ import { FormsModule } from '@angular/forms';
           </button>
           <button class="nav-item" (click)="goToTransactions()">
             <span class="nav-icon">📈</span>
-            <span>Storico</span>
+            <span>History</span>
           </button>
           <button class="nav-item" (click)="router.navigate(['/gallery'])">
             <span class="nav-icon">🖼️</span>
-            <span>Galleria</span>
+            <span>Gallery</span>
           </button>
         </nav>
 
@@ -60,12 +60,12 @@ import { FormsModule } from '@angular/forms';
           <div class="topbar-left">
             <h1 class="page-title">Dashboard</h1>
             <p class="page-subtitle">
-              Monitora saldo, consumi e acquisti dei tuoi crediti AI in tempo reale.
+              Monitor your AI credit balance, consumption and purchases in real-time.
             </p>
           </div>
           <div class="topbar-right">
             <div class="pill">
-              <span class="pill-label">Token disponibili</span>
+              <span class="pill-label">Available Tokens</span>
               <span class="pill-value">{{ balance?.tokens || 0 }}</span>
             </div>
           </div>
@@ -76,8 +76,8 @@ import { FormsModule } from '@angular/forms';
           <div class="glass-card balance-card">
             <div class="card-header">
               <div>
-                <h2>Saldo attuale</h2>
-                <p class="card-subtitle">Token disponibili per le tue chiamate API</p>
+                <h2>Current Balance</h2>
+                <p class="card-subtitle">Tokens available for your API calls</p>
               </div>
             </div>
 
@@ -90,20 +90,20 @@ import { FormsModule } from '@angular/forms';
               </div>
               <div class="balance-side">
                 <div class="balance-stat">
-                  <span class="balance-stat-label">Token consumati</span>
+                  <span class="balance-stat-label">Tokens Consumed</span>
                   <span class="balance-stat-value negative">{{ totalConsumed }}</span>
                 </div>
                 <div class="balance-stat">
-                  <span class="balance-stat-label">Token acquistati</span>
+                  <span class="balance-stat-label">Tokens Purchased</span>
                   <span class="balance-stat-value positive">{{ totalPurchased }}</span>
                 </div>
                 <div
                   class="balance-warning"
                   *ngIf="(balance?.tokens || 0) === 0"
                 >
-                  Nessun token disponibile. Acquista un pacchetto per iniziare a usare le API.
+                  No tokens available. Purchase a package to start using the APIs.
                 </div>
-                <button class="btn-primary" (click)="goToStore()">Acquista token</button>
+                <button class="btn-primary" (click)="goToStore()">Buy Tokens</button>
               </div>
             </div>
           </div>
@@ -111,8 +111,8 @@ import { FormsModule } from '@angular/forms';
           <div class="glass-card profile-card">
             <div class="card-header">
               <div>
-                <h2>Profilo</h2>
-                <p class="card-subtitle">Dettagli del tuo account</p>
+                <h2>Profile</h2>
+                <p class="card-subtitle">Your account details</p>
               </div>
             </div>
             <div class="profile-body" *ngIf="user">
@@ -125,7 +125,7 @@ import { FormsModule } from '@angular/forms';
                 <span class="profile-value">{{ user.email }}</span>
               </div>
               <div class="profile-row">
-                <span class="profile-label">ID Utente</span>
+                <span class="profile-label">User ID</span>
                 <span class="profile-value">#{{ user.id }}</span>
               </div>
             </div>
@@ -137,8 +137,8 @@ import { FormsModule } from '@angular/forms';
           <div class="glass-card purchase-card">
             <div class="card-header">
               <div>
-                <h2>Pacchetti token</h2>
-                <p class="card-subtitle">Scegli il pacchetto più adatto</p>
+                <h2>Token Packages</h2>
+                <p class="card-subtitle">Choose the best package</p>
               </div>
             </div>
             <div class="packages-row" *ngIf="packages?.length">
@@ -153,7 +153,7 @@ import { FormsModule } from '@angular/forms';
               </button>
             </div>
             <div class="empty-packages" *ngIf="!packages?.length">
-              Nessun pacchetto configurato. Vai al negozio per vedere le opzioni disponibili.
+              No packages configured. Go to the store to see available options.
             </div>
           </div>
 
@@ -166,15 +166,15 @@ import { FormsModule } from '@angular/forms';
             </div>
             <div class="stats-grid">
               <div class="stat-chip">
-                <span class="stat-label">Transazioni totali</span>
+                <span class="stat-label">Total Transactions</span>
                 <span class="stat-value">{{ transactions.length }}</span>
               </div>
               <div class="stat-chip">
-                <span class="stat-label">Token consumati</span>
+                <span class="stat-label">Tokens Consumed</span>
                 <span class="stat-value negative">{{ totalConsumed }}</span>
               </div>
               <div class="stat-chip">
-                <span class="stat-label">Token acquistati</span>
+                <span class="stat-label">Tokens Purchased</span>
                 <span class="stat-value positive">{{ totalPurchased }}</span>
               </div>
             </div>
@@ -186,15 +186,15 @@ import { FormsModule } from '@angular/forms';
           <div class="glass-card transactions-card">
             <div class="card-header">
               <div>
-                <h2>Ultime transazioni</h2>
-                <p class="card-subtitle">Movimenti più recenti del tuo wallet</p>
+                <h2>Recent Transactions</h2>
+                <p class="card-subtitle">Your most recent wallet movements</p>
               </div>
               <button
                 class="link-button"
                 *ngIf="transactions.length"
                 (click)="goToTransactions()"
               >
-                Vedi tutto
+                View All
               </button>
             </div>
 
@@ -208,7 +208,7 @@ import { FormsModule } from '@angular/forms';
                   [class.tx-consume]="tx.transaction_type === 'consume'"
                   [class.tx-purchase]="tx.transaction_type === 'purchase'"
                 >
-                  {{ tx.transaction_type === 'consume' ? 'Consume' : 'Purchase' }}
+                  {{ tx.transaction_type === 'consume' ? 'Consumed' : 'Purchased' }}
                 </div>
                 <div class="tx-main">
                   <div class="tx-desc">{{ tx.description }}</div>
@@ -229,7 +229,7 @@ import { FormsModule } from '@angular/forms';
 
             <ng-template #emptyTx>
               <div class="empty-state">
-                Nessuna transazione ancora. I movimenti appariranno qui non appena inizierai a usare o acquistare token.
+                No transactions yet. Movements will appear here as soon as you start using or purchasing tokens.
               </div>
             </ng-template>
           </div>

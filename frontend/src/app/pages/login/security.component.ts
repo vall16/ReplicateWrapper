@@ -12,71 +12,71 @@ import { Router } from '@angular/router';
 
         <h1>Security & Data Protection</h1>
         <p class="intro">
-          La sicurezza dei dati e delle API è una priorità assoluta per Repli.
-          Operiamo come wrapper sicuro per l'accesso ai modelli AI di Replicate.ai,
-          garantendo protezione, isolamento e controllo completo delle richieste.
+          Data and API security is an absolute priority for Repli.
+          We operate as a secure wrapper for accessing AI models from Replicate.ai,
+          ensuring protection, isolation and complete control of requests.
         </p>
 
         <section>
-          <h2>🔒 Connessioni Sicure</h2>
+          <h2>🔐 Secure Connections</h2>
           <ul>
-            <li>Tutte le comunicazioni avvengono tramite HTTPS cifrato (TLS 1.2+)</li>
-            <li>Nessuna trasmissione di dati in chiaro</li>
-            <li>Protezione contro attacchi Man-in-the-Middle</li>
+            <li>All communications via encrypted HTTPS (TLS 1.2+)</li>
+            <li>No transmission of data in clear text</li>
+            <li>Protection against Man-in-the-Middle attacks</li>
           </ul>
         </section>
 
         <section>
-          <h2>🔐 Protezione delle Credenziali</h2>
+          <h2>🔐 Credential Protection</h2>
           <ul>
-            <li>Password salvate con hashing sicuro (bcrypt/argon2)</li>
-            <li>Nessuna memorizzazione di API key Replicate in chiaro</li>
-            <li>Accesso limitato e segregato a livello infrastrutturale</li>
+            <li>Passwords saved with secure hashing (bcrypt/argon2)</li>
+            <li>No storage of Replicate API keys in plain text</li>
+            <li>Limited access and segregated at infrastructure level</li>
           </ul>
         </section>
 
         <section>
-          <h2>🛡️ Isolamento delle Richieste AI</h2>
+          <h2>🛱 AI Request Isolation</h2>
           <p>
-            Ogni richiesta ai modelli AI viene instradata attraverso un layer
-            di validazione che applica:
+            Each request to AI models is routed through a validation layer
+            that applies:
           </p>
           <ul>
-            <li>Rate limiting per prevenire abusi</li>
-            <li>Controlli automatici contro utilizzi non conformi</li>
-            <li>Logging sicuro per audit e monitoraggio</li>
+            <li>Rate limiting to prevent abuse</li>
+            <li>Automatic controls against non-compliant usage</li>
+            <li>Secure logging for audit and monitoring</li>
           </ul>
         </section>
 
         <section>
-          <h2>📊 Monitoraggio & Audit</h2>
+          <h2>📊 Monitoring & Audit</h2>
           <ul>
-            <li>Tracciamento utilizzo token</li>
-            <li>Monitoraggio attività sospette</li>
-            <li>Logging strutturato per debugging e sicurezza</li>
+            <li>Token usage tracking</li>
+            <li>Suspicious activity monitoring</li>
+            <li>Structured logging for debugging and security</li>
           </ul>
         </section>
 
         <section>
-          <h2>☁️ Infrastruttura</h2>
+          <h2>☁️ Infrastructure</h2>
           <ul>
-            <li>Deploy su infrastrutture cloud sicure</li>
-            <li>Backup periodici</li>
-            <li>Separazione ambiente produzione / sviluppo</li>
+            <li>Deployment on secure cloud infrastructure</li>
+            <li>Periodic backups</li>
+            <li>Production / development environment separation</li>
           </ul>
         </section>
 
         <section>
-          <h2>🔎 Responsabilità</h2>
+          <h2>🔎 Responsibility</h2>
           <p>
-            Repli funge da intermediario tecnico per l’accesso ai modelli AI.
-            I contenuti generati sono responsabilità dell’utente finale.
-            Collaboriamo con Replicate.ai per garantire conformità e sicurezza.
+            Repli acts as a technical intermediary for accessing AI models.
+            Generated content is the responsibility of the end user.
+            We collaborate with Replicate.ai to ensure compliance and security.
           </p>
         </section>
 
         <div class="back">
-          <button (click)="goHome()">← Torna alla Home</button>
+          <button (click)="goHome()">← Back to Home</button>
         </div>
 
       </div>

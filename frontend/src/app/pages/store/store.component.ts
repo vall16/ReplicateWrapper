@@ -14,26 +14,26 @@ import { StripeService } from '../../services/stripe.service';
         <div>
           <h1 class="store-title">Token Store</h1>
           <p class="store-subtitle">
-            Scegli il pacchetto di crediti AI perfetto per il tuo flusso su Replicate.
+            Choose the perfect AI credit package for your Replicate workflow.
           </p>
         </div>
         <button class="btn-ghost" (click)="goBack()">
-          Torna al dashboard
+          Back to Dashboard
         </button>
       </header>
 
       <section class="store-main">
         <div class="glass-card hero-card">
           <div class="hero-copy">
-            <h2>Seleziona il tuo piano token</h2>
+            <h2>Select Your Token Plan</h2>
             <p>
-              I crediti vengono scalati automaticamente a ogni chiamata API. Nessuna scadenza, massima
-              trasparenza.
+              Credits are auto-scaled with each API call. No expiration, maximum
+              transparency.
             </p>
             <ul class="hero-list">
-              <li>Prezzo per token sempre visibile prima dell’acquisto</li>
-              <li>Checkout sicuro tramite provider di pagamento</li>
-              <li>Saldo aggiornato in tempo reale nel dashboard</li>
+              <li>Token price always visible before purchase</li>
+              <li>Secure checkout via payment provider</li>
+              <li>Real-time balance updates in dashboard</li>
             </ul>
           </div>
           <div class="hero-security">
@@ -45,7 +45,7 @@ import { StripeService } from '../../services/stripe.service';
               <div class="lock-ring">
                 <div class="lock-inner">✓</div>
               </div>
-              <span>Pagamenti protetti end‑to‑end</span>
+              <span>End-to-end protected payments</span>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ import { StripeService } from '../../services/stripe.service';
             </p>
           </div>
           <div class="glass-card faq-card">
-            <h3>Come funziona la fatturazione?</h3>
+            <h3>How does billing work?</h3>
             <p>
               Paghi solo i pacchetti acquistati. Tutti i pagamenti passano tramite un provider
               certificato che non espone i tuoi dati al backend.

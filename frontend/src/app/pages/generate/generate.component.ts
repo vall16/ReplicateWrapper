@@ -14,51 +14,51 @@ import { environment } from '../../../environments/environments';
 
       <!-- SIDEBAR -->
       <aside class="sidebar">
-        <!-- Saldo Token -->
+        <!-- Token Balance -->
         <div class="section">
           <div class="section-header">
-            <span>Saldo Token</span>
+            <span>Token Balance</span>
           </div>
           <div class="section-body">
             <div class="token-display">
               <div class="token-current">{{ currentTokens | number:'1.0-0' }}</div>
-              <div class="token-label">Token disponibili</div>
+              <div class="token-label">Available Tokens</div>
               <div *ngIf="selectedModel" class="token-info">
-                Questo modello costerà <span class="cost-highlight">{{ selectedModel.cost }} token</span>
+                This model will cost <span class="cost-highlight">{{ selectedModel.cost }} token</span>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Mostra transazione se c'è stata -->
+        <!-- Show transaction if there was one -->
         <div class="section" *ngIf="tokensUsed > 0">
           <div class="section-header" style="color: #059669;">
-            <span>✅ Ultima generazione</span>
+            <span>✅ Last Generation</span>
           </div>
           <div class="section-body">
             <div class="token-transaction">
-              <div>Token usati: <span class="token-minus">-{{ tokensUsed }}</span></div>
-              <div>Rimasti: <span class="token-remaining">{{ tokensRemaining }}</span></div>
+              <div>Tokens used: <span class="token-minus">-{{ tokensUsed }}</span></div>
+              <div>Remaining: <span class="token-remaining">{{ tokensRemaining }}</span></div>
             </div>
           </div>
         </div>
 
-        <!-- Impostazioni generali -->
+        <!-- General Settings -->
         <div class="section">
           <!-- <div class="section-header" (click)="toggleSection('general')">
             <!- <span>Impostazioni generali</span> -->
             <!-- <span class="arrow">{{ openSections.general ? '▲' : '▼' }}</span> -->
           <!-- </div> --> 
           <div class="section-body" *ngIf="openSections.general">
-            <label>Modello Text-to-Image</label>
-            <!-- <small class="field-caption">Scegli il modello da usare per generare l'immagine.</small> -->
+            <label>Text-to-Image Model</label>
+            <!-- <small class="field-caption">Choose the model to use for image generation.</small> -->
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
 
               <!-- SELECTED -->
               <div class="selected">
                 <img *ngIf="isSvgPath(selectedModel?.icon)" [src]="selectedModel?.icon" class="icon icon-svg" />
                 <span *ngIf="!isSvgPath(selectedModel?.icon)" class="icon">{{ selectedModel?.icon }}</span>
-                <span>{{ selectedModel?.name || 'Seleziona modello' }}</span>
+                <span>{{ selectedModel?.name || 'Select model' }}</span>
                 <span class="arrow">▼</span>
               </div>
 
@@ -85,7 +85,7 @@ import { environment } from '../../../environments/environments';
                     <img *ngIf="isSvgPath(item.icon)" [src]="item.icon" class="icon icon-svg" />
                     <span *ngIf="!isSvgPath(item.icon)" class="icon">{{ item.icon }}</span>
                     <span>{{ item.name }}</span>
-                    <!-- 👇 AGGIUNTA COSTO -->
+                    <!-- Adds cost -->
                     <span class="model-cost">
                       {{ item.cost }} tokens
                     </span>
@@ -794,13 +794,13 @@ selectedModel: any = null;
 
     this.style = this.styles[0].value; //
     
-    // Carica il saldo token corrente
+    // Load current token balance
     this.authService.getBalance().subscribe(
       (res: any) => {
         this.currentTokens = res.tokens || 0;
       },
       (err) => {
-        console.error('Errore caricamento saldo token', err);
+        console.error('Error loading token balance', err);
         this.currentTokens = 0;
       }
     );
@@ -899,9 +899,9 @@ selectedModel: any = null;
         this.loadingModels = false;
         // Fallback ai modelli di default
         this.availableModels = [
-          { id: 'flux-pro', name: 'FLUX.1 Pro', description: 'Modello ad alta qualità' },
-          { id: 'flux-dev', name: 'FLUX.1 Dev', description: 'Modello veloce e versatile' },
-          { id: 'sdxl', name: 'SDXL', description: 'Modello stabile e affidabile' }
+          { id: 'flux-pro', name: 'FLUX.1 Pro', description: 'High quality model' },
+          { id: 'flux-dev', name: 'FLUX.1 Dev', description: 'Fast and versatile model' },
+          { id: 'sdxl', name: 'SDXL', description: 'Stable and reliable model' }
         ];
       }
     );

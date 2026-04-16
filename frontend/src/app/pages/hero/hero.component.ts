@@ -19,10 +19,10 @@ import { RouterModule } from '@angular/router';
             <span class="logo-text">Repli</span> -->
           </div>
           <ul class="nav-menu">
-            <li><a href="#features">Prodotti</a></li>
-            <li><a href="#how-it-works">Come Funziona</a></li>
-            <li><a href="#pricing">Prezzi</a></li>
-            <li><a href="#contact">Contatti</a></li>
+            <li><a href="#features">Products</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
           <!-- <div class="nav-buttons">
             <button class="btn btn-login" (click)="navigateTo('login')">Accedi
@@ -39,32 +39,32 @@ import { RouterModule } from '@angular/router';
         <div class="hero-content">
           <div class="hero-label">AI Credit Console · Replicate</div>
           <h1 class="hero-title">
-            Trasforma <span class="gradient-text">Testo in Immagini e Video</span>
-            in pochi secondi
+            Transform <span class="gradient-text">Text into Images and Videos</span>
+            in seconds
           </h1>
           <p class="hero-subtitle">
-            Hai un’idea? Trasformala subito in immagini e video spettacolari, senza bisogno di competenze tecniche.
+            Got an idea? Turn it instantly into stunning images and videos—no technical skills required.
           </p>
           <div class="hero-buttons">
             <button class="btn btn-primary-large" (click)="navigateTo('register')">
-              Inizia gratuitamente
+              Start Free
             </button>
             <button class="btn btn-secondary-large" (click)="scrollTo('features')">
-              Guarda cosa puoi fare →
+              See What You Can Do →
             </button>
           </div>
           <div class="hero-meta">
-            <span>Latency monitorata in tempo reale</span>
+            <span>Real-time latency monitoring</span>
             <span class="dot"></span>
-            <span>Token e costi sempre sotto controllo</span>
+            <span>Control tokens and costs always</span>
           </div>
           <div class="hero-stats">
             <div class="stat-chip">
-              <span class="stat-label">Team attivi</span>
+              <span class="stat-label">Active Teams</span>
               <span class="stat-value">10K+</span>
             </div>
             <div class="stat-chip">
-              <span class="stat-label">Modelli plug‑and‑play</span>
+              <span class="stat-label">Plug-and-play Models</span>
               <span class="stat-value">50+</span>
             </div>
             <div class="stat-chip">
@@ -88,7 +88,7 @@ import { RouterModule } from '@angular/router';
               <div class="hero-connector"></div>
               <div class="hero-step hero-step-model">
                 <span class="hero-step-label">Replicate Model</span>
-                <span class="hero-step-meta">Version controllata · Logs</span>
+                <span class="hero-step-meta">Version Controlled · Logs</span>
               </div>
               <div class="hero-connector"></div>
               <div class="hero-step hero-step-out">
@@ -97,50 +97,50 @@ import { RouterModule } from '@angular/router';
               </div>
             </div>
             <div class="hero-footnote">
-              Nessuna chiave nel frontend · orchestrazione solo lato server
+              No keys in frontend · server-side orchestration only
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Products Section -->
+      <!-- Sezione Prodotti -->
       <section class="products" id="features">
         <div class="section-header">
           <h2>Modelli Generativi Disponibili</h2>
-          <p>Accedi ai migliori modelli di text-to-image al mondo, tutti in un'unica piattaforma</p>
+          <p>Accedi ai migliori modelli text-to-image del mondo, tutto in una piattaforma</p>
         </div>
 
         <div class="products-grid">
           <!-- Flux Pro -->
           <div class="product-card featured" [class.visible]="visibleCards[0]" [style.--card-index]="0" style="--card-index: 0">
-            <div class="badge-lightning">Istantaneo & Adattivo</div>
+            <div class="badge-lightning">Istantaneo & Adattavo</div>
             <div class="product-logo">
               <img src="assets/flux.png" alt="Flux" class="logo-img" />
             </div>
             <h3>Flux AI</h3>
-            <p>Qualità fotografica ultrareale con la velocità del fulmine</p>
+            <p>Ultra-realistic photo quality with lightning speed</p>
             <ul class="product-features">
-              <li>🔥 Qualità premium</li>
-              <li>⚡ Generazione ultra-rapida</li>
-              <li>🎨 Dettagli straordinari</li>
-              <li>✨ Miglior rapporto qualità/velocità</li>
+              <li>🔥 Premium quality</li>
+              <li>⚡ Ultra-fast generation</li>
+              <li>🎨 Extraordinary details</li>
+              <li>✨ Best quality-to-speed ratio</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Inizia Subito</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Inizia</button>
           </div>
 
           <!-- SDXL Stability -->
           <div class="product-card" [class.visible]="visibleCards[1]" [style.--card-index]="1" style="--card-index: 1">
-            <div class="badge-lightning">Robusto</div>
+            <div class="badge-lightning">Affidabile</div>
             <div class="product-logo">
               <img src="assets/stability.svg" alt="Stability" class="logo-img" />
             </div>
             <h3>Stable Diffusion XL</h3>
-            <p>Il classico affidabile per generazioni consistenti e creative</p>
+            <p>The reliable classic for consistent and creative outputs</p>
             <ul class="product-features">
-              <li>🎯 Altamente affidabile</li>
-              <li>🖼️ Stile personalizzabile</li>
-              <li>💰 Economico</li>
-              <li>📚 Migliori prompt comunali</li>
+              <li>🎯 Highly reliable</li>
+              <li>🖼️ Customizable style</li>
+              <li>💰 Cost-effective</li>
+              <li>📚 Best community prompts</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
           </div>
@@ -151,12 +151,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" />
             </div>
             <h3>Midjourney</h3>
-            <p>Stile artistico unico e raffinato, perfetto per concetti creativi</p>
+            <p>Unique and refined artistic style, perfect for creative concepts</p>
             <ul class="product-features">
-              <li>🎭 Stile estetico distintivo</li>
-              <li>🌈 Vibrant e vivace</li>
-              <li>✏️ Ottimo per concetti</li>
-              <li>🏆 Vincitore di premi</li>
+              <li>🎭 Distinctive aesthetic style</li>
+              <li>🌈 Vibrant and lively</li>
+              <li>✏️ Great for concepts</li>
+              <li>🏆 Award-winning</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
           </div>
@@ -168,12 +168,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/openai.svg" alt="OpenAI" class="logo-img" />
             </div>
             <h3>OpenAI GPT-image-1.5</h3>
-            <p>Interpretazione precisa del testo con risultati naturali e realistici</p>
+            <p>Precise text interpretation with natural and realistic results</p>
             <ul class="product-features">
-              <li>📖 Comprensione testuale</li>
-              <li>🎯 Esecuzione precisa</li>
-              <li>🌍 Ampia conoscenza</li>
-              <li>✅ Affidabilità premium</li>
+              <li>📖 Text understanding</li>
+              <li>🎯 Precise execution</li>
+              <li>🌍 Broad knowledge</li>
+              <li>✅ Premium reliability</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Accedi</button>
           </div>
@@ -184,12 +184,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/kling.jpg" alt="Kling" class="logo-img" />
             </div>
             <h3>Kling Video</h3>
-            <p>Trasforma immagini e testo in video straordinari e fluidi</p>
+            <p>Transform images and text into extraordinary smooth videos</p>
             <ul class="product-features">
-              <li>🎬 Video alta qualità</li>
-              <li>🎞️ Movimento naturale</li>
-              <li>🚀 Tecnologia emergente</li>
-              <li>✨ Effetti cinematografici</li>
+              <li>🎬 High-quality video</li>
+              <li>🎞️ Natural movement</li>
+              <li>🚀 Emerging technology</li>
+              <li>✨ Cinematic effects</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Genera Video</button>
           </div>
@@ -201,12 +201,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/google.png" alt="Google" class="logo-img" />
             </div>
             <h3>Google Nano-banana</h3>
-            <p>Potenza multimodale di Google con comprensione avanzata del contesto</p>
+            <p>Google's multimodal power with advanced context understanding</p>
             <ul class="product-features">
-              <li>🧠 Intelligenza avanzata</li>
-              <li>🌐 Comprensione multimodale</li>
-              <li>🔍 Ricerca integrata</li>
-              <li>⚡ Risposte rapide e accurate</li>
+              <li>🧠 Advanced intelligence</li>
+              <li>🌐 Multimodal understanding</li>
+              <li>🔍 Integrated search</li>
+              <li>⚡ Fast and accurate answers</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
           </div>
@@ -217,29 +217,29 @@ import { RouterModule } from '@angular/router';
               <img src="assets/seedream.png" alt="Seedream" class="logo-img" />
             </div>
             <h3>Seedream</h3>
-            <p>Generazione artistica con stili unici e creatività illimitata</p>
+            <p>Artistic generation with unique styles and unlimited creativity</p>
             <ul class="product-features">
-              <li>🎨 Stili artistici unici</li>
-              <li>🌈 Creatività illimitata</li>
-              <li>✨ Risultati sorprendenti</li>
-              <li>🎭 Espressione artistica</li>
+              <li>🎨 Unique artistic styles</li>
+              <li>🌈 Unlimited creativity</li>
+              <li>✨ Amazing results</li>
+              <li>🎭 Artistic expression</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Crea Arte</button>
           </div>
 
           <!-- Qwen -->
           <div class="product-card" [class.visible]="visibleCards[7]" [style.--card-index]="7" style="--card-index: 7">
-            <div class="badge-lightning">Versatile, Omnisciente</div>
+            <div class="badge-lightning">Versatile, Onnisciente</div>
             <div class="product-logo">
               <img src="assets/qwen.jpg" alt="Qwen" class="logo-img" />
             </div>
             <h3>Qwen</h3>
-            <p>Modello linguistico avanzato con eccellente comprensione del linguaggio</p>
+            <p>Advanced language model with excellent language understanding</p>
             <ul class="product-features">
-              <li>📝 Comprensione eccellente</li>
-              <li>🌍 Supporto multilingue</li>
-              <li>🧠 Ragionamento avanzato</li>
-              <li>📚 Conoscenza approfondita</li>
+              <li>📝 Excellent understanding</li>
+              <li>🌍 Multilingual support</li>
+              <li>🧠 Advanced reasoning</li>
+              <li>📚 In-depth knowledge</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
           </div>
@@ -249,27 +249,27 @@ import { RouterModule } from '@angular/router';
       <!-- How It Works -->
       <section class="how-it-works" id="how-it-works">
         <div class="section-header">
-          <h2>Come Funziona</h2>
-          <p>Tre semplici passi per iniziare</p>
+          <h2>How It Works</h2>
+          <p>Three simple steps to get started</p>
         </div>
 
         <div class="steps">
           <div class="step step-1">
             <div class="step-number">1</div>
-            <h3>Registrati</h3>
-            <p>Crea il tuo account Repli gratuitamente in pochi secondi</p>
+            <h3>Sign Up</h3>
+            <p>Create your Repli account for free in seconds</p>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-2">
             <div class="step-number">2</div>
-            <h3>Acquista Token</h3>
-            <p>Compra token per accedere ai modelli Replicate.ai</p>
+            <h3>Purchase Tokens</h3>
+            <p>Buy tokens to access Replicate.ai models</p>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-3">
             <div class="step-number">3</div>
-            <h3>Inizia a Creare</h3>
-            <p>Usa la nostra API per integrare i modelli AI nel tuo progetto</p>
+            <h3>Start Creating</h3>
+            <p>Use our API to integrate AI models into your project</p>
           </div>
         </div>
       </section>
@@ -277,8 +277,8 @@ import { RouterModule } from '@angular/router';
       <!-- Pricing Preview -->
       <section class="pricing-preview" id="pricing">
         <div class="section-header">
-          <h2>Pacchetti Token</h2>
-          <p>Scegli il piano che fa per te</p>
+          <h2>Token Packages</h2>
+          <p>Choose the plan that's right for you</p>
         </div>
 
         <div class="pricing-cards">
@@ -286,36 +286,36 @@ import { RouterModule } from '@angular/router';
             <h3>Starter</h3>
             <div class="price">100 ⚡ </div>
             <p class="price-sub">€1.00</p>
-            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card featured">
-            <div class="ribbon">Consigliato</div>
+            <div class="ribbon">Recommended</div>
             <h3>Growth</h3>
             <div class="price">500 ⚡ </div>
-            <p class="price-sub">€4.50 - Risparmia 10%</p>
-            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
+            <p class="price-sub">€4.50 - Save 10%</p>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
             <h3>Pro</h3>
             <div class="price">1000 ⚡ </div>
-            <p class="price-sub">€8.00 - Risparmia 20%</p>
-            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
+            <p class="price-sub">€8.00 - Save 20%</p>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
             <h3>Enterprise</h3>
             <div class="price">5000 ⚡ </div>
-            <p class="price-sub">€35.00 - Risparmia 30%</p>
-            <button class="btn btn-primary-small" (click)="navigateTo('login')">Seleziona</button>
+            <p class="price-sub">€35.00 - Save 30%</p>
+            <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
         </div>
       </section>
 
       <!-- CTA Section -->
       <section class="cta">
-        <h2>Pronto a Iniziare?</h2>
-        <p>Unisciti a migliaia di sviluppatori che usano Repli</p>
+        <h2>Ready to Get Started?</h2>
+        <p>Join thousands of developers using Repli</p>
         <button class="btn btn-primary-large" (click)="navigateTo('register')">
-          Registrati Gratuitamente Oggi
+          Sign Up Free Today
         </button>
       </section>
 
@@ -324,7 +324,7 @@ import { RouterModule } from '@angular/router';
   <div class="legal-container">
     <h2>Privacy Policy</h2>
     <p>
-      La tua privacy è importante per noi. Raccogliamo solo i dati necessari
+      Your privacy is important to us. We collect only the necessary data
       per fornire il servizio e migliorare l’esperienza utente.
     </p>
 
@@ -354,7 +354,7 @@ import { RouterModule } from '@angular/router';
     <ul>
       <li>L'utente è responsabile dell’uso dei modelli AI.</li>
       <li>I token acquistati non sono rimborsabili.</li>
-      <li>È vietato utilizzare il servizio per attività illegali.</li>
+      <li>It is forbidden to use the service for illegal activities.</li>
       <li>Ci riserviamo il diritto di sospendere account in caso di abuso.</li>
     </ul>
   </div>
@@ -365,18 +365,18 @@ import { RouterModule } from '@angular/router';
   <div class="legal-container">
     <h2>Security</h2>
     <p>
-      Implementiamo misure di sicurezza avanzate per proteggere i tuoi dati.
+      We implement advanced security measures to protect your data.
     </p>
 
     <ul>
-      <li>🔒 Connessioni HTTPS cifrate</li>
-      <li>🔐 Hashing sicuro delle password</li>
-      <li>🛡️ Monitoraggio continuo contro abusi</li>
-      <li>📊 Logging e audit trail</li>
+      <li>🔒 Encrypted HTTPS connections</li>
+      <li>🔐 Secure password hashing</li>
+      <li>🛡️ Continuous abuse monitoring</li>
+      <li>📊 Logging and audit trail</li>
     </ul>
   </div>
 </section>  -->
-      <!-- Contact Section -->
+      <!-- Sezione Contatti -->
     <section class="contact-section" id="contact">
       <div class="contact-background">
         <div class="contact-overlay"></div>
@@ -391,14 +391,14 @@ import { RouterModule } from '@angular/router';
         <div class="contact-header">
           <div class="contact-badge">
             <span class="badge-icon">💬</span>
-            <span class="badge-text">Contattaci</span>
+            <span class="badge-text">Contact Us</span>
           </div>
           <h2 class="contact-title">
-            Hai una domanda?<br>
-            <span class="gradient-highlight">Siamo qui per aiutarti</span>
+            Have a Question?<br>
+            <span class="gradient-highlight">We're Here to Help</span>
           </h2>
           <p class="contact-subtitle">
-            Il nostro team è pronto a rispondere a tutte le tue domande sui nostri servizi AI
+            Our team is ready to answer all your questions about our AI services
           </p>
         </div>
 
@@ -413,7 +413,7 @@ import { RouterModule } from '@angular/router';
                 </svg>
               </div>
               <h3>Email Support</h3>
-              <p>Risposta entro 24 ore</p>
+              <p>Response within 24 hours</p>
               <a href="mailto:support@repli.ai" class="contact-link">
                 support&#64;repli.ai
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -428,8 +428,8 @@ import { RouterModule } from '@angular/router';
                   <path d="M22 16.92V19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21C16.13 21 12.46 19.5 9.5 16.92M22 16.92C22 16.3896 21.7893 15.8809 21.4142 15.5058C21.0391 15.1307 20.5304 15 20 15C16.13 15 12.46 16.5 9.5 19.08M22 16.92C19.5 16.92 17.32 15.5 15.5 13.92M9.5 19.08C9.5 19.08 9.5 19.08 9.5 19.08C7.68 17.5 5.5 16.08 3 16.08C2.46957 16.08 1.96086 15.8693 1.58579 15.4942C1.21071 15.1191 1 14.6104 1 14.08V11C1 10.4696 1.21071 9.96086 1.58579 9.58579C1.96086 9.21071 2.46957 9 3 9C6.87 9 10.54 10.5 13.5 13.08" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <h3>Telefono</h3>
-              <p>Lun-Ven 9:00-18:00 CET</p>
+              <h3>Phone</h3>
+              <p>Mon-Fri 9:00-18:00 CET</p>
               <a href="tel:+390123456789" class="contact-link">
                 +39 012 345 6789
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -445,30 +445,30 @@ import { RouterModule } from '@angular/router';
                   <path d="M12 9C12.5523 9 13 8.55228 13 8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8C11 8.55228 11.4477 9 12 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </div>
-              <h3>Ufficio</h3>
-              <p>Milano, Italia</p>
+              <h3>Office</h3>
+              <p>Milan, Italy</p>
               <div class="contact-address">
                 Via AI 42<br>
-                20100 Milano
+                20100 Milan
               </div>
             </div>
           </div>
 
-          <!-- Contact Form -->
+          <!-- Modulo Contatti -->
           <div class="contact-form-container" data-aos="fade-up" data-aos-delay="400">
             <div class="form-header">
-              <h3>Invia un messaggio</h3>
-              <p>Compila il form e ti risponderemo presto</p>
+              <h3>Send a Message</h3>
+              <p>Fill out the form and we'll get back to you soon</p>
             </div>
 
             <form class="contact-form" (submit)="submitContact($event)">
               <div class="form-group">
-                <label for="name">Nome completo</label>
+                <label for="name">Full Name</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Il tuo nome"
+                  placeholder="Your name"
                   required
                   class="form-input"
                 />
@@ -480,37 +480,37 @@ import { RouterModule } from '@angular/router';
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="tua@email.com"
+                  placeholder="your@email.com"
                   required
                   class="form-input"
                 />
               </div>
 
               <div class="form-group">
-                <label for="subject">Oggetto</label>
+                <label for="subject">Subject</label>
                 <select id="subject" name="subject" class="form-select" required>
-                  <option value="">Seleziona un argomento</option>
-                  <option value="support">Supporto tecnico</option>
-                  <option value="billing">Fatturazione</option>
+                  <option value="">Select a topic</option>
+                  <option value="support">Technical Support</option>
+                  <option value="billing">Billing</option>
                   <option value="partnership">Partnership</option>
-                  <option value="general">Informazioni generali</option>
+                  <option value="general">General Information</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="message">Messaggio</label>
+                <label for="message">Message</label>
                 <textarea
                   id="message"
                   name="message"
                   rows="5"
-                  placeholder="Descrivi la tua richiesta..."
+                  placeholder="Describe your request..."
                   required
                   class="form-textarea"
                 ></textarea>
               </div>
 
               <button type="submit" class="btn-submit">
-                <span>Invia messaggio</span>
+                <span>Send Message</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3.5 8H12.5M12.5 8L8.5 4M12.5 8L8.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -521,7 +521,7 @@ import { RouterModule } from '@angular/router';
 
         <!-- Social Links -->
         <div class="social-section">
-          <h3>Seguici sui social</h3>
+          <h3>Follow Us on Social</h3>
           <div class="social-links">
             <a href="#" class="social-link" aria-label="Twitter">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -552,7 +552,7 @@ import { RouterModule } from '@angular/router';
                 <span class="footer-logo-title">ReplicateXpress</span>
               </div>
               <p class="footer-description">
-                La piattaforma AI più avanzata per utilizzare facilmente le Api di Replicate
+                The most advanced AI platform to easily use Replicate APIs
               </p>
               <div class="social-links-footer">
                 
@@ -572,7 +572,7 @@ import { RouterModule } from '@angular/router';
             <div class="footer-links-group">
               <h3 class="footer-links-title">Link Rapidi</h3>
               <ul class="footer-links-list">
-                <li><a href="#features">Funzionalità</a></li>
+                <li><a href="#features">Caratteristiche</a></li>
                 <li><a href="#pricing">Prezzi</a></li>
                 <li><a href="#how-it-works">Come Funziona</a></li>
                 <li><a href="javascript:void(0)" (click)="navigateTo('register')">Registrati</a></li>
@@ -580,9 +580,9 @@ import { RouterModule } from '@angular/router';
             </div>
 
             <div class="footer-links-group">
-              <h3 class="footer-links-title">Note Legali</h3>
+              <h3 class="footer-links-title">Legale</h3>
               <ul class="footer-links-list">
-                <li><a routerLink="/privacy">Privacy Policy</a></li>
+                <li><a routerLink="/privacy">Informativa Privacy</a></li>
                 <li><a routerLink="/terms">Termini di Servizio</a></li>
                 <li><a routerLink="/security">Sicurezza</a></li>
               </ul>

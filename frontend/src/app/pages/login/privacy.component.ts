@@ -11,41 +11,40 @@ import { Router } from '@angular/router';
       <div class="container">
 
         <h1>Privacy Policy</h1>
-        <p class="last-update">Ultimo aggiornamento: {{ today }}</p>
+        <p class=\"last-update\">Last updated: {{ today }}</p>
 
         <section>
-          <h2>1. Introduzione</h2>
+          <h2>1. Introduction</h2>
           <p>
-            La presente Privacy Policy descrive come raccogliamo, utilizziamo
-            e proteggiamo i dati personali degli utenti che utilizzano
-            la nostra piattaforma, che funge da wrapper tecnico per l’accesso
-            ai modelli AI forniti da terze parti.
+            This Privacy Policy describes how we collect, use and protect
+            the personal data of users who use our platform, which acts
+            as a technical wrapper for access to AI models provided by third parties.
           </p>
         </section>
 
         <section>
-          <h2>2. Dati Raccolti</h2>
-          <p>Possiamo raccogliere le seguenti categorie di dati:</p>
+          <h2>2. Data Collected</h2>
+          <p>We may collect the following categories of data:</p>
           <ul>
-            <li>Dati di registrazione (email, password criptata)</li>
-            <li>Dati di utilizzo (richieste API, consumo token, log tecnici)</li>
-            <li>Dati di pagamento (gestiti tramite provider terzi)</li>
-            <li>Informazioni tecniche (IP, browser, sistema operativo)</li>
+            <li>Registration data (email, encrypted password)</li>
+            <li>Usage data (API requests, token consumption, technical logs)</li>
+            <li>Payment data (managed through third-party providers)</li>
+            <li>Technical information (IP, browser, operating system)</li>
           </ul>
         </section>
 
         <section>
-          <h2>3. Finalità del Trattamento</h2>
+          <h2>3. Purpose of Processing</h2>
           <ul>
-            <li>Fornitura del servizio e gestione account</li>
-            <li>Monitoraggio utilizzo e prevenzione abusi</li>
-            <li>Gestione pagamenti e fatturazione</li>
-            <li>Miglioramento del servizio e sicurezza</li>
+            <li>Service provision and account management</li>
+            <li>Usage monitoring and abuse prevention</li>
+            <li>Payment management and billing</li>
+            <li>Service improvement and security</li>
           </ul>
         </section>
 
         <section>
-          <h2>4. Contenuti Inviati ai Modelli AI</h2>
+          <h2>4. Content Sent to AI Models</h2>
           <p>
             Le richieste inviate ai modelli AI vengono elaborate tramite
             provider terzi. Non garantiamo la conservazione permanente
@@ -55,69 +54,69 @@ import { Router } from '@angular/router';
         </section>
 
         <section>
-          <h2>5. Base Giuridica</h2>
-          <p>
-            Il trattamento dei dati avviene sulla base di:
-          </p>
-          <ul>
-            <li>Esecuzione di un contratto (fornitura del servizio)</li>
-            <li>Obblighi legali</li>
-            <li>Legittimo interesse (sicurezza e prevenzione frodi)</li>
+          <h2>5. Legal Basis</h2>
+            <p>
+            Data processing takes place on the basis of:
+            </p>
+            <ul>
+            <li>Execution of a contract (service provision)</li>
+            <li>Legal obligations</li>
+            <li>Legitimate interest (security and fraud prevention)</li>
           </ul>
         </section>
 
         <section>
-          <h2>6. Conservazione dei Dati</h2>
+          <h2>6. Data Retention</h2>
           <p>
-            Conserviamo i dati personali solo per il tempo necessario
-            alle finalità per cui sono stati raccolti, salvo obblighi
-            legali diversi.
+            We retain personal data only for the time necessary for
+            the purposes for which they were collected, unless different
+            legal obligations apply.
           </p>
         </section>
 
         <section>
-          <h2>7. Sicurezza</h2>
+          <h2>7. Security</h2>
           <ul>
-            <li>Connessioni cifrate HTTPS (TLS)</li>
-            <li>Password protette tramite hashing sicuro</li>
-            <li>Controlli di accesso limitati</li>
-            <li>Monitoraggio attività sospette</li>
+            <li>Encrypted HTTPS connections (TLS)</li>
+            <li>Passwords protected through secure hashing</li>
+            <li>Limited access controls</li>
+            <li>Monitoring of suspicious activities</li>
           </ul>
         </section>
 
         <section>
-          <h2>8. Diritti dell’Utente</h2>
+          <h2>8. User Rights</h2>
           <p>
-            L’utente ha diritto di:
+            The user has the right to:
           </p>
           <ul>
-            <li>Accedere ai propri dati</li>
-            <li>Richiederne la rettifica o cancellazione</li>
-            <li>Limitare o opporsi al trattamento</li>
-            <li>Richiedere la portabilità dei dati</li>
+            <li>Access their own data</li>
+            <li>Request rectification or deletion</li>
+            <li>Limit or object to processing</li>
+            <li>Request data portability</li>
           </ul>
         </section>
 
         <section>
-          <h2>9. Trasferimento a Terze Parti</h2>
+          <h2>9. Transfer to Third Parties</h2>
           <p>
-            Alcuni dati possono essere condivisi con provider terzi
-            necessari per il funzionamento del servizio
-            (es. infrastruttura cloud, sistemi di pagamento,
-            fornitori di modelli AI).
+            Some data may be shared with third-party providers
+            necessary for the operation of the service
+            (e.g., cloud infrastructure, payment systems,
+            AI model providers).
           </p>
         </section>
 
         <section>
-          <h2>10. Modifiche alla Privacy Policy</h2>
+          <h2>10. Changes to the Privacy Policy</h2>
           <p>
-            Ci riserviamo il diritto di aggiornare questa Privacy Policy.
-            Le modifiche saranno pubblicate su questa pagina.
+            We reserve the right to update this Privacy Policy.
+            Changes will be published on this page.
           </p>
         </section>
 
         <div class="back">
-          <button (click)="goHome()">← Torna alla Home</button>
+          <button (click)="goHome()">← Back to Home</button>
         </div>
 
       </div>
