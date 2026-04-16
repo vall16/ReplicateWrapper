@@ -106,14 +106,14 @@ import { RouterModule } from '@angular/router';
       <!-- Sezione Prodotti -->
       <section class="products" id="features">
         <div class="section-header">
-          <h2>Modelli Generativi Disponibili</h2>
-          <p>Accedi ai migliori modelli text-to-image del mondo, tutto in una piattaforma</p>
+          <h2>Available Generative Models</h2>
+          <p>Access the world’s best text-to-image models, all in one platform</p>
         </div>
 
         <div class="products-grid">
           <!-- Flux Pro -->
           <div class="product-card featured" [class.visible]="visibleCards[0]" [style.--card-index]="0" style="--card-index: 0">
-            <div class="badge-lightning">Istantaneo & Adattavo</div>
+            <div class="badge-lightning">Instant & Adaptive</div>
             <div class="product-logo">
               <img src="assets/flux.png" alt="Flux" class="logo-img" />
             </div>
@@ -125,12 +125,12 @@ import { RouterModule } from '@angular/router';
               <li>🎨 Extraordinary details</li>
               <li>✨ Best quality-to-speed ratio</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Inizia</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Start</button>
           </div>
 
           <!-- SDXL Stability -->
           <div class="product-card" [class.visible]="visibleCards[1]" [style.--card-index]="1" style="--card-index: 1">
-            <div class="badge-lightning">Affidabile</div>
+            <div class="badge-lightning">Very Reliable</div>
             <div class="product-logo">
               <img src="assets/stability.svg" alt="Stability" class="logo-img" />
             </div>
@@ -142,7 +142,7 @@ import { RouterModule } from '@angular/router';
               <li>💰 Cost-effective</li>
               <li>📚 Best community prompts</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
           </div>
 
           <!-- Midjourney -->
@@ -158,12 +158,12 @@ import { RouterModule } from '@angular/router';
               <li>✏️ Great for concepts</li>
               <li>🏆 Award-winning</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
           </div>
 
           <!-- OpenAI DALL-E -->
           <div class="product-card" [class.visible]="visibleCards[3]" [style.--card-index]="3" style="--card-index: 3">
-            <div class="badge-lightning">Creativo & Espressivo</div>
+            <div class="badge-lightning">Creative & Expressive</div>
             <div class="product-logo">
               <img src="assets/openai.svg" alt="OpenAI" class="logo-img" />
             </div>
@@ -175,7 +175,7 @@ import { RouterModule } from '@angular/router';
               <li>🌍 Broad knowledge</li>
               <li>✅ Premium reliability</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Accedi</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Access</button>
           </div>
 
           <!-- Kling -->
@@ -196,7 +196,7 @@ import { RouterModule } from '@angular/router';
 
           <!-- Google Gemini -->
           <div class="product-card" [class.visible]="visibleCards[5]" [style.--card-index]="5" style="--card-index: 5">
-            <div class="badge-lightning">Istantaneo & Leggero</div>
+            <div class="badge-lightning">Instant & Lightweight</div>
             <div class="product-logo">
               <img src="assets/google.png" alt="Google" class="logo-img" />
             </div>
@@ -229,7 +229,7 @@ import { RouterModule } from '@angular/router';
 
           <!-- Qwen -->
           <div class="product-card" [class.visible]="visibleCards[7]" [style.--card-index]="7" style="--card-index: 7">
-            <div class="badge-lightning">Versatile, Onnisciente</div>
+            <div class="badge-lightning">Versatile, Omniscient</div>
             <div class="product-logo">
               <img src="assets/qwen.jpg" alt="Qwen" class="logo-img" />
             </div>
@@ -570,21 +570,21 @@ import { RouterModule } from '@angular/router';
             </div>
             
             <div class="footer-links-group">
-              <h3 class="footer-links-title">Link Rapidi</h3>
+              <h3 class="footer-links-title">Quick Links</h3>
               <ul class="footer-links-list">
-                <li><a href="#features">Caratteristiche</a></li>
-                <li><a href="#pricing">Prezzi</a></li>
-                <li><a href="#how-it-works">Come Funziona</a></li>
-                <li><a href="javascript:void(0)" (click)="navigateTo('register')">Registrati</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="javascript:void(0)" (click)="navigateTo('register')">Sign Up</a></li>
               </ul>
             </div>
 
             <div class="footer-links-group">
-              <h3 class="footer-links-title">Legale</h3>
+              <h3 class="footer-links-title">Legal</h3>
               <ul class="footer-links-list">
-                <li><a routerLink="/privacy">Informativa Privacy</a></li>
-                <li><a routerLink="/terms">Termini di Servizio</a></li>
-                <li><a routerLink="/security">Sicurezza</a></li>
+                <li><a routerLink="/privacy">Privacy Policy</a></li>
+                <li><a routerLink="/terms">Terms of Service</a></li>
+                <li><a routerLink="/security">Security</a></li>
               </ul>
             </div>
           </div>
