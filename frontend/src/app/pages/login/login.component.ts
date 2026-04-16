@@ -16,7 +16,7 @@ import { environment } from '../../../environments/environments';
       <div class="login-grid">
         <section class="login-hero">
           <div class="logo-orb">
-            <div class="logo-inner">RW</div>
+            <div class="logo-inner">RX</div>
           </div>
           <h1 class="hero-title">Accedi al tuo spazio AI</h1>
           <p class="hero-subtitle">
@@ -116,7 +116,7 @@ import { environment } from '../../../environments/environments';
     .login-shell::before {
       content: '';
       position: absolute;
-      inset: -5%; /* Slightly larger to avoid unblurred edges */
+      inset: -5%;
       background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
@@ -127,7 +127,11 @@ import { environment } from '../../../environments/environments';
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.75) 100%);
+      background: linear-gradient(90deg, 
+        rgba(15, 23, 42, 0.85) 0%,
+        rgba(15, 23, 42, 0.65) 25%,
+        rgba(255, 255, 255, 0.95) 50%,
+        rgba(255, 255, 255, 0.98) 100%);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       pointer-events: none;
@@ -180,14 +184,18 @@ import { environment } from '../../../environments/environments';
       font-size: 2.2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
+      color: #0f172a;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .hero-subtitle {
       margin: 0 0 1rem;
       font-size: 1.05rem;
       line-height: 1.5;
-      color: #4b5563;
+      color: #1f2937;
       max-width: 420px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
     }
 
     .hero-points {
@@ -198,7 +206,8 @@ import { environment } from '../../../environments/environments';
       flex-direction: column;
       gap: 0.5rem;
       font-size: 0.9rem;
-      color: #4b5563;
+      color: #111827;
+      font-weight: 500;
     }
 
     .hero-points li::before {

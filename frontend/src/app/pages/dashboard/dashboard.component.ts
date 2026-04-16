@@ -242,26 +242,29 @@ import { FormsModule } from '@angular/forms';
     :host {
       display: block;
       height: 100%;
-      color: #1f2937;
+      color: var(--color-text-primary);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .dashboard-shell {
       display: grid;
       grid-template-columns: 260px minmax(0, 1fr);
       height: 100vh;
-      background-color: #f9fafb;
-      color: #1f2937;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
       overflow: hidden;
+      transition: background-color 0.3s ease;
     }
 
     .sidebar {
-      background: #ffffff;
-      border-right: 1px solid #e5e7eb;
+      background: var(--color-bg-secondary);
+      border-right: 1px solid var(--color-border);
       padding: 1.5rem 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 2rem;
+      transition: background-color 0.3s ease;
     }
 
     .brand {
@@ -274,7 +277,7 @@ import { FormsModule } from '@angular/forms';
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      background: linear-gradient(135deg, var(--color-gradient-start), #8b5cf6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -294,11 +297,12 @@ import { FormsModule } from '@angular/forms';
       font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.03em;
+      color: var(--color-text-primary);
     }
 
     .brand-subtitle {
       font-size: 0.75rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .nav {
@@ -311,7 +315,7 @@ import { FormsModule } from '@angular/forms';
     .nav-item {
       border: none;
       background: transparent;
-      color: #4b5563;
+      color: var(--color-text-secondary);
       display: flex;
       align-items: center;
       gap: 0.6rem;
@@ -323,14 +327,14 @@ import { FormsModule } from '@angular/forms';
     }
 
     .nav-item:hover {
-      background: #f3f4f6;
-      color: #111827;
+      background: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
       transform: translateY(-1px);
     }
 
     .nav-item-active {
-      background: #eef2ff;
-      color: #4338ca;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--color-gradient-end);
       font-weight: 500;
     }
 
@@ -359,21 +363,22 @@ import { FormsModule } from '@angular/forms';
       gap: 0.6rem;
       padding: 0.45rem 0.6rem;
       border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
     }
 
     .avatar {
       width: 28px;
       height: 28px;
       border-radius: 999px;
-      background: #f3f4f6;
+      background: var(--color-bg-tertiary);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.85rem;
       font-weight: 600;
-      color: #6366f1;
+      color: var(--color-gradient-start);
     }
 
     .user-meta {
@@ -385,17 +390,18 @@ import { FormsModule } from '@angular/forms';
     .user-name {
       font-size: 0.8rem;
       font-weight: 500;
+      color: var(--color-text-primary);
     }
 
     .user-email {
       font-size: 0.72rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .btn-logout {
       border-radius: 6px;
       border: 1px solid #fca5a5;
-      background: #ffffff;
+      background: var(--color-bg-secondary);
       color: #ef4444;
       padding: 0.4rem 0.8rem;
       font-size: 0.8rem;
@@ -405,7 +411,7 @@ import { FormsModule } from '@angular/forms';
     }
 
     .btn-logout:hover {
-      background: #fef2f2;
+      background: rgba(239, 68, 68, 0.1);
       transform: translateY(-1px);
     }
 
@@ -413,6 +419,7 @@ import { FormsModule } from '@angular/forms';
       padding: 1.75rem 2rem;
       overflow-y: auto;
       position: relative;
+      background: var(--color-bg-primary);
     }
 
     .topbar {
@@ -428,12 +435,13 @@ import { FormsModule } from '@angular/forms';
       font-size: 1.6rem;
       letter-spacing: 0.03em;
       font-weight: 600;
+      color: var(--color-text-primary);
     }
 
     .page-subtitle {
       margin: 0.35rem 0 0;
       font-size: 0.85rem;
-      color: #4b5563;
+      color: var(--color-text-secondary);
       max-width: 420px;
     }
 
@@ -446,25 +454,26 @@ import { FormsModule } from '@angular/forms';
     .pill {
       padding: 0.5rem 0.9rem;
       border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-secondary);
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
       min-width: 130px;
+      color: var(--color-text-primary);
     }
 
     .pill-label {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.11em;
-      color: #6b7280;
+      color: var(--color-text-tertiary);
     }
 
     .pill-value {
       font-size: 1.05rem;
       font-weight: 600;
-      color: #6366f1;
+      color: var(--color-gradient-start);
     }
 
     .hero-row {
@@ -492,10 +501,11 @@ import { FormsModule } from '@angular/forms';
       position: relative;
       border-radius: 1.25rem;
       padding: 1.2rem 1.3rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
       overflow: hidden;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .glass-card::before {
@@ -521,12 +531,13 @@ import { FormsModule } from '@angular/forms';
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      color: var(--color-text-primary);
     }
 
     .card-subtitle {
       margin: 0.25rem 0 0;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .balance-body {
@@ -558,18 +569,20 @@ import { FormsModule } from '@angular/forms';
       width: 82%;
       height: 82%;
       border-radius: 999px;
-      background: #ffffff;
+      background: var(--color-bg-primary);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 0 1px #e5e7eb;
+      box-shadow: inset 0 0 0 1px var(--color-border);
+      color: var(--color-text-primary);
     }
 
     .balance-value {
       font-size: 2.1rem;
       font-weight: 700;
       letter-spacing: 0.06em;
+      color: var(--color-text-primary);
     }
 
     .balance-label {
@@ -577,7 +590,7 @@ import { FormsModule } from '@angular/forms';
       font-size: 0.7rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .balance-side {
@@ -592,13 +605,14 @@ import { FormsModule } from '@angular/forms';
       align-items: baseline;
       padding: 0.4rem 0.55rem;
       border-radius: 0.9rem;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
     }
 
     .balance-stat-label {
       font-size: 0.78rem;
-      color: #4b5563;
+      color: var(--color-text-secondary);
     }
 
     .balance-stat-value {
@@ -626,7 +640,7 @@ import { FormsModule } from '@angular/forms';
       padding: 0.55rem 1.1rem;
       border-radius: 6px;
       border: none;
-      background: #6366f1;
+      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
       color: white;
       font-size: 0.85rem;
       font-weight: 500;
@@ -637,7 +651,7 @@ import { FormsModule } from '@angular/forms';
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      background: #4f46e5;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
     }
 
     .profile-body {
@@ -652,14 +666,16 @@ import { FormsModule } from '@angular/forms';
       justify-content: space-between;
       align-items: baseline;
       font-size: 0.82rem;
+      color: var(--color-text-primary);
     }
 
     .profile-label {
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .profile-value {
       font-weight: 500;
+      color: var(--color-text-primary);
     }
 
     .packages-row {
@@ -675,34 +691,35 @@ import { FormsModule } from '@angular/forms';
       min-width: 150px;
       border-radius: 0.9rem;
       padding: 0.6rem 0.8rem;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-tertiary);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 0.15rem;
       cursor: pointer;
-      color: #374151;
+      color: var(--color-text-primary);
       font-size: 0.8rem;
       transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
       white-space: nowrap;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      box-shadow: var(--shadow-sm);
     }
 
     .package-pill:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      border-color: #6366f1;
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-gradient-start);
     }
 
     .package-name {
       font-weight: 600;
       font-size: 0.82rem;
+      color: var(--color-text-primary);
     }
 
     .package-tokens {
       font-size: 0.78rem;
-      color: #6366f1;
+      color: var(--color-gradient-start);
     }
 
     .package-price {
@@ -714,7 +731,7 @@ import { FormsModule } from '@angular/forms';
     .empty-packages {
       margin-top: 0.4rem;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .stats-grid {
@@ -727,22 +744,24 @@ import { FormsModule } from '@angular/forms';
     .stat-chip {
       border-radius: 0.85rem;
       padding: 0.55rem 0.7rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
       gap: 0.15rem;
       font-size: 0.78rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      box-shadow: var(--shadow-sm);
+      color: var(--color-text-primary);
     }
 
     .stat-label {
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .stat-value {
       font-size: 0.97rem;
       font-weight: 600;
+      color: var(--color-text-primary);
     }
 
     .stat-value.negative {
@@ -771,8 +790,9 @@ import { FormsModule } from '@angular/forms';
       align-items: center;
       padding: 0.5rem 0.55rem;
       border-radius: 0.85rem;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
     }
 
     .tx-pill {
@@ -781,20 +801,20 @@ import { FormsModule } from '@angular/forms';
       letter-spacing: 0.16em;
       padding: 0.22rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid #d1d5db;
-      color: #374151;
-      background: #ffffff;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
     }
 
     .tx-consume {
       border-color: #fca5a5;
-      background: #fef2f2;
+      background: rgba(239, 68, 68, 0.1);
       color: #ef4444;
     }
 
     .tx-purchase {
       border-color: #86efac;
-      background: #f0fdf4;
+      background: rgba(16, 185, 129, 0.1);
       color: #10b981;
     }
 
@@ -803,16 +823,18 @@ import { FormsModule } from '@angular/forms';
       flex-direction: column;
       gap: 0.1rem;
       font-size: 0.8rem;
+      color: var(--color-text-primary);
     }
 
     .tx-desc {
       font-weight: 500;
+      color: var(--color-text-primary);
     }
 
     .tx-meta {
       display: flex;
       gap: 0.5rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
       font-size: 0.72rem;
       flex-wrap: wrap;
     }
@@ -837,18 +859,22 @@ import { FormsModule } from '@angular/forms';
     .empty-state {
       margin-top: 0.6rem;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--color-text-secondary);
     }
 
     .link-button {
       border: none;
       background: transparent;
-      color: #6366f1;
+      color: var(--color-gradient-start);
       font-size: 0.78rem;
       font-weight: 500;
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 0.18rem;
+    }
+
+    .link-button:hover {
+      color: var(--color-gradient-end);
     }
 
     /* Scrollbar tweaks */

@@ -1,0 +1,440 @@
+/* ========== DARK MODE UTILITIES ========== */
+
+/* Glassmorphism per dark mode */
+.glass-dark {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(10px);
+}
+
+html.dark .glass-card {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+}
+
+/* Cards */
+html.dark {
+  --card-bg: #1e293b;
+  --card-border: rgba(148, 163, 184, 0.2);
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --input-bg: #0f172a;
+  --input-border: rgba(148, 163, 184, 0.3);
+}
+
+/* ========== DARK MODE HERO & GENERAL OVERRIDES ========== */
+
+html.dark .hero-wrapper {
+  background-color: #0f172a;
+  background-image: radial-gradient(#1e293b 1.5px, transparent 1.5px);
+  color: #f1f5f9;
+}
+
+html.dark .navbar {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border-bottom-color: rgba(148, 163, 184, 0.2) !important;
+  color: #f1f5f9;
+}
+
+html.dark .nav-menu a {
+  color: #cbd5e1 !important;
+}
+
+html.dark .nav-menu a:hover {
+  color: #f1f5f9 !important;
+}
+
+html.dark .hero-label {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .hero-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .hero-subtitle {
+  color: #cbd5e1 !important;
+}
+
+html.dark .hero-meta {
+  color: #94a3b8 !important;
+}
+
+html.dark .hero-glass {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #f1f5f9;
+}
+
+html.dark .hero-step {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .pill {
+  background-color: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .pricing-card {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #f1f5f9;
+}
+
+html.dark .pricing-card h3 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .pricing-card p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .footer-wrapper {
+  background: #0a0f1b !important;
+  border-top-color: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1;
+}
+
+/* ========== GALLERY PAGE ========== */
+
+html.dark .gallery-shell {
+  background: #0f172a !important;
+  color: #f1f5f9;
+}
+
+html.dark .card {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: #818cf8 !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(129, 140, 248, 0.3) !important;
+}
+
+html.dark .card-meta {
+  color: #cbd5e1 !important;
+}
+
+html.dark .card-meta strong {
+  color: #f1f5f9 !important;
+}
+
+html.dark .media-type {
+  color: #94a3b8 !important;
+}
+
+html.dark .card img,
+html.dark .card video.video-preview {
+  background: rgba(15, 23, 42, 0.8) !important;
+}
+
+
+/* Input fields dark mode */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background: #0f172a !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Forms and Labels */
+html.dark label {
+  color: #cbd5e1 !important;
+}
+
+html.dark small {
+  color: #94a3b8 !important;
+}
+
+/* ========== LOGIN & REGISTER PAGES ========== */
+
+html.dark .login-shell,
+html.dark .register-shell {
+  background: linear-gradient(135deg, #0f172a 0%, #1a2540 100%) !important;
+  color: #f1f5f9;
+}
+
+html.dark .glass-card {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border: 1px solid rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9;
+}
+
+html.dark .card-header h1 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .subtitle {
+  color: #cbd5e1 !important;
+}
+
+html.dark .form-group label {
+  color: #cbd5e1 !important;
+}
+
+html.dark .form-group small {
+  color: #94a3b8 !important;
+}
+
+html.dark .hero-points {
+  color: #cbd5e1 !important;
+}
+
+html.dark .hero-points li {
+  color: #cbd5e1 !important;
+}
+
+/* ========== BUTTONS ========== */
+
+html.dark .btn-primary {
+  background: linear-gradient(135deg, #818cf8, #60a5fa) !important;
+  color: white !important;
+}
+
+html.dark .btn-primary:hover {
+  background: linear-gradient(135deg, #6366f1, #3b82f6) !important;
+}
+
+html.dark .btn-outline {
+  border-color: rgba(148, 163, 184, 0.4) !important;
+  color: #cbd5e1 !important;
+  background: transparent !important;
+}
+
+html.dark .btn-outline:hover {
+  background: rgba(148, 163, 184, 0.1) !important;
+}
+
+html.dark .btn-login {
+  color: #cbd5e1 !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+html.dark .btn-login:hover {
+  background: rgba(148, 163, 184, 0.1) !important;
+}
+
+html.dark .btn-secondary-large {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .btn-secondary-large:hover {
+  background: rgba(148, 163, 184, 0.1) !important;
+}
+
+/* ========== DASHBOARD & HOME ========== */
+
+html.dark .dashboard-shell {
+  background: #0f172a !important;
+  color: #f1f5f9;
+}
+
+html.dark .sidebar {
+  background: #1a2540 !important;
+  border-right-color: rgba(148, 163, 184, 0.2) !important;
+  color: #f1f5f9;
+}
+
+html.dark .brand {
+  color: #f1f5f9;
+}
+
+html.dark .nav-item {
+  color: #cbd5e1 !important;
+  background: transparent !important;
+}
+
+html.dark .nav-item:hover {
+  background: rgba(148, 163, 184, 0.1) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .nav-item-active {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: #818cf8 !important;
+}
+
+html.dark .panel {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1;
+}
+
+html.dark .panel h2,
+html.dark .panel h3 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .panel p {
+  color: #cbd5e1 !important;
+}
+
+/* Dashboard specific overrides */
+html.dark .balance-inner {
+  background: var(--color-bg-primary) !important;
+  box-shadow: inset 0 0 0 1px var(--color-border) !important;
+}
+
+html.dark .balance-stat {
+  background: var(--color-bg-tertiary) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark .package-pill {
+  background: var(--color-bg-tertiary) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+html.dark .stat-chip {
+  background: var(--color-bg-tertiary) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+html.dark .transaction-row {
+  background: var(--color-bg-tertiary) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+html.dark .tx-pill {
+  background: var(--color-bg-primary) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* ========== GENERATE PAGE ========== */
+
+html.dark .generate-shell {
+  background: #0f172a !important;
+  color: #f1f5f9;
+}
+
+html.dark .custom-select {
+  background: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .selected {
+  color: #f1f5f9 !important;
+}
+
+html.dark .token-info {
+  background: rgba(96, 165, 250, 0.1) !important;
+  color: #93c5fd !important;
+  border-left-color: #60a5fa !important;
+}
+
+html.dark .token-transaction {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-left-color: #10b981 !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .field-caption {
+  color: #94a3b8 !important;
+}
+
+html.dark .cost-highlight {
+  color: #fca5a5 !important;
+}
+
+/* ========== GENERAL ELEMENTS ========== */
+
+/* Links */
+html.dark a {
+  color: #60a5fa;
+}
+
+html.dark a:hover {
+  color: #93c5fd;
+}
+
+/* Borders and separators */
+html.dark hr {
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+/* Scrollbar styling for dark mode */
+html.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 5px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+/* Code blocks */
+html.dark code {
+  background: rgba(15, 23, 42, 0.9) !important;
+  color: #93c5fd !important;
+}
+
+/* Tables */
+html.dark table {
+  color: #f1f5f9;
+}
+
+html.dark th {
+  background: rgba(30, 41, 59, 0.8);
+  color: #f1f5f9;
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+html.dark td {
+  border-color: rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+}
+
+/* Lists */
+html.dark li {
+  color: #cbd5e1;
+}
+
+/* Status colors in dark mode */
+html.dark .status-success {
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+html.dark .status-warning {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+html.dark .status-error {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+html.dark .status-info {
+  color: #93c5fd;
+  background: rgba(96, 165, 250, 0.1);
+}

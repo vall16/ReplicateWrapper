@@ -7,6 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- Dark Mode Support -->
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme-mode') || 
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = 'dark';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>
