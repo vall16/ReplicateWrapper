@@ -85,16 +85,15 @@ import { StripeService } from '../../services/stripe.service';
               (click)="purchasePackage(pkg)"
               [disabled]="isPurchasing"
             >
-              <span *ngIf="isPurchasing && selectedPackage?.id === pkg.id">Elaborazione…</span>
-              <span *ngIf="!(isPurchasing && selectedPackage?.id === pkg.id)">Procedi al checkout</span>
+              <span *ngIf="isPurchasing && selectedPackage?.id === pkg.id">Processing...</span>
+              <span *ngIf="!(isPurchasing && selectedPackage?.id === pkg.id)">Proceed to checkout</span>
             </button>
           </div>
         </div>
 
         <ng-template #emptyPackages>
           <div class="glass-card empty-state">
-            Nessun pacchetto è attualmente configurato. Riprova più tardi o contatta
-            l’amministratore.
+            No package is currently configured. Please try again later or contact the administrator.
           </div>
         </ng-template>
 
@@ -109,25 +108,27 @@ import { StripeService } from '../../services/stripe.service';
 
         <section class="faq-row">
           <div class="glass-card faq-card">
-            <h3>Cosa sono i token?</h3>
-            <p>
-              Ogni chiamata all’API del tuo wrapper consuma un numero di token predefinito. I token
-              non scadono e puoi usarli quando vuoi.
-            </p>
+            <h3>What are tokens?</h3>
+          <p>
+            Each API call to your wrapper consumes a predefined number of tokens. Tokens
+            do not expire and can be used anytime.
+          </p>
+
+                    </div>
+                    <div class="glass-card faq-card">
+                      <h3>How does billing work?</h3>
+          <p>
+            You only pay for the packages you purchase. All payments are processed through
+            a certified provider that does not expose your data to the backend.
+          </p>
+
           </div>
           <div class="glass-card faq-card">
-            <h3>How does billing work?</h3>
-            <p>
-              Paghi solo i pacchetti acquistati. Tutti i pagamenti passano tramite un provider
-              certificato che non espone i tuoi dati al backend.
-            </p>
-          </div>
-          <div class="glass-card faq-card">
-            <h3>Posso vedere lo storico degli acquisti?</h3>
-            <p>
-              Sì, nella sezione dashboard trovi tutte le transazioni con dettagli di data, importo e
-              tipo di operazione.
-            </p>
+            <h3>Can I see my purchase history?</h3>
+<p>
+  Yes, in the dashboard section you can find all transactions with details such as
+  date, amount, and operation type.
+</p>
           </div>
         </section>
       </section>
@@ -480,24 +481,33 @@ import { StripeService } from '../../services/stripe.service';
       color: #10b981;
     }
 
-    .faq-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1.1rem;
-    }
+/* --- FAQ Section Base (Light Mode) --- */
+.faq-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
 
-    .faq-card h3 {
-      margin: 0 0 0.4rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #1f2937;
-    }
+.faq-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+}
 
-    .faq-card p {
-      margin: 0;
-      font-size: 0.78rem;
-      color: #4b5563;
-    }
+.faq-card h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff; /* Grigio quasi nero per massima leggibilità */
+}
+
+.faq-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563; /* Grigio scuro leggibile */
+}
 
     @media (max-width: 900px) {
       .hero-card {
@@ -519,6 +529,72 @@ import { StripeService } from '../../services/stripe.service';
         align-items: flex-start;
       }
     }
+    :host-context(.dark-mode) {
+  color: #e5e7eb;
+}
+
+/* 🔥 FORZA TUTTI I TESTI LEGGIBILI */
+:host-context(.dark-mode) h1,
+:host-context(.dark-mode) h2,
+:host-context(.dark-mode) h3,
+:host-context(.dark-mode) p,
+:host-context(.dark-mode) span,
+:host-context(.dark-mode) small,
+:host-context(.dark-mode) li {
+  color: #e5e7eb !important;
+}
+
+/* testi secondari più soft */
+:host-context(.dark-mode) .store-subtitle,
+:host-context(.dark-mode) .hero-copy p,
+:host-context(.dark-mode) .package-description,
+:host-context(.dark-mode) .price-unit,
+:host-context(.dark-mode) .tokens-label,
+:host-context(.dark-mode) .faq-card p {
+  color: #94a3b8 !important;
+}
+
+/* card scure corrette */
+:host-context(.dark-mode) .glass-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+}
+
+/* chip leggibili */
+:host-context(.dark-mode) .security-chip {
+  background: #111827;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+}
+
+/* bottoni ghost leggibili */
+:host-context(.dark-mode) .btn-ghost {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+}
+
+:host-context(.dark-mode) .btn-ghost:hover {
+  background: #1e293b;
+}
+/* --- Dark Mode Overrides --- */
+:host-context(.dark-mode) .faq-card {
+  background: #1e293b !important; /* Blu scuro profondo invece di nero totale */
+  border: 1px solid #334155 !important;
+}
+
+:host-context(.dark-mode) .faq-card h3 {
+  color: #f8fafc !important; /* Bianco sporco brillante */
+}
+
+:host-context(.dark-mode) .faq-card p {
+  color: #cbd5e1 !important; /* Grigio chiaro con alto contrasto */
+}
+
+/* Fix per il contenitore generale in Dark Mode */
+:host-context(.dark-mode) .store-shell {
+  color: #f1f5f9;
+}
   `]
 })
 export class StoreComponent implements OnInit {

@@ -66,35 +66,35 @@ def get_packages():
             "name": "Starter",
             "tokens": 100,
             "price": 1.00,
-            "description": "Perfetto per iniziare"
+            "description": "Perfect to get started"
         },
         {
             "id": 2,
             "name": "Growth",
             "tokens": 500,
             "price": 4.50,
-            "description": "Miglior rapporto prezzo/qualità",
-            "badge": "👍 Consigliato"
+            "description": "Best value for money",
+            "badge": "👍 Recommended"
         },
         {
             "id": 3,
             "name": "Pro",
             "tokens": 1000,
             "price": 8.00,
-            "description": "Per gli utenti professionali"
+            "description": "For professional users"
         },
         {
             "id": 4,
             "name": "Enterprise",
             "tokens": 5000,
             "price": 35.00,
-            "description": "Per le grandi operazioni",
-            "badge": "⚡ Massimo sconto"
+            "description": "For large-scale operations",
+            "badge": "⚡ Maximum discount"
         }
     ]
     return {
         "packages": packages,
-        "message": "💰 Seleziona il pacchetto che preferisci"
+        "message": "💰 Select the package that suits you best"
     }
 
 # VERIFICA SALDO PRIMA DI FAR USARE L'API
