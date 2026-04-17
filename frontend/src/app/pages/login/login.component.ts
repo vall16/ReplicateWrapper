@@ -18,21 +18,24 @@ import { environment } from '../../../environments/environments';
           <div class="logo-orb">
             <div class="logo-inner">RX</div>
           </div>
-          <h1 class="hero-title">Accedi al tuo spazio AI</h1>
+          <h1 class="hero-title">Access your AI workspace</h1>
+
           <p class="hero-subtitle">
-            Gestisci crediti, transazioni e chiamate al wrapper Replicate da un’unica console.
+            Manage credits, transactions, and Replicate wrapper calls from a single console.
+
           </p>
           <ul class="hero-points">
-            <li>Dashboard in tempo reale del saldo token</li>
-            <li>Pagamenti sicuri e trasparenti</li>
-            <li>Storico completo delle operazioni</li>
+<li>Real-time token balance dashboard</li>
+  <li>Secure and transparent payments</li>
+  <li>Complete transaction history</li>
+
           </ul>
         </section>
 
         <section class="login-panel glass-card">
           <header class="panel-header">
             <h2>Login</h2>
-            <p>Entra con le tue credenziali per continuare.</p>
+            <p>Sign in with your credentials to continue.</p>
           </header>
 
           <form (ngSubmit)="login()" *ngIf="!isLoading" class="login-form">
@@ -61,12 +64,14 @@ import { environment } from '../../../environments/environments';
             </div>
 
             <button type="submit" class="btn-primary">
-              Accedi
+              Sign in
+
             </button>
           </form>
 
           <div *ngIf="isLoading" class="loading">
-            Autenticazione in corso…
+            Authenticating…
+
           </div>
 
           <div *ngIf="error" class="feedback feedback-error">
@@ -74,20 +79,21 @@ import { environment } from '../../../environments/environments';
           </div>
 
           <div class="oauth-divider">
-            <span>oppure</span>
+            <span>or</span>
           </div>
 
           <button type="button" class="btn-google" (click)="loginWithGoogle()">
             <!-- <span class="google-logo"></span> -->
             <img src="assets/google.png"  />
 
-            Continua con Google
+            Continue with Google
+
           </button>
 
           <div class="panel-footer">
-            <span>Non hai un account?</span>
+            <span>Don't have an account?</span>
             <button class="btn-ghost" type="button" (click)="goToRegister()">
-              Registrati
+              Sign up
             </button>
           </div>
         </section>
@@ -245,7 +251,7 @@ import { environment } from '../../../environments/environments';
 
     .panel-header h2 {
       margin: 0;
-      color: #1f2937;
+      color: #e5e8ecff;
       font-size: 1.1rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -454,7 +460,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   login() {
     this.isLoading = true;

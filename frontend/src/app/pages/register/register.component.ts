@@ -13,9 +13,10 @@ import { AuthService } from '../../services/auth.service';
       <div class="register-card glass-card">
         <header class="card-header">
           <div>
-            <h1>Registrazione</h1>
+            <h1>Sign Up</h1>
             <p class="subtitle">
-              Crea il tuo account per iniziare a gestire i token dei modelli Replicate.
+              Create your account to start managing Replicate model tokens.
+
             </p>
           </div>
         </header>
@@ -28,7 +29,7 @@ import { AuthService } from '../../services/auth.service';
               type="email"
               [(ngModel)]="email"
               name="email"
-              placeholder="tuoindirizzo@email.com"
+              placeholder="youraddress@email.com"
               required
             />
           </div>
@@ -40,7 +41,8 @@ import { AuthService } from '../../services/auth.service';
               type="text"
               [(ngModel)]="username"
               name="username"
-              placeholder="Il tuo username"
+              placeholder="Your username"
+
               required
             />
           </div>
@@ -56,11 +58,12 @@ import { AuthService } from '../../services/auth.service';
                 placeholder="••••••••"
                 required
               />
-              <small>Minimo 8 caratteri</small>
+              <small>Minimum 8 characters</small>
+
             </div>
 
             <div class="form-group">
-              <label for="confirmPassword">Conferma password</label>
+              <label for="confirmPassword">Confirm password</label>
               <input
                 id="confirmPassword"
                 type="password"
@@ -72,11 +75,12 @@ import { AuthService } from '../../services/auth.service';
             </div>
           </div>
 
-          <button type="submit" class="btn-primary">Crea account</button>
+          <button type="submit" class="btn-primary">Create account</button>
         </form>
 
         <div *ngIf="isLoading" class="loading">
-          Registrazione in corso…
+          Registration in progress…
+
         </div>
 
         <div *ngIf="error" class="feedback feedback-error">
@@ -88,12 +92,13 @@ import { AuthService } from '../../services/auth.service';
         </div>
 
         <div class="divider">
-          <span>oppure</span>
+          <span>or</span>
         </div>
 
         <p class="login-link">
-          Hai già un account?
-          <button type="button" class="link-button" (click)="goToLogin()">Accedi qui</button>
+          Already have an account?
+
+          <button type="button" class="link-button" (click)="goToLogin()">Login here</button>
         </p>
       </div>
     </div>
@@ -117,7 +122,7 @@ import { AuthService } from '../../services/auth.service';
   //     max-width: 440px;
   //   }
 
-    
+
 
   //   .glass-card {
   //     position: relative;
@@ -529,7 +534,7 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   register() {
     // Validazione
