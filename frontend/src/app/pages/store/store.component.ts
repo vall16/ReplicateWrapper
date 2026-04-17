@@ -140,6 +140,15 @@ import { StripeService } from '../../services/stripe.service';
       color: #1f2937;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
+      :host-context(.dark-mode) {
+  color: #e5e7eb;
+}
+
+:host-context(.dark-mode) .glass-card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+}
 
     .store-shell {
       max-width: 1120px;
@@ -160,12 +169,13 @@ import { StripeService } from '../../services/stripe.service';
       font-size: 1.7rem;
       font-weight: 600;
       letter-spacing: 0.04em;
+      color: #cbd5e1;
     }
 
     .store-subtitle {
       margin: 0.35rem 0 0;
       font-size: 0.86rem;
-      color: #6b7280;
+      color: #cbd5e1;;
       max-width: 420px;
     }
 
@@ -225,7 +235,7 @@ import { StripeService } from '../../services/stripe.service';
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-weight: 600;
-      color: #1f2937;
+      color: #dfe3e7ff;
     }
 
     .hero-copy p {
@@ -242,7 +252,7 @@ import { StripeService } from '../../services/stripe.service';
       flex-direction: column;
       gap: 0.25rem;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: #cbd5e1;;
     }
 
     .hero-list li::before {
@@ -349,7 +359,7 @@ import { StripeService } from '../../services/stripe.service';
     .package-description {
       margin: 0.25rem 0 0;
       font-size: 0.78rem;
-      color: #6b7280;
+      color: #cbd5e1;;
     }
 
     .package-badge {
@@ -385,7 +395,7 @@ import { StripeService } from '../../services/stripe.service';
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: #6b7280;
+      color: #cbd5e1;;
     }
 
     .package-price {
@@ -414,7 +424,7 @@ import { StripeService } from '../../services/stripe.service';
 
     .price-unit {
       font-size: 0.72rem;
-      color: #6b7280;
+      color: #cbd5e1;;
     }
 
     .btn-primary {
@@ -524,12 +534,12 @@ export class StoreComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private stripeService: StripeService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (!this.authService.isAuthenticated()) {
-        this.router.navigate(['/login']);
-        return;
+      this.router.navigate(['/login']);
+      return;
     }
 
     this.loadPackages();
@@ -566,7 +576,7 @@ export class StoreComponent implements OnInit {
 
     // (non serviamo più la key lato client dato che usiamo redirect to checkout)
     // se fosse necessario per redirectToCheckout possiamo recuperarla con getPublishableKey()
-}
+  }
 
   loadPackages() {
     this.authService.getTokenPackages().subscribe(
