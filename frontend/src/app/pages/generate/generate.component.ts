@@ -199,7 +199,7 @@ import { environment } from '../../../environments/environments';
         <div class="preview-box">
           <img *ngIf="image" [src]="image" />
           <div *ngIf="!image" class="placeholder">
-            Nessuna immagine generata
+            No image generated
           </div>
         </div>
 
@@ -207,7 +207,7 @@ import { environment } from '../../../environments/environments';
         <div class="prompt-box">
           <textarea
             [(ngModel)]="prompt"
-            placeholder="Descrivi l'immagine..."
+            placeholder="Describe the image you want to generate"
           ></textarea>
 
           <div class="prompt-actions">
@@ -216,7 +216,7 @@ import { environment } from '../../../environments/environments';
               {{ loading ? 'Generazione...' : 'Genera' }}
             </button> -->
             <button (click)="generate()" [disabled]="loading" class="generate-btn">
-              <span *ngIf="!loading">Genera</span>
+              <span *ngIf="!loading">Generate</span>
               <span *ngIf="loading" class="loading-indicator">
                 Generazione
                 <span class="dots">
@@ -225,7 +225,7 @@ import { environment } from '../../../environments/environments';
               </span>
             </button>
             <button class="btn-link" (click)="goToGallery()" [disabled]="loading" style="margin-left:0.7rem;">
-              Vai alla galleria
+              Go to gallery
             </button>
             <div *ngIf="error" style="color: #ef4444; font-size: 0.8rem; margin-top: 6px;">
               {{ error }}
@@ -261,7 +261,7 @@ import { environment } from '../../../environments/environments';
 
     /* SIDEBAR */
     .sidebar {
-      background: #fff;
+      background: var(--color-bg-secondary);
       border-radius: 12px;
       /* bordo più marcato e ombra più profonda */
   border: 1px solid #cbd5e1;
@@ -299,39 +299,39 @@ import { environment } from '../../../environments/environments';
       font-weight: 600;
     }
 
-    .token-display {
-      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      border: 1px solid #93c5fd;
-    }
+.token-display {
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
 
-    .token-current {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #1e40af;
-      margin-bottom: 0.25rem;
-    }
+.token-current {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #38bdf8; /* azzurro brillante leggibile */
+  margin-bottom: 0.25rem;
+}
 
-    .token-label {
-      font-size: 0.75rem;
-      color: #1e40af;
-      font-weight: 600;
-    }
+.token-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
 
-    .token-info {
-      font-size: 0.8rem;
-      color: #1e40af;
-      margin-top: 0.5rem;
-    }
+.token-info {
+  font-size: 0.8rem;
+  color: #cbd5f5;
+  margin-top: 0.5rem;
+}
 
-    .cost-highlight {
-      font-weight: 700;
-      color: #dc2626;
-      font-size: 0.9rem;
-    }
-
+.cost-highlight {
+  font-weight: 700;
+  color: #f87171; /* rosso soft */
+  font-size: 0.9rem;
+}
     .token-transaction {
       background: #f0fdf4;
       border-left: 3px solid #16a34a;
@@ -395,7 +395,7 @@ import { environment } from '../../../environments/environments';
     border: 1px solid #cbd5e1;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 
-      background: #ffffff;
+      background: var(--color-bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -425,7 +425,7 @@ import { environment } from '../../../environments/environments';
       border: 1px solid #e5e7eb;
       border-radius: 12px;
       padding: 0.6rem;
-      background: #ffffff;
+      background: var(--color-bg-primary);
       width: 80%;         /* Riduce la larghezza al 80% */
       margin-right: auto;  
     }
@@ -475,30 +475,64 @@ import { environment } from '../../../environments/environments';
       margin-bottom: 0.4rem;
     }
 
-    .ratio-button {
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: #334155;
-      padding: 0.35rem 0.55rem;
-      border-radius: 0.45rem;
-      font-size: 0.78rem;
-      cursor: pointer;
-      min-width: 56px;
-      text-align: center;
-      transition: all 0.18s ease;
-    }
+/* =========================
+   RATIO BUTTONS (dark)
+========================= */
+.ratio-button {
+  border: 1px solid #334155;
+  background: #020617;
+  color: #cbd5e1;
 
-    .ratio-button:hover {
-      border-color: #94a3b8;
-      background: #e2e8f0;
-    }
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.45rem;
+  font-size: 0.78rem;
+  cursor: pointer;
 
-    .ratio-button.active {
-      border-color: #2563eb;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 600;
-    }
+  transition: all 0.18s ease;
+}
+
+.ratio-button:hover {
+  border-color: #475569;
+  background: #0f172a;
+}
+
+.ratio-button.active {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+}
+
+
+/* =========================
+   STYLE BUTTONS (dark)
+========================= */
+.style-button {
+  border: 1px solid #334155;
+  background: #020617;
+  color: #cbd5e1;
+
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.45rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  transition: all 0.18s ease;
+}
+
+.style-button:hover {
+  border-color: #475569;
+  background: #0f172a;
+}
+
+.style-button.active {
+  border-color: #a78bfa;
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.4);
+}
 
     .ratio-select {
       display: block;
@@ -522,7 +556,7 @@ import { environment } from '../../../environments/environments';
       position: relative;
       border: 1px solid #e5e7eb;
       border-radius: 6px;
-      background: #fff;
+      background: var(--color-bg-primary);
       cursor: pointer;
       min-width: 200px;
     }
@@ -549,18 +583,36 @@ import { environment } from '../../../environments/environments';
       transition: transform 0.2s ease;
     }
 
+    /* This is the correct way to comment in CSS 
+    // .dropdown {
+    //   position: absolute;
+    //   top: calc(100% + 4px);
+    //   left: 0;
+    //   right: 0;
+    //   background: #fff;
+    //   border: 1px solid #e5e7eb;
+    //   border-radius: 6px;
+    //   max-height: 400px;
+    //   overflow-y: auto;
+    //   z-index: 10;
+    //   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+     }*/
+
     .dropdown {
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
       right: 0;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
+
+      background: #0f172a; /* dark */
+      border: 1px solid #334155;
+      border-radius: 8px;
+
       max-height: 400px;
       overflow-y: auto;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 50;
+
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
 
     .group {
@@ -569,21 +621,22 @@ import { environment } from '../../../environments/environments';
     }
 
     .group-title {
-      padding: 0.6rem;
-      font-weight: 600;
-      background: #f9fafb;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      user-select: none;
-      border-bottom: 1px solid #e5e7eb;
-      transition: background-color 0.15s ease;
-    }
+  padding: 0.6rem;
+  font-weight: 600;
+  background: #1e293b; /* dark section */
+  color: #e2e8f0;
 
-    .group-title:hover {
-      background: #f3f4f6;
-    }
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  border-bottom: 1px solid #334155;
+}
+
+.group-title:hover {
+  background: #334155;
+}
 
     .group-title .icon {
       font-size: 1.1rem;
@@ -609,20 +662,22 @@ import { environment } from '../../../environments/environments';
 }
 
     .option {
-      padding: 0.5rem 0.6rem;
-      padding-left: 1.8rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #374151;
-      transition: background-color 0.15s ease;
-    }
+  padding: 0.5rem 0.6rem;
+  padding-left: 1.8rem;
 
-    .option:hover {
-      background: #f3f4f6;
-    }
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  color: #e5e7eb; /* testo chiaro */
+}
+
+.option:hover {
+  background: #1e293b;
+}
 
     .option .icon {
       font-size: 1rem;
@@ -645,28 +700,6 @@ import { environment } from '../../../environments/environments';
   margin-top: 0.4rem;
 }
 
-.style-button {
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
-  color: #334155;
-  padding: 0.35rem 0.6rem;
-  border-radius: 0.45rem;
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.style-button:hover {
-  border-color: #94a3b8;
-  background: #e2e8f0;
-}
-
-.style-button.active {
-  border-color: #7c3aed;
-  background: #f5f3ff;
-  color: #5b21b6;
-  font-weight: 600;
-}
 
 .generate-btn {
   position: relative;
@@ -747,7 +780,7 @@ export class GenerateComponent {
   loadingModels = true;
 
   openDropdown = false;
-selectedModel: any = null;
+  selectedModel: any = null;
 
   referenceImages: string[] = [];
   availableModels: any[] = [];
@@ -758,33 +791,33 @@ selectedModel: any = null;
   };
 
   style = '';
-  
+
   // Token
   currentTokens: number = 0;
   tokensUsed: number = 0;
   tokensRemaining: number = 0;
 
   styles = [
-  { label: 'Realistic', value: 'photorealistic, ultra detailed, 8k' },
-  { label: 'Ultra-realistic', value: 'hyper realistic, ultra detailed, cinematic lighting, 8k' },
-  
-  { label: 'Ghibli', value: 'soft anime illustration, pastel colors, hand drawn animation style, whimsical, detailed background, japanese animation style' },
-  
-  { label: 'Anime', value: 'anime illustration, sharp lines, vibrant colors, japanese anime style, high detail' },
-  
-  { label: 'Cartoon', value: 'cartoon style, clean lines, colorful, stylized' },
-  { label: 'Cinematic', value: 'cinematic lighting, dramatic shadows, movie still' },
-  { label: 'Fantasy', value: 'fantasy art, epic scene, highly detailed' },
-  { label: '3D Render', value: '3d render, octane render, realistic lighting' },
-  { label: 'Minimal', value: 'minimalist, simple shapes, clean design' }
-];
+    { label: 'Realistic', value: 'photorealistic, ultra detailed, 8k' },
+    { label: 'Ultra-realistic', value: 'hyper realistic, ultra detailed, cinematic lighting, 8k' },
+
+    { label: 'Ghibli', value: 'soft anime illustration, pastel colors, hand drawn animation style, whimsical, detailed background, japanese animation style' },
+
+    { label: 'Anime', value: 'anime illustration, sharp lines, vibrant colors, japanese anime style, high detail' },
+
+    { label: 'Cartoon', value: 'cartoon style, clean lines, colorful, stylized' },
+    { label: 'Cinematic', value: 'cinematic lighting, dramatic shadows, movie still' },
+    { label: 'Fantasy', value: 'fantasy art, epic scene, highly detailed' },
+    { label: '3D Render', value: '3d render, octane render, realistic lighting' },
+    { label: 'Minimal', value: 'minimalist, simple shapes, clean design' }
+  ];
 
   constructor(
-      private authService: AuthService,
-      private router: Router
-    ) {}
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-    ngOnInit() {
+  ngOnInit() {
 
     // Controllo login all'inizio
     if (!this.authService.isAuthenticated()) {
@@ -793,7 +826,7 @@ selectedModel: any = null;
     }
 
     this.style = this.styles[0].value; //
-    
+
     // Load current token balance
     this.authService.getBalance().subscribe(
       (res: any) => {
@@ -804,74 +837,74 @@ selectedModel: any = null;
         this.currentTokens = 0;
       }
     );
-    
+
 
     // Lista T2I con provider + sotto-modelli (tipo PollO.ai)
     this.availableModelGroups = [
-  {
-    provider: 'Flux AI',
-    icon: 'assets/flux.png',
-    expanded: false,
-    models: [
-      { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png', cost: 8 },
-      { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png', cost: 5 },
-      { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png', cost: 2 }
-    ]
-  },
-  {
-    provider: 'Google',
-    icon: 'assets/google.png',
-    expanded: false,
-    models: [
-      { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png', cost: 7 },
-      { id: 'imagen-4-fast', name: 'Imagen Fast', icon: 'assets/google.png', cost: 3 },
-      { id: 'nano-banana', name: 'Nano Banana', icon: 'assets/google.png', cost: 2 },
-      { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png', cost: 5 }
-    ]
-  },
-  {
-    provider: 'Midjourney',
-    icon: 'assets/midjourney.png',
-    expanded: false,
-    models: [
-      { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png', cost: 6 },
-      { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png', cost: 8 }
-    ]
-  },
-  {
-    provider: 'OpenAI',
-    icon: 'assets/openai.svg',
-    expanded: false,
-    models: [
-      { id: 'gpt-image-1.5', name: 'GPT Image 1.5', icon: 'assets/openai.svg', cost: 7 }
-    ]
-  },
-  {
-    provider: 'Qwen',
-    icon: 'assets/qwen.jpg',
-    expanded: false,
-    models: [
-      { id: 'qwen-image', name: 'Qwen Image', icon: 'assets/qwen.jpg', cost: 3 }
-    ]
-  },
-  {
-    provider: 'Seedream',
-    icon: 'assets/seedream.png',
-    expanded: false,
-    models: [
-      { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png', cost: 4 }
-    ]
-  },
-  {
-    provider: 'Stability AI',
-    icon: 'assets/stability.svg',
-    expanded: false,
-    models: [
-      { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg', cost: 3 },
-      { id: 'stable-diffusion-3', name: 'Stable Diffusion 3', icon: 'assets/stability.svg', cost: 5 }
-    ]
-  }
-];
+      {
+        provider: 'Flux AI',
+        icon: 'assets/flux.png',
+        expanded: false,
+        models: [
+          { id: 'flux-pro', name: 'Flux Pro', icon: 'assets/flux.png', cost: 8 },
+          { id: 'flux-dev', name: 'Flux Dev', icon: 'assets/flux.png', cost: 5 },
+          { id: 'flux-schnell', name: 'Flux Schnell', icon: 'assets/flux.png', cost: 2 }
+        ]
+      },
+      {
+        provider: 'Google',
+        icon: 'assets/google.png',
+        expanded: false,
+        models: [
+          { id: 'imagen-4', name: 'Imagen 4 (HQ)', icon: 'assets/google.png', cost: 7 },
+          { id: 'imagen-4-fast', name: 'Imagen Fast', icon: 'assets/google.png', cost: 3 },
+          { id: 'nano-banana', name: 'Nano Banana', icon: 'assets/google.png', cost: 2 },
+          { id: 'nano-banana-pro', name: 'Nano Banana Pro 🔥', icon: 'assets/google.png', cost: 5 }
+        ]
+      },
+      {
+        provider: 'Midjourney',
+        icon: 'assets/midjourney.png',
+        expanded: false,
+        models: [
+          { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png', cost: 6 },
+          { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png', cost: 8 }
+        ]
+      },
+      {
+        provider: 'OpenAI',
+        icon: 'assets/openai.svg',
+        expanded: false,
+        models: [
+          { id: 'gpt-image-1.5', name: 'GPT Image 1.5', icon: 'assets/openai.svg', cost: 7 }
+        ]
+      },
+      {
+        provider: 'Qwen',
+        icon: 'assets/qwen.jpg',
+        expanded: false,
+        models: [
+          { id: 'qwen-image', name: 'Qwen Image', icon: 'assets/qwen.jpg', cost: 3 }
+        ]
+      },
+      {
+        provider: 'Seedream',
+        icon: 'assets/seedream.png',
+        expanded: false,
+        models: [
+          { id: 'seedream-5-lite', name: 'Seedream 5.0 Lite', icon: 'assets/seedream.png', cost: 4 }
+        ]
+      },
+      {
+        provider: 'Stability AI',
+        icon: 'assets/stability.svg',
+        expanded: false,
+        models: [
+          { id: 'sdxl', name: 'SDXL 1.0', icon: 'assets/stability.svg', cost: 3 },
+          { id: 'stable-diffusion-3', name: 'Stable Diffusion 3', icon: 'assets/stability.svg', cost: 5 }
+        ]
+      }
+    ];
 
     this.model = this.availableModelGroups[0].models[0].id;
     this.selectedModel = this.availableModelGroups[0].models[0];
@@ -912,25 +945,25 @@ selectedModel: any = null;
   }
 
   toggleDropdown() {
-  if (this.loadingModels) return;
-  this.openDropdown = !this.openDropdown;
-}
+    if (this.loadingModels) return;
+    this.openDropdown = !this.openDropdown;
+  }
 
-toggleGroup(group: any, event: Event) {
-  event.stopPropagation();
-  group.expanded = !group.expanded;
-}
+  toggleGroup(group: any, event: Event) {
+    event.stopPropagation();
+    group.expanded = !group.expanded;
+  }
 
-selectModel(item: any, event: Event) {
-  event.stopPropagation();
-  this.model = item.id;
-  this.selectedModel = item;
-  this.openDropdown = false;
-}
+  selectModel(item: any, event: Event) {
+    event.stopPropagation();
+    this.model = item.id;
+    this.selectedModel = item;
+    this.openDropdown = false;
+  }
 
-isSvgPath(icon: string): boolean {
-  return typeof icon === 'string' && (icon.endsWith('.svg') || icon.includes('assets/'));
-}
+  isSvgPath(icon: string): boolean {
+    return typeof icon === 'string' && (icon.endsWith('.svg') || icon.includes('assets/'));
+  }
 
   addReferenceImage() {
     if (this.referenceImages.length < 4) {
@@ -960,7 +993,7 @@ isSvgPath(icon: string): boolean {
 
     const style = styleMap[this.model] || "moderno";
     const finalPrompt = this.buildPrompt();
-    console.log("FINALPROMPT",finalPrompt)
+    console.log("FINALPROMPT", finalPrompt)
 
     // this.authService.generateImage2(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
     this.authService.generateImage(finalPrompt, style, this.model, this.ratio).subscribe(  // <-- passiamo model + ratio
@@ -975,10 +1008,10 @@ isSvgPath(icon: string): boolean {
         console.log('TOKENS REMAINING:', res?.tokens_remaining);
 
         if (res.error) {
-          this.error = res.error;  
+          this.error = res.error;
         } else if (res.image_url) {
           this.image = environment.apiBaseUrl + res.image_url;
-          
+
           // Mostra i token scalati
           this.tokensUsed = res.tokens_used || 0;
           this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
@@ -1012,7 +1045,7 @@ isSvgPath(icon: string): boolean {
       "3:4": "portrait composition",
       "4:3": "landscape composition",
       "21:9": "ultra wide cinematic"
-   };
+    };
 
 
     finalPrompt += `, ${ratioMap[this.ratio] || ''}`;

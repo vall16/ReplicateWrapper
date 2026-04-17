@@ -38,10 +38,10 @@ import { environment } from '../../../environments/environments';
               <div>Remaining: <span class="token-remaining">{{ tokensRemaining }}</span></div>
             </div> </div> </div> <div class="section">
           <div class="section-header">
-             <span>Video Settings</span>
+            
           </div>
           <div class="section-body">
-            <label>Video Model</label>
+            <label>Text-to-Video Model</label>
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
               <div class="selected">
                 <span>{{ selectedModel?.name || 'Select model' }}</span>
@@ -60,53 +60,29 @@ import { environment } from '../../../environments/environments';
             </div>
 
             <label>Resolution</label>
-            <div class="resolution-options">
-              <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '480p'" 
-                (click)="resolution='480p'">
-                480p
-              </button>
-              <button 
-                type="button" 
-                class="resolution-button" 
-                [class.active]="resolution === '720p'" 
-                (click)="resolution='720p'">
-                720p
-              </button>
+            <div class="option-grid">
+           <button 
+    *ngFor="let res of resolutionOptions"
+    type="button" 
+    class="choice-button" 
+    [class.active]="resolution === res" 
+    (click)="resolution = res">
+    {{ res }}
+  </button>
+
             </div>
 
             <label>Video Duration (seconds)</label>
-            <div class="duration-options">
+            <div class="option-grid">
               <button 
-                type="button" 
-                class="duration-button" 
-                [class.active]="duration === 5" 
-                (click)="duration=5">
-                5s
-              </button>
-              <button 
-                type="button" 
-                class="duration-button" 
-                [class.active]="duration === 10" 
-                (click)="duration=10">
-                10s
-              </button>
-              <button 
-                type="button" 
-                class="duration-button" 
-                [class.active]="duration === 30" 
-                (click)="duration=30">
-                30s
-              </button>
-              <button 
-                type="button" 
-                class="duration-button" 
-                [class.active]="duration === 60" 
-                (click)="duration=60">
-                60s
-              </button>
+  *ngFor="let d of availableDurations"
+  type="button" 
+  class="choice-button" 
+  [class.active]="duration === d" 
+  (click)="duration = d">
+  {{ d }}s
+</button>
+
             </div>
           </div>
         </div>
@@ -162,6 +138,7 @@ import { environment } from '../../../environments/environments';
       width: 100vw;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
+      background: #0f172a; /* Fallback background */
     }
 
     .video-generate-shell {
@@ -174,199 +151,170 @@ import { environment } from '../../../environments/environments';
       max-width: 100vw;
     }
 
-    /* SIDEBAR */
+    /* SIDEBAR DARK STYLE */
     .sidebar {
-      background: #fff;
+      background: #020617;
+      border: 1px solid #334155;
       border-radius: 12px;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
       overflow-y: auto;
     }
 
-    .section {
-      display: flex;
-      flex-direction: column;
-    }
-
     .section-header {
-      display: flex;
-      justify-content: space-between;
       font-weight: 600;
       font-size: 0.875rem;
-      color: #1f2937;
+      color: #e2e8f0;
+      margin-bottom: 0.5rem;
     }
 
     .section-body {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 0.5rem;
+      gap: 0.8rem;
     }
 
     .section-body label {
       font-size: 0.75rem;
-      color: #6b7280;
+      color: #94a3b8;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
     }
 
+    /* TOKEN DISPLAY CONSISTENCY */
     .token-display {
-      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-      border-radius: 8px;
-      padding: 1rem;
+      background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+      border-radius: 10px;
+      padding: 1.2rem;
       text-align: center;
-      border: 1px solid #93c5fd;
+      border: 1px solid #334155;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
 
     .token-current {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: #1e40af;
+      color: #38bdf8;
       margin-bottom: 0.25rem;
     }
 
     .token-label {
       font-size: 0.75rem;
-      color: #1e40af;
+      color: #94a3b8;
       font-weight: 600;
     }
 
     .token-info {
       font-size: 0.8rem;
-      color: #1e40af;
+      color: #cbd5f5;
       margin-top: 0.5rem;
     }
 
     .cost-highlight {
       font-weight: 700;
-      color: #dc2626;
-      font-size: 0.9rem;
+      color: #f87171;
     }
 
     .token-transaction {
-      background: #f0fdf4;
-      border-left: 3px solid #16a34a;
+      background: rgba(5, 150, 105, 0.1);
+      border-left: 3px solid #059669;
       border-radius: 4px;
       padding: 0.6rem;
       font-size: 0.8rem;
-      color: #166534;
+      color: #34d399;
     }
 
-    .token-minus {
-      color: #dc2626;
-      font-weight: 700;
-    }
-
-    .token-remaining {
-      color: #059669;
-      font-weight: 700;
-    }
-
-    .field-caption {
-      font-size: 0.78rem;
-      color: #9ca3af;
-      line-height: 1.4;
-      margin-top: -0.2rem;
-      margin-bottom: 0.65rem;
-    }
-
-    /* DURATION & RESOLUTION BUTTONS */
-    .duration-options, .resolution-options {
+    /* CHOICE BUTTONS (Resolution/Duration) */
+    .option-grid {
       display: flex;
-      flex-direction: column;
+      flex-wrap: wrap;
       gap: 0.4rem;
     }
 
-    .duration-button, .resolution-button {
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: #334155;
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
+    .choice-button {
+      border: 1px solid #334155;
+      background: #020617;
+      color: #cbd5e1;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.45rem;
+      font-size: 0.78rem;
       cursor: pointer;
+      flex: 1;
+      min-width: 60px;
       transition: all 0.18s ease;
-      text-align: center;
     }
 
-    .duration-button:hover, .resolution-button:hover {
-      border-color: #94a3b8;
-      background: #e2e8f0;
+    .choice-button:hover {
+      border-color: #475569;
+      background: #0f172a;
     }
 
-    .duration-button.active, .resolution-button.active {
-      border-color: #3b82f6;
-      background: #eff6ff;
-      color: #1d4ed8;
+    .choice-button.active {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
       font-weight: 600;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
     }
 
-    /* CUSTOM SELECT & DROPDOWN */
+    /* CUSTOM SELECT */
     .custom-select {
       position: relative;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      background: #fff;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background: #0f172a;
       cursor: pointer;
-    }
-
-    .custom-select.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+      color: #e2e8f0;
     }
 
     .selected {
-      padding: 0.5rem;
+      padding: 0.6rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-size: 0.9rem;
     }
 
-    .selected .arrow {
-      transition: transform 0.2s ease;
-    }
-
     .dropdown {
       position: absolute;
-      top: calc(100% + 4px);
+      top: calc(100% + 6px);
       left: 0;
       right: 0;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      max-height: 200px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      max-height: 250px;
       overflow-y: auto;
-      z-index: 10;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 50;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
 
     .option {
-      padding: 0.6rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      color: #374151;
-      transition: background-color 0.15s ease;
-      border-bottom: 1px solid #f3f4f6;
+      padding: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e5e7eb;
+      border-bottom: 1px solid #1e293b;
     }
 
     .option:hover {
-      background: #f3f4f6;
+      background: #1e293b;
     }
 
     .model-cost {
-      margin-left: auto;
-      font-size: 0.75rem;
-      color: #6b7280;
-      background: #f3f4f6;
-      padding: 0.15rem 0.4rem;
-      border-radius: 0.4rem;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      background: #1e293b;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
     }
 
-    /* MAIN */
+    /* MAIN AREA & PREVIEW */
     .main-area {
       display: flex;
       flex-direction: column;
@@ -376,153 +324,105 @@ import { environment } from '../../../environments/environments';
     .preview-box {
       flex: 1;
       border-radius: 12px;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-      background: #ffffff;
+      background: #020617;
+      border: 1px solid #334155;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      width: 80%;
-      margin-right: auto;
-      height: 100%;
+      width: 85%;
       max-height: 70vh;
     }
 
     .video-player {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-
-    .placeholder {
-      color: #9ca3af;
-      font-size: 0.9rem;
+      max-width: 100%;
+      max-height: 100%;
     }
 
     .prompt-box {
-      border: 1px solid #e5e7eb;
+      border: 1px solid #334155;
       border-radius: 12px;
-      padding: 0.6rem;
-      background: #ffffff;
-      width: 80%;
-      margin-right: auto;
+      padding: 0.8rem;
+      background: #020617;
+      width: 85%;
     }
 
     textarea {
       width: 100%;
+      background: transparent;
+      color: #f8fafc;
       border: none;
       resize: none;
       outline: none;
-      font-size: 0.9rem;
-      padding: 0.5rem;
-      font-family: 'Inter', sans-serif;
-      min-height: 80px;
+      font-size: 1rem;
+      min-height: 70px;
     }
 
-    .prompt-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.4rem;
-    }
-
-    button {
+    /* BUTTONS & ANIMATIONS */
+    .generate-btn {
       background: #2563eb;
       color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      font-weight: 500;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
     }
 
-    button:hover:not(:disabled) {
+    .generate-btn:hover:not(:disabled) {
       background: #1d4ed8;
-    }
-
-    .btn-link {
-      background: transparent;
-      border: 1px solid #2563eb;
-      color: #2563eb;
-      padding: 0.3rem 0.6rem;
-      border-radius: 0.5rem;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .generate-btn {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.2s ease;
+      transform: translateY(-1px);
     }
 
     .generate-btn:disabled {
       animation: pulse 1.2s infinite;
+      opacity: 0.7;
     }
 
-    .loading-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-weight: 500;
+    .btn-link {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
     }
 
-    .dots span {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      animation: blink 1s infinite;
-    }
-
-    .dots span:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .dots span:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes blink {
-      0%, 80%, 100% { opacity: 0; transform: translateY(0); }
-      40% { opacity: 1; transform: translateY(-2px); }
+    .btn-link:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
-      50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7); }
-      100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
+      0% { box-shadow: 0 0 0 rgba(37, 99, 235, 0.4); }
+      50% { box-shadow: 0 0 15px rgba(37, 99, 235, 0.6); }
+      100% { box-shadow: 0 0 0 rgba(37, 99, 235, 0.4); }
+    }
+
+    .loading-indicator { display: flex; align-items: center; gap: 0.4rem; }
+    .dots span {
+      display: inline-block; width: 4px; height: 4px; background: white;
+      border-radius: 50%; animation: blink 1s infinite;
+    }
+    .dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
     }
 
     @media (max-width: 900px) {
-      .video-generate-shell {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        order: 2;
-      }
-
-      .preview-box {
-        width: 100%;
-      }
-
-      .prompt-box {
-        width: 100%;
-      }
+      .video-generate-shell { grid-template-columns: 1fr; }
+      .sidebar { order: 2; }
+      .preview-box, .prompt-box { width: 100%; }
     }
   `]
 })
 export class VideoGenerateComponent {
   prompt = '';
   duration: 5 | 10 | 30 | 60 = 5;
-  resolution: '480p'| '720p' | '1080p'  = '480p';
+  resolution: '480p' | '720p' | '1080p' = '480p';
+
   videoUrl: string | null = null;
   error: string | null = null;
   loading = false;
@@ -536,6 +436,10 @@ export class VideoGenerateComponent {
   tokensUsed: number = 0;
   tokensRemaining: number = 0;
 
+  readonly availableDurations: (5 | 10 | 30 | 60)[] = [5, 10, 30, 60];
+  readonly resolutionOptions: ('480p' | '720p' | '1080p')[] = ['480p', '720p', '1080p'];
+
+
   availableVideoModels = [
     { id: 'kling-video', name: 'Kwaivgi', cost: 20 },
     { id: 'seedance-2', name: 'Bytedance', cost: 25 },
@@ -545,7 +449,7 @@ export class VideoGenerateComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Controllo login all'inizio
@@ -618,7 +522,7 @@ export class VideoGenerateComponent {
         } else if (res.video_url) {
           // Concatena base URL con percorso video
           this.videoUrl = environment.apiBaseUrl + res.video_url;
-          
+
           // Show scaled tokens
           this.tokensUsed = res.tokens_used || 0;
           this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
