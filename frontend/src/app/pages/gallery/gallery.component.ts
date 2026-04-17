@@ -13,13 +13,13 @@ import { environment } from '../../../environments/environments';
     <div class="gallery-shell">
       <header class="gallery-header">
         <div>
-          <h1>I miei contenuti generati</h1>
-          <p>Visualizza tutte le tue immagini e video generati. Filtra per stile, modello o testo del prompt.</p>
+          <h1>My Generated Content</h1>
+          <p>View all your generated images and videos. Filter by style, model, or prompt text.</p>
         </div>
         <div class="header-actions">
-          <button class="btn" (click)="goToGenerate()">Genera Immagine</button>
-          <button class="btn" (click)="goToVideoGenerate()">Genera Video</button>
-          <button class="btn btn-primary" (click)="loadImages()">Aggiorna</button>
+          <button class="btn" (click)="goToGenerate()">Generate Image</button>
+          <button class="btn" (click)="goToVideoGenerate()">Generate Video</button>
+          <button class="btn btn-primary" (click)="loadImages()">Refresh</button>
         </div>
       </header>
 
@@ -31,21 +31,21 @@ import { environment } from '../../../environments/environments';
           (keyup.enter)="loadImages()"
         />
         <select [(ngModel)]="styleFilter">
-          <option value="">Tutti gli stili</option>
-          <option value="moderno">moderno</option>
-          <option value="lusso">lusso</option>
-          <option value="scandinavo">scandinavo</option>
+          <option value="">All Styles</option>
+          <option value="moderno">modern</option>
+          <option value="lusso">luxury</option>
+          <option value="scandinavo">scandinavian</option>
         </select>
         <select [(ngModel)]="modelFilter">
-          <option value="">Tutti i modelli</option>
+          <option value="">All Models</option>
           <option *ngFor="let m of availableModels" [value]="m.id">{{ m.name }}</option>
         </select>
-        <button class="btn btn-primary" (click)="loadImages()">Applica</button>
-        <button class="btn btn-secondary" (click)="resetFilters()">Azzera</button>
+        <button class="btn btn-primary" (click)="loadImages()">Apply</button>
+        <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
       </section>
 
       <section class="gallery-content">
-        <div class="empty-state" *ngIf="!media.length && !loading">Nessun contenuto trovato.</div>
+        <div class="empty-state" *ngIf="!media.length && !loading">No content found.</div>
         <div class="grid" *ngIf="media.length">
           <div class="card" *ngFor="let item of media">
             <!-- IMMAGINE -->
@@ -56,19 +56,19 @@ import { environment } from '../../../environments/environments';
             
             <div class="card-meta">
               <div><strong>Prompt:</strong> {{ item.prompt }}</div>
-              <div *ngIf="item.type === 'image'"><strong>Stile:</strong> {{ item.style || '-' }}</div>
-              <div *ngIf="item.type === 'video'"><strong>Risoluzione:</strong> {{ item.resolution || '-' }}</div>
-              <div *ngIf="item.type === 'video'"><strong>Durata:</strong> {{ item.duration }}s</div>
-              <div><strong>Modello:</strong> {{ item.model || '-' }}</div>
-              <div><strong>Token:</strong> {{ item.tokens_used }}</div>
+              <div *ngIf="item.type === 'image'"><strong>Style:</strong> {{ item.style || '-' }}</div>
+              <div *ngIf="item.type === 'video'"><strong>Resolution:</strong> {{ item.resolution || '-' }}</div>
+              <div *ngIf="item.type === 'video'"><strong>Duration:</strong> {{ item.duration }}s</div>
+              <div><strong>Model:</strong> {{ item.model || '-' }}</div>
+              <div><strong>Tokens:</strong> {{ item.tokens_used }}</div>
               <div><small>{{ item.created_at | date:'short' }}</small></div>
-              <div class="media-type">{{ item.type === 'image' ? '🖼️ Immagine' : '🎬 Video' }}</div>
+              <div class="media-type">{{ item.type === 'image' ? '🖼️ Image' : '🎬 Video' }}</div>
             </div>
           </div>
         </div>
       </section>
 
-      <div class="loading-overlay" *ngIf="loading">Caricamento in corso...</div>
+      <div class="loading-overlay" *ngIf="loading">Loading...</div>
       <div class="error-message" *ngIf="error">{{ error }}</div>
     </div>
   `,
@@ -364,7 +364,7 @@ export class GalleryComponent {
       },
       (err: any) => {
         console.error('Errore caricamento media generati', err);
-        this.error = 'Impossibile caricare i contenuti. Riprova più tardi.';
+        this.error = 'Unable to load content. Please try again later.';
         this.loading = false;
       }
     );
