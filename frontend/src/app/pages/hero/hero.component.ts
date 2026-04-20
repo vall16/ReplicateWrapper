@@ -191,7 +191,7 @@ import { RouterModule } from '@angular/router';
               <li>🚀 Emerging technology</li>
               <li>✨ Cinematic effects</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Genera Video</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Generate Video</button>
           </div>
 
           <!-- Google Gemini -->
@@ -208,7 +208,7 @@ import { RouterModule } from '@angular/router';
               <li>🔍 Integrated search</li>
               <li>⚡ Fast and accurate answers</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Esplora</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
           </div>
 
           <!-- Seedream -->
@@ -224,7 +224,7 @@ import { RouterModule } from '@angular/router';
               <li>✨ Amazing results</li>
               <li>🎭 Artistic expression</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Crea Arte</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Create Art</button>
           </div>
 
           <!-- Qwen -->
@@ -241,7 +241,7 @@ import { RouterModule } from '@angular/router';
               <li>🧠 Advanced reasoning</li>
               <li>📚 In-depth knowledge</li>
             </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Scopri</button>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
           </div>
         </div>
       </section>
@@ -605,23 +605,23 @@ import { RouterModule } from '@angular/router';
 
     .hero-wrapper {
       min-height: 100vh;
-      background-color: #ffffff;
-      background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
-      background-size: 32px 32px;
-      color: #1f2937;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 45%),
+                  radial-gradient(circle at bottom right, rgba(79, 70, 229, 0.14), transparent 32%),
+                  #050816;
+      color: #e2e8f0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
     /* Navbar */
     .navbar {
-      background: rgba(255, 255, 255, 0.98);
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(16px);
       padding: 0.9rem 0;
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
     }
 
     .nav-container {
@@ -669,7 +669,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .nav-menu a {
-      color: #4b5563;
+      color: #cbd5e1;
       text-decoration: none;
       transition: color 0.2s ease;
       font-weight: 500;
@@ -677,7 +677,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .nav-menu a:hover {
-      color: #111827;
+      color: #ffffff;
     }
 
     .nav-buttons {
@@ -686,18 +686,18 @@ import { RouterModule } from '@angular/router';
     }
 
     .btn-login {
-      background: transparent;
-      color: #4b5563;
+      background: rgba(255,255,255,0.06);
+      color: #e2e8f0;
       border-radius: 6px;
-      border: 1px solid #d1d5db;
+      border: 1px solid rgba(148, 163, 184, 0.3);
       padding: 0.45rem 1rem;
       font-size: 0.8rem;
       font-weight: 500;
     }
 
     .btn-login:hover {
-      background: #f3f4f6;
-      border-color: #9ca3af;
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(148, 163, 184, 0.55);
       transform: translateY(-1px);
     }
 
@@ -742,9 +742,9 @@ import { RouterModule } from '@angular/router';
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      background: #f3f4f6;
-      border: 1px solid #d1d5db;
-      color: #4b5563;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      color: #cbd5e1;
     }
     
     .hero-title {
@@ -753,7 +753,7 @@ import { RouterModule } from '@angular/router';
       margin: 0;
       line-height: 1.08;
       letter-spacing: -0.04em;
-      color: #1f2937;
+      color: #f8fafc;
     }
     
     .gradient-text {
@@ -765,7 +765,7 @@ import { RouterModule } from '@angular/router';
     
     .hero-subtitle {
       font-size: 0.98rem;
-      color: #4b5563;
+      color: #cbd5e1;
       line-height: 1.6;
       max-width: 34rem;
     }
@@ -799,16 +799,16 @@ import { RouterModule } from '@angular/router';
     }
 
     .btn-secondary-large {
-      background-color: transparent;
-      color: #4b5563;
-      border: 1px solid #d1d5db;
+      background-color: rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.3);
       padding: 0.9rem 2.3rem;
       font-size: 0.95rem;
     }
 
     .btn-secondary-large:hover {
-      background-color: #f3f4f6;
-      border-color: #9ca3af;
+      background-color: rgba(255,255,255,0.16);
+      border-color: rgba(148, 163, 184, 0.55);
     }
 
     .hero-meta {
@@ -817,14 +817,14 @@ import { RouterModule } from '@angular/router';
       align-items: center;
       gap: 0.65rem;
       font-size: 0.78rem;
-      color: #6b7280;
+      color: #94a3b8;
     }
     
     .hero-meta .dot {
       width: 3px;
       height: 3px;
       border-radius: 999px;
-      background-color: #4b5563;
+      background-color: #94a3b8;
     }
     
     .hero-stats {
@@ -837,17 +837,17 @@ import { RouterModule } from '@angular/router';
     .stat-chip {
       border-radius: 0.85rem;
       padding: 0.6rem 0.7rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
       display: flex;
       flex-direction: column;
       gap: 0.15rem;
       font-size: 0.78rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
     }
     
     .stat-label {
-      color: #6b7280;
+      color: #94a3b8;
     }
     
     .stat-value {
@@ -867,17 +867,7 @@ import { RouterModule } from '@angular/router';
       animation: hero-fade-up 0.95s ease-out 0.1s forwards;
     }
     
-    /* .hero-glass {
-      position: relative;
-      width: 100%;
-      max-width: 360px;
-      border-radius: 1.3rem;
-      padding: 1.2rem 1.1rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    } */
+    /* hero glass wrapper */
 
     .hero-glass {
       position: relative;
@@ -885,12 +875,9 @@ import { RouterModule } from '@angular/router';
       max-width: 360px;
       border-radius: 1.3rem;
       padding: 1.2rem 1.1rem;
-
-      /* QUI la versione migliorata */
-      background: linear-gradient(180deg, #ffffff, #f9fafb);
-
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
       overflow: hidden;
     }
 
@@ -939,22 +926,22 @@ import { RouterModule } from '@angular/router';
       letter-spacing: 0.13em;
       padding: 0.18rem 0.6rem;
       border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background-color: #ffffff;
-      color: #374151;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
       white-space: nowrap;
     }
     
     .pill-live {
-      border-color: #34d399;
-      color: #059669;
-      background-color: #ecfdf5;
+      border-color: rgba(52, 211, 153, 0.55);
+      color: #a7f3d0;
+      background-color: rgba(52, 211, 153, 0.14);
     }
     
     .pill-safe {
-      border-color: #93c5fd;
-      color: #2563eb;
-      background-color: #eff6ff;
+      border-color: rgba(147, 197, 253, 0.55);
+      color: #bfdbfe;
+      background-color: rgba(147, 197, 253, 0.12);
     }
     
     .hero-flow {
@@ -967,8 +954,8 @@ import { RouterModule } from '@angular/router';
     .hero-step {
       border-radius: 6px;
       padding: 0.55rem 0.65rem;
-      background-color: #ffffff;
-      border: 1px solid #e5e7eb;
+      background-color: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.22);
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
@@ -1064,7 +1051,7 @@ import { RouterModule } from '@angular/router';
 
     .section-header h2 {
       font-size: 2.5rem;
-      color: #1f2937;
+      color: #d8dce2;
       margin-bottom: 1rem;
     }
 
@@ -1075,21 +1062,67 @@ import { RouterModule } from '@angular/router';
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: minmax(220px, auto);
+      gap: 1.35rem;
+      align-items: start;
+    }
+
+    .products-grid > .product-card {
+      min-height: 220px;
+    }
+
+    .products-grid > .product-card:nth-child(1) {
+      grid-column: span 5;
+      grid-row: span 2;
+    }
+
+    .products-grid > .product-card:nth-child(2) {
+      grid-column: span 4;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(3) {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(4) {
+      grid-column: span 4;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(5) {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(6) {
+      grid-column: span 5;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(7) {
+      grid-column: span 4;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(8) {
+      grid-column: span 8;
+      grid-row: span 1;
     }
 
     .product-card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 1.8rem 1.9rem;
-      transition: all 0.3s ease;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 1.25rem;
+      padding: 1.85rem 1.9rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      
-      /* Animazione di reveal */
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.22);
+      backdrop-filter: blur(14px);
+      color: #e2e8f0;
       opacity: 0;
       transform: translateY(40px) scale(0.95);
       animation: revealCard 0.6s ease-out forwards;
@@ -1116,8 +1149,9 @@ import { RouterModule } from '@angular/router';
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
       animation: shimmer 3s infinite;
+      pointer-events: none;
     }
 
     @keyframes shimmer {
@@ -1126,25 +1160,25 @@ import { RouterModule } from '@angular/router';
     }
 
     .product-card:hover {
-      border-color: #6366f1;
+      border-color: rgba(99, 102, 241, 0.72);
       transform: translateY(-6px);
-      box-shadow: 0 15px 25px -3px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.32);
     }
 
     .product-card.featured {
-  border: 1px solid #6366f1;
-  background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
-  position: relative;
-  background-attachment: fixed;
-}
+      grid-column: span 5;
+      grid-row: span 2;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(79, 70, 229, 0.08));
+    }
 
     .product-card.featured::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 12px;
+      border-radius: 1.25rem;
       padding: 1px;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(139, 92, 246, 0.8), rgba(236, 72, 153, 0.7));
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       mask-composite: intersect;
       -webkit-mask-composite: source-out;
@@ -1158,17 +1192,30 @@ import { RouterModule } from '@angular/router';
       50% { opacity: 1; }
     }
 
-    @media (min-width: 1024px) {
-      .product-card.featured {
-        /* grid-column: span 2; */
-        grid-row: span 1;
+    @media (max-width: 1100px) {
+      .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .products-grid > .product-card:nth-child(1),
+      .products-grid > .product-card:nth-child(6) {
+        grid-column: span 2;
+      }
+      .products-grid > .product-card:nth-child(8) {
+        grid-column: span 2;
       }
     }
 
-    .product-card.featured:hover {
-      border-color: #4f46e5;
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.3);
+    @media (max-width: 720px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      .products-grid > .product-card,
+      .products-grid > .product-card:nth-child(1),
+      .products-grid > .product-card:nth-child(6),
+      .products-grid > .product-card:nth-child(8) {
+        grid-column: auto;
+        grid-row: auto;
+      }
     }
 
     .badge {
@@ -1230,9 +1277,9 @@ import { RouterModule } from '@angular/router';
       justify-content: center;
       height: 80px;
       margin-bottom: 1rem;
-      background: linear-gradient(135deg, #f3f4f6, #ffffff);
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(148, 163, 184, 0.12));
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.24);
       padding: 1rem;
       transition: all 0.3s ease;
       position: relative;
@@ -1243,16 +1290,16 @@ import { RouterModule } from '@angular/router';
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1), transparent);
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.12), transparent);
       opacity: 0;
       transition: opacity 0.3s ease;
     }
 
     .product-card:hover .product-logo {
-      background: linear-gradient(135deg, #f0f4ff, #f3f4f6);
-      border-color: #6366f1;
-      transform: scale(1.12) rotateZ(2deg);
-      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.15);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(148, 163, 184, 0.14));
+      border-color: rgba(99, 102, 241, 0.65);
+      transform: scale(1.06) rotateZ(1deg);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
     }
 
     .product-card:hover .product-logo::before {
@@ -1263,7 +1310,7 @@ import { RouterModule } from '@angular/router';
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
       transition: transform 0.3s ease;
       z-index: 1;
     }
@@ -1274,20 +1321,20 @@ import { RouterModule } from '@angular/router';
 
     .product-card h3 {
       font-size: 1.5rem;
-      color: #1f2937;
+      color: #e2e8f0;
       margin-bottom: 0.5rem;
       font-weight: 700;
     }
 
     .product-card.featured h3 {
-      background: linear-gradient(120deg, #6366f1, #8b5cf6);
+      background: linear-gradient(120deg, #818cf8, #a78bfa);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
     .product-card p {
-      color: #4b5563;
+      color: #cbd5e1;
       margin-bottom: 1.5rem;
       line-height: 1.6;
       font-size: 0.95rem;
@@ -1300,7 +1347,7 @@ import { RouterModule } from '@angular/router';
 
     .product-features li {
       padding: 0.45rem 0;
-      color: #374151;
+      color: #cbd5e1;
       font-size: 0.85rem;
       transition: transform 0.2s ease;
     }
@@ -1311,19 +1358,19 @@ import { RouterModule } from '@angular/router';
 
     .btn-product {
       width: 100%;
-      background: #f3f4f6;
-      color: #374151;
-      padding: 0.7rem 0.9rem;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      font-weight: 500;
-      font-size: 0.85rem;
+      background: rgba(99, 102, 241, 0.15);
+      color: #eff6ff;
+      padding: 0.75rem 0.95rem;
+      border-radius: 0.85rem;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      font-weight: 600;
+      font-size: 0.9rem;
       box-shadow: none;
-      transition: background-color 0.15s ease;
+      transition: background-color 0.15s ease, transform 0.15s ease;
     }
 
     .btn-product:hover {
-      background: #e5e7eb;
+      background: rgba(99, 102, 241, 0.27);
       transform: translateY(-1px);
     }
 
@@ -1333,9 +1380,9 @@ import { RouterModule } from '@angular/router';
       margin: 3.5rem auto;
       padding: 3rem 2rem 3.5rem;
       text-align: center;
-      background: #f9fafb;
+      background: rgba(15, 23, 42, 0.9);
       border-radius: 12px;
-      border: 1px solid #f3f4f6;
+      border: 1px solid rgba(148, 163, 184, 0.2);
     }
 
     .steps {
@@ -1403,14 +1450,14 @@ import { RouterModule } from '@angular/router';
     }
 
     .pricing-card {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.18);
       border-radius: 1.2rem;
       padding: 1.9rem 1.8rem;
       text-align: center;
       transition: all 0.2s ease;
       position: relative;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
       overflow: hidden;
     }
 
@@ -1421,8 +1468,8 @@ import { RouterModule } from '@angular/router';
     }
 
     .pricing-card.featured {
-      border-color: #3b82f6;
-      background: #f0fdfa;
+      border-color: rgba(59, 130, 246, 0.55);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(79, 70, 229, 0.12));
     }
 
     .ribbon {
@@ -1439,7 +1486,7 @@ import { RouterModule } from '@angular/router';
 
     .pricing-card h3 {
       font-size: 1.3rem;
-      color: #1f2937;
+      color: #e2e8f0;
       margin-bottom: 1rem;
     }
 
@@ -1469,8 +1516,8 @@ import { RouterModule } from '@angular/router';
     }
 
     .btn-outline:hover {
-      background: #f3f4f6;
-      border-color: #9ca3af;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(148, 163, 184, 0.55);
     }
 
     .btn-primary-small {
@@ -1495,20 +1542,20 @@ import { RouterModule } from '@angular/router';
       margin: 3.5rem auto 4rem;
       padding: 2.6rem 2.1rem;
       text-align: center;
-      background: #f0fdfa;
-      border: 1px solid #d1d5db;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
       border-radius: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
     }
 
     .cta h2 {
       font-size: 2.2rem;
-      color: #1f2937;
+      color: #f8fafc;
       margin-bottom: 1rem;
     }
 
     .cta p {
-      color: #4b5563;
+      color: #cbd5e1;
       margin-bottom: 2rem;
       font-size: 0.95rem;
     }
@@ -1842,18 +1889,18 @@ import { RouterModule } from '@angular/router';
     }
 
     .contact-card {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(148, 163, 184, 0.18);
       border-radius: 16px;
       padding: 2rem;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
     }
 
     .contact-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.25);
     }
 
     .card-icon {
@@ -1871,12 +1918,12 @@ import { RouterModule } from '@angular/router';
     .contact-card h3 {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #1f2937;
+      color: #eff6ff;
       margin-bottom: 0.5rem;
     }
 
     .contact-card p {
-      color: #6b7280;
+      color: #cbd5e1;
       margin-bottom: 1rem;
       font-size: 0.875rem;
     }
@@ -1903,12 +1950,12 @@ import { RouterModule } from '@angular/router';
     }
 
     .contact-form-container {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(148, 163, 184, 0.18);
       border-radius: 16px;
       padding: 2rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
     }
 
     .form-header {
@@ -1918,12 +1965,12 @@ import { RouterModule } from '@angular/router';
     .form-header h3 {
       font-size: 1.5rem;
       font-weight: 600;
-      color: #1f2937;
+      color: #eff6ff;
       margin-bottom: 0.5rem;
     }
 
     .form-header p {
-      color: #6b7280;
+      color: #cbd5e1;
       font-size: 0.875rem;
     }
 
@@ -1949,10 +1996,10 @@ import { RouterModule } from '@angular/router';
     .form-select,
     .form-textarea {
       padding: 0.875rem 1rem;
-      border: 2px solid #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.25);
       border-radius: 8px;
-      background: #ffffff;
-      color: #1f2937;
+      background: rgba(15, 23, 42, 0.94);
+      color: #e2e8f0;
       font-size: 0.875rem;
       transition: all 0.2s ease;
     }

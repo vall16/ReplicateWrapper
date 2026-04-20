@@ -11,42 +11,42 @@ import { AuthService } from '../../services/auth.service';
     <div class="transactions-shell">
       <header class="transactions-header">
         <div>
-          <h1 class="header-title">Storico transazioni</h1>
+          <h1 class="header-title">Transaction History</h1>
           <p class="header-subtitle">
-            Visualizza tutti i movimenti di token tra consumi e acquisti.
+            View all token movements between consumptions and purchases.
           </p>
         </div>
-        <button class="btn-back" (click)="goBack()">← Torna al dashboard</button>
+        <button class="btn-back" (click)="goBack()">← Back to dashboard</button>
       </header>
 
       <section class="stats-row">
         <div class="glass-card stat-card">
-          <h3>Transazioni totali</h3>
+          <h3>Total Transactions</h3>
           <p class="stat-number">{{ transactions.length }}</p>
         </div>
         <div class="glass-card stat-card">
-          <h3>Token consumati</h3>
+          <h3>Token Consumed</h3>
           <p class="stat-number negative">{{ totalConsumed }}</p>
         </div>
         <div class="glass-card stat-card">
-          <h3>Token acquistati</h3>
+          <h3>Token Purchased</h3>
           <p class="stat-number positive">{{ totalPurchased }}</p>
         </div>
       </section>
 
       <section class="table-card glass-card">
         <div class="table-header">
-          <h2>Dettaglio movimenti</h2>
+          <h2>Transaction Details</h2>
         </div>
 
         <div class="table-wrapper" *ngIf="transactions.length; else emptyState">
           <table>
             <thead>
               <tr>
-                <th>Data</th>
-                <th>Tipo</th>
-                <th>Descrizione</th>
-                <th class="amount-col">Importo</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th class="amount-col">Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@ import { AuthService } from '../../services/auth.service';
                     [class.consume]="tx.transaction_type === 'consume'"
                     [class.purchase]="tx.transaction_type === 'purchase'"
                   >
-                    {{ tx.transaction_type === 'consume' ? 'Consumo' : 'Acquisto' }}
+                    {{ tx.transaction_type === 'consume' ? 'Consumption' : 'Purchase' }}
                   </span>
                 </td>
                 <td class="cell-description">{{ tx.description }}</td>
@@ -80,8 +80,8 @@ import { AuthService } from '../../services/auth.service';
 
         <ng-template #emptyState>
           <div class="empty-state">
-            <p>Non hai ancora transazioni registrate.</p>
-            <button class="btn-primary" (click)="goToDashboard()">Vai al dashboard</button>
+            <p>You don't have any transactions yet.</p>
+            <button class="btn-primary" (click)="goToDashboard()">Go to dashboard</button>
           </div>
         </ng-template>
       </section>
@@ -96,7 +96,7 @@ import { AuthService } from '../../services/auth.service';
       max-width: 1120px;
       margin: 0 auto;
       padding: 1.75rem 1.5rem 2.5rem;
-      color: #1f2937;
+      color: #e2e8f0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
@@ -118,15 +118,15 @@ import { AuthService } from '../../services/auth.service';
     .header-subtitle {
       margin: 0.35rem 0 0;
       font-size: 0.85rem;
-      color: #6b7280;
+      color: #94a3b8;
       max-width: 460px;
     }
 
     .btn-back {
       border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #4b5563;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e2e8f0;
       padding: 0.45rem 0.9rem;
       font-size: 0.8rem;
       font-weight: 500;
@@ -135,8 +135,8 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .btn-back:hover {
-      background: #f3f4f6;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      background: rgba(99, 102, 241, 0.2);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.35);
       transform: translateY(-1px);
     }
 
@@ -151,9 +151,10 @@ import { AuthService } from '../../services/auth.service';
       position: relative;
       border-radius: 1.15rem;
       padding: 1.1rem 1.2rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      background: rgba(15, 23, 42, 0.84);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.22);
+      backdrop-filter: blur(16px);
       overflow: hidden;
     }
 
@@ -169,7 +170,7 @@ import { AuthService } from '../../services/auth.service';
     .stat-card h3 {
       margin: 0 0 0.45rem;
       font-size: 0.85rem;
-      color: #6b7280;
+      color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.09em;
     }
@@ -204,8 +205,8 @@ import { AuthService } from '../../services/auth.service';
     .table-wrapper {
       border-radius: 0.85rem;
       overflow: hidden;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.18);
     }
 
     table {
@@ -215,18 +216,18 @@ import { AuthService } from '../../services/auth.service';
     }
 
     thead {
-      background: #f9fafb;
+      background: rgba(15, 23, 42, 0.94);
     }
 
     th {
       padding: 0.7rem 0.9rem;
       text-align: left;
-      color: #6b7280;
+      color: #94a3b8;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       font-size: 0.72rem;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
     }
 
     .amount-col {
@@ -239,26 +240,26 @@ import { AuthService } from '../../services/auth.service';
     }
 
     tbody tr:hover {
-      background: #f9fafb;
+      background: rgba(148, 163, 184, 0.08);
     }
 
     tbody tr.consume {
-      border-left: 3px solid #fca5a5;
+      border-left: 3px solid rgba(248, 113, 113, 0.85);
     }
 
     tbody tr.purchase {
-      border-left: 3px solid #86efac;
+      border-left: 3px solid rgba(52, 211, 153, 0.85);
     }
 
     td {
       padding: 0.7rem 0.9rem;
-      color: #374151;
+      color: #cbd5e1;
       vertical-align: middle;
     }
 
     .cell-date {
       white-space: nowrap;
-      color: #6b7280;
+      color: #94a3b8;
     }
 
     .cell-description {
@@ -286,23 +287,23 @@ import { AuthService } from '../../services/auth.service';
       border-radius: 999px;
       font-weight: 500;
       font-size: 0.72rem;
-      border: 1px solid #d1d5db;
-      color: #374151;
-      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.8);
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
 
     .type-badge.consume {
-      border-color: #fca5a5;
-      background: #fef2f2;
-      color: #ef4444;
+      border-color: rgba(248, 113, 113, 0.55);
+      background: rgba(248, 113, 113, 0.14);
+      color: #fecaca;
     }
 
     .type-badge.purchase {
-      border-color: #86efac;
-      background: #f0fdf4;
-      color: #10b981;
+      border-color: rgba(52, 211, 153, 0.55);
+      background: rgba(52, 211, 153, 0.14);
+      color: #a7f3d0;
     }
 
     .empty-state {
@@ -311,7 +312,7 @@ import { AuthService } from '../../services/auth.service';
     }
 
     .empty-state p {
-      color: #6b7280;
+      color: #94a3b8;
       font-size: 0.9rem;
       margin-bottom: 1rem;
     }
@@ -339,9 +340,9 @@ import { AuthService } from '../../services/auth.service';
       border-radius: 0.9rem;
       padding: 0.65rem 0.9rem;
       font-size: 0.8rem;
-      background: #fef2f2;
-      border: 1px solid #fca5a5;
-      color: #ef4444;
+      background: rgba(248, 113, 113, 0.14);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      color: #fecaca;
     }
 
     @media (max-width: 768px) {
