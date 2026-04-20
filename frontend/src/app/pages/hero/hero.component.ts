@@ -1098,8 +1098,8 @@ import { RouterModule } from '@angular/router';
     }
 
     .products-grid > .product-card:nth-child(1) {
-      grid-column: span 5;
-      grid-row: span 2;
+      grid-column: span 4;
+      grid-row: span 1;
     }
 
     .products-grid > .product-card:nth-child(2) {
@@ -1108,32 +1108,32 @@ import { RouterModule } from '@angular/router';
     }
 
     .products-grid > .product-card:nth-child(3) {
-      grid-column: span 3;
-      grid-row: span 1;
-    }
-
-    .products-grid > .product-card:nth-child(4) {
-      grid-column: span 6;
-      grid-row: span 1;
-    }
-
-    .products-grid > .product-card:nth-child(5) {
-      grid-column: span 6;
-      grid-row: span 1;
-    }
-
-    .products-grid > .product-card:nth-child(6) {
-      grid-column: span 5;
-      grid-row: span 1;
-    }
-
-    .products-grid > .product-card:nth-child(7) {
       grid-column: span 4;
       grid-row: span 1;
     }
 
-    .products-grid > .product-card:nth-child(8) {
+    .products-grid > .product-card:nth-child(4) {
+      grid-column: span 5;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(5) {
+      grid-column: span 4;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(6) {
       grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(7) {
+      grid-column: span 6;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(8) {
+      grid-column: span 6;
       grid-row: span 1;
     }
 
