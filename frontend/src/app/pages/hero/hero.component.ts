@@ -126,6 +126,10 @@ import { RouterModule } from '@angular/router';
               <li>✨ Best quality-to-speed ratio</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Start</button>
+            <div class="product-preview">
+              <img src="assets/flux_example.png" alt="Flux AI Preview" />
+
+            </div>
           </div>
 
           <!-- SDXL Stability -->
@@ -143,6 +147,10 @@ import { RouterModule } from '@angular/router';
               <li>📚 Best community prompts</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/mgxm/bb35c491-8794-43d6-81e1-41211831535d/out-0.png" alt="Stable Diffusion XL Preview" />
+
+            </div>
           </div>
 
           <!-- Midjourney -->
@@ -176,6 +184,10 @@ import { RouterModule } from '@angular/router';
               <li>✅ Premium reliability</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Access</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/xezq/blJQLMYDsk6oMBTU4vO4D2Jmjoa0OY9iu72baLq8yzoZMf5KA/tmpsjqw2di6.jpeg" alt="OpenAI GPT-image-1.5 Preview" />
+
+            </div>
           </div>
 
           <!-- Kling -->
@@ -192,6 +204,10 @@ import { RouterModule } from '@angular/router';
               <li>✨ Cinematic effects</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Generate Video</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/pbxt/MNRKHnYUu5HjNqEerj2kxWRmUD3xWGaZ0gJmhqVbkra2jCbD/underwater.jpeg" alt="Kling Video Preview" />
+
+            </div>
           </div>
 
           <!-- Google Gemini -->
@@ -209,6 +225,10 @@ import { RouterModule } from '@angular/router';
               <li>⚡ Fast and accurate answers</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/xezq/PNicQdZsGyLWNpXvNX4pqiaaotTP5j23J9cSyTuReLpLVxFLA/tmpx6zdponu.jpeg" alt="Flux AI Preview" />
+
+            </div>
           </div>
 
           <!-- Seedream -->
@@ -242,6 +262,10 @@ import { RouterModule } from '@angular/router';
               <li>📚 In-depth knowledge</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/xezq/tJpz92U8JrJdAtnQm5N5rIuYHZaOMiftBhiK0vKYHsKcU1jKA/out-0.webp" alt="Qwen AI Preview" />
+
+            </div>
           </div>
         </div>
       </section>
@@ -1190,6 +1214,34 @@ import { RouterModule } from '@angular/router';
     @keyframes borderGlow {
       0%, 100% { opacity: 0; }
       50% { opacity: 1; }
+    }
+
+    .product-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .product-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 1.25rem;
+    }
+
+    .product-card:hover .product-preview {
+      opacity: 1;
     }
 
     @media (max-width: 1100px) {

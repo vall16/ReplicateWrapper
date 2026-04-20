@@ -77,6 +77,69 @@ import { ThemeService } from './services/theme.service';
     </div>
   `,
   styles: [`
+    /* --- Keyframe Animations --- */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.8);
+      }
+    }
+
+    @keyframes floatUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes navLinkStagger {
+      from {
+        opacity: 0;
+        transform: translateX(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     /* --- base styles --- */
     .app-shell { min-height: 100vh; display: flex; flex-direction: column; background-color: var(--color-bg-primary); background-image: radial-gradient(circle, var(--color-bg-tertiary) 1.5px, transparent 1.5px); background-size: 32px 32px; color: var(--color-text-primary); position: relative; overflow: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
     
@@ -93,6 +156,7 @@ import { ThemeService } from './services/theme.service';
       border-bottom: 1px solid var(--color-border);
       box-shadow: var(--shadow-glow);
       transition: all 0.3s ease;
+      animation: slideDown 0.5s ease-out;
     }
 
     .ai-switch {
@@ -112,12 +176,23 @@ import { ThemeService } from './services/theme.service';
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--color-text-secondary);
+      position: relative;
+    }
+
+    .ai-switch button:hover {
+      transform: translateY(-2px);
+      color: var(--color-text-primary);
+    }
+
+    .ai-switch button:active {
+      transform: scale(0.98);
     }
 
     .ai-switch button.active {
       background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
       color: white;
       box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+      animation: floatUp 0.4s ease-out;
     }
 
     /* Theme Toggle Button */
@@ -134,6 +209,26 @@ import { ThemeService } from './services/theme.service';
       transition: all 0.3s ease;
       color: var(--color-text-primary);
       margin: 0 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .theme-toggle:active::before {
+      width: 300px;
+      height: 300px;
     }
 
     .theme-toggle:hover {
@@ -144,9 +239,19 @@ import { ThemeService } from './services/theme.service';
     .theme-icon {
       width: 1.4rem;
       height: 1.4rem;
+      transition: transform 0.3s ease;
     }
 
-    .logo { display: flex; align-items: center; gap: 0.75rem; }
+    .theme-toggle:hover .theme-icon {
+      animation: spin 0.4s ease-in-out;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(20deg); }
+    }
+
+    .logo { display: flex; align-items: center; gap: 0.75rem; animation: floatUp 0.6s ease-out; }
     
     .logo-mark {
       border-radius: 12px;
@@ -160,10 +265,16 @@ import { ThemeService } from './services/theme.service';
       font-weight: 700;
       color: #ffffff;
       font-size: 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .logo-mark:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.8);
     }
 
     .logo-text { display: flex; flex-direction: column; gap: 0.1rem; }
-    .logo-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; color: var(--color-gradient-start); }
+    .logo-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; color: var(--color-gradient-start); transition: all 0.3s ease; }
     .logo-subtitle { font-size: 0.75rem; color: var(--color-text-tertiary); }
     
     .header-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
@@ -185,17 +296,44 @@ import { ThemeService } from './services/theme.service';
       padding: 0.4rem 0.75rem;
       border-radius: 6px;
       font-weight: 500;
-      transition: color 0.2s ease, background-color 0.2s ease;
+      transition: all 0.2s ease;
+      animation: navLinkStagger 0.5s ease-out backwards;
+      position: relative;
+    }
+
+    .nav-links a:nth-child(1) { animation-delay: 0.1s; }
+    .nav-links a:nth-child(2) { animation-delay: 0.2s; }
+    .nav-links a:nth-child(3) { animation-delay: 0.3s; }
+    .nav-links a:nth-child(4) { animation-delay: 0.4s; }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end));
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover { 
       color: var(--color-text-primary);
       background-color: var(--color-bg-tertiary);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .nav-links a.active { 
       color: var(--color-gradient-end);
       background-color: rgba(99, 102, 241, 0.08);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
     }
 
     .icon { width: 1.4em; height: 1.4em; position: relative; top: 1px; }
@@ -212,17 +350,32 @@ import { ThemeService } from './services/theme.service';
       color: #ffffff; 
       cursor: pointer; 
       background: var(--color-accent);
-      transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease; 
-      white-space: nowrap; 
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .primary-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
     }
 
     .primary-cta:hover { 
       background-color: var(--color-accent-hover);
-      transform: translateY(-1px); 
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
     }
 
     .primary-cta:active { 
-      transform: translateY(0); 
+      transform: translateY(0) scale(0.98);
       background-color: var(--color-accent-active); 
     }
 
@@ -232,19 +385,27 @@ import { ThemeService } from './services/theme.service';
       font-size: 0.9rem; 
       font-weight: 500; 
       cursor: pointer; 
-      transition: background-color 0.2s ease, transform 0.15s ease; 
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); 
       border: none;
+      position: relative;
+      overflow: hidden;
     }
 
     .btn-login {
       background: transparent;
       color: var(--color-text-tertiary);
       font-weight: 500;
+      animation: floatUp 0.6s ease-out;
     }
 
     .btn-login:hover {
       color: var(--color-text-primary);
       background: var(--color-bg-tertiary);
+      transform: translateY(-1px);
+    }
+
+    .btn-login:active {
+      transform: scale(0.98);
     }
 
     .btn-register {
@@ -254,13 +415,16 @@ import { ThemeService } from './services/theme.service';
       font-weight: 600;
       padding: 0.55rem 1.2rem;
       border-radius: 999px;
-      position: relative;
-      overflow: hidden;
+      animation: floatUp 0.6s ease-out 0.1s backwards;
     }
 
     .btn-register:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(99,102,241,0.6);
+      box-shadow: 0 12px 36px rgba(99,102,241,0.6);
+    }
+
+    .btn-register:active {
+      transform: translateY(0) scale(0.97);
     }
 
     .btn-register::after {
@@ -285,10 +449,11 @@ import { ThemeService } from './services/theme.service';
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
       border: 2px solid #1e40af;
       transform: translateY(-1px);
+      animation: glowPulse 2s ease-in-out infinite;
     }
 
     .app-main { flex: 1; display: flex; align-items: stretch; justify-content: center; padding: 0; position: relative; }
-    .content-surface { position: relative; z-index: 1; width: 100%; margin: 0; border-radius: 0; padding: 0; background: transparent; box-shadow: none; border: none; backdrop-filter: none; display: flex; flex-direction: column; }
+    .content-surface { position: relative; z-index: 1; width: 100%; margin: 0; border-radius: 0; padding: 0; background: transparent; box-shadow: none; border: none; backdrop-filter: none; display: flex; flex-direction: column; animation: fadeIn 0.4s ease-out; }
 
     @media (max-width: 900px) {
       .app-header { padding-inline: 1.25rem; gap: 1rem; }
