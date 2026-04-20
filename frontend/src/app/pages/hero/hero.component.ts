@@ -1088,6 +1088,7 @@ import { RouterModule } from '@angular/router';
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-auto-rows: minmax(220px, auto);
+      grid-auto-flow: dense;
       gap: 1.35rem;
       align-items: start;
     }
@@ -1112,12 +1113,12 @@ import { RouterModule } from '@angular/router';
     }
 
     .products-grid > .product-card:nth-child(4) {
-      grid-column: span 4;
+      grid-column: span 6;
       grid-row: span 1;
     }
 
     .products-grid > .product-card:nth-child(5) {
-      grid-column: span 3;
+      grid-column: span 6;
       grid-row: span 1;
     }
 
@@ -1132,7 +1133,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .products-grid > .product-card:nth-child(8) {
-      grid-column: span 8;
+      grid-column: span 3;
       grid-row: span 1;
     }
 
