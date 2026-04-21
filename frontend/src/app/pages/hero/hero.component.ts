@@ -114,7 +114,7 @@ import { RouterModule } from '@angular/router';
           <!-- Flux Pro -->
           <div class="product-card featured" [class.visible]="visibleCards[0]" [style.--card-index]="0" style="--card-index: 0">
             <div class="badge-lightning">Instant & Adaptive</div>
-            <div class="product-logo">
+            <div class="product-logo" >
               <img src="assets/flux.png" alt="Flux" class="logo-img" />
             </div>
             <h3>Flux AI</h3>
@@ -127,16 +127,18 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Start</button>
             <div class="product-preview">
-              <img src="assets/flux_example.png" alt="Flux AI Preview" />
+              <img src="assets/flux_example.png" alt="Flux AI Preview" (click)="scrollTo('pricing')"/>
 
             </div>
+            
           </div>
 
           <!-- SDXL Stability -->
           <div class="product-card" [class.visible]="visibleCards[1]" [style.--card-index]="1" style="--card-index: 1">
             <div class="badge-lightning">Very Reliable</div>
             <div class="product-logo">
-              <img src="assets/stability.svg" alt="Stability" class="logo-img" />
+              <img src="assets/stability.svg" 
+ alt="Stability" class="logo-img" />
             </div>
             <h3>Stable Diffusion XL</h3>
             <p>The reliable classic for consistent and creative outputs</p>
@@ -148,15 +150,16 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
             <div class="product-preview">
-              <img src="https://replicate.delivery/mgxm/bb35c491-8794-43d6-81e1-41211831535d/out-0.png" alt="Stable Diffusion XL Preview" />
-
+              <img src="https://replicate.delivery/mgxm/bb35c491-8794-43d6-81e1-41211831535d/out-0.png" alt="Stable Diffusion XL Preview" (click)="scrollTo('pricing')"/>
             </div>
           </div>
 
           <!-- Midjourney -->
           <div class="product-card" [class.visible]="visibleCards[2]" [style.--card-index]="2" style="--card-index: 2">
             <div class="product-logo">
-              <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" />
+              <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" 
+              (click)="scrollTo('pricing')"
+/>
             </div>
             <h3>Midjourney</h3>
             <p>Unique and refined artistic style, perfect for creative concepts</p>
@@ -185,7 +188,7 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Access</button>
             <div class="product-preview">
-              <img src="https://replicate.delivery/xezq/blJQLMYDsk6oMBTU4vO4D2Jmjoa0OY9iu72baLq8yzoZMf5KA/tmpsjqw2di6.jpeg" alt="OpenAI GPT-image-1.5 Preview" />
+              <img src="https://replicate.delivery/xezq/blJQLMYDsk6oMBTU4vO4D2Jmjoa0OY9iu72baLq8yzoZMf5KA/tmpsjqw2di6.jpeg" alt="OpenAI GPT-image-1.5 Preview" (click)="scrollTo('pricing')"/>
 
             </div>
           </div>
@@ -205,7 +208,7 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Generate Video</button>
             <div class="product-preview">
-              <img src="https://replicate.delivery/pbxt/MNRKHnYUu5HjNqEerj2kxWRmUD3xWGaZ0gJmhqVbkra2jCbD/underwater.jpeg" alt="Kling Video Preview" />
+              <img src="https://replicate.delivery/pbxt/MNRKHnYUu5HjNqEerj2kxWRmUD3xWGaZ0gJmhqVbkra2jCbD/underwater.jpeg" alt="Kling Video Preview" (click)="scrollTo('pricing')" />
 
             </div>
           </div>
@@ -226,7 +229,7 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
             <div class="product-preview">
-              <img src="https://replicate.delivery/xezq/PNicQdZsGyLWNpXvNX4pqiaaotTP5j23J9cSyTuReLpLVxFLA/tmpx6zdponu.jpeg" alt="Flux AI Preview" />
+              <img src="https://replicate.delivery/xezq/PNicQdZsGyLWNpXvNX4pqiaaotTP5j23J9cSyTuReLpLVxFLA/tmpx6zdponu.jpeg" alt="Flux AI Preview" (click)="scrollTo('pricing')"/>
 
             </div>
           </div>
@@ -245,6 +248,9 @@ import { RouterModule } from '@angular/router';
               <li>🎭 Artistic expression</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Create Art</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/xezq/eG2pfAezTFZtzow6LeIxb6wiyJYlcsNW6Y092mDvLFjrfWWxC/tmpud9jmfu_.png" alt="Seedream Preview" (click)="scrollTo('pricing')"/>
+            </div>
           </div>
 
           <!-- Qwen -->
@@ -263,7 +269,7 @@ import { RouterModule } from '@angular/router';
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
             <div class="product-preview">
-              <img src="https://replicate.delivery/xezq/tJpz92U8JrJdAtnQm5N5rIuYHZaOMiftBhiK0vKYHsKcU1jKA/out-0.webp" alt="Qwen AI Preview" />
+              <img src="https://replicate.delivery/xezq/tJpz92U8JrJdAtnQm5N5rIuYHZaOMiftBhiK0vKYHsKcU1jKA/out-0.webp" alt="Qwen AI Preview" (click)="scrollTo('pricing')"/>
 
             </div>
           </div>
@@ -273,28 +279,38 @@ import { RouterModule } from '@angular/router';
       <!-- How It Works -->
       <section class="how-it-works" id="how-it-works">
         <div class="section-header">
-          <h2>How It Works</h2>
-          <p>Three simple steps to get started</p>
+          <h2>From Zero to Hero in 3 Moves ⚡</h2>
+          <p>Your AI journey starts here—no boring setup, just pure creativity</p>
         </div>
 
         <div class="steps">
           <div class="step step-1">
+            <div class="step-icon">🚀</div>
             <div class="step-number">1</div>
-            <h3>Sign Up</h3>
-            <p>Create your Repli account for free in seconds</p>
+            <h3>Create Your Account</h3>
+            <p>Free signup in literally 2 minutes—just grab your email and you're in the game</p>
+            <span class="time-badge">⏱️ 2 min</span>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-2">
+            <div class="step-icon">💰</div>
             <div class="step-number">2</div>
-            <h3>Purchase Tokens</h3>
-            <p>Buy tokens to access Replicate.ai models</p>
+            <h3>Get Your Tokens</h3>
+            <p>Pick a pack that fits your vibe, no strings attached. Pay once, create forever</p>
+            <span class="time-badge">💳 Instant</span>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-3">
+            <div class="step-icon">✨</div>
             <div class="step-number">3</div>
-            <h3>Start Creating</h3>
-            <p>Use our API to integrate AI models into your project</p>
+            <h3>Level Up Your Game</h3>
+            <p>Turn your wildest ideas into reality—images, videos, all that AI magic</p>
+            <span class="time-badge">🎬 Ready!</span>
           </div>
+        </div>
+
+        <div class="steps-bonus">
+          <p class="bonus-text">💡 Pro Tip: Most creators earn back their investment in their first week</p>
         </div>
       </section>
 
@@ -1113,17 +1129,17 @@ import { RouterModule } from '@angular/router';
     }
 
     .products-grid > .product-card:nth-child(4) {
-      grid-column: span 5;
-      grid-row: span 1;
-    }
-
-    .products-grid > .product-card:nth-child(5) {
       grid-column: span 4;
       grid-row: span 1;
     }
 
-    .products-grid > .product-card:nth-child(6) {
+    .products-grid > .product-card:nth-child(5) {
       grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .products-grid > .product-card:nth-child(6) {
+      grid-column: span 5;
       grid-row: span 1;
     }
 
@@ -1366,6 +1382,10 @@ import { RouterModule } from '@angular/router';
       filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
       transition: transform 0.3s ease;
       z-index: 1;
+      cursor: pointer;
+  pointer-events: auto;
+  display: block;
+
     }
 
     .product-card:hover .logo-img {
@@ -1430,61 +1450,209 @@ import { RouterModule } from '@angular/router';
     /* How It Works */
     .how-it-works {
       max-width: 1120px;
-      margin: 3.5rem auto;
-      padding: 3rem 2rem 3.5rem;
+      margin: 4.5rem auto;
+      padding: 4rem 2rem;
       text-align: center;
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      position: relative;
+    }
+
+    .how-it-works::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
+      border-radius: 999px;
+      filter: blur(40px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .how-it-works .section-header {
+      position: relative;
+      z-index: 1;
     }
 
     .steps {
       display: flex;
-      justify-content: space-around;
-      align-items: center;
-      gap: 2rem;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1rem;
       flex-wrap: wrap;
-      margin-top: 3rem;
+      margin-top: 3.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     .step {
-      flex: 1;
-      min-width: 200px;
+      flex: 0 1 calc(33.333% - 0.7rem);
+      min-width: 240px;
+      padding: 2rem 1.8rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: translateY(0);
+    }
+
+    .step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+    }
+
+    .step::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
+      border-radius: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .step:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+    }
+
+    .step:hover::after {
+      opacity: 1;
+    }
+
+    .step-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .step-1 .step-icon { animation-delay: 0s; }
+    .step-2 .step-icon { animation-delay: 0.5s; }
+    .step-3 .step-icon { animation-delay: 1s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
 
     .step-number {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 56px;
-      height: 56px;
-      background: #6366f1;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
       color: #ffffff;
       border-radius: 999px;
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin: 0 auto 1rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0.5rem auto 1.2rem;
+      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+      position: relative;
+      z-index: 1;
     }
 
     .step h3 {
-      font-size: 1.3rem;
-      color: #1f2937;
-      margin-bottom: 0.5rem;
+      font-size: 1.35rem;
+      color: #f8fafc;
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
     }
 
     .step p {
-      color: #4b5563;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .time-badge {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #a5b4fc;
+      margin-top: 0.8rem;
+      position: relative;
+      z-index: 1;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .steps-bonus {
+      margin-top: 3rem;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.08));
+      border: 1px dashed rgba(99, 102, 241, 0.3);
+      border-radius: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bonus-text {
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      margin: 0;
+      font-weight: 500;
     }
 
     .step-arrow {
-      font-size: 2rem;
-      color: #9ca3af;
+      font-size: 2.2rem;
+      color: #6366f1;
       display: none;
+      align-self: center;
+      animation: slideArrow 1.5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes slideArrow {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
     }
 
     @media (min-width: 768px) {
       .step-arrow {
-        display: block;
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .step {
+        flex: 0 1 100%;
+      }
+
+      .step-arrow {
+        display: none;
+      }
+
+      .steps {
+        flex-direction: column;
+        gap: 1.5rem;
       }
     }
 

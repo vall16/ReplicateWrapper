@@ -128,10 +128,10 @@ import { environment } from '../../../environments/environments';
           </div>
         </div>
 
-        <!-- Immagini di riferimento -->
+        <!-- Reference Images -->
         <div class="section">
           <div class="section-header" (click)="toggleSection('refs')">
-            <span>Immagini di riferimento ({{ referenceImages.length }}/4)</span>
+            <span>Reference Images ({{ referenceImages.length }}/4)</span>
             <span class="arrow">{{ openSections.refs ? '▲' : '▼' }}</span>
           </div>
           <div class="section-body" *ngIf="openSections.refs">

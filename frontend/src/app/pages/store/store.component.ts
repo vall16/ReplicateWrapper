@@ -52,41 +52,70 @@ import { StripeService } from '../../services/stripe.service';
 
         <div class="packages-grid" *ngIf="packages?.length; else emptyPackages">
           <div
-            *ngFor="let pkg of packages"
+            *ngFor="let pkg of packages; let i = index"
             class="glass-card package-card"
             [class.package-featured]="pkg.badge"
+            [style.animation-delay]="(i * 0.1) + 's'"
           >
+            <!-- Premium Gradient Overlay -->
+            <div class="package-shine"></div>
+            
+            <!-- Badge Container -->
+            <div class="badge-container">
+              <span *ngIf="pkg.badge" class="package-badge">{{ pkg.badge }}</span>
+              <span *ngIf="pkg.badge" class="badge-glow"></span>
+            </div>
+
+            <!-- Header Section -->
             <div class="package-header">
-              <div>
-                <h3 class="package-name">{{ pkg.name }}</h3>
+              <div class="header-content">
+                <div class="package-tier">
+                  <span class="tier-icon">{{ getTierIcon(pkg.name) }}</span>
+                  <h3 class="package-name">{{ pkg.name }}</h3>
+                </div>
                 <p class="package-description">{{ pkg.description }}</p>
               </div>
-              <span *ngIf="pkg.badge" class="package-badge">{{ pkg.badge }}</span>
             </div>
 
-            <div class="package-body">
-              <div class="package-tokens">
-                <span class="tokens-value">{{ pkg.tokens }}</span>
-                <span class="tokens-label">token</span>
-              </div>
-              <div class="package-price">
-                <div class="price-main">
-                  <span class="price-currency">€</span>
-                  <span class="price-amount">{{ pkg.price }}</span>
+            <!-- Main Value Section -->
+            <div class="package-value-section">
+              <div class="tokens-showcase">
+                <div class="tokens-number">
+                  <span class="tokens-value">{{ formatNumber(pkg.tokens) }}</span>
+                  <span class="tokens-unit">Tokens</span>
                 </div>
-                <span class="price-unit">
-                  ≈ €{{ (pkg.price / pkg.tokens).toFixed(4) }} / token
-                </span>
+              </div>
+
+              <div class="price-section">
+                <div class="price-display">
+                  <span class="price-currency">€</span><span class="price-amount">{{ pkg.price }}</span>
+                </div>
+                <div class="unit-price">
+                  <span class="unit-label">€{{ (pkg.price / pkg.tokens).toFixed(4) }}/token</span>
+                  <span *ngIf="getBestValue(pkg)" class="value-tag">💰 Best Value</span>
+                </div>
               </div>
             </div>
 
+            <!-- Value Indicator Bar -->
+            <div class="value-indicator">
+              <div class="indicator-bar" [style.width]="getValuePercentage(pkg) + '%'"></div>
+            </div>
+
+            <!-- CTA Button -->
             <button
-              class="btn-primary"
+              class="btn-purchase"
+              [class.btn-featured]="pkg.badge"
               (click)="purchasePackage(pkg)"
               [disabled]="isPurchasing"
             >
-              <span *ngIf="isPurchasing && selectedPackage?.id === pkg.id">Processing...</span>
-              <span *ngIf="!(isPurchasing && selectedPackage?.id === pkg.id)">Proceed to checkout</span>
+              <span *ngIf="isPurchasing && selectedPackage?.id === pkg.id" class="btn-loading">
+                <span class="spinner"></span>Processing...
+              </span>
+              <span *ngIf="!(isPurchasing && selectedPackage?.id === pkg.id)" class="btn-text">
+                Get Tokens
+                <span class="btn-arrow">→</span>
+              </span>
             </button>
           </div>
         </div>
@@ -321,136 +350,413 @@ import { StripeService } from '../../services/stripe.service';
 
     .packages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin: 0;
     }
 
+    /* ===== PACKAGE CARD STYLES ===== */
     .package-card {
-      transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
+      gap: 1rem;
+      padding: 1.6rem 1.4rem;
+      animation: slideInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .package-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 1.2rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .package-shine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      border-radius: 1.2rem;
+    }
+
+    .package-card:hover::before {
+      opacity: 1;
     }
 
     .package-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
       border-color: #6366f1;
     }
 
     .package-featured {
-      border-color: #f59e0b;
-      box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.1);
-      background: #fffbeb;
+      border: 2px solid #f59e0b !important;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+      transform: scale(1.05);
     }
 
-    .package-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
+    .package-featured:hover {
+      transform: translateY(-8px) scale(1.07);
+      box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
     }
 
-    .package-name {
-      margin: 0;
-      font-size: 0.98rem;
-      font-weight: 600;
-    }
-
-    .package-description {
-      margin: 0.25rem 0 0;
-      font-size: 0.78rem;
-      color: #cbd5e1;;
+    /* Badge Container */
+    .badge-container {
+      position: relative;
+      margin-bottom: 0.25rem;
     }
 
     .package-badge {
-      padding: 0.16rem 0.6rem;
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
       border-radius: 999px;
-      background: #f59e0b;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       color: #ffffff;
-      font-size: 0.72rem;
-      font-weight: 600;
-      white-space: nowrap;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      position: relative;
+      z-index: 2;
     }
 
-    .package-body {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      align-items: flex-end;
+    .badge-glow {
+      position: absolute;
+      inset: -4px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 100%);
+      border-radius: 999px;
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    .package-tokens {
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Header Section */
+    .package-header {
       display: flex;
       flex-direction: column;
-      gap: 0.1rem;
+      gap: 0.5rem;
+    }
+
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .package-tier {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tier-icon {
+      font-size: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 8px;
+      color: white;
+    }
+
+    .package-featured .tier-icon {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    /* .package-name {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    } */
+
+    .package-name {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #eceff5; /* chiaro e leggibile */
+  font-weight: 700;
+}
+
+    .package-featured .package-name {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .package-description {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .package-featured .package-description {
+      color: #92400e;
+    }
+
+    /* Value Section */
+    .package-value-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: 0.8rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .package-featured .package-value-section {
+      background: linear-gradient(135deg, #fef3c7 0%, #fef9e7 100%);
+      border-color: #fcd34d;
+    }
+
+    .tokens-showcase {
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+
+    .tokens-number {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
 
     .tokens-value {
-      font-size: 1.65rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .tokens-label {
+    .package-featured .tokens-value {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tokens-unit {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #cbd5e1;;
+      letter-spacing: 0.15em;
+      color: #9ca3af;
+      font-weight: 600;
     }
 
-    .package-price {
-      text-align: right;
+    .package-featured .tokens-unit {
+      color: #b45309;
+    }
+
+    /* Price Section */
+    .price-section {
       display: flex;
       flex-direction: column;
-      gap: 0.1rem;
+      gap: 0.4rem;
     }
 
-    .price-main {
+    .price-display {
+      text-align: center;
       display: flex;
       align-items: baseline;
-      justify-content: flex-end;
+      justify-content: center;
+      gap: 0.2rem;
     }
 
     .price-currency {
       font-size: 0.95rem;
+      font-weight: 600;
       color: #6366f1;
-      margin-right: 0.15rem;
+    }
+
+    .package-featured .price-currency {
+      color: #f59e0b;
     }
 
     .price-amount {
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1f2937;
     }
 
-    .price-unit {
+    .package-featured .price-amount {
+      color: #d97706;
+    }
+
+    .unit-price {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .unit-label {
       font-size: 0.72rem;
-      color: #cbd5e1;;
-    }
-
-    .btn-primary {
-      margin-top: 0.2rem;
-      align-self: stretch;
-      padding: 0.6rem 0.9rem;
-      border-radius: 6px;
-      border: none;
-      background: #6366f1;
-      color: white;
-      font-size: 0.85rem;
+      color: #9ca3af;
       font-weight: 500;
+    }
+
+    .package-featured .unit-label {
+      color: #b45309;
+    }
+
+    .value-tag {
+      font-size: 0.7rem;
+      color: #10b981;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* Value Indicator */
+    .value-indicator {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.25rem;
+    }
+
+    .indicator-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 999px;
+      transition: width 0.6s ease-out;
+    }
+
+    .package-featured .indicator-bar {
+      background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    /* CTA Button */
+    .btn-purchase {
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
-      transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-1px);
-      background: #4f46e5;
+    .btn-purchase::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    .btn-primary:disabled {
+    .btn-purchase:hover:not(:disabled)::before {
+      opacity: 1;
+    }
+
+    .btn-purchase:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-purchase:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-featured {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-featured:hover:not(:disabled) {
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-purchase:disabled {
       opacity: 0.6;
-      cursor: default;
+      cursor: not-allowed;
+    }
+
+    .btn-text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-purchase:hover:not(:disabled) .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    .btn-loading {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 999px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     .empty-state {
@@ -595,6 +901,72 @@ import { StripeService } from '../../services/stripe.service';
 :host-context(.dark-mode) .store-shell {
   color: #f1f5f9;
 }
+
+/* Dark mode package cards */
+:host-context(.dark-mode) .package-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+:host-context(.dark-mode) .package-card:hover {
+  border-color: #6366f1;
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+}
+
+:host-context(.dark-mode) .package-featured {
+  background: linear-gradient(135deg, #4b3409 0%, #5a3a1a 100%);
+  border-color: #f59e0b;
+}
+
+:host-context(.dark-mode) .package-name {
+  background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:host-context(.dark-mode) .package-featured .package-name {
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:host-context(.dark-mode) .package-description {
+  color: #94a3b8;
+}
+
+:host-context(.dark-mode) .package-featured .package-description {
+  color: #d4a574;
+}
+
+:host-context(.dark-mode) .package-value-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
+  border-color: #334155;
+}
+
+:host-context(.dark-mode) .package-featured .package-value-section {
+  background: linear-gradient(135deg, #6b3a0a 0%, #7c4a12 100%);
+  border-color: #f59e0b;
+}
+
+:host-context(.dark-mode) .tokens-unit,
+:host-context(.dark-mode) .unit-label {
+  color: #64748b;
+}
+
+:host-context(.dark-mode) .package-featured .tokens-unit,
+:host-context(.dark-mode) .package-featured .unit-label {
+  color: #d4a574;
+}
+
+:host-context(.dark-mode) .price-amount {
+  color: #f1f5f9;
+}
+
+:host-context(.dark-mode) .value-indicator {
+  background: #334155;
+}
   `]
 })
 export class StoreComponent implements OnInit {
@@ -702,6 +1074,56 @@ export class StoreComponent implements OnInit {
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  /**
+   * Returns an emoji icon based on the package tier name
+   */
+  getTierIcon(name: string): string {
+    const lowerName = (name || '').toLowerCase();
+    if (lowerName.includes('starter') || lowerName.includes('small')) return '🚀';
+    if (lowerName.includes('pro') || lowerName.includes('medium')) return '⚡';
+    if (lowerName.includes('enterprise') || lowerName.includes('large') || lowerName.includes('unlimited')) return '👑';
+    if (lowerName.includes('premium')) return '✨';
+    return '💎';
+  }
+
+  /**
+   * Formats a number with thousand separators
+   */
+  formatNumber(num: number): string {
+    if (!num) return '0';
+    return num.toLocaleString('en-US');
+  }
+
+  /**
+   * Determines if a package represents the best value (lowest price per token)
+   */
+  getBestValue(pkg: any): boolean {
+    if (!this.packages || this.packages.length === 0) return false;
+    
+    const costPerToken = pkg.price / pkg.tokens;
+    const minCostPerToken = Math.min(...this.packages.map(p => p.price / p.tokens));
+    
+    return Math.abs(costPerToken - minCostPerToken) < 0.0001;
+  }
+
+  /**
+   * Calculates the value percentage for the indicator bar (0-100)
+   * Higher value = better deal relative to the most expensive package
+   */
+  getValuePercentage(pkg: any): number {
+    if (!this.packages || this.packages.length === 0) return 50;
+    
+    const costPerToken = pkg.price / pkg.tokens;
+    const maxCostPerToken = Math.max(...this.packages.map(p => p.price / p.tokens));
+    const minCostPerToken = Math.min(...this.packages.map(p => p.price / p.tokens));
+    
+    if (maxCostPerToken === minCostPerToken) return 50;
+    
+    // Inverse: lower cost per token = higher percentage
+    const percentage = 100 - ((costPerToken - minCostPerToken) / (maxCostPerToken - minCostPerToken)) * 100;
+    return Math.max(20, Math.min(100, percentage));
   }
 
 
