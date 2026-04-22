@@ -80,22 +80,35 @@ import { RouterModule } from '@angular/router';
               <span class="pill pill-safe">Secure backend</span>
             </div>
             <div class="hero-flow">
+              
               <div class="hero-step hero-step-in">
-                <span class="hero-step-label">Prompt · Input</span>
-                <!-- <span class="hero-step-meta">Text · Image · Audio</span> -->
-                <span class="hero-step-meta">Text</span>
+                <span class="hero-step-label">Prompt</span>
+                <span class="hero-step-meta">"A man walking in the wood ..."</span>
               </div>
               <div class="hero-connector"></div>
               <div class="hero-step hero-step-model">
-                <span class="hero-step-label">Replicate Model</span>
-                <span class="hero-step-meta">Version Controlled · Logs</span>
+                <span class="hero-step-label">AI Engine</span>
+                <span class="hero-step-meta">Flux · SDXL · Video Diffusion</span>
               </div>
               <div class="hero-connector"></div>
+              <!-- <div class="hero-step hero-step-model">
+                <span class="hero-step-label">Replicate Model</span>
+                <span class="hero-step-meta">Version Controlled · Logs</span>
+              </div> -->
+              <!-- <div class="hero-connector"></div> -->
               <div class="hero-step hero-step-out">
-                <span class="hero-step-label">Output · Preview</span>
-                <span class="hero-step-meta">Share · Iterate · Ship</span>
+                <span class="hero-step-label">Output</span>
+
+                <div class="output-preview">
+                  <img src="assets/flux_example.jpg" />
+                  <video src="assets/video_example.mp4" autoplay muted loop></video>
+                </div>
+
+
+                <span class="hero-step-meta">Image · Video · Variations</span>
               </div>
             </div>
+            
             <div class="hero-footnote">
               No keys in frontend · server-side orchestration only
             </div>
@@ -630,7 +643,7 @@ import { RouterModule } from '@angular/router';
           </div>
           
           <div class="footer-bottom">
-            <p>&copy; 2026 Vibe srl. Tutti i diritti riservati.</p>
+            <p>&copy; 2026 Vibe srl. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -1034,7 +1047,7 @@ import { RouterModule } from '@angular/router';
     
     .hero-step-label {
       font-weight: 500;
-      color: #1f2937;
+      color: #116ceb;
     }
     
     .hero-step-meta {
@@ -1042,12 +1055,6 @@ import { RouterModule } from '@angular/router';
     }
     
     /* .hero-connector {
-      height: 10px;
-      margin-left: 1.1rem;
-      border-left: 2px dashed #d1d5db;
-    } */
-
-    .hero-connector {
   height: 10px;
   margin-left: 1.1rem;
   border-left: 2px dashed #d1d5db;
@@ -1064,6 +1071,42 @@ import { RouterModule } from '@angular/router';
   background: #6366f1;
   border-radius: 50%;
   animation: flow 1.5s linear infinite;
+} */
+
+.hero-connector {
+  height: 14px;
+  margin-left: 1.1rem;
+  position: relative;
+}
+
+.hero-connector::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6366f1, transparent);
+  opacity: 0.4;
+}
+
+.hero-connector::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 0 12px #6366f1;
+  animation: flow-pulse 1.2s linear infinite;
+}
+
+@keyframes flow-pulse {
+  0% { left: 0%; opacity: 0; }
+  20% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
 }
 
 @keyframes flow {
@@ -2377,6 +2420,108 @@ import { RouterModule } from '@angular/router';
 .product-card.featured .btn-product:hover {
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
   box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4);
+}
+/* --- Stili per i Circoli Floating nella sezione Contatti --- */
+
+.contact-section {
+  position: relative; /* Necessario per i cerchi absolute */
+  padding: 80px 0;
+  overflow: hidden; /* Evita che i cerchi creino scrollbar */
+  background: #050816;
+}
+
+.contact-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Sopra lo sfondo nero, sotto il testo */
+}
+
+.floating-shapes .shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px); /* Crea l'effetto "aura" */
+  opacity: 0.5;
+  animation: float-animation 20s infinite alternate ease-in-out;
+}
+
+/* Cerchio 1: In alto a destra (vicino a Have a Question) */
+.shape-1 {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  top: -50px;
+  right: -50px;
+}
+
+/* Cerchio 2: In basso a sinistra */
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  bottom: 20px;
+  left: -80px;
+  animation-delay: -5s !important;
+}
+
+/* Cerchio 3: Centrale/Destra basso */
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  background: rgba(59, 130, 246, 0.4);
+  bottom: 10%;
+  right: 15%;
+  animation-duration: 15s !important;
+}
+
+/* Assicurati che il contenuto sia sopra i cerchi */
+.contact-wrapper {
+  position: relative;
+  z-index: 2; 
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.output-preview {
+  position: relative;
+  margin-top: 0.4rem;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 80px;
+}
+
+.output-preview img,
+.output-preview video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: swapPreview 6s infinite;
+}
+
+.output-preview video {
+  opacity: 0;
+}
+
+@keyframes swapPreview {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Animazione del movimento */
+@keyframes float-animation {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  100% {
+    transform: translate(-20px, 20px) scale(1);
+  }
 }
 
 /* Responsive */

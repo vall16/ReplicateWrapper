@@ -17,7 +17,7 @@ import { StripeService } from '../../services/stripe.service';
             Choose the perfect AI credit package for your Replicate workflow.
           </p>
         </div>
-        <button class="btn-ghost" (click)="goBack()">
+        <button class="btn-link" (click)="goBack()">
           Back to Dashboard
         </button>
       </header>
@@ -227,6 +227,14 @@ import { StripeService } from '../../services/stripe.service';
       transform: translateY(-1px);
     }
 
+    .btn-link {
+      background: transparent;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.5rem;
+    }
+
     .store-main {
       display: flex;
       flex-direction: column;
@@ -271,7 +279,7 @@ import { StripeService } from '../../services/stripe.service';
     .hero-copy p {
       margin: 0.45rem 0 0.6rem;
       font-size: 0.85rem;
-      color: #4b5563;
+      color: #3179d6;
     }
 
     .hero-list {
@@ -812,7 +820,7 @@ import { StripeService } from '../../services/stripe.service';
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: #4b5563; /* Grigio scuro leggibile */
+  color: #1248dd; /* Grigio scuro leggibile */
 }
 
     @media (max-width: 900px) {
