@@ -83,7 +83,7 @@ import { RouterModule } from '@angular/router';
               
               <div class="hero-step hero-step-in">
                 <span class="hero-step-label">Prompt</span>
-                <span class="hero-step-meta">"A man walking in the wood ..."</span>
+                <span class="hero-step-meta">"A man walking in the park ..."</span>
               </div>
               <div class="hero-connector"></div>
               <div class="hero-step hero-step-model">
@@ -1034,10 +1034,31 @@ import { RouterModule } from '@angular/router';
       border-color: #86efac;
     } */
 
-    .hero-step-model {
+    /* .hero-step-model {
   background: linear-gradient(135deg, #ecfdf5, #d1fae5);
   border-color: #34d399;
   box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
+} */
+
+.hero-step-model {
+  position: relative;
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border-color: #34d399;
+  overflow: hidden;
+}
+
+.hero-step-model::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(16,185,129,0.4), transparent 60%);
+  animation: pulse-ai 2.5s infinite;
+  z-index: 0;
+}
+
+@keyframes pulse-ai {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
 }
     
     .hero-step-out {
