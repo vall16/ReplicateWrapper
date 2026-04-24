@@ -37,11 +37,12 @@ import { RouterModule } from '@angular/router';
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-content">
-          <div class="hero-label">AI Credit Console · Replicate</div>
+          <!-- <div class="hero-label">AI Credit Console · Replicate</div> -->
           <h1 class="hero-title">
-            Transform <span class="gradient-text">Text into Images and Videos</span>
-            in seconds
+            Create <span class="gradient-text">stunning AI images & videos </span>
+            - Instantly.
           </h1>
+
           <p class="hero-subtitle">
             Got an idea? Turn it instantly into stunning images and videos—no technical skills required.
           </p>
@@ -100,7 +101,7 @@ import { RouterModule } from '@angular/router';
                 <span class="hero-step-label">Output</span>
 
                 <div class="output-preview">
-                  <img src="assets/flux_example.jpg" />
+                  <img src="assets/flux_example.png" />
                   <video src="assets/video_example.mp4" autoplay muted loop></video>
                 </div>
 
@@ -298,7 +299,8 @@ import { RouterModule } from '@angular/router';
 
         <div class="steps">
           <div class="step step-1">
-            <div class="step-icon">🚀</div>
+            <!-- <div class="step-icon">🚀</div> -->
+            <div class="step-icon">◆</div>
             <div class="step-number">1</div>
             <h3>Create Your Account</h3>
             <p>Free signup in literally 2 minutes—just grab your email and you're in the game</p>
@@ -306,7 +308,8 @@ import { RouterModule } from '@angular/router';
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-2">
-            <div class="step-icon">💰</div>
+            <!-- <div class="step-icon">💰</div> -->
+            <div class="step-icon">◉</div>
             <div class="step-number">2</div>
             <h3>Get Your Tokens</h3>
             <p>Pick a pack that fits your vibe, no strings attached. Pay once, create forever</p>
@@ -314,7 +317,8 @@ import { RouterModule } from '@angular/router';
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-3">
-            <div class="step-icon">✨</div>
+            <!-- <div class="step-icon">✨</div> -->
+            <div class="step-icon">✧</div>
             <div class="step-number">3</div>
             <h3>Level Up Your Game</h3>
             <p>Turn your wildest ideas into reality—images, videos, all that AI magic</p>
@@ -800,14 +804,23 @@ import { RouterModule } from '@angular/router';
       color: #cbd5e1;
     }
     
-    .hero-title {
+    /* .hero-title {
       font-size: clamp(2.3rem, 3vw, 2.8rem);
       font-weight: 650;
       margin: 0;
       line-height: 1.08;
       letter-spacing: -0.04em;
       color: #f8fafc;
-    }
+    } */
+
+    .hero-title {
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  color: #f8fafc;
+}
     
     .gradient-text {
       background: linear-gradient(120deg, #6366f1, #8b5cf6);
