@@ -1749,43 +1749,105 @@ import { RouterModule } from '@angular/router';
 
     .pricing-card {
       background: rgba(15, 23, 42, 0.88);
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      border: 2px solid rgba(148, 163, 184, 0.18);
       border-radius: 1.2rem;
       padding: 1.9rem 1.8rem;
       text-align: center;
-      transition: all 0.2s ease;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
       overflow: hidden;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .pricing-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .pricing-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .pricing-card:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .pricing-card:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .pricing-card:hover {
       border-color: #6366f1;
-      transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3), 0 0 30px rgba(99, 102, 241, 0.2);
+      animation: none;
+    }
+
+    .pricing-card:hover::before {
+      opacity: 1;
     }
 
     .pricing-card.featured {
-      border-color: rgba(59, 130, 246, 0.55);
+      border-color: rgba(59, 130, 246, 0.8);
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(79, 70, 229, 0.12));
+      position: relative;
+      z-index: 1;
+    }
+
+    .pricing-card.featured::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .pricing-card.featured:hover {
+      border-color: #6366f1;
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 40px 80px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.3);
     }
 
     .ribbon {
       position: absolute;
       top: 18px;
       right: -30px;
-      background: #f59e0b;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
       color: #ffffff;
       padding: 0.45rem 3rem;
       transform: rotate(45deg);
       font-size: 0.75rem;
       font-weight: 600;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      animation: slideIn 0.6s ease-out 0.3s forwards;
+      animation-fill-mode: both;
     }
 
     .pricing-card h3 {
       font-size: 1.3rem;
       color: #e2e8f0;
       margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover h3 {
+      color: #6366f1;
+      transform: scale(1.05);
     }
 
     .price {
@@ -1793,12 +1855,27 @@ import { RouterModule } from '@angular/router';
       font-weight: 600;
       color: #6366f1;
       margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pricing-card:hover .price {
+      font-size: 2.1rem;
+      transform: scale(1.1);
     }
 
     .price-sub {
       color: #4b5563;
       font-size: 0.8rem;
       margin-bottom: 1.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover .price-sub {
+      color: #818cf8;
     }
 
     .btn-outline {
@@ -1821,17 +1898,43 @@ import { RouterModule } from '@angular/router';
     .btn-primary-small {
       width: 100%;
       border-radius: 6px;
-      background: #6366f1;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
       color: white;
       padding: 0.7rem 0.9rem;
       border: none;
       font-weight: 500;
       font-size: 0.85rem;
       box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .btn-primary-small::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
     
     .btn-primary-small:hover {
-      background: #4f46e5;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4), 0 0 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .btn-primary-small:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary-small:active {
+      transform: translateY(0px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     /* CTA Section */
@@ -2555,6 +2658,40 @@ import { RouterModule } from '@angular/router';
   }
   100% {
     transform: translate(-20px, 20px) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
   }
 }
 
