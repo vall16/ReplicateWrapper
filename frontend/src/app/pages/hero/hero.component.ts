@@ -1823,20 +1823,32 @@ import { RouterModule } from '@angular/router';
       box-shadow: 0 40px 80px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.3);
     }
 
+
     .ribbon {
-      position: absolute;
-      top: 18px;
-      right: -30px;
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      color: #ffffff;
-      padding: 0.45rem 3rem;
-      transform: rotate(45deg);
-      font-size: 0.75rem;
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-      animation: slideIn 0.6s ease-out 0.3s forwards;
-      animation-fill-mode: both;
-    }
+        position: absolute;
+        top: 12px;
+        right: -42px;
+
+        width: 160px;
+        text-align: center;
+
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        color: #fff;
+
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+
+        padding: 0.45rem 0;
+
+        transform: rotate(45deg);
+
+        box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
+
+        z-index: 10;
+
+        overflow: hidden;
+      }
 
     .pricing-card h3 {
       font-size: 1.3rem;

@@ -26,7 +26,7 @@ import { environment } from '../../../environments/environments';
       <section class="filter-row">
         <input
           type="text"
-          placeholder="Cerca nel prompt..."
+          placeholder="Search in prompt..."
           [(ngModel)]="promptFilter"
           (keyup.enter)="loadImages()"
         />

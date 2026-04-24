@@ -19,7 +19,7 @@ import { environment } from '../../../environments/environments';
           </div>
           <div class="section-body">
             <div class="token-display">
-              <div class="token-current">{{ currentTokens | number:'1.0-0' }}</div>
+              <div class="token-current">{{ displayTokens | number:'1.0-0' }}</div>
               <div class="token-label">Available Tokens</div>
               <div *ngIf="selectedModel" class="token-info">
                 This model will cost <span class="cost-highlight">{{ selectedModel.cost }} tokens</span>
@@ -436,6 +436,8 @@ export class VideoGenerateComponent {
   tokensUsed: number = 0;
   tokensRemaining: number = 0;
 
+  displayTokens: number = 0;
+
   readonly availableDurations: (5 | 10 | 30 | 60)[] = [5, 10, 30, 60];
   readonly resolutionOptions: ('480p' | '720p' | '1080p')[] = ['480p', '720p', '1080p'];
 
@@ -462,6 +464,7 @@ export class VideoGenerateComponent {
     this.authService.getBalance().subscribe(
       (res: any) => {
         this.currentTokens = res.tokens || 0;
+        this.animateTokens(this.currentTokens);
       },
       (err) => {
         console.error('Error loading token balance', err);
@@ -471,6 +474,25 @@ export class VideoGenerateComponent {
 
     // Select the first model as default
     this.selectedModel = this.availableVideoModels[0];
+  }
+
+  animateTokens(target: number) {
+    const duration = 1800; // ms (velocità animazione)
+    const start = 0;
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      this.displayTokens = Math.floor(progress * target);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        this.displayTokens = target;
+      }
+    };
+
+    requestAnimationFrame(step);
   }
 
   toggleDropdown() {
