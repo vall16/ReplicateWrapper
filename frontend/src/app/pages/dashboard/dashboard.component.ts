@@ -82,7 +82,13 @@ import { FormsModule } from '@angular/forms';
             </div>
 
             <div class="balance-body">
-              <div class="balance-circle">
+              <div class="balance-circle"
+              (mouseenter)="isBalanceHovered = true"
+              (mouseleave)="isBalanceHovered = false"
+              [class.active]="isBalanceHovered"
+              [class.low]="(balance?.tokens || 0) < 50"
+
+              >
                 <div class="balance-inner">
                   <span class="balance-value">{{ balance?.tokens || 0 }}</span>
                   <span class="balance-label">TOKEN</span>
@@ -547,7 +553,7 @@ import { FormsModule } from '@angular/forms';
       align-items: center;
     }
 
-    .balance-circle {
+    /* .balance-circle {
       width: 180px;
       height: 180px;
       border-radius: 999px;
@@ -576,7 +582,75 @@ import { FormsModule } from '@angular/forms';
       justify-content: center;
       box-shadow: inset 0 0 0 1px var(--color-border);
       color: var(--color-text-primary);
-    }
+    } */
+
+      @keyframes tokenPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px 10px rgba(99, 102, 241, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+}
+
+@keyframes dangerShake {
+  0%, 100% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(-2px) scale(1.03); }
+  50% { transform: translateX(2px) scale(1.03); }
+  75% { transform: translateX(-1px) scale(1.02); }
+}
+
+    .balance-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background:
+    conic-gradient(
+      from 200deg,
+      rgba(52, 211, 153, 0.8),
+      rgba(59, 130, 246, 0.9),
+      rgba(147, 51, 234, 0.9),
+      rgba(52, 211, 153, 0.8)
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* INNER */
+.balance-inner {
+  width: 82%;
+  height: 82%;
+  border-radius: 999px;
+  background: var(--color-bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  transition: all 0.25s ease;
+}
+
+.balance-circle.active {
+  transform: scale(1.08);
+  animation: tokenPulse 0.6s ease-in-out infinite;
+  filter: brightness(1.2);
+}
+
+.balance-circle.active .balance-inner {
+  transform: scale(0.97);
+}
+
+.balance-circle.low {
+  animation: dangerShake 0.6s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+}
 
     .balance-value {
       font-size: 2.1rem;
@@ -943,6 +1017,7 @@ export class DashboardComponent implements OnInit {
   t2iLoading: boolean = false;
   t2iStyle = 'photorealistic';      // default
   t2iResolution = '1MP';            // default
+  isBalanceHovered = false;
 
 
 

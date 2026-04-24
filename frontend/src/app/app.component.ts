@@ -144,20 +144,104 @@ import { ThemeService } from './services/theme.service';
     .app-shell { min-height: 100vh; display: flex; flex-direction: column; background-color: var(--color-bg-primary); background-image: radial-gradient(circle, var(--color-bg-tertiary) 1.5px, transparent 1.5px); background-size: 32px 32px; color: var(--color-text-primary); position: relative; overflow: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
     
     .app-header {
-      position: sticky;
+      /* position: sticky; */
+      position: relative;
       top: 0;
       z-index: 50;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      backdrop-filter: blur(20px);
+      /* backdrop-filter: blur(20px);
       background: var(--color-header-bg);
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border); */
+
+      background: radial-gradient(1200px 400px at 20% -10%, rgba(124, 58, 237, 0.25), transparent),
+              radial-gradient(1000px 300px at 80% 0%, rgba(6, 182, 212, 0.2), transparent),
+              rgba(10, 10, 20, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
       box-shadow: var(--shadow-glow);
       transition: all 0.3s ease;
       animation: slideDown 0.5s ease-out;
+
+      @keyframes borderFlow {
+  0% { background-position: 0% }
+  100% { background-position: 200% }
+      }
+
     }
+
+    /* .app-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 58, 237, 0.8),
+    rgba(6, 182, 212, 0.8),
+    transparent
+  );
+
+  filter: blur(2px);
+  opacity: 0.7;
+} */
+
+/* .app-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 58, 237, 0.8),
+    rgba(6, 182, 212, 0.8),
+    transparent
+  );
+
+  filter: blur(2px);
+  opacity: 0.7;
+} */
+
+.app-header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(124, 58, 237, 0.9) 0%,
+    rgba(6, 182, 212, 0.7) 35%,
+    rgba(6, 182, 212, 0.35) 65%,
+    rgba(124, 58, 237, 0.1) 85%,
+    transparent 100%
+  );
+
+  /* 🔥 fa diventare il bordo più “fine” a destra */
+  mask-image: linear-gradient(to right, black 55%, transparent 100%);
+
+  /* glow controllato */
+  filter: blur(3px);
+  opacity: 0.9;
+
+  /* effetto dinamico */
+  background-size: 200% 100%;
+  animation: borderFlow 4s linear infinite;
+}
+    
 
     .ai-switch {
       display: flex;
@@ -274,7 +358,18 @@ import { ThemeService } from './services/theme.service';
     }
 
     .logo-text { display: flex; flex-direction: column; gap: 0.1rem; }
-    .logo-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; color: var(--color-gradient-start); transition: all 0.3s ease; }
+    /* .logo-title { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; color: var(--color-gradient-start); transition: all 0.3s ease; } */
+    .logo-title {
+      font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #c084fc, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transform: skewX(-10deg); /* 👈 inclinazione verso destra */
+  display: inline-block; /* importante per evitare glitch */
+
+}
     .logo-subtitle { font-size: 0.75rem; color: var(--color-text-tertiary); }
     
     .header-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
@@ -287,7 +382,7 @@ import { ThemeService } from './services/theme.service';
       margin-right: auto;
     }
 
-    .nav-links a {
+    /* .nav-links a {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -299,7 +394,14 @@ import { ThemeService } from './services/theme.service';
       transition: all 0.2s ease;
       animation: navLinkStagger 0.5s ease-out backwards;
       position: relative;
-    }
+    } */
+
+    .nav-links a {
+  background: transparent;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+}
+
 
     .nav-links a:nth-child(1) { animation-delay: 0.1s; }
     .nav-links a:nth-child(2) { animation-delay: 0.2s; }
@@ -408,7 +510,7 @@ import { ThemeService } from './services/theme.service';
       transform: scale(0.98);
     }
 
-    .btn-register {
+    /* .btn-register {
       background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
       color: #ffffff;
       box-shadow: 0 6px 18px rgba(99,102,241,0.4);
@@ -440,7 +542,79 @@ import { ThemeService } from './services/theme.service';
 
     .btn-register:hover::after {
       left: 100%;
-    }
+    } */
+
+    /* .btn-register {
+  background: transparent;
+  border: 1px solid rgba(124, 58, 237, 0.6);
+  color: white;
+  border-radius: 10px;
+  padding: 0.5rem 1.2rem;
+  position: relative;
+}
+
+.btn-register::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+  opacity: 0.15;
+}
+
+.btn-register:hover {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+} */
+
+  .btn-register {
+  position: relative;
+  padding: 0.55rem 1.4rem;
+  border-radius: 12px;
+  background: rgba(15, 15, 25, 0.9);
+  color: #fff;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* BORDO GRADIENT REALE */
+.btn-register::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+/* GLOW ESTERNO */
+.btn-register::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+  filter: blur(12px);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* HOVER */
+.btn-register:hover {
+  transform: translateY(-1px);
+}
+
+.btn-register:hover::after {
+  opacity: 0.9;
+}
 
     /* --- active CTA style --- */
     .primary-cta.active {
