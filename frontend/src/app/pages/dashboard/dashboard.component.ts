@@ -245,30 +245,35 @@ import { FormsModule } from '@angular/forms';
   styles: [`
     :host {
       display: block;
-      height: 100%;
-      color: var(--color-text-primary);
+      min-height: 100vh;
+      color: white;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 24%),
+                  radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.16), transparent 20%),
+                  linear-gradient(180deg, #0b1220 0%, #070b14 100%);
+      transition: background 0.4s ease, color 0.3s ease;
     }
 
     .dashboard-shell {
       display: grid;
       grid-template-columns: 260px minmax(0, 1fr);
-      height: 100vh;
-      background-color: var(--color-bg-primary);
+      min-height: 100vh;
+      background: transparent;
       color: var(--color-text-primary);
       overflow: hidden;
-      transition: background-color 0.3s ease;
+      position: relative;
     }
 
     .sidebar {
-      background: var(--color-bg-secondary);
-      border-right: 1px solid var(--color-border);
+      background: rgba(15, 23, 42, 0.76);
+      border-right: 1px solid rgba(148, 163, 184, 0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       padding: 1.5rem 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 2rem;
-      transition: background-color 0.3s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
     }
 
     .brand {
@@ -423,7 +428,10 @@ import { FormsModule } from '@angular/forms';
       padding: 1.75rem 2rem;
       overflow-y: auto;
       position: relative;
-      background: var(--color-bg-primary);
+      background: rgba(15, 23, 42, 0.55);
+      border-left: 1px solid rgba(148, 163, 184, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
     .topbar {
@@ -458,13 +466,15 @@ import { FormsModule } from '@angular/forms';
     .pill {
       padding: 0.5rem 0.9rem;
       border-radius: 999px;
-      border: 1px solid var(--color-border);
-      background: var(--color-bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
       min-width: 130px;
       color: var(--color-text-primary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .pill-label {
@@ -505,15 +515,24 @@ import { FormsModule } from '@angular/forms';
       position: relative;
       border-radius: 1.25rem;
       padding: 1.2rem 1.3rem;
-      background: var(--color-bg-secondary);
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-sm);
+      background: rgba(15, 23, 42, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
       overflow: hidden;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.25s ease, background 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
     .glass-card::before {
-      display: none;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 32%),
+                  radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.1), transparent 24%);
+      pointer-events: none;
+      opacity: 0.85;
+      mix-blend-mode: screen;
     }
 
     .glass-card > * {
@@ -763,8 +782,8 @@ import { FormsModule } from '@angular/forms';
       min-width: 150px;
       border-radius: 0.9rem;
       padding: 0.6rem 0.8rem;
-      border: 1px solid var(--color-border);
-      background: var(--color-bg-tertiary);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -774,7 +793,9 @@ import { FormsModule } from '@angular/forms';
       font-size: 0.8rem;
       transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
       white-space: nowrap;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .package-pill:hover {
@@ -816,14 +837,16 @@ import { FormsModule } from '@angular/forms';
     .stat-chip {
       border-radius: 0.85rem;
       padding: 0.55rem 0.7rem;
-      background: var(--color-bg-tertiary);
-      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
       gap: 0.15rem;
       font-size: 0.78rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.07);
       color: var(--color-text-primary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .stat-label {
@@ -862,9 +885,11 @@ import { FormsModule } from '@angular/forms';
       align-items: center;
       padding: 0.5rem 0.55rem;
       border-radius: 0.85rem;
-      background: var(--color-bg-tertiary);
-      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--color-text-primary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .tx-pill {

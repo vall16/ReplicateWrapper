@@ -325,6 +325,7 @@ import { AuthService, User } from '../../services/auth.service';
       align-items: flex-start;
       gap: 1.25rem;
       margin-bottom: 1.75rem;
+      position:sticky;
     }
 
     .page-title {

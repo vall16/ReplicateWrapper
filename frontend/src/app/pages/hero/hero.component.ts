@@ -867,7 +867,7 @@ import { RouterModule } from '@angular/router';
     .btn-secondary-large {
       background-color: rgba(255,255,255,0.08);
       color: #e2e8f0;
-      border: 1px solid rgba(148, 163, 184, 0.3);
+      border: 1px solid rgba(11, 106, 238, 0.3);
       padding: 0.9rem 2.3rem;
       font-size: 0.95rem;
     }
@@ -1173,8 +1173,8 @@ import { RouterModule } from '@angular/router';
     }
 
     .section-header p {
-      font-size: 0.9rem;
-      color: #6b7280;
+      font-size: 1.3rem;
+      color: #074cd4;
     }
 
     .products-grid {
