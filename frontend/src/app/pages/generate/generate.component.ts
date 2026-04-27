@@ -602,8 +602,8 @@ import { environment } from '../../../environments/environments';
     .model-cost {
   margin-left: auto;
   font-size: 0.75rem;
-  color: #6b7280;
-  background: #f3f4f6;
+  color: #0d54e4;
+  background: #0c0c0c;
   padding: 0.15rem 0.4rem;
   border-radius: 0.4rem;
 }

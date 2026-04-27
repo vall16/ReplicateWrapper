@@ -131,6 +131,7 @@ import { environment } from '../../../environments/environments';
       background: var(--color-bg-tertiary);
       transform: translateY(-1px);
     }
+    
 
     .btn-primary {
       background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));

@@ -308,8 +308,8 @@ import { environment } from '../../../environments/environments';
 
     .model-cost {
       font-size: 0.7rem;
-      color: #94a3b8;
-      background: #1e293b;
+      color: #0d54e4;
+  background: #0c0c0c;
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
     }

@@ -36,7 +36,7 @@ import { FormsModule } from '@angular/forms';
             <span>History</span>
           </button>
           <button class="nav-item" (click)="router.navigate(['/gallery'])">
-            <span class="nav-icon">”🧿</span>
+            <span class="nav-icon">🧿</span>
             <span>Gallery</span>
           </button>
         </nav>

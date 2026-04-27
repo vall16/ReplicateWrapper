@@ -81,7 +81,7 @@ class UserService:
             user_id=user_id,
             amount=-amount,
             transaction_type="consume",
-            description=f"Consumo {amount} token per chiamata API"
+            description=f"Consumption of {amount} tokens for API call"
         )
         
         db.add(transaction)
