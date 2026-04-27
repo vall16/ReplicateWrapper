@@ -16,8 +16,6 @@ import { FormsModule } from '@angular/forms';
         <div class="brand">
           <div class="brand-logo">RX</div>
           <div class="brand-text">
-            <!-- <span class="brand-title">Replicate Wrapper</span>
-            <span class="brand-subtitle">AI Credit Console</span> -->
             <span class="brand-title">AI Credit Console</span>
           </div>
         </div>
