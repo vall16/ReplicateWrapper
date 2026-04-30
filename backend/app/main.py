@@ -34,7 +34,7 @@ print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
 UPLOADS_DIR.mkdir(exist_ok=True)
 
-# Crea sottocartelle per immagini e video
+# Crea sottocartelle per immagini e video0
 IMAGES_DIR = UPLOADS_DIR / "images"
 IMAGES_DIR.mkdir(exist_ok=True)
 
