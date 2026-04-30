@@ -27,34 +27,25 @@ def get_current_user(authorization: Optional[str] = Header(None), db: Session = 
         raise HTTPException(status_code=401, detail="Non autorizzato")
 
 # ACQUISTA TOKEN
+# Endpoint disabilitato: l'acquisto deve passare esclusivamente tramite Stripe Checkout
+# (/api/create-checkout-session → pagamento → /api/tokens/checkout/confirm)
 @router.post("/purchase", response_model=StatusResponse)
 def purchase_tokens(
     purchase: TokenPurchase,
     user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Acquista token"""
-    
-    try:
-        # Calcola il prezzo
-        price = calculate_token_price(purchase.amount)
-        
-        # Simula il pagamento (in produzione integrerai Stripe, PayPal, etc)
-        # Per ora supponiamo che il pagamento avvenga sempre con successo
-        
-        user = UserService.purchase_tokens(db, user.id, purchase.amount)
-        
-        return {
-            "message": f"💳 Hai acquistato {purchase.amount} token per €{price:.2f}",
-            "status": "success",
-            "data": {
-                "tokens_purchased": purchase.amount,
-                "price": price,
-                "new_balance": user.tokens
-            }
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    """Acquisto token diretto — DISABILITATO per sicurezza.
+
+    L'unico modo valido per acquistare token è il flusso Stripe Checkout:
+    1. POST /api/create-checkout-session  → ottieni URL di pagamento
+    2. Redirect utente a Stripe
+    3. GET /api/tokens/checkout/confirm?session_id=... → accredita token
+    """
+    raise HTTPException(
+        status_code=403,
+        detail="L'acquisto diretto non è consentito. Usa Stripe Checkout: POST /api/create-checkout-session"
+    )
 
 # PACCHETTI TOKENPRECONFIGURATI
 @router.get("/packages")

@@ -70,14 +70,14 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user": UserResponse.from_orm(user)
+        "user": UserResponse.model_validate(user)
     }
 
 # PROFILO UTENTE
 @router.get("/profile", response_model=UserResponse)
 def get_profile(user = Depends(get_current_user)):
     """Restituisce il profilo dell'utente corrente"""
-    return UserResponse.from_orm(user)
+    return UserResponse.model_validate(user)
 
 # SALDO TOKEN
 @router.get("/balance")
@@ -159,5 +159,5 @@ def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user": UserResponse.from_orm(user),
+        "user": UserResponse.model_validate(user),
     }

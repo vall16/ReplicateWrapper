@@ -108,23 +108,70 @@ def build_prompt(description: str, style: str, ratio: str = "16:9"):
 
 
 @app.post("/generate")
-def generate_image(req: ImageRequest):
-    prompt = build_prompt(req.description, req.style)
+async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
+    prompt = build_prompt(req.description, req.style, req.ratio)
+    token_cost = IMAGE_MODEL_COSTS.get(req.model, 3)
+    model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
-    output = replicate.run(
-        "stability-ai/sdxl:latest",
-        input={
-            "prompt": prompt,
-            "negative_prompt": "blurry, distorted, ugly, unrealistic, cartoon",
-            "width": 1024,
-            "height": 768
+    allowed_ratios = ["1:1", "16:9", "3:2", "2:3", "3:4", "4:3", "21:9"]
+    aspect_ratio = req.ratio if req.ratio in allowed_ratios else "16:9"
+
+    try:
+        output = await replicate_wrapper.run_model(
+            model_version,
+            input_params={
+                "prompt": prompt,
+                "aspect_ratio": aspect_ratio,
+                "safety_filter_level": "block_medium_and_above"
+            },
+            user_id=user.id,
+            db=db,
+            token_cost=token_cost
+        )
+
+        if isinstance(output, list):
+            image_url_remote = output[0]
+        else:
+            image_url_remote = output
+
+        local_image_url = await download_and_save_image(image_url_remote)
+
+        generated_image = GeneratedImage(
+            user_id=user.id,
+            prompt=req.description,
+            model=req.model,
+            style=req.style,
+            image_url=local_image_url,
+            tokens_used=token_cost
+        )
+        db.add(generated_image)
+        db.commit()
+        db.refresh(generated_image)
+
+        from app.services import UserService
+        updated_user = UserService.get_user(db, user.id)
+
+        return {
+            "image_url": local_image_url,
+            "id": generated_image.id,
+            "tokens_used": token_cost,
+            "tokens_remaining": updated_user.tokens
         }
-    )
 
-    return {
-        "prompt": prompt,
-        "image_url": output[0]
-    }
+    except Exception as e:
+        error_msg = str(e)
+        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+            try:
+                from app.services import UserService
+                UserService.refund_tokens(db, user.id, token_cost)
+                error_msg = f"{error_msg} — Token rimborsati"
+            except Exception as refund_err:
+                print(f"[REFUND FALLITO] {refund_err}")
+
+        return JSONResponse(
+            status_code=200,
+            content={"error": error_msg}
+        )
 
 replicate_token = os.getenv("REPLICATE_API_TOKEN")
 if not replicate_token:
