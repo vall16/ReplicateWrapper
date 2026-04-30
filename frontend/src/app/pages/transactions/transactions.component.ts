@@ -124,9 +124,9 @@ import { AuthService } from '../../services/auth.service';
 
     .btn-back {
       border-radius: 6px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid rgba(12, 105, 235, 0.4);
       background: rgba(15, 23, 42, 0.9);
-      color: #e2e8f0;
+      color: #0d6ce9;
       padding: 0.45rem 0.9rem;
       font-size: 0.8rem;
       font-weight: 500;
