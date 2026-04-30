@@ -25,15 +25,15 @@ import { AuthService, User } from '../../services/auth.service';
             <span>Home</span>
           </button>
           <button class="nav-item" (click)="goToDashboard()">
-            <span class="nav-icon">📊</span>
+            <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
             <span>Dashboard</span>
           </button>
           <button class="nav-item" (click)="goToStore()">
-            <span class="nav-icon">🪙</span>
+            <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/><line x1="13" y1="12" x2="11" y2="12"/></svg>
             <span>Token Store</span>
           </button>
           <button class="nav-item" (click)="goToTransactions()">
-            <span class="nav-icon">📈</span>
+            <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             <span>History</span>
           </button>
         </nav>
@@ -247,6 +247,12 @@ import { AuthService, User } from '../../services/auth.service';
 
     .nav-icon {
       font-size: 1rem;
+    }
+
+    .nav-icon-svg {
+      width: 1rem;
+      height: 1rem;
+      flex-shrink: 0;
     }
 
     .sidebar-footer {
