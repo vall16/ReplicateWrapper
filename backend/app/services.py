@@ -90,6 +90,27 @@ class UserService:
         return user
     
     @staticmethod
+    def refund_tokens(db: Session, user_id: int, amount: float):
+        """Rimborsa token quando la generazione fallisce dopo il consumo"""
+        user = UserService.get_user(db, user_id)
+        if not user:
+            raise Exception("Utente non trovato")
+
+        user.tokens += amount
+
+        transaction = TokenTransaction(
+            user_id=user_id,
+            amount=amount,
+            transaction_type="refund",
+            description=f"Refund of {amount} tokens — generation failed after consumption"
+        )
+
+        db.add(transaction)
+        db.commit()
+        db.refresh(user)
+        return user
+
+    @staticmethod
     def get_transactions(db: Session, user_id: int, limit: int = 50):
         """Recupera le transazioni di un utente"""
         return db.query(TokenTransaction).filter(

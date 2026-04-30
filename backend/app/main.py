@@ -30,7 +30,7 @@ load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 
-# --- SETUP UPLOADS FOLDER ---
+# --- SETUP UPLOADS FOLDER --
 UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
 UPLOADS_DIR.mkdir(exist_ok=True)
 
@@ -326,10 +326,19 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
 
 
     except Exception as e:
-        # cattura l’errore e ritornalo a frontend
+        error_msg = str(e)
+        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+            try:
+                from app.services import UserService
+                UserService.refund_tokens(db, user.id, token_cost)
+                print(f"[REFUND] {token_cost} token rimborsati all'utente {user.id}")
+                error_msg = f"{error_msg} — Token rimborsati"
+            except Exception as refund_err:
+                print(f"[REFUND FALLITO] {refund_err}")
+
         return JSONResponse(
-            status_code=200,  # 200 così Angular riceve la risposta e può mostrare l’errore
-            content={"error": str(e)}
+            status_code=200,
+            content={"error": error_msg}
         )
 
 
@@ -497,11 +506,21 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         }
     
     except Exception as e:
-        # Cattura errore e ritornalo
-        print(f"Errore generazione video: {str(e)}")
+        error_msg = str(e)
+        print(f"Errore generazione video: {error_msg}")
+
+        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+            try:
+                from app.services import UserService
+                UserService.refund_tokens(db, user.id, token_cost)
+                print(f"[REFUND] {token_cost} token rimborsati all'utente {user.id}")
+                error_msg = f"{error_msg} — Token rimborsati"
+            except Exception as refund_err:
+                print(f"[REFUND FALLITO] {refund_err}")
+
         return JSONResponse(
             status_code=200,
-            content={"error": str(e)}
+            content={"error": error_msg}
         )
 
 @app.get("/")
