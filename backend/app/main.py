@@ -191,8 +191,6 @@ MODEL_MAP = {
     "flux-schnell": "black-forest-labs/flux-schnell",
     # "stable-diffusion-1-5": "stability-ai/stable-diffusion:1.5",
     "gpt-image-1.5": "openai/gpt-image-1.5",  #ok
-    "midjourney-v5": "stability-ai/sdxl:7762fd07",
-    "midjourney-v6": "stability-ai/sdxl:7762fd07",
     "seedream-5-lite": "bytedance/seedream-5-lite",          # esempio
     # "seedream-4-5": "bytedance/seedream-4.5",          # esempio
     # "seedream-4-0": "bytedance/seedream-4.0",          # esempio
@@ -231,8 +229,6 @@ IMAGE_MODEL_COSTS = {
     "imagen-4-fast": 3,
     "nano-banana": 2,
     "nano-banana-pro": 5,
-    "midjourney-v5": 6,
-    "midjourney-v6": 8,
     "gpt-image-1.5": 7,
     "qwen-image": 3,
     "seedream-5-lite": 4,

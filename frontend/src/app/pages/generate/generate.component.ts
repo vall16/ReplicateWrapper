@@ -817,15 +817,6 @@ export class GenerateComponent {
         ]
       },
       {
-        provider: 'Midjourney',
-        icon: 'assets/midjourney.png',
-        expanded: false,
-        models: [
-          { id: 'midjourney-v5', name: 'Midjourney v5', icon: 'assets/midjourney.png', cost: 6 },
-          { id: 'midjourney-v6', name: 'Midjourney v6', icon: 'assets/midjourney.png', cost: 8 }
-        ]
-      },
-      {
         provider: 'OpenAI',
         icon: 'assets/openai.svg',
         expanded: false,
@@ -966,8 +957,7 @@ onBlurPrompt() {
       "sdxl": "digital art",
       "flux-schnell": "clean, modern, slightly stylized",
       "stable-diffusion-3": "photorealistic",
-      "dalle-3": "creative illustration",
-      "midjourney": "epic cinematic"
+      "dalle-3": "creative illustration"
     };
 
     const style = styleMap[this.model] || "moderno";

@@ -168,23 +168,6 @@ import { RouterModule } from '@angular/router';
             </div>
           </div>
 
-          <!-- Midjourney -->
-          <div class="product-card" [class.visible]="visibleCards[2]" [style.--card-index]="2" style="--card-index: 2">
-            <div class="product-logo">
-              <img src="assets/midjourney.png" alt="Midjourney" class="logo-img" 
-              (click)="scrollTo('pricing')"
-/>
-            </div>
-            <h3>Midjourney</h3>
-            <p>Unique and refined artistic style, perfect for creative concepts</p>
-            <ul class="product-features">
-              <li>🎭 Distinctive aesthetic style</li>
-              <li>🌈 Vibrant and lively</li>
-              <li>✏️ Great for concepts</li>
-              <li>🏆 Award-winning</li>
-            </ul>
-            <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
-          </div>
 
           <!-- OpenAI DALL-E -->
           <div class="product-card" [class.visible]="visibleCards[3]" [style.--card-index]="3" style="--card-index: 3">
