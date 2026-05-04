@@ -349,7 +349,7 @@ import { environment } from '../../../environments/environments';
       overflow: hidden;
 
       width: 80%;         /* Riduce la larghezza al 80% */
-      margin-right: auto;  
+      margin: 0 auto;  
 
 
       height: 100%;
@@ -374,7 +374,7 @@ import { environment } from '../../../environments/environments';
       padding: 0.6rem;
       background: var(--color-bg-primary);
       width: 80%;         /* Riduce la larghezza al 80% */
-      margin-right: auto;  
+      margin: 0 auto;  
     }
 
     textarea {
