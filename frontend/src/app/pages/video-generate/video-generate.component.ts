@@ -29,16 +29,20 @@ import { environment } from '../../../environments/environments';
         </div>
         
         <div class="section" *ngIf="tokensUsed > 0">
-          <div class="section-header" style="color: #059669;">
-            <span>✅ Last Generation</span>
+          <div class="section-header success-header">
+            <span>Last Generation</span>
           </div>
           <div class="section-body">
             <div class="token-transaction">
               <div>Tokens used: <span class="token-minus">-{{ tokensUsed }}</span></div>
               <div>Remaining: <span class="token-remaining">{{ tokensRemaining }}</span></div>
-            </div> </div> </div> <div class="section">
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
           <div class="section-header">
-            
+            <span>Video Settings</span>
           </div>
           <div class="section-body">
             <label>Text-to-Video Model</label>
@@ -61,28 +65,26 @@ import { environment } from '../../../environments/environments';
 
             <label>Resolution</label>
             <div class="option-grid">
-           <button 
-    *ngFor="let res of resolutionOptions"
-    type="button" 
-    class="choice-button" 
-    [class.active]="resolution === res" 
-    (click)="resolution = res">
-    {{ res }}
-  </button>
-
+              <button 
+                *ngFor="let res of resolutionOptions"
+                type="button" 
+                class="choice-button" 
+                [class.active]="resolution === res" 
+                (click)="resolution = res">
+                {{ res }}
+              </button>
             </div>
 
             <label>Video Duration (seconds)</label>
             <div class="option-grid">
               <button 
-  *ngFor="let d of availableDurations"
-  type="button" 
-  class="choice-button" 
-  [class.active]="duration === d" 
-  (click)="duration = d">
-  {{ d }}s
-</button>
-
+                *ngFor="let d of availableDurations"
+                type="button" 
+                class="choice-button" 
+                [class.active]="duration === d" 
+                (click)="duration = d">
+                {{ d }}s
+              </button>
             </div>
           </div>
         </div>
@@ -123,7 +125,7 @@ import { environment } from '../../../environments/environments';
             <button class="btn-link" (click)="goToGallery()" [disabled]="loading" style="margin-left:0.7rem;">
               Go to Gallery
             </button>
-            <div *ngIf="error" style="color: #ef4444; font-size: 0.8rem; margin-top: 6px;">
+            <div *ngIf="error" class="error-message">
               {{ error }}
             </div>
           </div>
@@ -138,7 +140,6 @@ import { environment } from '../../../environments/environments';
       width: 100vw;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
-      background: #0f172a; /* Fallback background */
     }
 
     .video-generate-shell {
@@ -151,52 +152,67 @@ import { environment } from '../../../environments/environments';
       max-width: 100vw;
     }
 
-    /* SIDEBAR DARK STYLE */
+    /* SIDEBAR */
     .sidebar {
-      background: #020617;
-      border: 1px solid #334155;
+      background: var(--color-bg-secondary);
       border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-      overflow-y: auto;
+      gap: 1rem;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
     }
 
     .section-header {
+      display: flex;
+      justify-content: space-between;
       font-weight: 600;
+      cursor: pointer;
       font-size: 0.875rem;
-      color: #e2e8f0;
-      margin-bottom: 0.5rem;
+      color: var(--color-text-primary);
+    }
+
+    .success-header {
+      color: #059669;
+    }
+
+    .error-message {
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 6px;
     }
 
     .section-body {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
     }
 
     .section-body label {
       font-size: 0.75rem;
-      color: #94a3b8;
+      color: #6b7280;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.025em;
     }
 
-    /* TOKEN DISPLAY CONSISTENCY */
+    /* TOKEN DISPLAY */
     .token-display {
       background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
       border-radius: 10px;
-      padding: 1.2rem;
+      padding: 1rem;
       text-align: center;
       border: 1px solid #334155;
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
 
     .token-current {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #38bdf8;
       margin-bottom: 0.25rem;
@@ -217,35 +233,47 @@ import { environment } from '../../../environments/environments';
     .cost-highlight {
       font-weight: 700;
       color: #f87171;
+      font-size: 0.9rem;
     }
 
     .token-transaction {
-      background: rgba(5, 150, 105, 0.1);
-      border-left: 3px solid #059669;
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
       border-radius: 4px;
       padding: 0.6rem;
       font-size: 0.8rem;
-      color: #34d399;
+      color: #166534;
     }
 
-    /* CHOICE BUTTONS (Resolution/Duration) */
+    .token-minus {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .token-remaining {
+      color: #059669;
+      font-weight: 700;
+    }
+
+    /* OPTION GRID (Resolution/Duration) */
     .option-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
+      margin-bottom: 0.4rem;
     }
 
     .choice-button {
       border: 1px solid #334155;
       background: #020617;
       color: #cbd5e1;
-      padding: 0.4rem 0.6rem;
+      padding: 0.35rem 0.55rem;
       border-radius: 0.45rem;
       font-size: 0.78rem;
       cursor: pointer;
+      transition: all 0.18s ease;
       flex: 1;
       min-width: 60px;
-      transition: all 0.18s ease;
     }
 
     .choice-button:hover {
@@ -264,24 +292,30 @@ import { environment } from '../../../environments/environments';
     /* CUSTOM SELECT */
     .custom-select {
       position: relative;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      background: #0f172a;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: var(--color-bg-primary);
       cursor: pointer;
-      color: #e2e8f0;
+      min-width: 200px;
     }
 
     .selected {
-      padding: 0.6rem;
+      padding: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-size: 0.9rem;
+      color: var(--color-text-primary);
+    }
+
+    .selected .arrow {
+      margin-left: auto;
+      transition: transform 0.2s ease;
     }
 
     .dropdown {
       position: absolute;
-      top: calc(100% + 6px);
+      top: calc(100% + 4px);
       left: 0;
       right: 0;
       background: #0f172a;
@@ -307,14 +341,15 @@ import { environment } from '../../../environments/environments';
     }
 
     .model-cost {
-      font-size: 0.7rem;
+      margin-left: auto;
+      font-size: 0.75rem;
       color: #0d54e4;
-  background: #0c0c0c;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
+      background: #0c0c0c;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.4rem;
     }
 
-    /* MAIN AREA & PREVIEW */
+    /* MAIN AREA */
     .main-area {
       display: flex;
       flex-direction: column;
@@ -324,9 +359,9 @@ import { environment } from '../../../environments/environments';
     .preview-box {
       flex: 1;
       border-radius: 12px;
-      background: #020617;
-      border: 1px solid #334155;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      background: var(--color-bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -340,81 +375,113 @@ import { environment } from '../../../environments/environments';
       max-height: 100%;
     }
 
+    .placeholder {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
     .prompt-box {
-      border: 1px solid #334155;
+      border: 1px solid #e5e7eb;
       border-radius: 12px;
-      padding: 0.8rem;
-      background: #020617;
+      padding: 0.6rem;
+      background: var(--color-bg-primary);
       width: 85%;
     }
 
     textarea {
       width: 100%;
-      background: transparent;
-      color: #f8fafc;
       border: none;
       resize: none;
       outline: none;
-      font-size: 1rem;
-      min-height: 70px;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      background: transparent;
+      color: var(--color-text-primary);
     }
 
-    /* BUTTONS & ANIMATIONS */
+    .prompt-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.4rem;
+    }
+
+    /* BUTTONS */
     .generate-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
       background: #2563eb;
       color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.2s;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-weight: 500;
     }
 
     .generate-btn:hover:not(:disabled) {
       background: #1d4ed8;
-      transform: translateY(-1px);
     }
 
     .generate-btn:disabled {
-      animation: pulse 1.2s infinite;
-      opacity: 0.7;
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .btn-link {
       background: transparent;
-      border: 1px solid #334155;
-      color: #94a3b8;
-      padding: 0.5rem 0.8rem;
-      border-radius: 8px;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.5rem;
     }
 
-    .btn-link:hover {
-      border-color: #38bdf8;
-      color: #38bdf8;
+    /* ANIMATIONS */
+    .generate-btn:disabled {
+      animation: pulse 1.2s infinite;
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 rgba(37, 99, 235, 0.4); }
-      50% { box-shadow: 0 0 15px rgba(37, 99, 235, 0.6); }
-      100% { box-shadow: 0 0 0 rgba(37, 99, 235, 0.4); }
+      0% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
+      50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7); }
+      100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
     }
 
-    .loading-indicator { display: flex; align-items: center; gap: 0.4rem; }
-    .dots span {
-      display: inline-block; width: 4px; height: 4px; background: white;
-      border-radius: 50%; animation: blink 1s infinite;
+    .loading-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: 500;
     }
+
+    .dots span {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
     .dots span:nth-child(2) { animation-delay: 0.2s; }
     .dots span:nth-child(3) { animation-delay: 0.4s; }
 
     @keyframes blink {
-      0%, 80%, 100% { opacity: 0; }
-      40% { opacity: 1; }
+      0%, 80%, 100% { opacity: 0; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
     }
 
     @media (max-width: 900px) {
-      .video-generate-shell { grid-template-columns: 1fr; }
-      .sidebar { order: 2; }
-      .preview-box, .prompt-box { width: 100%; }
+      .video-generate-shell {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: 2;
+      }
+      .preview-box, .prompt-box {
+        width: 100%;
+      }
     }
   `]
 })
