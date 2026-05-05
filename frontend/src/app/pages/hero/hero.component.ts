@@ -1770,9 +1770,22 @@ import { RouterModule } from '@angular/router';
 
     .pricing-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
       margin-top: 3rem;
+    }
+
+    @media (max-width: 992px) {
+      .pricing-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
     }
 
     .pricing-card {
