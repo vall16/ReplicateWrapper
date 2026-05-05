@@ -39,18 +39,19 @@ import { RouterModule } from '@angular/router';
         <div class="hero-content">
           <!-- <div class="hero-label">AI Credit Console · Replicate</div> -->
           <h1 class="hero-title">
-            Create <span class="gradient-text">stunning AI images & videos </span>
-            - Instantly.
+            Create <br/>
+            <span class="gradient-text dynamic-text">{{ currentWord }}</span><span class="cursor">_</span>
+            <br/><span style="font-size: 0.8em; color: #f8fafc;">Instantly.</span>
           </h1>
 
           <p class="hero-subtitle">
             Got an idea? Turn it instantly into stunning images and videos—no technical skills required.
           </p>
           <div class="hero-buttons">
-            <button class="btn btn-primary-large" (click)="navigateTo('register')">
+            <button class="btn btn-primary-large game-btn" (click)="navigateTo('register')">
               Start Free
             </button>
-            <button class="btn btn-secondary-large" (click)="scrollTo('features')">
+            <button class="btn btn-secondary-large game-btn-secondary" (click)="scrollTo('features')">
               See What You Can Do →
             </button>
           </div>
@@ -806,10 +807,25 @@ import { RouterModule } from '@angular/router';
 }
     
     .gradient-text {
-      background: linear-gradient(120deg, #6366f1, #8b5cf6);
+      background: linear-gradient(120deg, #60a5fa, #a78bfa, #f472b6);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.6));
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 4px;
+      background-color: #a78bfa;
+      animation: blink 1s step-end infinite;
+      box-shadow: 0 0 10px #a78bfa, 0 0 20px #8b5cf6;
+      color: #a78bfa;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
     
     .hero-subtitle {
@@ -834,30 +850,52 @@ import { RouterModule } from '@angular/router';
       font-weight: 500;
     }
 
-    .btn-primary-large {
-      background: #6366f1;
+    .btn-primary-large,
+    .game-btn {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+      background-size: 200% 200%;
+      animation: gradientBG 3s ease infinite;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+      transition: all 0.3s ease;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       color: #ffffff;
       padding: 0.9rem 2.3rem;
       font-size: 0.95rem;
-      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
     }
 
-    .btn-primary-large:hover {
-      transform: translateY(-1px);
-      background-color: #4f46e5;
+    .game-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.7);
     }
 
-    .btn-secondary-large {
-      background-color: rgba(255,255,255,0.08);
+    .btn-secondary-large,
+    .game-btn-secondary {
+      border: 2px solid #8b5cf6 !important;
+      background: rgba(15, 23, 42, 0.6) !important;
       color: #e2e8f0;
-      border: 1px solid rgba(11, 106, 238, 0.3);
+      box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.3);
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
       padding: 0.9rem 2.3rem;
       font-size: 0.95rem;
     }
 
-    .btn-secondary-large:hover {
-      background-color: rgba(255,255,255,0.16);
-      border-color: rgba(148, 163, 184, 0.55);
+    .game-btn-secondary:hover {
+      background: rgba(139, 92, 246, 0.15) !important;
+      box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.6), 0 0 20px rgba(139, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .hero-meta {
@@ -926,8 +964,15 @@ import { RouterModule } from '@angular/router';
       padding: 1.2rem 1.1rem;
       background: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(148, 163, 184, 0.24);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.2);
       overflow: hidden;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); box-shadow: 0 0 40px rgba(99, 102, 241, 0.3); }
+      50% { transform: translateY(-15px); box-shadow: 0 0 60px rgba(236, 72, 153, 0.4); }
+      100% { transform: translateY(0px); box-shadow: 0 0 40px rgba(99, 102, 241, 0.3); }
     }
 
     @keyframes hero-fade-up {
@@ -2702,16 +2747,52 @@ export class HeroComponent implements OnInit, OnDestroy {
   visibleCards: boolean[] = [false, false, false, false, false, false, false, false];
   private intersectionObserver: IntersectionObserver | null = null;
 
+  words = ['stunning AI images', 'cinematic videos', '3D masterpieces', 'epic artworks'];
+  currentWord = 'stunning AI images';
+  wordIndex = 0;
+  isDeleting = false;
+  private typingTimer: any;
+
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.setupIntersectionObserver();
+    this.typingTimer = setTimeout(() => {
+      this.isDeleting = true;
+      this.typeWriter();
+    }, 2000);
   }
 
   ngOnDestroy() {
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
     }
+    if (this.typingTimer) {
+      clearTimeout(this.typingTimer);
+    }
+  }
+
+  typeWriter() {
+    const fullWord = this.words[this.wordIndex];
+    
+    if (this.isDeleting) {
+      this.currentWord = fullWord.substring(0, this.currentWord.length - 1);
+    } else {
+      this.currentWord = fullWord.substring(0, this.currentWord.length + 1);
+    }
+
+    let typeSpeed = this.isDeleting ? 40 : 80;
+
+    if (!this.isDeleting && this.currentWord === fullWord) {
+      typeSpeed = 2000;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.currentWord === '') {
+      this.isDeleting = false;
+      this.wordIndex = (this.wordIndex + 1) % this.words.length;
+      typeSpeed = 400;
+    }
+
+    this.typingTimer = setTimeout(() => this.typeWriter(), typeSpeed);
   }
 
   private setupIntersectionObserver() {
