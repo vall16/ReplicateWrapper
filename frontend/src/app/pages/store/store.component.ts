@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { StripeService } from '../../services/stripe.service';
 
@@ -70,7 +71,7 @@ import { StripeService } from '../../services/stripe.service';
             <div class="package-header">
               <div class="header-content">
                 <div class="package-tier">
-                  <span class="tier-icon">{{ getTierIcon(pkg.name) }}</span>
+                  <span class="tier-icon" [innerHTML]="getTierIcon(pkg.name)"></span>
                   <h3 class="package-name">{{ pkg.name }}</h3>
                 </div>
                 <p class="package-description">{{ pkg.description }}</p>
@@ -92,7 +93,10 @@ import { StripeService } from '../../services/stripe.service';
                 </div>
                 <div class="unit-price">
                   <span class="unit-label">€{{ (pkg.price / pkg.tokens).toFixed(4) }}/token</span>
-                  <span *ngIf="getBestValue(pkg)" class="value-tag">💰 Best Value</span>
+                  <span *ngIf="getBestValue(pkg)" class="value-tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="vertical-align:middle;margin-right:3px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Best Value
+                  </span>
                 </div>
               </div>
             </div>
@@ -486,15 +490,22 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .tier-icon {
-      font-size: 1.5rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      border-radius: 8px;
+      border-radius: 10px;
       color: white;
+      flex-shrink: 0;
+    }
+
+    .tier-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      fill: none;
     }
 
     .package-featured .tier-icon {
@@ -989,7 +1000,8 @@ export class StoreComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -1085,15 +1097,27 @@ export class StoreComponent implements OnInit {
   }
 
   /**
-   * Returns an emoji icon based on the package tier name
+   * Returns a safe SVG icon based on the package tier name
    */
-  getTierIcon(name: string): string {
+  getTierIcon(name: string): SafeHtml {
     const lowerName = (name || '').toLowerCase();
-    if (lowerName.includes('starter') || lowerName.includes('small')) return '🚀';
-    if (lowerName.includes('pro') || lowerName.includes('medium')) return '⚡';
-    if (lowerName.includes('enterprise') || lowerName.includes('large') || lowerName.includes('unlimited')) return '👑';
-    if (lowerName.includes('premium')) return '✨';
-    return '💎';
+    let svg: string;
+    // Rocket: starter / small
+    if (lowerName.includes('starter') || lowerName.includes('small'))
+      svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`;
+    // Zap: pro / medium / growth
+    else if (lowerName.includes('pro') || lowerName.includes('medium') || lowerName.includes('growth'))
+      svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+    // Crown: enterprise / large / unlimited
+    else if (lowerName.includes('enterprise') || lowerName.includes('large') || lowerName.includes('unlimited'))
+      svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="m4 20 2-10 6 6 6-6 2 10"/><circle cx="12" cy="6" r="2"/></svg>`;
+    // Star: premium
+    else if (lowerName.includes('premium'))
+      svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    // Diamond: default fallback
+    else
+      svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z"/></svg>`;
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
   }
 
   /**
