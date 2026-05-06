@@ -135,10 +135,10 @@ import { RouterModule } from '@angular/router';
             <h3>Flux AI</h3>
             <p>Ultra-realistic photo quality with lightning speed</p>
             <ul class="product-features">
-              <li>🔥 Premium quality</li>
-              <li>⚡ Ultra-fast generation</li>
-              <li>🎨 Extraordinary details</li>
-              <li>✨ Best quality-to-speed ratio</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Premium quality</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Ultra-fast generation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Extraordinary details</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Best quality-to-speed ratio</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Start</button>
             <div class="product-preview">
@@ -158,10 +158,10 @@ import { RouterModule } from '@angular/router';
             <h3>Stable Diffusion XL</h3>
             <p>The reliable classic for consistent and creative outputs</p>
             <ul class="product-features">
-              <li>🎯 Highly reliable</li>
-              <li>🖼️ Customizable style</li>
-              <li>💰 Cost-effective</li>
-              <li>📚 Best community prompts</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Highly reliable</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Customizable style</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Cost-effective</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Best community prompts</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
             <div class="product-preview">
@@ -179,10 +179,10 @@ import { RouterModule } from '@angular/router';
             <h3>OpenAI GPT-image-1.5</h3>
             <p>Precise text interpretation with natural and realistic results</p>
             <ul class="product-features">
-              <li>📖 Text understanding</li>
-              <li>🎯 Precise execution</li>
-              <li>🌍 Broad knowledge</li>
-              <li>✅ Premium reliability</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Text understanding</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Precise execution</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Broad knowledge</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Premium reliability</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Access</button>
             <div class="product-preview">
@@ -199,10 +199,10 @@ import { RouterModule } from '@angular/router';
             <h3>Kling Video</h3>
             <p>Transform images and text into extraordinary smooth videos</p>
             <ul class="product-features">
-              <li>🎬 High-quality video</li>
-              <li>🎞️ Natural movement</li>
-              <li>🚀 Emerging technology</li>
-              <li>✨ Cinematic effects</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> High-quality video</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><line x1="12" y1="11" x2="12" y2="21"/></svg> Natural movement</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Emerging technology</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Cinematic effects</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Generate Video</button>
             <div class="product-preview">
@@ -220,10 +220,10 @@ import { RouterModule } from '@angular/router';
             <h3>Google Nano-banana</h3>
             <p>Google's multimodal power with advanced context understanding</p>
             <ul class="product-features">
-              <li>🧠 Advanced intelligence</li>
-              <li>🌐 Multimodal understanding</li>
-              <li>🔍 Integrated search</li>
-              <li>⚡ Fast and accurate answers</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Advanced intelligence</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Multimodal understanding</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Integrated search</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Fast and accurate answers</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
             <div class="product-preview">
@@ -240,10 +240,10 @@ import { RouterModule } from '@angular/router';
             <h3>Seedream</h3>
             <p>Artistic generation with unique styles and unlimited creativity</p>
             <ul class="product-features">
-              <li>🎨 Unique artistic styles</li>
-              <li>🌈 Unlimited creativity</li>
-              <li>✨ Amazing results</li>
-              <li>🎭 Artistic expression</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> Unique artistic styles</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/><path d="M12 18a6 6 0 1 0 6-6"/><circle cx="18" cy="18" r="3"/></svg> Unlimited creativity</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Amazing results</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Artistic expression</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Create Art</button>
             <div class="product-preview">
@@ -260,10 +260,10 @@ import { RouterModule } from '@angular/router';
             <h3>Qwen</h3>
             <p>Advanced language model with excellent language understanding</p>
             <ul class="product-features">
-              <li>📝 Excellent understanding</li>
-              <li>🌍 Multilingual support</li>
-              <li>🧠 Advanced reasoning</li>
-              <li>📚 In-depth knowledge</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Excellent understanding</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Multilingual support</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Advanced reasoning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> In-depth knowledge</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
             <div class="product-preview">
@@ -1528,6 +1528,23 @@ import { RouterModule } from '@angular/router';
       color: #cbd5e1;
       font-size: 0.85rem;
       transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .product-features li svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      stroke: #a78bfa;
+      opacity: 0.85;
+      transition: stroke 0.2s ease, opacity 0.2s ease;
+    }
+
+    .product-card:hover .product-features li svg {
+      stroke: #c4b5fd;
+      opacity: 1;
     }
 
     .product-card:hover .product-features li {
