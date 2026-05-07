@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import update
 from app.database import User, TokenTransaction
 from app.security import get_password_hash, verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, calculate_token_price
 from datetime import timedelta
@@ -66,16 +67,24 @@ class UserService:
     
     @staticmethod
     def consume_tokens(db: Session, user_id: int, amount: float):
-        """Consuma token"""
+        """Consuma token in modo atomico"""
         user = UserService.get_user(db, user_id)
         if not user:
             raise Exception("Utente non trovato")
-        
-        if user.tokens < amount:
-            raise Exception(f"Token insufficienti. Hai {user.tokens} token, ne servono {amount}")
-        
-        user.tokens -= amount
-        
+
+        # Update atomico: sottrae i token solo se ce ne sono abbastanza
+        result = db.execute(
+            update(User)
+            .where(User.id == user_id, User.tokens >= amount)
+            .values(tokens=User.tokens - amount)
+        )
+
+        if result.rowcount == 0:
+            db.rollback()
+            # Re-leggi il saldo aggiornato per il messaggio di errore
+            current_user = UserService.get_user(db, user_id)
+            raise Exception(f"Token insufficienti. Hai {current_user.tokens} token, ne servono {amount}")
+
         # Registra la transazione
         transaction = TokenTransaction(
             user_id=user_id,
@@ -83,11 +92,11 @@ class UserService:
             transaction_type="consume",
             description=f"Consumption of {amount} tokens for API call"
         )
-        
+
         db.add(transaction)
         db.commit()
-        db.refresh(user)
-        return user
+
+        return UserService.get_user(db, user_id)
     
     @staticmethod
     def refund_tokens(db: Session, user_id: int, amount: float):
