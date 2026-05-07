@@ -778,7 +778,7 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:4200")
 
 # nuovo endpoint per generare una sessione di Checkout
 @app.post("/api/create-checkout-session")
-async def create_checkout_session(request: Request):
+async def create_checkout_session(request: Request, user=Depends(get_current_user)):
     data = await request.json()
     pkg = data.get("package") or {}
     # costruisci il nome/prodotto a partire dal pacchetto
@@ -799,13 +799,12 @@ async def create_checkout_session(request: Request):
                 "quantity": 1,
             }],
             mode="payment",
-            # success_url="http://localhost:4200/store?payment=success&session_id={CHECKOUT_SESSION_ID}",
-            # cancel_url="http://localhost:4200/store?payment=cancel",
             success_url=f"{FRONTEND_URL}/store?payment=success&session_id={{CHECKOUT_SESSION_ID}}",
             cancel_url=f"{FRONTEND_URL}/store?payment=cancel",
             metadata={
                 "package_id": pkg.get("id"),
-                "tokens": tokens
+                "tokens": tokens,
+                "user_email": user.email
             }
         )
         return {"id": session.id, "url": session.url}

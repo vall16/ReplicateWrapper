@@ -100,6 +100,11 @@ def confirm_checkout(
     if session.payment_status != 'paid':
         raise HTTPException(status_code=400, detail="Pagamento non completato")
 
+    # Verifica che la sessione appartenga all'utente corrente
+    session_user_email = session.metadata.get('user_email')
+    if session_user_email and session_user_email != user.email:
+        raise HTTPException(status_code=403, detail="Questa sessione non appartiene all'utente corrente")
+
     # estrai i token dalla metadata (aggiunti in create_checkout_session)
     tokens = int(session.metadata.get('tokens', 0))
     if tokens <= 0:
