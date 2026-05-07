@@ -148,10 +148,11 @@ import { RouterModule } from '@angular/router';
             
           </div>
 
-          <!-- SDXL Stability -->
+          <!-- SDXL Stability --->
           <div class="product-card" [class.visible]="visibleCards[1]" [style.--card-index]="1" style="--card-index: 1">
             <div class="badge-lightning">Very Reliable</div>
             <div class="product-logo">
+              
               <img src="assets/stability.svg" 
  alt="Stability" class="logo-img" />
             </div>
