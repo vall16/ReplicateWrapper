@@ -18,7 +18,7 @@ import stripe
 import replicate
 from app.auth_routes import router as auth_router
 from app.token_routes import router as token_router
-from app.auth_routes import get_current_user
+from app.security import get_current_user
 from app.database import get_db, GeneratedImage, GeneratedVideo
 from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest

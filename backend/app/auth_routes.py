@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Header
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import get_db, User
 from app.schemas import (
@@ -6,38 +6,19 @@ from app.schemas import (
     UserLogin,
     UserResponse,
     TokenResponse,
-    TokenPurchase,
     TokenTransaction,
     StatusResponse,
     GoogleLoginRequest,
 )
 from app.services import UserService
-from app.security import decode_token, calculate_token_price
-from typing import List, Optional
+from app.security import get_current_user
+from typing import List
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
 import secrets
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
-
-# Funzione per ottenere l'utente verificando il token
-def get_current_user(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
-    if not authorization:
-        raise HTTPException(status_code=401, detail="Non autorizzato")
-    
-    try:
-        token = authorization.replace("Bearer ", "")
-        payload = decode_token(token)
-        if not payload:
-            raise HTTPException(status_code=401, detail="Token invalido")
-        
-        user = UserService.get_user_by_email(db, payload["email"])
-        if not user:
-            raise HTTPException(status_code=401, detail="Utente non trovato")
-        return user
-    except:
-        raise HTTPException(status_code=401, detail="Non autorizzato")
 
 # REGISTRAZIONE
 @router.post("/register", response_model=StatusResponse)

@@ -1,30 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.schemas import TokenPurchase, StatusResponse, UserResponse
+from app.schemas import TokenPurchase, StatusResponse
 from app.services import UserService
-from app.security import calculate_token_price, decode_token
-from typing import Optional
+from app.security import get_current_user
 import stripe
 
 router = APIRouter(prefix="/api/tokens", tags=["Tokens"])
-
-def get_current_user(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
-    if not authorization:
-        raise HTTPException(status_code=401, detail="Non autorizzato")
-    
-    try:
-        token = authorization.replace("Bearer ", "")
-        payload = decode_token(token)
-        if not payload:
-            raise HTTPException(status_code=401, detail="Token invalido")
-        
-        user = UserService.get_user_by_email(db, payload["email"])
-        if not user:
-            raise HTTPException(status_code=401, detail="Utente non trovato")
-        return user
-    except:
-        raise HTTPException(status_code=401, detail="Non autorizzato")
 
 # ACQUISTA TOKEN
 # Endpoint disabilitato: l'acquisto deve passare esclusivamente tramite Stripe Checkout
@@ -90,10 +72,8 @@ def get_packages():
 
 # VERIFICA SALDO PRIMA DI FAR USARE L'API
 @router.get("/check")
-def check_tokens(authorization: str = None, db: Session = Depends(get_db)):
+def check_tokens(user = Depends(get_current_user)):
     """Verifica se l'utente ha token sufficienti"""
-    user = get_current_user(authorization, db)
-    
     has_tokens = user.tokens > 0
     status = "✅ Puoi usare l'API" if has_tokens else "🚫 Token insufficienti"
     
