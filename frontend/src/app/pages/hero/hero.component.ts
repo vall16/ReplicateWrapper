@@ -122,7 +122,7 @@ import { RouterModule } from '@angular/router';
       <section class="products" id="features">
         <div class="section-header">
           <h2>Available Generative Models</h2>
-          <p>Access the world’s best text-to-image models, all in one platform</p>
+          <p>Access the world’s best text-to-image & text-to-video models, all in one platform</p>
         </div>
 
         <div class="products-grid">

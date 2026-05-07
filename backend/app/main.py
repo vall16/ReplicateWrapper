@@ -1,4 +1,5 @@
-from fast
+
+from fastapi import HTTPException
 from typing import Optional
 
 from fastapi import FastAPI
