@@ -46,7 +46,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True)
     username = Column(String(255), unique=True, index=True)
     hashed_password = Column(String(255))
-    tokens = Column(Float, default=0.0)  # Saldo token
+    tokens = Column(Integer, default=0)  # Saldo token
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -74,7 +74,7 @@ class TokenTransaction(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    amount = Column(Float)
+    amount = Column(Integer)
     transaction_type = Column(String(50))  # "purchase", "consume"
     description = Column(String(255))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -93,7 +93,7 @@ class GeneratedImage(Base):
 
     image_url = Column(String(500))
 
-    tokens_used = Column(Float, default=0.0)
+    tokens_used = Column(Integer, default=0)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -114,7 +114,7 @@ class GeneratedVideo(Base):
 
     video_url = Column(String(500))
 
-    tokens_used = Column(Float, default=0.0)
+    tokens_used = Column(Integer, default=0)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

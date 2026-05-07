@@ -16,7 +16,7 @@ class UserResponse(BaseModel):
     id: int
     email: str
     username: str
-    tokens: float
+    tokens: int
     is_active: bool
     created_at: datetime
 
@@ -25,13 +25,13 @@ class UserResponse(BaseModel):
 
 # Token Models
 class TokenPurchase(BaseModel):
-    amount: float
+    amount: int
     price: Optional[float] = None  # Prezzo calcolato automaticamente
 
 class TokenTransaction(BaseModel):
     id: int
     user_id: int
-    amount: float
+    amount: int
     transaction_type: str
     description: str
     created_at: datetime

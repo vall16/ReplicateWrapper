@@ -13,12 +13,12 @@ class UserService:
             raise Exception("Email già registrata")
         if db.query(User).filter(User.username == username).first():
             raise Exception("Username già utilizzato")
-        
+
         user = User(
             email=email,
             username=username,
             hashed_password=get_password_hash(password),
-            tokens=0.0
+            tokens=0
         )
         db.add(user)
         db.commit()
@@ -44,14 +44,14 @@ class UserService:
         return db.query(User).filter(User.email == email).first()
     
     @staticmethod
-    def purchase_tokens(db: Session, user_id: int, amount: float):
+    def purchase_tokens(db: Session, user_id: int, amount: int):
         """Acquista token"""
         user = UserService.get_user(db, user_id)
         if not user:
             raise Exception("Utente non trovato")
-        
+
         user.tokens += amount
-        
+
         # Registra la transazione
         transaction = TokenTransaction(
             user_id=user_id,
@@ -59,14 +59,14 @@ class UserService:
             transaction_type="purchase",
             description=f"Acquisto {amount} token"
         )
-        
+
         db.add(transaction)
         db.commit()
         db.refresh(user)
         return user
     
     @staticmethod
-    def consume_tokens(db: Session, user_id: int, amount: float):
+    def consume_tokens(db: Session, user_id: int, amount: int):
         """Consuma token in modo atomico"""
         user = UserService.get_user(db, user_id)
         if not user:
@@ -99,7 +99,7 @@ class UserService:
         return UserService.get_user(db, user_id)
     
     @staticmethod
-    def refund_tokens(db: Session, user_id: int, amount: float):
+    def refund_tokens(db: Session, user_id: int, amount: int):
         """Rimborsa token quando la generazione fallisce dopo il consumo"""
         user = UserService.get_user(db, user_id)
         if not user:
