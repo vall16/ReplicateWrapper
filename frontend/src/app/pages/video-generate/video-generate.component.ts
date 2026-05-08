@@ -622,7 +622,7 @@ export class VideoGenerateComponent {
       },
       (err: any) => {
         this.loading = false;
-        this.error = "Network error or server unreachable.";
+        this.error = err.error?.error || "Network error or server unreachable.";
         console.error('Error generating video:', err);
       }
     );
