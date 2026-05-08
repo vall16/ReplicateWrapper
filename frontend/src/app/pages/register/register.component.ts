@@ -10,310 +10,149 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="register-shell">
-      <div class="register-card glass-card">
-        <header class="card-header">
-          <div>
-            <h1>Sign Up</h1>
-            <p class="subtitle">
-              Create your account to start managing Replicate model tokens.
-
-            </p>
+      <div class="register-grid">
+        <section class="register-hero">
+          <div class="hero-glow"></div>
+          <div class="logo-orb">
+            <div class="logo-inner">RX</div>
           </div>
-        </header>
+          <h1 class="hero-title">Join the network</h1>
+          <p class="hero-subtitle">
+            Create your account and start managing Replicate model tokens with real-time credit tracking.
+          </p>
+          <ul class="hero-points">
+            <li><span class="point-icon">◆</span> Dashboard with live token balance</li>
+            <li><span class="point-icon">◆</span> Usage analytics and history</li>
+            <li><span class="point-icon">◆</span> Instant top-up with secure payments</li>
+          </ul>
+        </section>
 
-        <form (ngSubmit)="register()" *ngIf="!isLoading" class="form-body">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              [(ngModel)]="email"
-              name="email"
-              placeholder="youraddress@email.com"
-              required
-            />
-          </div>
+        <section class="register-panel">
+          <div class="panel-glow"></div>
+          <div class="panel-border"></div>
+          <header class="panel-header">
+            <h2>Sign Up</h2>
+            <p>Create your account to get started.</p>
+          </header>
 
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              [(ngModel)]="username"
-              name="username"
-              placeholder="Your username"
-
-              required
-            />
-          </div>
-
-          <div class="form-row">
+          <form (ngSubmit)="register()" *ngIf="!isLoading" class="register-form">
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="email">Email</label>
               <input
-                id="password"
-                type="password"
-                [(ngModel)]="password"
-                name="password"
-                placeholder="••••••••"
+                id="email"
+                type="email"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="youraddress@email.com"
                 required
               />
-              <small>Minimum 8 characters</small>
-
+              <div class="input-glow"></div>
             </div>
 
             <div class="form-group">
-              <label for="confirmPassword">Confirm password</label>
+              <label for="username">Username</label>
               <input
-                id="confirmPassword"
-                type="password"
-                [(ngModel)]="confirmPassword"
-                name="confirmPassword"
-                placeholder="••••••••"
+                id="username"
+                type="text"
+                [(ngModel)]="username"
+                name="username"
+                placeholder="Your username"
                 required
               />
+              <div class="input-glow"></div>
             </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  [(ngModel)]="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required
+                />
+                <div class="input-glow"></div>
+                <small>Minimum 8 characters</small>
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  [(ngModel)]="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="••••••••"
+                  required
+                />
+                <div class="input-glow"></div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary">
+              <span class="btn-text">Create account</span>
+              <span class="btn-arrow">→</span>
+            </button>
+          </form>
+
+          <div *ngIf="isLoading" class="loading">
+            <span class="loading-text">Creating account</span>
+            <span class="dots">
+              <span></span><span></span><span></span>
+            </span>
           </div>
 
-          <button type="submit" class="btn-primary">Create account</button>
-        </form>
+          <div *ngIf="error" class="feedback feedback-error">
+            {{ error }}
+          </div>
 
-        <div *ngIf="isLoading" class="loading">
-          Registration in progress…
+          <div *ngIf="success" class="feedback feedback-success">
+            {{ success }}
+          </div>
 
-        </div>
-
-        <div *ngIf="error" class="feedback feedback-error">
-          {{ error }}
-        </div>
-
-        <div *ngIf="success" class="feedback feedback-success">
-          {{ success }}
-        </div>
-
-        <div class="divider">
-          <span>or</span>
-        </div>
-
-        <p class="login-link">
-          Already have an account?
-
-          <button type="button" class="link-button" (click)="goToLogin()">Login here</button>
-        </p>
+          <div class="panel-footer">
+            <span>Already have an account?</span>
+            <button class="btn-ghost" type="button" (click)="goToLogin()">
+              Login <span class="btn-arrow">→</span>
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   `,
-  // styles: [`
-  //   .register-shell {
-  //     min-height: 100vh;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     padding: 1.75rem 1.2rem;
-  //     background-color: #ffffff;
-  //     background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
-  //     background-size: 32px 32px;
-  //     color: #1f2937;
-  //     font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  //   }
-
-  //   .register-card {
-  //     width: 100%;
-  //     max-width: 440px;
-  //   }
-
-
-
-  //   .glass-card {
-  //     position: relative;
-  //     border-radius: 1.25rem;
-  //     padding: 1.6rem 1.7rem 1.5rem;
-  //     background: #ffffff;
-  //     border: 1px solid #e5e7eb;
-  //     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  //     overflow: hidden;
-  //   }
-
-  //   .glass-card::before {
-  //     display: none;
-  //   }
-
-  //   .glass-card > * {
-  //     position: relative;
-  //     z-index: 1;
-  //   }
-
-  //   .card-header h1 {
-  //     margin: 0;
-  //     color: #1f2937;
-  //     font-size: 1.6rem;
-  //     letter-spacing: 0.03em;
-  //     font-weight: 600;
-  //   }
-
-  //   .subtitle {
-  //     margin: 0.4rem 0 0;
-  //     font-size: 0.86rem;
-  //     color: #4b5563;
-  //   }
-
-  //   .form-body {
-  //     margin-top: 1.3rem;
-  //     display: flex;
-  //     flex-direction: column;
-  //     gap: 1rem;
-  //   }
-
-  //   .form-group {
-  //     display: flex;
-  //     flex-direction: column;
-  //     gap: 0.35rem;
-  //   }
-
-  //   .form-row {
-  //     display: grid;
-  //     grid-template-columns: repeat(2, minmax(0, 1fr));
-  //     gap: 0.9rem;
-  //   }
-
-  //   label {
-  //     font-size: 0.8rem;
-  //     color: #374151;
-  //     font-weight: 500;
-  //   }
-
-  //   small {
-  //     font-size: 0.75rem;
-  //     color: #6b7280;
-  //   }
-
-  //   input {
-  //     width: 100%;
-  //     padding: 0.65rem 0.75rem;
-  //     border-radius: 6px;
-  //     border: 1px solid #d1d5db;
-  //     background: #ffffff;
-  //     color: #1f2937;
-  //     font-size: 0.9rem;
-  //     outline: none;
-  //     transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  //     box-sizing: border-box;
-  //   }
-
-  //   input::placeholder {
-  //     color: #9ca3af;
-  //   }
-
-  //   input:focus {
-  //     border-color: #6366f1;
-  //     box-shadow: 0 0 0 1px #6366f1;
-  //   }
-
-  //   .btn-primary {
-  //     margin-top: 0.25rem;
-  //     width: 100%;
-  //     border-radius: 6px;
-  //     border: none;
-  //     padding: 0.75rem 1.2rem;
-  //     font-size: 0.9rem;
-  //     font-weight: 500;
-  //     cursor: pointer;
-  //     background: #6366f1;
-  //     color: #ffffff;
-  //     box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
-  //     transition: background-color 0.15s ease, transform 0.1s ease;
-  //   }
-
-  //   .btn-primary:hover {
-  //     background-color: #4f46e5;
-  //     transform: translateY(-1px);
-  //   }
-
-  //   .loading {
-  //     margin-top: 1rem;
-  //     text-align: center;
-  //     font-size: 0.85rem;
-  //     color: #6b7280;
-  //   }
-
-  //   .feedback {
-  //     margin-top: 0.9rem;
-  //     border-radius: 6px;
-  //     padding: 0.65rem 0.8rem;
-  //     font-size: 0.8rem;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: space-between;
-  //     gap: 0.5rem;
-  //   }
-
-  //   .feedback-error {
-  //     background: #fef2f2;
-  //     border: 1px solid #fecaca;
-  //     color: #b91c1c;
-  //   }
-
-  //   .feedback-success {
-  //     background: #f0fdf4;
-  //     border: 1px solid #bbf7d0;
-  //     color: #15803d;
-  //   }
-
-  //   .divider {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     gap: 0.75rem;
-  //     margin: 1.4rem 0 0.9rem;
-  //     font-size: 0.8rem;
-  //     color: #6b7280;
-  //   }
-
-  //   .divider::before,
-  //   .divider::after {
-  //     content: "";
-  //     flex: 1;
-  //     height: 1px;
-  //     background: #e5e7eb;
-  //   }
-
-  //   .login-link {
-  //     text-align: center;
-  //     font-size: 0.82rem;
-  //     color: #4b5563;
-  //   }
-
-  //   .link-button {
-  //     border: none;
-  //     background: transparent;
-  //     color: #6366f1;
-  //     cursor: pointer;
-  //     font-size: 0.82rem;
-  //     font-weight: 500;
-  //     text-decoration: underline;
-  //     text-underline-offset: 0.18rem;
-  //   }
-
-  //   @media (max-width: 640px) {
-  //     .register-shell {
-  //       padding: 1.5rem 1rem;
-  //     }
-
-  //     .glass-card {
-  //       padding: 1.4rem 1.4rem 1.3rem;
-  //     }
-
-  //     .form-row {
-  //       grid-template-columns: minmax(0, 1fr);
-  //     }
-  //   }
-  // `]
-
   styles: [`
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-3px); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
     :host {
       display: block;
       min-height: 100vh;
-      color: #1f2937;
+      color: #e5e7eb;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
     }
 
@@ -324,70 +163,170 @@ import { AuthService } from '../../services/auth.service';
       justify-content: center;
       padding: 2rem 1.5rem;
       position: relative;
-      background-color: #f1f5f9; /* Colore di fallback */
+      background: radial-gradient(1200px 500px at 20% -10%, rgba(124, 58, 237, 0.2), transparent),
+                  radial-gradient(1000px 400px at 80% 0%, rgba(6, 182, 212, 0.15), transparent),
+                  rgba(10, 10, 20, 0.95);
       overflow: hidden;
     }
 
-    /* Background con immagine e sfocatura identico al login */
     .register-shell::before {
       content: '';
       position: absolute;
-      inset: -5%;
-      background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      pointer-events: none;
-    }
-
-    .register-shell::after {
-      content: '';
-      position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.75) 100%);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1.5px, transparent 1.5px);
+      background-size: 32px 32px;
       pointer-events: none;
     }
 
-    .register-card {
+    .register-grid {
       width: 100%;
-      max-width: 460px; /* Leggermente più largo per accomodare la grid delle password */
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: center;
       position: relative;
       z-index: 10;
     }
 
-    .glass-card {
+    .register-hero {
       position: relative;
-      border-radius: 1.5rem;
-      padding: 2.5rem 2.2rem;
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(255, 255, 255, 1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-      overflow: hidden;
+      animation: slideInUp 0.6s ease-out;
     }
 
-    .glass-card > * {
-      position: relative;
-      z-index: 1;
+    .hero-glow {
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
+      pointer-events: none;
     }
 
-    .card-header h1 {
+    .logo-orb {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .logo-inner {
+      width: 74%;
+      height: 74%;
+      border-radius: 10px;
+      background: rgba(10, 10, 20, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #c4b5fd;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0 0 0.75rem;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #c4b5fd, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      margin: 0 0 1.2rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #94a3b8;
+      max-width: 420px;
+    }
+
+    .hero-points {
+      list-style: none;
+      padding: 0;
       margin: 0;
-      color: #1f2937;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .hero-points li {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: slideInUp 0.5s ease-out backwards;
+    }
+    .hero-points li:nth-child(1) { animation-delay: 0.1s; }
+    .hero-points li:nth-child(2) { animation-delay: 0.2s; }
+    .hero-points li:nth-child(3) { animation-delay: 0.3s; }
+
+    .point-icon {
+      color: #6366f1;
+      font-size: 0.6rem;
+    }
+
+    .register-panel {
+      position: relative;
+      border-radius: 1.2rem;
+      padding: 2.5rem 2rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      max-width: 420px;
+      margin-left: auto;
+      animation: slideInUp 0.6s ease-out 0.1s backwards;
+    }
+
+    .panel-glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.08), transparent 60%);
+      pointer-events: none;
+    }
+
+    .panel-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 1.2rem;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.5), rgba(6, 182, 212, 0.3), rgba(124, 58, 237, 0.1));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      color: #e5e7eb;
       font-size: 1.1rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
     }
 
-    .subtitle {
-      margin: 0.35rem 0 1.1rem;
+    .panel-header p {
+      margin: 0.35rem 0 1.3rem;
       font-size: 0.8rem;
-      color: #6b7280;
-      line-height: 1.4;
+      color: #64748b;
     }
 
-    .form-body {
+    .register-form {
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
@@ -396,7 +335,8 @@ import { AuthService } from '../../services/auth.service';
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.35rem;
+      position: relative;
     }
 
     .form-row {
@@ -406,116 +346,181 @@ import { AuthService } from '../../services/auth.service';
     }
 
     label {
-      font-size: 0.8rem;
-      color: #374151;
+      font-size: 0.78rem;
+      color: #94a3b8;
       font-weight: 500;
+      letter-spacing: 0.03em;
     }
 
     input {
       width: 100%;
-      padding: 0.6rem 0.75rem;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #1f2937;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: rgba(2, 6, 23, 0.6);
+      color: #e5e7eb;
       font-size: 0.9rem;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+
+    input::placeholder {
+      color: #475569;
     }
 
     input:focus {
       outline: none;
       border-color: #6366f1;
-      box-shadow: 0 0 0 1px #6366f1;
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3), 0 0 20px rgba(99, 102, 241, 0.1);
     }
 
     small {
       display: block;
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
       font-size: 0.7rem;
-      color: #9ca3af;
+      color: #64748b;
     }
 
     .btn-primary {
       margin-top: 0.5rem;
       width: 100%;
-      padding: 0.65rem 0.9rem;
-      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
       border: none;
-      background: #6366f1;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
       color: white;
       font-size: 0.9rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
-      transition: background-color 0.15s ease, transform 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-primary:hover {
-      background-color: #4f46e5;
-      transform: translateY(-1px);
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
+
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.45);
+    }
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover .btn-arrow,
+    .btn-ghost:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 1rem 0;
+    }
+
+    .loading-text {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .dots span {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #6366f1;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+      margin: 0 1px;
+    }
+    .dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
 
     .feedback {
       margin-top: 0.8rem;
       font-size: 0.8rem;
-      border-radius: 6px;
-      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      animation: fadeIn 0.3s ease-out;
     }
 
     .feedback-error {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
     }
 
     .feedback-success {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
     }
 
-    .divider {
-      margin: 1.2rem 0 0.8rem;
+    .panel-footer {
+      margin-top: 1.2rem;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       gap: 0.75rem;
-      font-size: 0.78rem;
-      color: #6b7280;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: #e5e7eb;
-    }
-
-    .login-link {
-      margin-top: 0.5rem;
-      text-align: center;
       font-size: 0.8rem;
-      color: #6b7280;
+      color: #64748b;
     }
 
-    .link-button {
-      border: none;
+    .btn-ghost {
+      border-radius: 8px;
+      border: 1px solid #334155;
       background: transparent;
-      color: #6366f1;
+      color: #cbd5e1;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      font-weight: 600;
-      padding-left: 0.3rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
     }
 
-    .link-button:hover {
-      text-decoration: underline;
+    .btn-ghost:hover {
+      border-color: #6366f1;
+      color: #c4b5fd;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      .register-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+      }
+      .register-panel {
+        margin: 0 auto;
+      }
+      .register-hero { display: none; }
     }
 
     @media (max-width: 640px) {
-      .register-shell {
-        padding: 1.5rem 1.1rem;
-      }
+      .register-shell { padding: 1.5rem 1.1rem; }
+      .register-panel { padding: 2rem 1.5rem; }
       .form-row {
         grid-template-columns: 1fr;
       }
@@ -537,14 +542,13 @@ export class RegisterComponent {
   ) { }
 
   register() {
-    // Validazione
     if (this.password !== this.confirmPassword) {
-        this.error = 'Passwords do not match';
+      this.error = 'Passwords do not match';
       return;
     }
 
     if (this.password.length < 8) {
-        this.error = 'Password must be at least 8 characters';
+      this.error = 'Password must be at least 8 characters';
       return;
     }
 
@@ -555,7 +559,7 @@ export class RegisterComponent {
     this.authService.register(this.email, this.username, this.password).subscribe(
       (response) => {
         this.isLoading = false;
-        this.success = '✅ Registration successful! Login now.';
+        this.success = 'Registration successful! Redirecting to login...';
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
