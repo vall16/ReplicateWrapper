@@ -521,7 +521,7 @@ export class VideoGenerateComponent {
   ) { }
 
   ngOnInit() {
-    // Controllo login all'inizio
+    // Check login at start
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;

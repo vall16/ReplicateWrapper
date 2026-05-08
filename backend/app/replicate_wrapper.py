@@ -2,21 +2,21 @@ import os
 from typing import Optional, Dict, Any
 import replicate
 from sqlalchemy.orm import Session
-# la “macchina” che genera l’immagine.
+# the "engine" that generates the image.
 class ReplicateWrapper:
     """
-    Wrapper class per gestire le interazioni con Replicate.ai con sistema token
+    Wrapper class to handle Replicate.ai interactions with token system
     """
 
-    # Costo token per chiamata (1 token per default)
+    # Token cost per call (1 token by default)
     TOKEN_COST_PER_CALL = 1.0
 
     def __init__(self, api_token: Optional[str] = None):
         """
-        Inizializza il wrapper con il token API
+        Initialize the wrapper with the API token
 
         Args:
-            api_token: Token API di Replicate (opzionale, usa variabile d'ambiente se non fornito)
+            api_token: Replicate API token (optional, uses environment variable if not provided)
         """
         self.api_token = api_token or os.getenv("REPLICATE_API_TOKEN")
         if self.api_token:
@@ -31,29 +31,29 @@ class ReplicateWrapper:
         token_cost: Optional[float] = None
     ) -> Any:
         """
-        Esegue un modello su Replicate con controllo token
+        Runs a model on Replicate with token checking
 
         Args:
-            model_version: Versione del modello (es. "owner/model:version")
-            input_params: Parametri di input per il modello
-            user_id: ID dell'utente (per controllo token)
-            db: Sessione database (per aggiornamento saldo)
-            token_cost: Costo token personalizzato (default: TOKEN_COST_PER_CALL)
+            model_version: Model version (e.g. "owner/model:version")
+            input_params: Input parameters for the model
+            user_id: User ID (for token checking)
+            db: Database session (for balance updates)
+            token_cost: Custom token cost (default: TOKEN_COST_PER_CALL)
 
         Returns:
-            Output del modello
+            Model output
         """
-        # Usa il costo token personalizzato o il default
+        # Use custom token cost or default
         cost = token_cost if token_cost is not None else self.TOKEN_COST_PER_CALL
         
-        # Verifica token se user_id è fornito
+        # Check tokens if user_id is provided
         if user_id and db:
             from app.services import UserService
             user = UserService.get_user(db, user_id)
             if not user:
-                raise Exception("Utente non trovato")
+                raise Exception("User not found")
             if user.tokens < cost:
-                raise Exception(f"❌ Token insufficienti! Hai {user.tokens} token, servono {cost}")
+                raise Exception(f"❌ Insufficient tokens! You have {user.tokens} tokens, need {cost}")
         
         try:
             output = replicate.run(
@@ -61,24 +61,24 @@ class ReplicateWrapper:
                 input=input_params
             )
             
-            # Consuma i token se l'operazione è riuscita
+            # Consume tokens if the operation succeeded
             if user_id and db:
                 from app.services import UserService
                 UserService.consume_tokens(db, user_id, cost)
             
             return output
         except Exception as e:
-            raise Exception(f"Errore nell'esecuzione del modello: {str(e)}")
+            raise Exception(f"Error executing model: {str(e)}")
 
     def list_models(self) -> list:
         """
-        Elenca i modelli disponibili
+        Lists available models
 
         Returns:
-            Lista dei modelli
+            List of models
         """
         try:
             models = replicate.models.list()
             return list(models)
         except Exception as e:
-            raise Exception(f"Errore nel recupero dei modelli: {str(e)}")
+            raise Exception(f"Error retrieving models: {str(e)}")

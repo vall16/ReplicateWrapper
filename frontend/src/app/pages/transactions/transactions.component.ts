@@ -388,7 +388,7 @@ export class TransactionsComponent implements OnInit {
         this.calculateStats();
       },
       (error) => {
-        this.error = 'Errore nel caricamento delle transazioni';
+        this.error = 'Error loading transactions';
         console.error(error);
       }
     );

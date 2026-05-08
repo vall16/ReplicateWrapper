@@ -164,8 +164,8 @@ import { FormsModule } from '@angular/forms';
           <div class="glass-card stats-card">
             <div class="card-header">
               <div>
-                <h2>Overview utilizzo</h2>
-                <p class="card-subtitle">Sintesi dell’attività recente</p>
+                <h2>Usage Overview</h2>
+                <p class="card-subtitle">Summary of recent activity</p>
               </div>
             </div>
             <div class="stats-grid">
@@ -1073,7 +1073,7 @@ export class DashboardComponent implements OnInit {
         this.balance = data;
       },
       (error) => {
-        console.error('Errore nel caricamento del saldo', error);
+        console.error('Error loading balance', error);
       }
     );
   }
@@ -1085,7 +1085,7 @@ export class DashboardComponent implements OnInit {
         this.calculateStats();
       },
       (error) => {
-        console.error('Errore nel caricamento delle transazioni', error);
+        console.error('Error loading transactions', error);
       }
     );
   }
@@ -1096,7 +1096,7 @@ export class DashboardComponent implements OnInit {
         this.packages = data.packages || [];
       },
       (error) => {
-        console.error('Errore nel caricamento dei pacchetti', error);
+        console.error('Error loading packages', error);
       }
     );
   }

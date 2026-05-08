@@ -21,14 +21,14 @@ for i in range(10):  # prova 10 volte
         # prova una connessione veloce
         conn = engine.connect()
         conn.close()
-        print("DB pronto!")
+        print("DB ready!")
         break
     except Exception as e:
-        print("ERRORE DB:", str(e))
-        print("DB non pronto, retry in 3s...")
+        print("DB ERROR:", str(e))
+        print("DB not ready, retry in 3s...")
         time.sleep(3)
 else:
-    raise Exception("Impossibile connettersi al DB")
+    raise Exception("Unable to connect to DB")
 
 # engine = create_engine(
 #     DATABASE_URL,

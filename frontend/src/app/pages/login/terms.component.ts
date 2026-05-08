@@ -10,100 +10,100 @@ import { Router } from '@angular/router';
     <div class="terms-wrapper">
       <div class="container">
 
-        <h1>Termini e Condizioni</h1>
-        <p class="last-update">Ultimo aggiornamento: {{ today }}</p>
+        <h1>Terms and Conditions</h1>
+        <p class="last-update">Last updated: {{ today }}</p>
 
         <section>
-          <h2>1. Accettazione dei Termini</h2>
+          <h2>1. Acceptance of Terms</h2>
           <p>
-            Utilizzando la piattaforma, accetti integralmente i presenti Termini e Condizioni.
-            Se non accetti una qualsiasi parte dei termini, non puoi utilizzare il servizio.
+            By using the platform, you fully accept these Terms and Conditions.
+            If you do not accept any part of the terms, you may not use the service.
           </p>
         </section>
 
         <section>
-          <h2>2. Descrizione del Servizio</h2>
+          <h2>2. Description of Service</h2>
           <p>
-            La piattaforma fornisce un servizio di intermediazione tecnica (wrapper)
-            per l’accesso ai modelli di intelligenza artificiale forniti da Replicate.ai.
-            Il servizio include gestione richieste API, monitoraggio utilizzo,
-            gestione crediti/token e strumenti di integrazione.
+            The platform provides a technical intermediation service (wrapper)
+            for accessing artificial intelligence models provided by Replicate.ai.
+            The service includes API request management, usage monitoring,
+            credit/token management, and integration tools.
           </p>
         </section>
 
         <section>
-          <h2>3. Account Utente</h2>
+          <h2>3. User Account</h2>
           <ul>
-            <li>L’utente è responsabile della sicurezza delle proprie credenziali.</li>
-            <li>È vietata la condivisione dell’account con terzi non autorizzati.</li>
-            <li>L’utente è responsabile di tutte le attività effettuate tramite il proprio account.</li>
+            <li>The user is responsible for the security of their own credentials.</li>
+            <li>Sharing the account with unauthorized third parties is prohibited.</li>
+            <li>The user is responsible for all activities carried out through their account.</li>
           </ul>
         </section>
 
         <section>
-          <h2>4. Utilizzo Consentito</h2>
-          <p>L’utente si impegna a non utilizzare il servizio per:</p>
+          <h2>4. Permitted Use</h2>
+          <p>The user agrees not to use the service for:</p>
           <ul>
-            <li>Attività illegali o fraudolente</li>
-            <li>Generazione di contenuti che violino diritti di terzi</li>
-            <li>Distribuzione di malware o contenuti dannosi</li>
-            <li>Abusi del sistema tramite automazioni non autorizzate</li>
+            <li>Illegal or fraudulent activities</li>
+            <li>Generating content that violates third-party rights</li>
+            <li>Distributing malware or harmful content</li>
+            <li>System abuse through unauthorized automation</li>
           </ul>
         </section>
 
         <section>
-          <h2>5. Contenuti Generati dall’AI</h2>
+          <h2>5. AI-Generated Content</h2>
           <p>
-            I contenuti generati tramite i modelli AI sono prodotti automaticamente.
-            La piattaforma non garantisce accuratezza, completezza o affidabilità
-            dei risultati. L’utente è l’unico responsabile dell’uso dei contenuti generati.
+            Content generated through AI models is produced automatically.
+            The platform does not guarantee accuracy, completeness, or reliability
+            of the results. The user is solely responsible for the use of generated content.
           </p>
         </section>
 
         <section>
-          <h2>6. Pagamenti e Crediti</h2>
+          <h2>6. Payments and Credits</h2>
           <ul>
-            <li>I crediti acquistati non sono rimborsabili salvo diversa disposizione legale.</li>
-            <li>Il consumo dei crediti dipende dall’utilizzo dei modelli AI.</li>
-            <li>I prezzi possono essere modificati con preavviso.</li>
+            <li>Purchased credits are non-refundable unless otherwise required by law.</li>
+            <li>Credit consumption depends on the usage of AI models.</li>
+            <li>Prices may be changed with prior notice.</li>
           </ul>
         </section>
 
         <section>
-          <h2>7. Limitazione di Responsabilità</h2>
+          <h2>7. Limitation of Liability</h2>
           <p>
-            La piattaforma non è responsabile per danni diretti, indiretti,
-            incidentali o consequenziali derivanti dall’uso del servizio.
-            Il servizio è fornito "così com’è" senza garanzie esplicite o implicite.
+            The platform is not liable for direct, indirect,
+            incidental, or consequential damages arising from the use of the service.
+            The service is provided "as is" without express or implied warranties.
           </p>
         </section>
 
         <section>
-          <h2>8. Sospensione o Chiusura Account</h2>
+          <h2>8. Account Suspension or Termination</h2>
           <p>
-            Ci riserviamo il diritto di sospendere o terminare l’account
-            in caso di violazione dei presenti termini o utilizzo improprio del servizio.
+            We reserve the right to suspend or terminate the account
+            in case of violation of these terms or improper use of the service.
           </p>
         </section>
 
         <section>
-          <h2>9. Modifiche ai Termini</h2>
+          <h2>9. Changes to Terms</h2>
           <p>
-            I presenti Termini possono essere aggiornati periodicamente.
-            L’uso continuato della piattaforma implica l’accettazione delle modifiche.
+            These Terms may be updated periodically.
+            Continued use of the platform implies acceptance of the changes.
           </p>
         </section>
 
         <section>
-          <h2>10. Legge Applicabile</h2>
+          <h2>10. Applicable Law</h2>
           <p>
-            I presenti Termini sono regolati dalla legge applicabile nel paese
-            in cui opera la società proprietaria del servizio.
+            These Terms are governed by the applicable law in the country
+            where the company owning the service operates.
           </p>
         </section>
 
         <div class="back">
-          <button (click)="goHome()">← Torna alla Home</button>
+          <button (click)="goHome()">← Back to Home</button>
         </div>
 
       </div>
@@ -184,7 +184,7 @@ import { Router } from '@angular/router';
   `]
 })
 export class TermsComponent {
-  today = new Date().toLocaleDateString();
+  today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   constructor(private router: Router) {}
 

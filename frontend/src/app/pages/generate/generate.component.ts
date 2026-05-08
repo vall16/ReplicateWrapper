@@ -124,7 +124,7 @@ import { environment } from '../../../environments/environments';
             </div>
 
             
-            <small *ngIf="loadingModels" style="color: #9ca3af;">Caricamento modelli...</small>
+            <small *ngIf="loadingModels" style="color: #9ca3af;">Loading models...</small>
           </div>
         </div>
 
@@ -873,7 +873,7 @@ export class GenerateComponent {
         // }
       },
       (error: any) => {
-        console.error('Errore nel caricamento dei modelli', error);
+        console.error('Error loading model list', error);
         this.loadingModels = false;
         // Fallback ai modelli di default
         this.availableModels = [
@@ -986,13 +986,13 @@ onBlurPrompt() {
           this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
           this.currentTokens = this.tokensRemaining;
         } else {
-          this.error = "Errore sconosciuto dal server.";
+          this.error = "Unknown error from server.";
         }
       },
       (err: any) => {
-        console.error('Errore generazione immagine', err);
+        console.error('Image generation error', err);
         this.loading = false;
-        this.error = err.error?.error || "Errore di rete o server non raggiungibile.";
+        this.error = err.error?.error || "Network error or server unreachable.";
       }
     );
   }

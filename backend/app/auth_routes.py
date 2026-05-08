@@ -20,10 +20,10 @@ import secrets
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
-# REGISTRAZIONE
+# REGISTRATION
 @router.post("/register", response_model=StatusResponse)
 def register(user_data: UserRegister, db: Session = Depends(get_db)):
-    """Registra un nuovo utente"""
+    """Register a new user"""
     try:
         user = UserService.create_user(
             db, 
@@ -32,7 +32,7 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
             password=user_data.password
         )
         return {
-            "message": "✅ Utente registrato con successo!",
+            "message": "✅ User registered successfully!",
             "status": "success",
             "data": {"user_id": user.id, "email": user.email}
         }
@@ -42,10 +42,10 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
 # LOGIN
 @router.post("/login", response_model=TokenResponse)
 def login(credentials: UserLogin, db: Session = Depends(get_db)):
-    """Autentica un utente e restituisce un token"""
+    """Authenticate a user and return a token"""
     user = UserService.authenticate_user(db, credentials.email, credentials.password)
     if not user:
-        raise HTTPException(status_code=401, detail="Email o password non validi")
+        raise HTTPException(status_code=401, detail="Invalid email or password")
     
     access_token = UserService.create_auth_token(user)
     return {
@@ -54,45 +54,45 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
         "user": UserResponse.model_validate(user)
     }
 
-# PROFILO UTENTE
+# USER PROFILE
 @router.get("/profile", response_model=UserResponse)
 def get_profile(user = Depends(get_current_user)):
-    """Restituisce il profilo dell'utente corrente"""
+    """Returns the current user's profile"""
     return UserResponse.model_validate(user)
 
-# SALDO TOKEN
+# TOKEN BALANCE
 @router.get("/balance")
 def get_balance(user = Depends(get_current_user)):
-    """Restituisce il saldo token dell'utente"""
+    """Returns the user's token balance"""
     return {
         "tokens": user.tokens,
         "user_id": user.id,
         "username": user.username,
-        "message": f"🪙 Hai {user.tokens} token disponibili"
+        "message": f"🪙 You have {user.tokens} tokens available"
     }
 
-# STORICO TRANSAZIONI
+# TRANSACTION HISTORY
 @router.get("/transactions", response_model=List[TokenTransaction])
 def get_transactions(
     limit: int = 50,
     user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Restituisce lo storico delle transazioni"""
+    """Returns the user's transaction history"""
     return UserService.get_transactions(db, user.id, limit)
 
 
 @router.post("/google-login", response_model=TokenResponse)
 def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
-    """Login tramite Google OAuth (Gmail).
+    """Login via Google OAuth (Gmail).
 
-    Il frontend deve passare un ID token ottenuto da Google Identity Services.
+    The frontend must pass an ID token obtained from Google Identity Services.
     """
     client_id = os.getenv("GOOGLE_CLIENT_ID")
     if not client_id:
         raise HTTPException(
             status_code=500,
-            detail="Google OAuth non configurato (manca GOOGLE_CLIENT_ID)",
+            detail="Google OAuth not configured (missing GOOGLE_CLIENT_ID)",
         )
 
     try:
@@ -104,7 +104,7 @@ def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token Google non valido",
+            detail="Invalid Google token",
         )
 
     email = idinfo.get("email")
@@ -113,7 +113,7 @@ def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
     if not email:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Il token Google non contiene una email valida",
+            detail="The Google token does not contain a valid email",
         )
 
     user = UserService.get_user_by_email(db, email)

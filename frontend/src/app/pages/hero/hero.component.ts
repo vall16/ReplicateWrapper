@@ -25,11 +25,11 @@ import { RouterModule } from '@angular/router';
             <li><a href="#contact">Contact</a></li>
           </ul>
           <!-- <div class="nav-buttons">
-            <button class="btn btn-login" (click)="navigateTo('login')">Accedi
+            <button class="btn btn-login" (click)="navigateTo('login')">Sign In
 
 
             </button>
-            <button class="btn btn-signup" (click)="navigateTo('register')">Registrati</button>
+            <button class="btn btn-signup" (click)="navigateTo('register')">Sign Up</button>
           </div> -->
         </div>
       </nav>
@@ -367,20 +367,20 @@ import { RouterModule } from '@angular/router';
     <h2>Privacy Policy</h2>
     <p>
       Your privacy is important to us. We collect only the necessary data
-      per fornire il servizio e migliorare l’esperienza utente.
+      to provide the service and improve the user experience.
     </p>
 
-    <h3>Dati Raccolti</h3>
+    <h3>Data Collected</h3>
     <ul>
-      <li>Email e informazioni di registrazione</li>
-      <li>Dati di utilizzo API e consumo token</li>
-      <li>Log tecnici per sicurezza e debugging</li>
+      <li>Email and registration information</li>
+      <li>API usage data and token consumption</li>
+      <li>Technical logs for security and debugging</li>
     </ul>
 
-    <h3>Utilizzo dei Dati</h3>
+    <h3>Data Usage</h3>
     <p>
-      I dati vengono utilizzati esclusivamente per fornire il servizio,
-      prevenire abusi e migliorare la piattaforma.
+      Data is used exclusively to provide the service,
+      prevent abuse, and improve the platform.
     </p>
   </div>
 </section>
@@ -390,14 +390,31 @@ import { RouterModule } from '@angular/router';
   <div class="legal-container">
     <h2>Terms of Service</h2>
     <p>
-      Utilizzando Repli accetti i seguenti termini.
+      By using Repli you agree to the following terms.
     </p>
 
     <ul>
-      <li>L'utente è responsabile dell’uso dei modelli AI.</li>
-      <li>I token acquistati non sono rimborsabili.</li>
+      <li>The user is responsible for the use of AI models.</li>
+      <li>Purchased tokens are non-refundable.</li>
       <li>It is forbidden to use the service for illegal activities.</li>
-      <li>Ci riserviamo il diritto di sospendere account in caso di abuso.</li>
+      <li>We reserve the right to suspend accounts in case of abuse.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section class="legal-section" id="terms">
+  <div class="legal-container">
+    <h2>Terms of Service</h2>
+    <p>
+      By using Repli you agree to the following terms.
+    </p>
+
+    <ul>
+      <li>The user is responsible for the use of AI models.</li>
+      <li>Purchased tokens are non-refundable.</li>
+      <li>It is forbidden to use the service for illegal activities.</li>
+      <li>We reserve the right to suspend accounts in case of abuse.</li>
     </ul>
   </div>
 </section>

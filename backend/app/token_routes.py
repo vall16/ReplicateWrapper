@@ -17,22 +17,22 @@ def purchase_tokens(
     user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Acquisto token diretto — DISABILITATO per sicurezza.
+    """Direct token purchase — DISABLED for security.
 
-    L'unico modo valido per acquistare token è il flusso Stripe Checkout:
-    1. POST /api/create-checkout-session  → ottieni URL di pagamento
-    2. Redirect utente a Stripe
-    3. GET /api/tokens/checkout/confirm?session_id=... → accredita token
+    The only valid way to purchase tokens is the Stripe Checkout flow:
+    1. POST /api/create-checkout-session  → get payment URL
+    2. Redirect user to Stripe
+    3. GET /api/tokens/checkout/confirm?session_id=... → credit tokens
     """
     raise HTTPException(
         status_code=403,
-        detail="L'acquisto diretto non è consentito. Usa Stripe Checkout: POST /api/create-checkout-session"
+        detail="Direct purchase is not allowed. Use Stripe Checkout: POST /api/create-checkout-session"
     )
 
-# PACCHETTI TOKENPRECONFIGURATI
+# PRE-CONFIGURED TOKEN PACKAGES
 @router.get("/packages")
 def get_packages():
-    """Restituisce i pacchetti token disponibili"""
+    """Returns the available token packages"""
     packages = [
         {
             "id": 1,
@@ -70,12 +70,12 @@ def get_packages():
         "message": "💰 Select the package that suits you best"
     }
 
-# VERIFICA SALDO PRIMA DI FAR USARE L'API
+# CHECK BALANCE BEFORE USING THE API
 @router.get("/check")
 def check_tokens(user = Depends(get_current_user)):
-    """Verifica se l'utente ha token sufficienti"""
+    """Checks if the user has sufficient tokens"""
     has_tokens = user.tokens > 0
-    status = "✅ Puoi usare l'API" if has_tokens else "🚫 Token insufficienti"
+    status = "✅ You can use the API" if has_tokens else "🚫 Insufficient tokens"
     
     return {
         "user_id": user.id,
@@ -84,33 +84,33 @@ def check_tokens(user = Depends(get_current_user)):
         "status": status
     }
 
-# conferma checkout Stripe: recupera sessione e accredita i token all'utente
+# confirm Stripe checkout: retrieve session and credit tokens to user
 @router.get("/checkout/confirm")
 def confirm_checkout(
     session_id: str,
     user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Controlla lo stato della sessione Stripe e se pagata accredita i token"""
+    """Checks the Stripe session status and credits tokens if paid"""
     try:
         session = stripe.checkout.Session.retrieve(session_id)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Impossibile recuperare la sessione: {e}")
+        raise HTTPException(status_code=400, detail=f"Unable to retrieve session: {e}")
 
     if session.payment_status != 'paid':
-        raise HTTPException(status_code=400, detail="Pagamento non completato")
+        raise HTTPException(status_code=400, detail="Payment not completed")
 
-    # Verifica che la sessione appartenga all'utente corrente
+    # Check that the session belongs to the current user
     session_user_email = session.metadata.get('user_email')
     if session_user_email and session_user_email != user.email:
-        raise HTTPException(status_code=403, detail="Questa sessione non appartiene all'utente corrente")
+        raise HTTPException(status_code=403, detail="This session does not belong to the current user")
 
-    # estrai i token dalla metadata (aggiunti in create_checkout_session)
+    # extract tokens from metadata (added in create_checkout_session)
     tokens = int(session.metadata.get('tokens', 0))
     if tokens <= 0:
-        raise HTTPException(status_code=400, detail="Informazioni pacchetto mancanti")
+        raise HTTPException(status_code=400, detail="Missing package information")
 
-    # aggiorna l'utente
+    # update the user
     user = UserService.purchase_tokens(db, user.id, tokens)
 
     return {

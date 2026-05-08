@@ -539,12 +539,12 @@ export class RegisterComponent {
   register() {
     // Validazione
     if (this.password !== this.confirmPassword) {
-      this.error = 'Le password non coincidono';
+        this.error = 'Passwords do not match';
       return;
     }
 
     if (this.password.length < 8) {
-      this.error = 'La password deve avere almeno 8 caratteri';
+        this.error = 'Password must be at least 8 characters';
       return;
     }
 
@@ -555,14 +555,14 @@ export class RegisterComponent {
     this.authService.register(this.email, this.username, this.password).subscribe(
       (response) => {
         this.isLoading = false;
-        this.success = '✅ Registrazione avvenuta con successo! Accedi ora.';
+        this.success = '✅ Registration successful! Login now.';
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
       },
       (error) => {
         this.isLoading = false;
-        this.error = error.error?.detail || 'Errore durante la registrazione';
+        this.error = error.error?.detail || 'Registration error';
       }
     );
   }

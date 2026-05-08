@@ -46,10 +46,10 @@ import { Router } from '@angular/router';
         <section>
           <h2>4. Content Sent to AI Models</h2>
           <p>
-            Le richieste inviate ai modelli AI vengono elaborate tramite
-            provider terzi. Non garantiamo la conservazione permanente
-            dei contenuti inviati. I dati possono essere temporaneamente
-            registrati per finalità di sicurezza, debugging o audit.
+            Requests sent to AI models are processed through
+            third-party providers. We do not guarantee permanent storage
+            of the sent content. Data may be temporarily
+            recorded for security, debugging, or audit purposes.
           </p>
         </section>
 
@@ -197,7 +197,7 @@ import { Router } from '@angular/router';
   `]
 })
 export class PrivacyComponent {
-  today = new Date().toLocaleDateString();
+  today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   constructor(private router: Router) {}
 

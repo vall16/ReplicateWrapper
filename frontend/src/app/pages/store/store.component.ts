@@ -1019,7 +1019,7 @@ export class StoreComponent implements OnInit {
         // chiedi al backend di confermare e accreditare i token
         this.authService.confirmCheckout(sessionId).subscribe(
           (res: any) => {
-            this.success = `✅ Pagamento confermato, ${res.tokens_added} token accreditati!`;
+            this.success = `✅ Payment confirmed, ${res.tokens_added} tokens credited!`;
             // aggiorna il saldo utente nel localStorage (chiama getBalance per aggiornare)
             this.authService.getBalance().subscribe(balance => {
               const user = this.authService.getCurrentUser();
@@ -1034,11 +1034,11 @@ export class StoreComponent implements OnInit {
           },
           (err) => {
             console.error('Errore conferma checkout', err);
-            this.error = 'Impossibile confermare il pagamento';
+            this.error = 'Unable to confirm payment';
           }
         );
       } else if (params['payment'] === 'cancel') {
-        this.error = 'Pagamento annullato';
+        this.error = 'Payment cancelled';
       }
     });
 
@@ -1053,7 +1053,7 @@ export class StoreComponent implements OnInit {
       },
       (err) => {
         console.error(err);
-        this.error = 'Errore nel caricamento dei pacchetti';
+        this.error = 'Error loading packages';
       }
     );
   }
@@ -1072,13 +1072,13 @@ export class StoreComponent implements OnInit {
           // redirect alla pagina ufficiale di Stripe
           window.location.href = res.url;
         } else {
-          this.error = 'Impossibile iniziare il pagamento';
+          this.error = 'Unable to start payment';
           this.isPurchasing = false;
         }
       },
       (err) => {
         console.error(err);
-        this.error = err.error?.error || 'Errore durante l\'inizializzazione del checkout';
+        this.error = err.error?.error || 'Error initializing checkout';
         this.isPurchasing = false;
       }
     );

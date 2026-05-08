@@ -74,7 +74,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(token_router)
 
-# mapping stili (fondamentale per vendere)
+# style mapping
 STYLE_MAP = {
     "moderno": "modern italian apartment, minimal design, bright light",
     "lusso": "luxury italian apartment, marble, elegant, high-end furniture",
@@ -89,11 +89,11 @@ class ImageRequest(BaseModel):
 
 
 def _error_status(error_msg: str) -> int:
-    if error_msg.startswith("❌ Token insufficienti"):
+    if error_msg.startswith("❌ Insufficient tokens"):
         return 402
-    if error_msg.startswith("Utente non trovato"):
+    if error_msg.startswith("User not found"):
         return 404
-    if error_msg.startswith("Modello video non supportato") or error_msg.startswith("Durata non supportata"):
+    if error_msg.startswith("Video model not supported") or error_msg.startswith("Duration not supported"):
         return 400
     return 500
 
@@ -171,13 +171,13 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
 
     except Exception as e:
         error_msg = str(e)
-        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
             try:
                 from app.services import UserService
                 UserService.refund_tokens(db, user.id, token_cost)
-                error_msg = f"{error_msg} — Token rimborsati"
+                error_msg = f"{error_msg} — Tokens refunded"
             except Exception as refund_err:
-                print(f"[REFUND FALLITO] {refund_err}")
+                print(f"[REFUND FAILED] {refund_err}")
 
         return JSONResponse(
             status_code=_error_status(error_msg),
@@ -187,7 +187,7 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
 
 replicate_token = os.getenv("REPLICATE_API_TOKEN")
 if not replicate_token:
-    raise Exception("REPLICATE_API_TOKEN non trovato nel .env!")
+    raise Exception("REPLICATE_API_TOKEN not found in .env!")
 
 # ✅ Crea un'istanza della classe
 replicate_wrapper = ReplicateWrapper(api_token=replicate_token)
@@ -269,7 +269,7 @@ async def download_and_save_image(image_url: str) -> str:
         filename = f"{unique_id}.png"
         filepath = IMAGES_DIR / filename
 
-        # Scarica l'immagine
+        # Download the image
         async with httpx.AsyncClient(follow_redirects=True) as client:
             response = await client.get(image_url, timeout=30.0)
             response.raise_for_status()
@@ -280,14 +280,14 @@ async def download_and_save_image(image_url: str) -> str:
 
         return f"/images/{filename}"
     except Exception as e:
-        print(f"Errore nel download dell'immagine: {e}")
-        raise Exception(f"Errore nel salvataggio dell'immagine: {str(e)}")
+        print(f"Error downloading image: {e}")
+        raise Exception(f"Error saving image: {str(e)}")
 async def download_and_save_video(video_url: str) -> str:
     """
-    Scarica un video da un URL e lo salva su disco.
+    Downloads a video from a URL and saves it to disk.
 
     Returns:
-        Percorso relativo: /videos/abc123.mp4
+        Relative path: /videos/abc123.mp4
     """
     try:
         # Genera un nome univoco
@@ -295,19 +295,19 @@ async def download_and_save_video(video_url: str) -> str:
         filename = f"{unique_id}.mp4"
         filepath = VIDEOS_DIR / filename
 
-        # Scarica il video (timeout più lungo perché è un file pesante)
+        # Download the video (longer timeout because it's a heavy file)
         async with httpx.AsyncClient(follow_redirects=True) as client:
             response = await client.get(video_url, timeout=120.0)
             response.raise_for_status()
 
-        # Salva su disco
+        # Save to disk
         with open(filepath, "wb") as f:
             f.write(response.content)
 
         return f"/videos/{filename}"
     except Exception as e:
-        print(f"Errore nel download del video: {e}")
-        raise Exception(f"Errore nel salvataggio del video: {str(e)}")
+        print(f"Error downloading video: {e}")
+        raise Exception(f"Error saving video: {str(e)}")
 # GENERAZIONE DELL’IMMAGINE
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
@@ -343,7 +343,7 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
             token_cost=token_cost  # Passa il costo token
         )
 
-        # 🔥 DEBUG (tienilo finché non funziona)
+        # 🔥 DEBUG (keep until it works)
         print("OUTPUT RAW:", output)
 
         # Estrazione URL dall’output (potrebbe essere stringa o lista)
@@ -382,14 +382,14 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
 
     except Exception as e:
         error_msg = str(e)
-        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
             try:
                 from app.services import UserService
                 UserService.refund_tokens(db, user.id, token_cost)
-                print(f"[REFUND] {token_cost} token rimborsati all'utente {user.id}")
-                error_msg = f"{error_msg} — Token rimborsati"
+                print(f"[REFUND] {token_cost} tokens refunded to user {user.id}")
+                error_msg = f"{error_msg} — Tokens refunded"
             except Exception as refund_err:
-                print(f"[REFUND FALLITO] {refund_err}")
+                print(f"[REFUND FAILED] {refund_err}")
 
         return JSONResponse(
             status_code=_error_status(error_msg),
@@ -430,7 +430,7 @@ FAKE_IMAGES = [
 #             model=req.model,
 #             style=req.style,
 #             image_url=local_image_url,
-#             tokens_used=0  # 0 perché non ha consumato token reali
+#             tokens_used=0  # 0 because no real tokens were consumed
 #         )
 #         db.add(generated_image)
 #         db.commit()
@@ -450,11 +450,10 @@ FAKE_IMAGES = [
 
 # Helper per mappare resolution a aspect_ratio per video
 def map_resolution_to_aspect_ratio(resolution: str) -> str:
-    """
-    Mappa la risoluzione (480p, 720p) a aspect_ratio per Replicate.
+    """Maps resolution to aspect ratio for Replicate.
     
     Returns:
-        Aspect ratio string (es. "16:9", "9:16")
+        Aspect ratio string (e.g. "16:9", "9:16")
     """
     resolution_map = {
         "480p": "16:9",   # Paesaggio standard
@@ -512,7 +511,7 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
             # "fps": 24,  # Frame per secondo
         }
         
-        # Se il modello è Kling, aggiungi parametri specifici
+        # If the model is Kling, add specific parameters
         if req.model == "kling-video":
             video_input_params["cfg_scale"] = 7.5  # Guidance scale
         
@@ -563,16 +562,16 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
     
     except Exception as e:
         error_msg = str(e)
-        print(f"Errore generazione video: {error_msg}")
+        print(f"Error generating video: {error_msg}")
 
-        if not error_msg.startswith("❌ Token insufficienti") and not error_msg.startswith("Utente non trovato"):
+        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
             try:
                 from app.services import UserService
                 UserService.refund_tokens(db, user.id, token_cost)
-                print(f"[REFUND] {token_cost} token rimborsati all'utente {user.id}")
-                error_msg = f"{error_msg} — Token rimborsati"
+                print(f"[REFUND] {token_cost} tokens refunded to user {user.id}")
+                error_msg = f"{error_msg} — Tokens refunded"
             except Exception as refund_err:
-                print(f"[REFUND FALLITO] {refund_err}")
+                print(f"[REFUND FAILED] {refund_err}")
 
         return JSONResponse(
             status_code=_error_status(error_msg),
@@ -598,13 +597,13 @@ async def health_check():
 
 @app.get("/api/models")
 async def get_available_models():
-    """Ritorna la lista di modelli disponibili"""
+    """Returns the list of available models"""
     return {
         "models": [
-            {"id": "flux-pro", "name": "FLUX.1 Pro", "description": "Modello ad alta qualità"},
-            {"id": "flux-dev", "name": "FLUX.1 Dev", "description": "Modello veloce e versatile"},
-            {"id": "sdxl", "name": "SDXL", "description": "Modello stabile e affidabile"},
-            {"id": "flux-schnell", "name": "FLUX Schnell", "description": "Generazione ultrarapida"}
+            {"id": "flux-pro", "name": "FLUX.1 Pro", "description": "High quality model"},
+            {"id": "flux-dev", "name": "FLUX.1 Dev", "description": "Fast and versatile model"},
+            {"id": "sdxl", "name": "SDXL", "description": "Stable and reliable model"},
+            {"id": "flux-schnell", "name": "FLUX Schnell", "description": "Ultra-fast generation"}
         ]
     }
 
@@ -764,7 +763,7 @@ def get_publishable_key():
     # Leggi la chiave dal .env
     stripe_key = os.getenv("STRIPE_PUBLISHABLE_KEY", "")
     if not stripe_key:
-        return {"detail": "Chiave non configurata"}
+        return {"detail": "Key not configured"}
     return {"key": stripe_key}
 
 @app.post("/api/create-payment-intent")

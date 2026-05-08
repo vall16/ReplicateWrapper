@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db, User
 import os
 
-# Configurazione: la secret_ey serve per firmare i token, mette un alfanumerico alla fine
+# Configuration: the secret key is used to sign tokens
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -16,15 +16,15 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verifica la password"""
+    """Verify password"""
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
-    """Hash della password"""
+    """Hash the password"""
     return pwd_context.hash(password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
-    """Crea un JWT token"""
+    """Create a JWT token"""
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -35,7 +35,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 def decode_token(token: str) -> dict:
-    """Decodifica e verifica il JWT token"""
+    """Decode and verify the JWT token"""
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
@@ -45,11 +45,11 @@ def decode_token(token: str) -> dict:
     except JWTError:
         return None
 
-# Prezzi token (0.01€ per token)
+# Token price (0.01€ per token)
 TOKEN_PRICE_MULTIPLIER = 0.01  # €0.01 per token
 
 def calculate_token_price(amount: float) -> float:
-    """Calcola il prezzo dei token"""
+    """Calculate token price"""
     return amount * TOKEN_PRICE_MULTIPLIER
 
 security = HTTPBearer()
@@ -63,21 +63,21 @@ def get_current_user(
     if not payload:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token non valido"
+            detail="Invalid token"
         )
 
     email = payload.get("email")
     if not email:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token non valido"
+            detail="Invalid token"
         )
 
     user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Utente non trovato"
+            detail="User not found"
         )
 
     return user

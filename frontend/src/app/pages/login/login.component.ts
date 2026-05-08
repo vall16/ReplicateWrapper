@@ -46,7 +46,7 @@ import { environment } from '../../../environments/environments';
                 type="email"
                 [(ngModel)]="email"
                 name="email"
-                placeholder="tuo@email.com"
+                placeholder="your@email.com"
                 required
               />
             </div>
@@ -473,7 +473,7 @@ export class LoginComponent {
       },
       (error) => {
         this.isLoading = false;
-        this.error = error.error?.detail || 'Errore durante il login';
+        this.error = error.error?.detail || 'Login error';
       }
     );
   }
@@ -482,7 +482,7 @@ export class LoginComponent {
     const google = (window as any).google;
 
     if (!google || !google.accounts || !google.accounts.id) {
-      this.error = 'Google Sign-In non è configurato correttamente.';
+      this.error = 'Google Sign-In is not configured correctly.';
       return;
     }
 
@@ -503,7 +503,7 @@ export class LoginComponent {
             },
             (error: any) => {
               this.isLoading = false;
-              this.error = error.error?.detail || 'Errore durante il login con Google.';
+              this.error = error.error?.detail || 'Error during Google login.';
             }
           );
         }
