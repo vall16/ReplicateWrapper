@@ -992,7 +992,7 @@ onBlurPrompt() {
       (err: any) => {
         console.error('Errore generazione immagine', err);
         this.loading = false;
-        this.error = "Errore di rete o server non raggiungibile.";
+        this.error = err.error?.error || "Errore di rete o server non raggiungibile.";
       }
     );
   }

@@ -88,6 +88,16 @@ class ImageRequest(BaseModel):
     ratio: str = "16:9"
 
 
+def _error_status(error_msg: str) -> int:
+    if error_msg.startswith("❌ Token insufficienti"):
+        return 402
+    if error_msg.startswith("Utente non trovato"):
+        return 404
+    if error_msg.startswith("Modello video non supportato") or error_msg.startswith("Durata non supportata"):
+        return 400
+    return 500
+
+
 def build_prompt(description: str, style: str, ratio: str = "16:9"):
     base_style = STYLE_MAP.get(style, STYLE_MAP["moderno"])
     ratio_description = {
@@ -170,9 +180,10 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
                 print(f"[REFUND FALLITO] {refund_err}")
 
         return JSONResponse(
-            status_code=200,
+            status_code=_error_status(error_msg),
             content={"error": error_msg}
         )
+
 
 replicate_token = os.getenv("REPLICATE_API_TOKEN")
 if not replicate_token:
@@ -381,9 +392,10 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
                 print(f"[REFUND FALLITO] {refund_err}")
 
         return JSONResponse(
-            status_code=200,
+            status_code=_error_status(error_msg),
             content={"error": error_msg}
         )
+
 
 
 import random
@@ -472,7 +484,7 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
     # Valida che il modello sia supportato
     if req.model not in VIDEO_MODEL_MAP:
         return JSONResponse(
-            status_code=200,
+            status_code=400,
             content={"error": f"Modello video non supportato: {req.model}. Disponibili: {list(VIDEO_MODEL_MAP.keys())}"}
         )
     
@@ -480,7 +492,7 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
     allowed_durations = [5, 10, 30, 60]
     if req.duration not in allowed_durations:
         return JSONResponse(
-            status_code=200,
+            status_code=400,
             content={"error": f"Durata non supportata: {req.duration}. Disponibili: {allowed_durations}"}
         )
     
@@ -563,7 +575,7 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
                 print(f"[REFUND FALLITO] {refund_err}")
 
         return JSONResponse(
-            status_code=200,
+            status_code=_error_status(error_msg),
             content={"error": error_msg}
         )
 
