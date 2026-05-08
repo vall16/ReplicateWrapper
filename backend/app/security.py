@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db, User
 import os
 
-# Configurazione
+# Configurazione: la secret_ey serve per firmare i token, mette un alfanumerico alla fine
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
