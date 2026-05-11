@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, DateTime, Boolean
+from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, DateTime, Boolean, CheckConstraint
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy.orm import Session
 
@@ -46,8 +46,11 @@ class User(Base):
     email = Column(String(255), unique=True, index=True)
     username = Column(String(255), unique=True, index=True)
     hashed_password = Column(String(255))
-    tokens = Column(Integer, default=0)  # Saldo token
+    tokens = Column(Integer, default=0, nullable=False)  # Saldo token
     is_active = Column(Boolean, default=True)
+    __table_args__ = (
+        CheckConstraint('tokens >= 0', name='ck_tokens_non_negative'),
+    )
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relazioni

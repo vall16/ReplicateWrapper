@@ -43,31 +43,32 @@ class ReplicateWrapper:
         Returns:
             Model output
         """
-        # Use custom token cost or default
         cost = token_cost if token_cost is not None else self.TOKEN_COST_PER_CALL
-        
-        # Check tokens if user_id is provided
+
         if user_id and db:
             from app.services import UserService
             user = UserService.get_user(db, user_id)
             if not user:
                 raise Exception("User not found")
-            if user.tokens < cost:
-                raise Exception(f"❌ Insufficient tokens! You have {user.tokens} tokens, need {cost}")
-        
+
         try:
+            if user_id and db:
+                from app.services import UserService
+                UserService.consume_tokens(db, user_id, cost)
+
             output = replicate.run(
                 model_version,
                 input=input_params
             )
-            
-            # Consume tokens if the operation succeeded
-            if user_id and db:
-                from app.services import UserService
-                UserService.consume_tokens(db, user_id, cost)
-            
+
             return output
         except Exception as e:
+            if user_id and db:
+                from app.services import UserService
+                try:
+                    UserService.refund_tokens(db, user_id, cost)
+                except Exception as refund_err:
+                    print(f"[REFUND FAILED] {refund_err}")
             raise Exception(f"Error executing model: {str(e)}")
 
     def list_models(self) -> list:

@@ -171,13 +171,6 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
 
     except Exception as e:
         error_msg = str(e)
-        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
-            try:
-                from app.services import UserService
-                UserService.refund_tokens(db, user.id, token_cost)
-                error_msg = f"{error_msg} — Tokens refunded"
-            except Exception as refund_err:
-                print(f"[REFUND FAILED] {refund_err}")
 
         return JSONResponse(
             status_code=_error_status(error_msg),
@@ -319,7 +312,7 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
     model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
     # Ottieni il costo token per questo modello
-    token_cost = IMAGE_MODEL_COSTS.get(req.model, 1)
+    token_cost = IMAGE_MODEL_COSTS.get(req.model, 3)
 
     # valida ratio input
     allowed_ratios = ["1:1", "16:9", "3:2", "2:3", "3:4", "4:3", "21:9"]
@@ -382,14 +375,6 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
 
     except Exception as e:
         error_msg = str(e)
-        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
-            try:
-                from app.services import UserService
-                UserService.refund_tokens(db, user.id, token_cost)
-                print(f"[REFUND] {token_cost} tokens refunded to user {user.id}")
-                error_msg = f"{error_msg} — Tokens refunded"
-            except Exception as refund_err:
-                print(f"[REFUND FAILED] {refund_err}")
 
         return JSONResponse(
             status_code=_error_status(error_msg),
@@ -564,19 +549,11 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         error_msg = str(e)
         print(f"Error generating video: {error_msg}")
 
-        if not error_msg.startswith("❌ Insufficient tokens") and not error_msg.startswith("User not found"):
-            try:
-                from app.services import UserService
-                UserService.refund_tokens(db, user.id, token_cost)
-                print(f"[REFUND] {token_cost} tokens refunded to user {user.id}")
-                error_msg = f"{error_msg} — Tokens refunded"
-            except Exception as refund_err:
-                print(f"[REFUND FAILED] {refund_err}")
-
         return JSONResponse(
             status_code=_error_status(error_msg),
             content={"error": error_msg}
         )
+
 
 @app.get("/")
 async def root():
@@ -821,4 +798,49 @@ async def create_checkout_session(request: Request, user=Depends(get_current_use
         return {"id": session.id, "url": session.url}
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=400)
+
+
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+@app.post("/api/webhook/stripe")
+async def stripe_webhook(request: Request, db=Depends(get_db)):
+    if not STRIPE_WEBHOOK_SECRET:
+        print("[WEBHOOK] STRIPE_WEBHOOK_SECRET not configured")
+        return JSONResponse({"error": "Webhook not configured"}, status_code=500)
+
+    payload = await request.body()
+    sig_header = request.headers.get("stripe-signature")
+
+    if not sig_header:
+        return JSONResponse({"error": "Missing stripe-signature header"}, status_code=400)
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError:
+        return JSONResponse({"error": "Invalid payload"}, status_code=400)
+    except stripe.error.SignatureVerificationError:
+        return JSONResponse({"error": "Invalid signature"}, status_code=400)
+
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        user_email = session.get("metadata", {}).get("user_email")
+        tokens = int(session.get("metadata", {}).get("tokens", 0))
+
+        if not user_email or tokens <= 0:
+            print(f"[WEBHOOK] Missing metadata: email={user_email}, tokens={tokens}")
+            return JSONResponse({"status": "ignored"}, status_code=200)
+
+        from app.services import UserService
+
+        user = UserService.get_user_by_email(db, user_email)
+        if not user:
+            print(f"[WEBHOOK] User not found: {user_email}")
+            return JSONResponse({"status": "ignored"}, status_code=200)
+
+        UserService.purchase_tokens(db, user.id, tokens)
+        print(f"[WEBHOOK] Credited {tokens} tokens to {user_email} (user {user.id})")
+
+    return JSONResponse({"status": "ok"}, status_code=200)
 

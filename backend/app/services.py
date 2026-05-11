@@ -80,10 +80,8 @@ class UserService:
         )
 
         if result.rowcount == 0:
-            db.rollback()
-            # Re-read the updated balance for the error message
             current_user = UserService.get_user(db, user_id)
-            raise Exception(f"Insufficient tokens. You have {current_user.tokens} tokens, need {amount}")
+            raise Exception(f"❌ Insufficient tokens! You have {current_user.tokens} tokens, need {amount}")
 
         # Record the transaction
         transaction = TokenTransaction(
