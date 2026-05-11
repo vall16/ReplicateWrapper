@@ -278,7 +278,7 @@ import { RouterModule } from '@angular/router';
       <!-- How It Works -->
       <section class="how-it-works" id="how-it-works">
         <div class="section-header">
-          <h2>From Zero to Hero in 3 Moves ⚡</h2>
+          <h2>From Zero to Hero in 3 Moves <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></h2>
           <p>Your AI journey starts here—no boring setup, just pure creativity</p>
         </div>
 
@@ -289,7 +289,7 @@ import { RouterModule } from '@angular/router';
             <div class="step-number">1</div>
             <h3>Create Your Account</h3>
             <p>Free signup in literally 2 minutes—just grab your email and you're in the game</p>
-            <span class="time-badge">⏱️ 2 min</span>
+            <span class="time-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align:middle;margin-right:2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 2 min</span>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-2">
@@ -298,7 +298,7 @@ import { RouterModule } from '@angular/router';
             <div class="step-number">2</div>
             <h3>Get Your Tokens</h3>
             <p>Pick a pack that fits your vibe, no strings attached. Pay once, create forever</p>
-            <span class="time-badge">💳 Instant</span>
+            <span class="time-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align:middle;margin-right:2px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Instant</span>
           </div>
           <div class="step-arrow">→</div>
           <div class="step step-3">
@@ -307,12 +307,12 @@ import { RouterModule } from '@angular/router';
             <div class="step-number">3</div>
             <h3>Level Up Your Game</h3>
             <p>Turn your wildest ideas into reality—images, videos, all that AI magic</p>
-            <span class="time-badge">🎬 Ready!</span>
+            <span class="time-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align:middle;margin-right:2px"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Ready!</span>
           </div>
         </div>
 
         <div class="steps-bonus">
-          <p class="bonus-text">💡 Pro Tip: Most creators earn back their investment in their first week</p>
+          <p class="bonus-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:middle;margin-right:4px"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg> Pro Tip: Most creators earn back their investment in their first week</p>
         </div>
       </section>
 
@@ -326,26 +326,26 @@ import { RouterModule } from '@angular/router';
         <div class="pricing-cards">
           <div class="pricing-card">
             <h3>Starter</h3>
-            <div class="price">100 ⚡ </div>
+            <div class="price">100 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
             <p class="price-sub">€1.00</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card featured">
             <div class="ribbon">Recommended</div>
             <h3>Growth</h3>
-            <div class="price">500 ⚡ </div>
+            <div class="price">500 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
             <p class="price-sub">€4.50 - Save 10%</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
             <h3>Pro</h3>
-            <div class="price">1000 ⚡ </div>
+            <div class="price">1000 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
             <p class="price-sub">€8.00 - Save 20%</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
             <h3>Enterprise</h3>
-            <div class="price">5000 ⚡ </div>
+            <div class="price">5000 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
             <p class="price-sub">€35.00 - Save 30%</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
@@ -428,10 +428,10 @@ import { RouterModule } from '@angular/router';
     </p>
 
     <ul>
-      <li>🔒 Encrypted HTTPS connections</li>
-      <li>🔐 Secure password hashing</li>
-      <li>🛡️ Continuous abuse monitoring</li>
-      <li>📊 Logging and audit trail</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:middle;margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Encrypted HTTPS connections</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:middle;margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secure password hashing</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:middle;margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Continuous abuse monitoring</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="vertical-align:middle;margin-right:6px"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Logging and audit trail</li>
     </ul>
   </div>
 </section>  -->
@@ -449,7 +449,7 @@ import { RouterModule } from '@angular/router';
       <div class="contact-wrapper">
         <div class="contact-header">
           <div class="contact-badge">
-            <span class="badge-icon">💬</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" class="badge-icon"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <span class="badge-text">Contact Us</span>
           </div>
           <h2 class="contact-title">
