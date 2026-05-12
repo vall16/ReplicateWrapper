@@ -273,6 +273,11 @@ import { RouterModule } from '@angular/router';
             </div>
           </div>
         </div>
+
+        <!-- Available Models Text for Mobile -->
+        <div class="models-list-mobile">
+          <p><strong>Available Models:</strong> Flux AI, Stable Diffusion XL, OpenAI GPT-image-1.5, Kling Video, Seedream, and Qwen.</p>
+        </div>
       </section>
 
       <!-- How It Works -->
@@ -1407,6 +1412,39 @@ import { RouterModule } from '@angular/router';
       .products-grid > .product-card:nth-child(8) {
         grid-column: auto;
         grid-row: auto;
+      }
+    }
+
+    /* Mobile Models List */
+    .models-list-mobile {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .products-grid {
+        display: none;
+      }
+
+      .models-list-mobile {
+        display: block;
+        padding: 1.5rem 1.25rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.08));
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 1rem;
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .models-list-mobile p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--color-text-primary);
+      }
+
+      .models-list-mobile strong {
+        color: var(--color-gradient-start);
+        font-weight: 600;
       }
     }
 
