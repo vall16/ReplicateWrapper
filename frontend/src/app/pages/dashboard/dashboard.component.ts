@@ -1017,6 +1017,7 @@ import { FormsModule } from '@angular/forms';
     @media (max-width: 768px) {
       .dashboard-shell {
         grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
       }
 
       .sidebar {
@@ -1024,11 +1025,136 @@ import { FormsModule } from '@angular/forms';
       }
 
       .dashboard-main {
-        padding: 1.25rem 1.1rem 1.5rem;
+        padding: 1rem 16px 1.5rem;
+        overflow-y: auto;
+        max-height: auto;
       }
 
       .topbar {
         flex-direction: column;
+        gap: 12px;
+      }
+
+      .hero-row,
+      .middle-row,
+      .bottom-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .glass-card {
+        padding: 16px;
+      }
+
+      .card-header {
+        gap: 12px;
+      }
+
+      .card-header h2 {
+        font-size: 1.05rem;
+      }
+
+      .balance-body {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .balance-stat {
+        padding: 12px;
+        gap: 6px;
+      }
+
+      .balance-stat-label {
+        font-size: 0.75rem;
+      }
+
+      .balance-stat-value {
+        font-size: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .stat-chip {
+        padding: 12px;
+        font-size: 0.75rem;
+      }
+
+      .packages-row {
+        flex-wrap: wrap;
+      }
+
+      .package-pill {
+        min-width: calc(50% - 8px);
+      }
+
+      .profile-body {
+        gap: 12px;
+      }
+
+      .profile-row {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-main {
+        padding: 12px;
+      }
+
+      .glass-card {
+        padding: 12px;
+      }
+
+      .card-header {
+        gap: 8px;
+      }
+
+      .card-header h2 {
+        font-size: 1rem;
+      }
+
+      .card-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .stat-chip {
+        padding: 10px;
+        font-size: 0.7rem;
+      }
+
+      .package-pill {
+        min-width: 100%;
+        padding: 12px;
+        font-size: 0.85rem;
+      }
+
+      .balance-stat-label {
+        font-size: 0.7rem;
+      }
+
+      .transactions-list {
+        gap: 8px;
+      }
+
+      .transaction-row {
+        gap: 8px;
+        padding: 8px;
+        font-size: 0.75rem;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.85rem;
       }
     }
   `]

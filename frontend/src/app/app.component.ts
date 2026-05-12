@@ -23,7 +23,7 @@ import { ThemeService } from './services/theme.service';
         </div>
 
         <div class="header-right">
-          <nav class="nav-links">
+          <nav class="nav-links hide-mobile">
             <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
   <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
 </svg>
@@ -53,7 +53,7 @@ import { ThemeService } from './services/theme.service';
             </svg>
           </button>
 
-          <div class="ai-switch">
+          <div class="ai-switch hide-mobile">
             <button [class.active]="activeCTA==='image'" (click)="setActiveCTA('image')" routerLink="/generate">
               ✨ Image
             </button>
@@ -62,12 +62,56 @@ import { ThemeService } from './services/theme.service';
             </button>
           </div>
 
-          <div class="auth-buttons">
+          <div class="auth-buttons hide-mobile">
             <button class="btn-login" routerLink="/login">Login</button>
             <button class="btn-register" routerLink="/register">Sign up</button>
           </div>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-menu-toggle show-mobile" (click)="toggleMobileMenu()" [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'">
+            <svg *ngIf="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg *ngIf="mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="menu-icon">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       </header>
+
+      <!-- Mobile Menu -->
+      <nav class="mobile-menu show-mobile" [class.active]="mobileMenuOpen">
+        <div class="mobile-menu-header">
+          <h2>Menu</h2>
+          <button (click)="closeMobileMenu()" class="close-btn" aria-label="Close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <ul class="mobile-menu-items">
+          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMobileMenu()">Home</a></li>
+          <li><a routerLink="/dashboard" routerLinkActive="active" (click)="closeMobileMenu()">Dashboard</a></li>
+          <li><a routerLink="/gallery" routerLinkActive="active" (click)="closeMobileMenu()">Gallery</a></li>
+          <li><a routerLink="/store" routerLinkActive="active" (click)="closeMobileMenu()">Store</a></li>
+          <li class="divider"></li>
+          <li>
+            <button class="mobile-ai-switch" [class.image-active]="activeCTA==='image'" (click)="setActiveCTA('image'); closeMobileMenu()" routerLink="/generate">
+              ✨ Image
+            </button>
+          </li>
+          <li>
+            <button class="mobile-ai-switch" [class.video-active]="activeCTA==='video'" (click)="setActiveCTA('video'); closeMobileMenu()" routerLink="/video-generate">
+              🎬 Video
+            </button>
+          </li>
+          <li class="divider"></li>
+          <li><button class="mobile-auth-btn" routerLink="/login" (click)="closeMobileMenu()">Login</button></li>
+          <li><button class="mobile-auth-btn primary" routerLink="/register" (click)="closeMobileMenu()">Sign up</button></li>
+        </ul>
+      </nav>
+      
+      <div class="mobile-menu-overlay show-mobile" [class.active]="mobileMenuOpen" (click)="closeMobileMenu()"></div>
 
       <main class="app-main">
         <section class="content-surface">
@@ -629,10 +673,216 @@ import { ThemeService } from './services/theme.service';
     .app-main { flex: 1; display: flex; align-items: stretch; justify-content: center; padding: 0; position: relative; }
     .content-surface { position: relative; z-index: 1; width: 100%; margin: 0; border-radius: 0; padding: 0; background: transparent; box-shadow: none; border: none; backdrop-filter: none; display: flex; flex-direction: column; animation: fadeIn 0.4s ease-out; }
 
+    /* Mobile Menu Styles */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      max-width: 280px;
+      height: 100vh;
+      background: var(--color-bg-primary);
+      border-right: 1px solid var(--color-border);
+      z-index: 999;
+      transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 60px;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+      box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--color-border);
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      max-width: 280px;
+      background: var(--color-bg-primary);
+      z-index: 1000;
+      transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mobile-menu.active ~ .mobile-menu-header,
+    .mobile-menu.active + .mobile-menu-header {
+      left: 0;
+    }
+
+    .mobile-menu-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--color-text-primary);
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-primary);
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background-color: var(--color-bg-tertiary);
+    }
+
+    .close-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .mobile-menu-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      padding-top: 8px;
+    }
+
+    .mobile-menu-items li {
+      padding: 0;
+    }
+
+    .mobile-menu-items a,
+    .mobile-menu-items .mobile-auth-btn {
+      display: block;
+      padding: 12px 20px;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border-radius: 6px;
+      margin: 0 8px;
+      text-align: left;
+    }
+
+    .mobile-menu-items a:hover,
+    .mobile-menu-items .mobile-auth-btn:hover {
+      color: var(--color-text-primary);
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+
+    .mobile-menu-items a.active {
+      color: var(--color-gradient-end);
+      background-color: rgba(99, 102, 241, 0.08);
+    }
+
+    .mobile-menu-items .divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 8px 12px;
+    }
+
+    .mobile-ai-switch {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 6px;
+      margin: 0 8px;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .mobile-ai-switch:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--color-text-primary);
+    }
+
+    .mobile-ai-switch.image-active,
+    .mobile-ai-switch.video-active {
+      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+      color: white;
+    }
+
+    .mobile-auth-btn {
+      border-radius: 6px;
+      margin: 4px 8px;
+    }
+
+    .mobile-auth-btn.primary {
+      background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+      color: white !important;
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 998;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Header adjustments for mobile */
+    @media (max-width: 768px) {
+      .app-header {
+        padding: 12px 16px;
+        gap: 12px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+
+      .logo-text {
+        display: none;
+      }
+
+      .logo {
+        gap: 0;
+      }
+
+      .header-right {
+        gap: 8px;
+      }
+
+      .theme-toggle {
+        width: 40px;
+        height: 40px;
+      }
+
+      .theme-icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
     @media (max-width: 900px) {
       .app-header { padding-inline: 1.25rem; gap: 1rem; }
       .header-right { gap: 0.75rem; }
-      .nav-links { display: none; }
       .primary-cta { padding-inline: 1.1rem; }
       .app-main { padding-inline: 0; }
       .content-surface { padding: 0; border-radius: 0; }
@@ -642,10 +892,19 @@ import { ThemeService } from './services/theme.service';
 export class AppComponent {
   title = 'repli-frontend';
   activeCTA: 'image' | 'video' | null = null;
+  mobileMenuOpen = false;
 
   constructor(public themeService: ThemeService) {}
 
   setActiveCTA(type: 'image' | 'video') {
     this.activeCTA = type;
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
   }
 }

@@ -842,6 +842,168 @@ import { StripeService } from '../../services/stripe.service';
       .hero-security {
         align-items: flex-start;
       }
+
+      .packages-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .faq-row {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .store-shell {
+        padding: 1rem 16px 1.75rem;
+      }
+
+      .store-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 1.25rem;
+      }
+
+      .store-title {
+        font-size: 1.4rem;
+      }
+
+      .store-subtitle {
+        font-size: 0.8rem;
+      }
+
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-security {
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .security-chip-row {
+        gap: 8px;
+      }
+
+      .security-chip {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .packages-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+      }
+
+      .package-card {
+        padding: 1.2rem 1rem;
+        gap: 0.8rem;
+      }
+
+      .package-name {
+        font-size: 1rem;
+      }
+
+      .price-amount {
+        font-size: 1.5rem;
+      }
+
+      .btn-purchase {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+      }
+
+      .faq-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .faq-card {
+        padding: 1.2rem 1rem;
+      }
+
+      .faq-card h3 {
+        font-size: 0.95rem;
+      }
+
+      .faq-card p {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .store-shell {
+        padding: 12px 12px 1.5rem;
+      }
+
+      .store-topbar {
+        gap: 8px;
+      }
+
+      .store-title {
+        font-size: 1.2rem;
+      }
+
+      .store-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .btn-ghost {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+      }
+
+      .packages-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .package-card {
+        padding: 1rem 0.9rem;
+      }
+
+      .package-name {
+        font-size: 0.95rem;
+      }
+
+      .package-description {
+        font-size: 0.75rem;
+      }
+
+      .price-amount {
+        font-size: 1.3rem;
+      }
+
+      .tokens-display {
+        font-size: 0.9rem;
+      }
+
+      .tokens-unit {
+        font-size: 0.7rem;
+      }
+
+      .btn-purchase {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+
+      .faq-row {
+        gap: 12px;
+      }
+
+      .faq-card {
+        padding: 1rem;
+      }
+
+      .faq-card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .faq-card p {
+        font-size: 0.75rem;
+      }
     }
 
     @media (max-width: 640px) {
@@ -854,6 +1016,7 @@ import { StripeService } from '../../services/stripe.service';
         align-items: flex-start;
       }
     }
+  
     :host-context(.dark-mode) {
   color: #e5e7eb;
 }
@@ -1160,3 +1323,4 @@ export class StoreComponent implements OnInit {
 
 
 }
+  

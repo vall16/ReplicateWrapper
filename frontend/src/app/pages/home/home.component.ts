@@ -607,12 +607,14 @@ import { AuthService, User } from '../../services/auth.service';
 
       .home-grid {
         grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
       }
     }
 
     @media (max-width: 768px) {
       .dashboard-shell {
         grid-template-columns: minmax(0, 1fr);
+        min-height: auto;
       }
 
       .sidebar {
@@ -620,16 +622,23 @@ import { AuthService, User } from '../../services/auth.service';
       }
 
       .dashboard-main {
-        padding: 1.25rem 1.1rem 1.5rem;
+        padding: 1rem 16px 1.5rem;
       }
 
       .topbar {
         flex-direction: column;
+        gap: 12px;
+      }
+
+      .home-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
       }
 
       .hero-actions {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
       }
 
       .hero-primary,
@@ -638,6 +647,72 @@ import { AuthService, User } from '../../services/auth.service';
         justify-content: center;
         display: inline-flex;
         align-items: center;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+      }
+
+      .page-title {
+        font-size: 1.75rem;
+      }
+
+      .page-subtitle {
+        font-size: 0.8rem;
+        max-width: 100%;
+      }
+
+      .hero-label {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-main {
+        padding: 12px;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+      }
+
+      .page-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .hero-title {
+        font-size: 1.4rem;
+      }
+
+      .hero-desc {
+        font-size: 0.95rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .hero-primary,
+      .hero-secondary {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+
+      .chips li {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .status-pill {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
       }
     }
   `]

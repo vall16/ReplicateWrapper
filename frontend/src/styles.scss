@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+// Mobile: 0px - 480px
+// Tablet: 481px - 768px
+// Desktop: 769px+
+
 /* ===== CSS Variables per Dark Mode ===== */
 :root {
   --color-bg-primary: #ffffff;
@@ -420,6 +425,230 @@ video {
 
   .products-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===== MOBILE-FIRST RESPONSIVE UTILITIES ===== */
+
+/* Mobile Navigation Utilities */
+.mobile-menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  padding: 0;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:active {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100vh;
+  background: var(--color-bg-primary);
+  border-right: 1px solid var(--color-border);
+  z-index: 999;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu.active {
+  left: 0;
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 998;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu.active ~ .mobile-menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (min-width: 769px) {
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none;
+  }
+}
+
+/* Touch-friendly spacing */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Safe area insets for notch support */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 481px) and (max-width: 768px) {
+  :root {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .container,
+  .content-wrapper,
+  .section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  .grid-2-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-3-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop adjustments */
+@media (min-width: 769px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .mobile-nav-drawer,
+  .mobile-menu,
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+
+  .grid-2-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4-cols {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Helper classes for responsive behavior */
+.hide-mobile {
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.hide-tablet {
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+.show-mobile {
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+/* Image optimization for mobile */
+@media (max-width: 768px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  picture {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* Prevent zoom on input focus */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 16px;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    font-size: 16px;
   }
 }
 }
