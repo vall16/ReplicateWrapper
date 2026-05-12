@@ -111,7 +111,8 @@ import { ThemeService } from './services/theme.service';
         </ul>
       </nav>
       
-      <div class="mobile-menu-overlay show-mobile" [class.active]="mobileMenuOpen" (click)="closeMobileMenu()"></div>
+      <div class="mobile-menu-overlay show-mobile" [class.open]="mobileMenuOpen"
+ [class.active]="mobileMenuOpen" (click)="closeMobileMenu()"></div>
 
       <main class="app-main">
         <section class="content-surface">
@@ -672,6 +673,125 @@ import { ThemeService } from './services/theme.service';
 
     .app-main { flex: 1; display: flex; align-items: stretch; justify-content: center; padding: 0; position: relative; }
     .content-surface { position: relative; z-index: 1; width: 100%; margin: 0; border-radius: 0; padding: 0; background: transparent; box-shadow: none; border: none; backdrop-filter: none; display: flex; flex-direction: column; animation: fadeIn 0.4s ease-out; }
+
+    .mobile-menu-toggle {
+  position: relative;
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,58,237,0.25),
+      transparent 60%),
+    rgba(15,15,25,0.85);
+
+  backdrop-filter: blur(14px);
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* glow */
+.mobile-menu-toggle::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(124,58,237,0.9),
+    rgba(6,182,212,0.9)
+  );
+
+  opacity: 0.25;
+  filter: blur(10px);
+
+  z-index: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* animated shine */
+.mobile-menu-toggle::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -120%;
+
+  width: 80%;
+  height: 180%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.18),
+    transparent
+  );
+
+  transform: rotate(20deg);
+  transition: left 0.6s ease;
+}
+
+.mobile-menu-toggle:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  border-color: rgba(124,58,237,0.5);
+
+  box-shadow:
+    0 0 20px rgba(124,58,237,0.35),
+    0 0 40px rgba(6,182,212,0.15);
+}
+
+.mobile-menu-toggle:hover::before {
+  opacity: 0.45;
+}
+
+.mobile-menu-toggle:hover::after {
+  left: 140%;
+}
+
+.mobile-menu-toggle:active {
+  transform: scale(0.96);
+}
+
+.menu-icon {
+  position: relative;
+  z-index: 2;
+
+  width: 24px;
+  height: 24px;
+
+  color: white;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.mobile-menu-toggle:hover .menu-icon {
+  transform: scale(1.08);
+}
+
+/* stato OPEN */
+.mobile-menu-toggle.open {
+  border-color: rgba(6,182,212,0.6);
+
+  box-shadow:
+    0 0 18px rgba(6,182,212,0.35),
+    0 0 36px rgba(124,58,237,0.2);
+}
 
     /* Mobile Menu Styles */
     .mobile-menu {
