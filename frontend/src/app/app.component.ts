@@ -259,6 +259,7 @@ import { ThemeService } from './services/theme.service';
     
 
     .ai-switch {
+      margin-left: 0.5rem;
       display: flex;
       background: var(--color-bg-tertiary);
       border-radius: 999px;
