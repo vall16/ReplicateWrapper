@@ -841,12 +841,12 @@ import { RouterModule } from '@angular/router';
       display: inline-block;
       width: 4px;
       background-color: #a78bfa;
-      animation: blink 1s step-end infinite;
+      animation: hero-blink 1s step-end infinite;
       box-shadow: 0 0 10px #a78bfa, 0 0 20px #8b5cf6;
       color: #a78bfa;
     }
 
-    @keyframes blink {
+    @keyframes hero-blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
@@ -989,10 +989,10 @@ import { RouterModule } from '@angular/router';
       border: 1px solid rgba(148, 163, 184, 0.24);
       box-shadow: 0 0 40px rgba(99, 102, 241, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.2);
       overflow: hidden;
-      animation: float 6s ease-in-out infinite;
+      animation: float-orb 6s ease-in-out infinite;
     }
 
-    @keyframes float {
+    @keyframes float-orb {
       0% { transform: translateY(0px); box-shadow: 0 0 40px rgba(99, 102, 241, 0.3); }
       50% { transform: translateY(-15px); box-shadow: 0 0 60px rgba(236, 72, 153, 0.4); }
       100% { transform: translateY(0px); box-shadow: 0 0 40px rgba(99, 102, 241, 0.3); }
@@ -1194,12 +1194,6 @@ import { RouterModule } from '@angular/router';
   100% { left: 100%; opacity: 0; }
 }
 
-@keyframes flow {
-  0% { top: 0; opacity: 0; }
-  30% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-}
-    
     .hero-footnote {
       font-size: 0.72rem;
       color: #6b7280;
@@ -1714,14 +1708,14 @@ import { RouterModule } from '@angular/router';
       font-size: 3rem;
       margin-bottom: 1rem;
       display: inline-block;
-      animation: float 3s ease-in-out infinite;
+      animation: float-step 3s ease-in-out infinite;
     }
 
     .step-1 .step-icon { animation-delay: 0s; }
     .step-2 .step-icon { animation-delay: 0.5s; }
     .step-3 .step-icon { animation-delay: 1s; }
 
-    @keyframes float {
+    @keyframes float-step {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-12px); }
     }
@@ -1773,10 +1767,10 @@ import { RouterModule } from '@angular/router';
       margin-top: 0.8rem;
       position: relative;
       z-index: 1;
-      animation: pulse 2s ease-in-out infinite;
+      animation: hero-pulse 2s ease-in-out infinite;
     }
 
-    @keyframes pulse {
+    @keyframes hero-pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.7; }
     }
@@ -2318,7 +2312,7 @@ import { RouterModule } from '@angular/router';
       position: absolute;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.1);
-      animation: float 6s ease-in-out infinite;
+      animation: float-contact 6s ease-in-out infinite;
     }
 
     .shape-1 {
@@ -2345,7 +2339,7 @@ import { RouterModule } from '@angular/router';
       animation-delay: 4s;
     }
 
-    @keyframes float {
+    @keyframes float-contact {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-20px) rotate(8deg); }
     }
@@ -2795,29 +2789,6 @@ import { RouterModule } from '@angular/router';
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
   }
 }
 
