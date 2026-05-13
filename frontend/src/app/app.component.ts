@@ -43,16 +43,6 @@ import { ThemeService } from './services/theme.service';
  Store</a>
           </nav>
 
-          <!-- Theme Toggle Button -->
-          <button class="theme-toggle" (click)="themeService.toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
-            <svg *ngIf="!themeService.isDarkMode()" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="theme-icon">
-              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-            </svg>
-            <svg *ngIf="themeService.isDarkMode()" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="theme-icon">
-              <path d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.364 1.636l.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </button>
-
           <div class="ai-switch hide-mobile">
             <button [class.active]="activeCTA==='image'" (click)="setActiveCTA('image')" routerLink="/generate">
               ✨ Image
@@ -302,62 +292,6 @@ import { ThemeService } from './services/theme.service';
       color: white;
       box-shadow: 0 4px 12px rgba(99,102,241,0.4);
       animation: floatUp 0.4s ease-out;
-    }
-
-    /* Theme Toggle Button */
-    .theme-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      border: none;
-      background: var(--color-bg-tertiary);
-      border-radius: 50%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: var(--color-text-primary);
-      margin: 0 0.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .theme-toggle::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(99, 102, 241, 0.2);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
-    }
-
-    .theme-toggle:active::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    .theme-toggle:hover {
-      background: var(--color-bg-secondary);
-      transform: scale(1.1) rotate(20deg);
-    }
-
-    .theme-icon {
-      width: 1.4rem;
-      height: 1.4rem;
-      transition: transform 0.3s ease;
-    }
-
-    .theme-toggle:hover .theme-icon {
-      animation: app-spin 0.4s ease-in-out;
-    }
-
-    @keyframes app-spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(20deg); }
     }
 
     .logo { display: flex; align-items: center; gap: 0.75rem; animation: floatUp 0.6s ease-out; }
@@ -969,15 +903,6 @@ import { ThemeService } from './services/theme.service';
         gap: 8px;
       }
 
-      .theme-toggle {
-        width: 40px;
-        height: 40px;
-      }
-
-      .theme-icon {
-        width: 20px;
-        height: 20px;
-      }
     }
 
     @media (max-width: 900px) {
