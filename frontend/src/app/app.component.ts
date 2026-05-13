@@ -134,27 +134,7 @@ import { ThemeService } from './services/theme.service';
       }
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes ripple {
-      0% {
-        transform: scale(0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    @keyframes glowPulse {
+    @keyframes app-glowPulse {
       0%, 100% {
         box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
       }
@@ -211,7 +191,7 @@ import { ThemeService } from './services/theme.service';
       transition: all 0.3s ease;
       animation: slideDown 0.5s ease-out;
 
-      @keyframes borderFlow {
+      @keyframes app-borderFlow {
   0% { background-position: 0% }
   100% { background-position: 200% }
       }
@@ -284,7 +264,7 @@ import { ThemeService } from './services/theme.service';
 
   /* effetto dinamico */
   background-size: 200% 100%;
-  animation: borderFlow 4s linear infinite;
+  animation: app-borderFlow 4s linear infinite;
 }
     
 
@@ -372,10 +352,10 @@ import { ThemeService } from './services/theme.service';
     }
 
     .theme-toggle:hover .theme-icon {
-      animation: spin 0.4s ease-in-out;
+      animation: app-spin 0.4s ease-in-out;
     }
 
-    @keyframes spin {
+    @keyframes app-spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(20deg); }
     }
@@ -668,7 +648,7 @@ import { ThemeService } from './services/theme.service';
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
       border: 2px solid #1e40af;
       transform: translateY(-1px);
-      animation: glowPulse 2s ease-in-out infinite;
+      animation: app-glowPulse 2s ease-in-out infinite;
     }
 
     .app-main { flex: 1; display: flex; align-items: stretch; justify-content: center; padding: 0; position: relative; }

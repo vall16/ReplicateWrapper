@@ -439,10 +439,10 @@ import { environment } from '../../../environments/environments';
 
     /* ANIMATIONS */
     .generate-btn:disabled {
-      animation: pulse 1.2s infinite;
+      animation: video-pulse 1.2s infinite;
     }
 
-    @keyframes pulse {
+    @keyframes video-pulse {
       0% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
       50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7); }
       100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
@@ -461,13 +461,13 @@ import { environment } from '../../../environments/environments';
       height: 4px;
       background: white;
       border-radius: 50%;
-      animation: blink 1s infinite;
+      animation: video-blink 1s infinite;
     }
 
     .dots span:nth-child(2) { animation-delay: 0.2s; }
     .dots span:nth-child(3) { animation-delay: 0.4s; }
 
-    @keyframes blink {
+    @keyframes video-blink {
       0%, 80%, 100% { opacity: 0; transform: translateY(0); }
       40% { opacity: 1; transform: translateY(-2px); }
     }

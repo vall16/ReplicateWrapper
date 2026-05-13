@@ -379,17 +379,6 @@ import { StripeService } from '../../services/stripe.service';
       opacity: 0;
     }
 
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .package-card::before {
       content: '';
       position: absolute;
@@ -462,10 +451,10 @@ import { StripeService } from '../../services/stripe.service';
       inset: -4px;
       background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 100%);
       border-radius: 999px;
-      animation: pulse 2s ease-in-out infinite;
+      animation: store-pulse 2s ease-in-out infinite;
     }
 
-    @keyframes pulse {
+    @keyframes store-pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
@@ -771,10 +760,10 @@ import { StripeService } from '../../services/stripe.service';
       border: 2px solid rgba(255,255,255,0.3);
       border-top-color: white;
       border-radius: 999px;
-      animation: spin 0.8s linear infinite;
+      animation: store-spin 0.8s linear infinite;
     }
 
-    @keyframes spin {
+    @keyframes store-spin {
       to { transform: rotate(360deg); }
     }
 

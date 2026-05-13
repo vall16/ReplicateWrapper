@@ -100,28 +100,11 @@ import { environment } from '../../../environments/environments';
     </div>
   `,
   styles: [`
-    @keyframes slideInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.05); }
-    }
-    @keyframes borderFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes blink {
+    @keyframes login-blink {
       0%, 80%, 100% { opacity: 0; transform: translateY(0); }
       40% { opacity: 1; transform: translateY(-3px); }
     }
-    @keyframes float {
+    @keyframes login-float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
     }
@@ -191,7 +174,7 @@ import { environment } from '../../../environments/environments';
       justify-content: center;
       margin-bottom: 1.5rem;
       box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
-      animation: float 3s ease-in-out infinite;
+      animation: login-float 3s ease-in-out infinite;
     }
 
     .logo-inner {
@@ -413,7 +396,7 @@ import { environment } from '../../../environments/environments';
       height: 5px;
       background: #6366f1;
       border-radius: 50%;
-      animation: blink 1s infinite;
+      animation: login-blink 1s infinite;
       margin: 0 1px;
     }
     .dots span:nth-child(2) { animation-delay: 0.2s; }
