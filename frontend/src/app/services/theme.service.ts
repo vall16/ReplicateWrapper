@@ -8,29 +8,15 @@ export class ThemeService {
 
   constructor() {
     this.applyTheme(this.isDarkMode());
-    this.listenToSystemPreference();
   }
 
   private getInitialTheme(): boolean {
-    // Controlla localStorage prima
+    if (typeof window === 'undefined') return true;
     const stored = localStorage.getItem('theme-mode');
     if (stored) {
       return stored === 'dark';
     }
-
-    // Poi controlla la preferenza del sistema
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-
-  private listenToSystemPreference(): void {
-    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    darkModeQuery.addEventListener('change', (e) => {
-      // Solo se l'utente non ha scelto manualmente
-      if (!localStorage.getItem('theme-mode')) {
-        this.isDarkMode.set(e.matches);
-        this.applyTheme(e.matches);
-      }
-    });
+    return true;
   }
 
   toggleTheme(): void {
@@ -47,7 +33,9 @@ export class ThemeService {
   }
 
   private applyTheme(isDark: boolean): void {
+    if (typeof document === 'undefined') return;
     const html = document.documentElement;
+    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
     if (isDark) {
       html.classList.add('dark');
       html.style.colorScheme = 'dark';
