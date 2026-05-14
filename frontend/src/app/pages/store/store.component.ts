@@ -1252,11 +1252,11 @@ export class StoreComponent implements OnInit {
     // Rocket: starter / small
     if (lowerName.includes('starter') || lowerName.includes('small'))
       svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`;
-    // Zap: pro / medium / growth
-    else if (lowerName.includes('pro') || lowerName.includes('medium') || lowerName.includes('growth'))
+    // Zap: pro / medium / creator
+    else if (lowerName.includes('pro') || lowerName.includes('medium') || lowerName.includes('creator'))
       svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
-    // Crown: enterprise / large / unlimited
-    else if (lowerName.includes('enterprise') || lowerName.includes('large') || lowerName.includes('unlimited'))
+    // Crown: max / enterprise / large / unlimited
+    else if (lowerName.includes('max') || lowerName.includes('enterprise') || lowerName.includes('large') || lowerName.includes('unlimited'))
       svg = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="m4 20 2-10 6 6 6-6 2 10"/><circle cx="12" cy="6" r="2"/></svg>`;
     // Star: premium
     else if (lowerName.includes('premium'))

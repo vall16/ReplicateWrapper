@@ -331,27 +331,27 @@ import { RouterModule } from '@angular/router';
         <div class="pricing-cards">
           <div class="pricing-card">
             <h3>Starter</h3>
-            <div class="price">100 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
-            <p class="price-sub">€1.00</p>
+            <div class="price">150 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
+            <p class="price-sub">€2.00</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card featured">
             <div class="ribbon">Recommended</div>
-            <h3>Growth</h3>
-            <div class="price">500 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
-            <p class="price-sub">€4.50 - Save 10%</p>
+            <h3>Creator</h3>
+            <div class="price">600 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
+            <p class="price-sub">€7.00</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
             <h3>Pro</h3>
-            <div class="price">1000 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
-            <p class="price-sub">€8.00 - Save 20%</p>
+            <div class="price">1500 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
+            <p class="price-sub">€15.00</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
           <div class="pricing-card">
-            <h3>Enterprise</h3>
+            <h3>Max</h3>
             <div class="price">5000 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:middle;display:inline"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> </div>
-            <p class="price-sub">€35.00 - Save 30%</p>
+            <p class="price-sub">€45.00</p>
             <button class="btn btn-primary-small" (click)="navigateTo('login')">Select</button>
           </div>
         </div>

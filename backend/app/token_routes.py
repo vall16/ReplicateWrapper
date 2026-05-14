@@ -37,30 +37,30 @@ def get_packages():
         {
             "id": 1,
             "name": "Starter",
-            "tokens": 100,
-            "price": 1.00,
+            "tokens": 150,
+            "price": 2.00,
             "description": "Perfect to get started"
         },
         {
             "id": 2,
-            "name": "Growth",
-            "tokens": 500,
-            "price": 4.50,
+            "name": "Creator",
+            "tokens": 600,
+            "price": 7.00,
             "description": "Best value for money",
             "badge": "👍 Recommended"
         },
         {
             "id": 3,
             "name": "Pro",
-            "tokens": 1000,
-            "price": 8.00,
+            "tokens": 1500,
+            "price": 15.00,
             "description": "For professional users"
         },
         {
             "id": 4,
-            "name": "Enterprise",
+            "name": "Max",
             "tokens": 5000,
-            "price": 35.00,
+            "price": 45.00,
             "description": "For large-scale operations",
             "badge": "⚡ Maximum discount"
         }
