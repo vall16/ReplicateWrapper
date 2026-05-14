@@ -104,14 +104,6 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  // Profilo utente
-  getProfile(): Observable<any> {
-    return this.getAuthHeaders().pipe(
-      tap(headers => {
-        return this.http.get(`${this.apiUrl}/auth/profile`, { headers });
-      })
-    );
-  }
 
   // Saldo token
   getBalance(): Observable<any> {
