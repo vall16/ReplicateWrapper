@@ -368,7 +368,7 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     /* ===== PACKAGE CARD STYLES ===== */
-    .package-card {
+    /* .package-card {
       position: relative;
       transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
@@ -377,7 +377,21 @@ import { StripeService } from '../../services/stripe.service';
       padding: 1.6rem 1.4rem;
       animation: slideInUp 0.6s ease-out forwards;
       opacity: 0;
-    }
+      overflow: visible !important;
+
+    } */
+
+    .package-card {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.6rem 1.4rem;
+
+  opacity: 1;
+  animation: slideInUp 0.6s ease-out;
+}
 
     .package-card::before {
       content: '';
@@ -417,7 +431,9 @@ import { StripeService } from '../../services/stripe.service';
       border: 2px solid #f59e0b !important;
       background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
       box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
-      transform: scale(1.05);
+      /* transform: scale(1.05); */
+      transform: scale(1.01);
+
     }
 
     .package-featured:hover {
@@ -1196,7 +1212,12 @@ export class StoreComponent implements OnInit {
   loadPackages() {
     this.authService.getTokenPackages().subscribe(
       (data) => {
+        console.log('PACKAGES RESPONSE:', data);
+
         this.packages = data.packages || [];
+
+        console.log('PACKAGES ARRAY:', this.packages);
+
       },
       (err) => {
         console.error(err);
