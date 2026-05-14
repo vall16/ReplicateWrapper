@@ -542,11 +542,6 @@ export class GalleryComponent {
   }
 
   ngOnInit() {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.authService.getAvailableModels().subscribe(
       (res: any) => {
         this.availableModels = res.models || [];

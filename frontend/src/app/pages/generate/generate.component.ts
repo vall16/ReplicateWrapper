@@ -856,13 +856,6 @@ export class GenerateComponent {
   ) { }
 
   ngOnInit() {
-
-    // Controllo login all'inizio
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.style = this.styles[0].value; //
 
     // Load current token balance

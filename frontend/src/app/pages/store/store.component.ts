@@ -1157,11 +1157,6 @@ export class StoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.loadPackages();
 
     // se veniamo dalla pagina di successo/cancellazione di Stripe controlliamo i parametri

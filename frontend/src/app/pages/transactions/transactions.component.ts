@@ -373,11 +373,6 @@ export class TransactionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.loadTransactions();
   }
 

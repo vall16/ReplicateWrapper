@@ -1182,11 +1182,6 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     this.user = this.authService.getCurrentUser();
     this.loadBalance();
     this.loadTransactions();

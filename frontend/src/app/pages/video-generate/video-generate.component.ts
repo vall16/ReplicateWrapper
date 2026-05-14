@@ -521,12 +521,6 @@ export class VideoGenerateComponent {
   ) { }
 
   ngOnInit() {
-    // Check login at start
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     // Carica il saldo token corrente
     this.authService.getBalance().subscribe(
       (res: any) => {
