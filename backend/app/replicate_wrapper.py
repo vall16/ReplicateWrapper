@@ -1,4 +1,5 @@
 import os
+import asyncio
 from typing import Optional, Dict, Any
 import replicate
 from sqlalchemy.orm import Session
@@ -56,9 +57,8 @@ class ReplicateWrapper:
                 from app.services import UserService
                 UserService.consume_tokens(db, user_id, cost)
 
-            output = replicate.run(
-                model_version,
-                input=input_params
+            output = await asyncio.to_thread(
+                replicate.run, model_version, input=input_params
             )
 
             return output
