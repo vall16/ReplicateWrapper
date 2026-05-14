@@ -29,7 +29,7 @@ from app.model_mapper import map_model
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
+# print("Stripe key:", os.getenv("STRIPE_SECRET_KEY"))
 
 # --- SETUP UPLOADS FOLDER --
 UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
