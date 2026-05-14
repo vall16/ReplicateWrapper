@@ -839,8 +839,9 @@ async def stripe_webhook(request: Request, db=Depends(get_db)):
             print(f"[WEBHOOK] User not found: {user_email}")
             return JSONResponse({"status": "ignored"}, status_code=200)
 
-        UserService.purchase_tokens(db, user.id, tokens)
-        print(f"[WEBHOOK] Credited {tokens} tokens to {user_email} (user {user.id})")
+        session_id = session.get("id", "")
+        UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
+        print(f"[WEBHOOK] Credited {tokens} tokens to {user_email} (user {user.id}, session {session_id})")
 
     return JSONResponse({"status": "ok"}, status_code=200)
 

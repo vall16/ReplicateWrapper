@@ -44,19 +44,26 @@ class UserService:
         return db.query(User).filter(User.email == email).first()
     
     @staticmethod
-    def purchase_tokens(db: Session, user_id: int, amount: int):
-        """Purchase tokens"""
+    def purchase_tokens(db: Session, user_id: int, amount: int, stripe_session_id: str = None):
+        """Purchase tokens with Stripe session deduplication"""
+        if stripe_session_id:
+            exists = db.query(TokenTransaction).filter(
+                TokenTransaction.stripe_session_id == stripe_session_id
+            ).first()
+            if exists:
+                raise Exception(f"Session {stripe_session_id} already processed")
+
         user = UserService.get_user(db, user_id)
         if not user:
             raise Exception("User not found")
 
         user.tokens += amount
 
-        # Record the transaction
         transaction = TokenTransaction(
             user_id=user_id,
             amount=amount,
             transaction_type="purchase",
+            stripe_session_id=stripe_session_id,
             description=f"Purchase of {amount} tokens"
         )
 

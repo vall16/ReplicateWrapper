@@ -78,7 +78,8 @@ class TokenTransaction(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     amount = Column(Integer)
-    transaction_type = Column(String(50))  # "purchase", "consume"
+    transaction_type = Column(String(50))  # "purchase", "consume", "refund"
+    stripe_session_id = Column(String(255), unique=True, nullable=True)
     description = Column(String(255))
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -127,6 +128,18 @@ class GeneratedVideo(Base):
 
 # Create tables
 Base.metadata.create_all(bind=engine)
+
+# Migration: add stripe_session_id column if missing on existing DBs
+try:
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        conn.execute(text(
+            "ALTER TABLE token_transactions ADD COLUMN stripe_session_id VARCHAR(255) UNIQUE"
+        ))
+        conn.commit()
+        print("[MIGRATION] Added stripe_session_id column to token_transactions")
+except Exception:
+    pass  # Column already exists
 
 def get_db():
     db = SessionLocal()

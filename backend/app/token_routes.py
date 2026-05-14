@@ -110,8 +110,8 @@ def confirm_checkout(
     if tokens <= 0:
         raise HTTPException(status_code=400, detail="Missing package information")
 
-    # update the user
-    user = UserService.purchase_tokens(db, user.id, tokens)
+    # update the user (with session_id deduplication)
+    user = UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
 
     return {
         "status": "success",
