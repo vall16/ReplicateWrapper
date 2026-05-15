@@ -227,11 +227,6 @@ export class AuthService {
 
   // Lista combinata immagini e video generati dall'utente, con filtri
   getGeneratedMedia(filters: { style?: string; model?: string; prompt?: string; limit?: number } = {}): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
     const params: string[] = [];
     if (filters.style) {
       params.push(`style=${encodeURIComponent(filters.style)}`);
@@ -247,7 +242,7 @@ export class AuthService {
     }
 
     const queryString = params.length ? `?${params.join('&')}` : '';
-    return this.http.get(`${this.apiUrl}/generated-media${queryString}`, { headers });
+    return this.http.get(`${this.apiUrl}/generated-media${queryString}`, { withCredentials: true });
   }
 
 // CLICK DI GENERAZIONE
