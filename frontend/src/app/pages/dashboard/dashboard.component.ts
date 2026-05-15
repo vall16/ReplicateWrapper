@@ -41,7 +41,7 @@ import { FormsModule } from '@angular/forms';
 
         <div class="sidebar-footer" *ngIf="user">
           <div class="user-pill">
-            <div class="avatar">{{ user.username?.charAt(0) | uppercase }}</div>
+            <div class="avatar">{{ user.username.charAt(0) | uppercase }}</div>
             <div class="user-meta">
               <span class="user-name">{{ user.username }}</span>
               <span class="user-email">{{ user.email }}</span>
