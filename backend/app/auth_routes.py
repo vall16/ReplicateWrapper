@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from sqlalchemy.orm import Session
 from app.database import get_db, User
 from app.schemas import (
@@ -17,6 +17,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
 import secrets
+from datetime import datetime, timedelta
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
@@ -41,15 +42,24 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
 
 # LOGIN
 @router.post("/login", response_model=TokenResponse)
-def login(credentials: UserLogin, db: Session = Depends(get_db)):
-    """Authenticate a user and return a token"""
+def login(credentials: UserLogin, response: Response, db: Session = Depends(get_db)):
+    """Authenticate a user and return a token in httpOnly cookie"""
     user = UserService.authenticate_user(db, credentials.email, credentials.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     
     access_token = UserService.create_auth_token(user)
+    # Set httpOnly cookie (secure=True in production)
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=os.getenv("ENVIRONMENT", "development") == "production",
+        samesite="strict",
+        max_age=30*60  # 30 minutes
+    )
     return {
-        "access_token": access_token,
+        "access_token": access_token,  # Still return for backward compatibility
         "token_type": "bearer",
         "user": UserResponse.model_validate(user)
     }
@@ -81,9 +91,20 @@ def get_transactions(
     """Returns the user's transaction history"""
     return UserService.get_transactions(db, user.id, limit)
 
+# LOGOUT
+@router.post("/logout")
+def logout(response: Response):
+    """Logout: clear httpOnly cookie"""
+    response.delete_cookie(
+        key="access_token",
+        secure=os.getenv("ENVIRONMENT", "development") == "production",
+        samesite="strict"
+    )
+    return {"message": "✅ Logged out successfully", "status": "success"}
+
 
 @router.post("/google-login", response_model=TokenResponse)
-def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
+def google_login(payload: GoogleLoginRequest, response: Response, db: Session = Depends(get_db)):
     """Login via Google OAuth (Gmail).
 
     The frontend must pass an ID token obtained from Google Identity Services.
@@ -136,9 +157,18 @@ def google_login(payload: GoogleLoginRequest, db: Session = Depends(get_db)):
         )
 
     access_token = UserService.create_auth_token(user)
+    # Set httpOnly cookie (secure=True in production)
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=os.getenv("ENVIRONMENT", "development") == "production",
+        samesite="strict",
+        max_age=30*60  # 30 minutes
+    )
 
     return {
-        "access_token": access_token,
+        "access_token": access_token,  # Still return for backward compatibility
         "token_type": "bearer",
         "user": UserResponse.model_validate(user),
     }

@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime, timedelta
 from typing import Optional
@@ -54,12 +54,30 @@ def calculate_token_price(amount: float) -> float:
     """Calculate token price"""
     return amount * TOKEN_PRICE_MULTIPLIER
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
+
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Session = Depends(get_db)
 ):
-    token = credentials.credentials
+    """Extract token from httpOnly cookie or Bearer header.
+    Priority: httpOnly cookie > Bearer token
+    """
+    token = None
+    
+    # Try to get token from httpOnly cookie first (most secure)
+    if "access_token" in request.cookies:
+        token = request.cookies.get("access_token")
+    # Fallback to Bearer token from Authorization header
+    elif credentials:
+        token = credentials.credentials
+    
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated"
+        )
 
     payload = decode_token(token)
     if not payload:

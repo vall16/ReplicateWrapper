@@ -24,6 +24,7 @@ from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
 from app.model_mapper import map_model
+from app.logger import logger, log_file_download
 
 
 
@@ -43,10 +44,28 @@ VIDEOS_DIR = UPLOADS_DIR / "videos"
 VIDEOS_DIR.mkdir(exist_ok=True)
 
 # --- GESTIONE CORS DA ENV ---
-# Leggiamo la stringa dal .env, se non esiste usiamo una lista vuota come fallback
-cors_origins_raw = os.getenv("CORS_ORIGINS", "")
-# Trasformiamo la stringa "dom1,dom2" in una lista ["dom1", "dom2"]
-allowed_origins = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
+# Read CORS origins from .env with safe fallback
+cors_origins_raw = os.getenv("CORS_ORIGINS", "").strip()
+environment = os.getenv("ENVIRONMENT", "development")
+
+# Parse CORS origins
+if cors_origins_raw:
+    allowed_origins = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
+else:
+    # Safe fallback based on environment
+    if environment == "production":
+        # In production, require explicit CORS config
+        logger.warning("⚠️  CORS_ORIGINS not configured in production! Requests from browser will be blocked.")
+        allowed_origins = []
+    else:
+        # In development, allow localhost
+        allowed_origins = [
+            "http://localhost:4200",
+            "http://localhost:3000",
+            "http://127.0.0.1:4200",
+            "http://127.0.0.1:3000"
+        ]
+        logger.info(f"✅ Using default development CORS origins: {allowed_origins}")
 
 app = FastAPI(
     title="Repli API",
@@ -248,58 +267,107 @@ VIDEO_MODEL_COSTS = {
     "pika-1": 30,
 }
 
+# Security: Max file sizes and allowed MIME types
+MAX_IMAGE_SIZE_MB = 10  # 10MB
+MAX_VIDEO_SIZE_MB = 500  # 500MB
+ALLOWED_IMAGE_MIMES = {"image/jpeg", "image/png", "image/webp"}
+ALLOWED_VIDEO_MIMES = {"video/mp4", "video/quicktime", "video/x-msvideo"}
+
+def validate_download_response(response: httpx.Response, file_type: str) -> None:
+    """
+    Validate downloaded file before saving
+    
+    Raises:
+        Exception: If file is invalid, too large, or suspicious
+    """
+    # Check HTTP status
+    response.raise_for_status()
+    
+    # Get Content-Type header
+    content_type = response.headers.get("content-type", "").lower()
+    
+    # Parse MIME type (ignore charset parameter)
+    mime_type = content_type.split(";")[0].strip()
+    
+    if file_type == "image":
+        allowed_mimes = ALLOWED_IMAGE_MIMES
+        max_size = MAX_IMAGE_SIZE_MB * 1024 * 1024
+    else:
+        allowed_mimes = ALLOWED_VIDEO_MIMES
+        max_size = MAX_VIDEO_SIZE_MB * 1024 * 1024
+    
+    # Validate MIME type
+    if mime_type and mime_type not in allowed_mimes:
+        raise Exception(f"Invalid {file_type} format: {mime_type}. Allowed: {allowed_mimes}")
+    
+    # Check Content-Length header
+    content_length = response.headers.get("content-length")
+    if content_length:
+        size_bytes = int(content_length)
+        if size_bytes > max_size:
+            raise Exception(f"{file_type.capitalize()} too large: {size_bytes / 1024 / 1024:.1f}MB (max: {max_size / 1024 / 1024:.1f}MB)")
+    
+    # Validate actual content size during download (safety check)
+    if len(response.content) > max_size:
+        raise Exception(f"{file_type.capitalize()} exceeded maximum size during download")
 
 async def download_and_save_image(image_url: str) -> str:
     """
-    Scarica un'immagine da un URL e la salva su disco.
+    Download and validate image before saving to disk.
 
     Returns:
-        Percorso relativo: /images/abc123.png
+        Relative path: /images/abc123.png
     """
     try:
-        # Genera un nome univoco
+        # Generate unique filename
         unique_id = str(uuid.uuid4())[:8]
         filename = f"{unique_id}.png"
         filepath = IMAGES_DIR / filename
 
-        # Download the image
-        async with httpx.AsyncClient(follow_redirects=True) as client:
+        # Download the image with timeout
+        async with httpx.AsyncClient(follow_redirects=True, limits=httpx.Limits(max_redirects=5)) as client:
             response = await client.get(image_url, timeout=30.0)
-            response.raise_for_status()
-
-        # Salva su disco
-        with open(filepath, "wb") as f:
-            f.write(response.content)
-
-        return f"/images/{filename}"
-    except Exception as e:
-        print(f"Error downloading image: {e}")
-        raise Exception(f"Error saving image: {str(e)}")
-async def download_and_save_video(video_url: str) -> str:
-    """
-    Downloads a video from a URL and saves it to disk.
-
-    Returns:
-        Relative path: /videos/abc123.mp4
-    """
-    try:
-        # Genera un nome univoco
-        unique_id = str(uuid.uuid4())[:8]
-        filename = f"{unique_id}.mp4"
-        filepath = VIDEOS_DIR / filename
-
-        # Download the video (longer timeout because it's a heavy file)
-        async with httpx.AsyncClient(follow_redirects=True) as client:
-            response = await client.get(video_url, timeout=120.0)
-            response.raise_for_status()
+            
+        # Validate before saving
+        validate_download_response(response, "image")
 
         # Save to disk
         with open(filepath, "wb") as f:
             f.write(response.content)
 
+        log_file_download(user_id=None, url=image_url, status="SUCCESS")
+        return f"/images/{filename}"
+    except Exception as e:
+        log_file_download(user_id=None, url=image_url, status="FAILED", error=str(e)[:100])
+        raise Exception(f"Error saving image: {str(e)}")
+async def download_and_save_video(video_url: str) -> str:
+    """
+    Download and validate video before saving to disk.
+
+    Returns:
+        Relative path: /videos/abc123.mp4
+    """
+    try:
+        # Generate unique filename
+        unique_id = str(uuid.uuid4())[:8]
+        filename = f"{unique_id}.mp4"
+        filepath = VIDEOS_DIR / filename
+
+        # Download the video with longer timeout (heavier file)
+        async with httpx.AsyncClient(follow_redirects=True, limits=httpx.Limits(max_redirects=5)) as client:
+            response = await client.get(video_url, timeout=120.0)
+            
+        # Validate before saving
+        validate_download_response(response, "video")
+
+        # Save to disk
+        with open(filepath, "wb") as f:
+            f.write(response.content)
+
+        log_file_download(user_id=None, url=video_url, status="SUCCESS")
         return f"/videos/{filename}"
     except Exception as e:
-        print(f"Error downloading video: {e}")
+        log_file_download(user_id=None, url=video_url, status="FAILED", error=str(e)[:100])
         raise Exception(f"Error saving video: {str(e)}")
 # GENERAZIONE DELL’IMMAGINE
 @app.post("/api/generate-paid")
@@ -465,23 +533,8 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
     - id: ID della generazione nel DB
     """
     
-    # Valida che il modello sia supportato
-    if req.model not in VIDEO_MODEL_MAP:
-        return JSONResponse(
-            status_code=400,
-            content={"error": f"Modello video non supportato: {req.model}. Disponibili: {list(VIDEO_MODEL_MAP.keys())}"}
-        )
-    
-    # Valida durata
-    allowed_durations = [5, 10, 30, 60]
-    if req.duration not in allowed_durations:
-        return JSONResponse(
-            status_code=400,
-            content={"error": f"Durata non supportata: {req.duration}. Disponibili: {allowed_durations}"}
-        )
-    
     try:
-        # Seleziona modello completo
+        # Seleziona modello completo (Pydantic already validated duration, resolution, model)
         model_version = VIDEO_MODEL_MAP[req.model]
         aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
         

@@ -1,12 +1,12 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Literal
 
 # User Models
 class UserRegister(BaseModel):
     email: EmailStr
-    username: str
-    password: str
+    username: str = Field(..., min_length=3, max_length=50)
+    password: str = Field(..., min_length=8)
 
 class UserLogin(BaseModel):
     email: str
@@ -25,8 +25,8 @@ class UserResponse(BaseModel):
 
 # Token Models
 class TokenPurchase(BaseModel):
-    amount: int
-    price: Optional[float] = None  # Prezzo calcolato automaticamente
+    amount: int = Field(..., gt=0)
+    price: Optional[float] = None
 
 class TokenTransaction(BaseModel):
     id: int
@@ -47,7 +47,7 @@ class TokenResponse(BaseModel):
 
 
 class GoogleLoginRequest(BaseModel):
-    id_token: str
+    id_token: str = Field(..., min_length=20)
 
 # Status Response
 class StatusResponse(BaseModel):
@@ -55,9 +55,9 @@ class StatusResponse(BaseModel):
     status: str
     data: Optional[dict] = None
 
-# Video Models
+# Video Models with STRICT validation
 class VideoRequest(BaseModel):
-    prompt: str
-    duration: int  # 5, 10, 30, 60 secondi
-    resolution: str  # "480p", "720p"
-    model: str  # "kling-video", "runway-ml", "pika-1"
+    prompt: str = Field(..., min_length=10, max_length=1000)
+    duration: Literal[5, 10, 30, 60] = Field(..., description="Duration in seconds")
+    resolution: Literal["480p", "720p", "1080p"] = Field(..., description="Video resolution")
+    model: Literal["kling-video", "seedance-2", "pika-1"] = Field(..., description="Video model")

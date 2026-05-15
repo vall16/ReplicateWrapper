@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
 
@@ -15,15 +15,10 @@ export class StripeService {
   }
 
   createCheckoutSession(pkg: any): Observable<any> {
-    // invia informazioni sul pacchetto al backend per generare una sessione Stripe Checkout
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    
+    // Send package info to backend to generate Stripe Checkout session
     return this.http.post(`${this.apiUrl}/create-checkout-session`, {
       package: pkg
-    }, { headers });
+    }, { withCredentials: true });
   }
 
   // Chiave pubblica caricata dinamicamente dal backend (utile per redirectToCheckout se necessario)

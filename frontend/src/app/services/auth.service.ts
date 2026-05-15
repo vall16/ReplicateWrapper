@@ -34,9 +34,9 @@ export class AuthService {
     this.loadUserFromStorage();
   }
 
-  // Carica l'utente dal localStorage
+  // Load user from sessionStorage (not localStorage for security)
   private loadUserFromStorage() {
-    const user = localStorage.getItem('user');
+    const user = sessionStorage.getItem('user');
     if (user) {
       this.currentUserSubject.next(JSON.parse(user));
     }
@@ -51,31 +51,31 @@ export class AuthService {
     });
   }
 
-  // Login
+  // Login (token stored in httpOnly cookie automatically)
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, {
       email,
       password
-    }).pipe(
+    }, { withCredentials: true }).pipe(
       tap(response => {
-        if (response.access_token) {
-          localStorage.setItem('token', response.access_token);
-          localStorage.setItem('user', JSON.stringify(response.user));
+        if (response.user) {
+          // Store user data in sessionStorage (not sensitive)
+          sessionStorage.setItem('user', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
         }
       })
     );
   }
 
-  // Login con Google (ID token da Google Identity Services)
+  // Login with Google (token stored in httpOnly cookie automatically)
   loginWithGoogle(idToken: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/google-login`, {
       id_token: idToken
-    }).pipe(
+    }, { withCredentials: true }).pipe(
       tap(response => {
-        if (response.access_token) {
-          localStorage.setItem('token', response.access_token);
-          localStorage.setItem('user', JSON.stringify(response.user));
+        if (response.user) {
+          // Store user data in sessionStorage (not sensitive)
+          sessionStorage.setItem('user', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
         }
       })
@@ -83,15 +83,20 @@ export class AuthService {
   }
 
   // Logout
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    this.currentUserSubject.next(null);
+  logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        sessionStorage.removeItem('user');
+        this.currentUserSubject.next(null);
+      })
+    );
   }
 
-  // Ottieni il token
+  // Get token (for backward compatibility - reads from sessionStorage)
   getToken(): string | null {
-    return localStorage.getItem('token');
+    // Token is now in httpOnly cookie, not available to JS
+    // This returns null, but httpOnly cookie is sent automatically with withCredentials
+    return null;
   }
 
   // Ottieni l'utente corrente
@@ -99,28 +104,21 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  // Verifica se è autenticato
+  // Check if authenticated
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    // Since token is in httpOnly cookie, check if we have user data
+    return !!this.getCurrentUser();
   }
 
 
-  // Saldo token
+  // Token balance
   getBalance(): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get(`${this.apiUrl}/auth/balance`, { headers });
+    return this.http.get(`${this.apiUrl}/auth/balance`, { withCredentials: true });
   }
 
-  // Storico transazioni
+  // Transaction history
   getTransactions(limit: number = 50): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get(`${this.apiUrl}/auth/transactions?limit=${limit}`, { headers });
+    return this.http.get(`${this.apiUrl}/auth/transactions?limit=${limit}`, { withCredentials: true });
   }
 
   // Pacchetti token
@@ -128,24 +126,16 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/tokens/packages`);
   }
 
-  // Conferma checkout Stripe e accredita token (backend usa session_id per validare)
+  // Confirm Stripe checkout
   confirmCheckout(sessionId: string): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get(`${this.apiUrl}/tokens/checkout/confirm?session_id=${sessionId}`, { headers });
+    return this.http.get(`${this.apiUrl}/tokens/checkout/confirm?session_id=${sessionId}`, { withCredentials: true });
   }
 
-  // Acquista token
+  // Purchase tokens
   purchaseTokens(amount: number): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
     return this.http.post(`${this.apiUrl}/tokens/purchase`, 
       { amount },
-      { headers }
+      { withCredentials: true }
     ).pipe(
       tap(() => {
         // Aggiorna il saldo dopo l'acquisto

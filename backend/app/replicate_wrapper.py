@@ -3,6 +3,7 @@ import asyncio
 from typing import Optional, Dict, Any
 import replicate
 from sqlalchemy.orm import Session
+from app.logger import logger, log_token_operation, log_refund_failure
 # the "engine" that generates the image.
 class ReplicateWrapper:
     """
@@ -56,6 +57,7 @@ class ReplicateWrapper:
             if user_id and db:
                 from app.services import UserService
                 UserService.consume_tokens(db, user_id, cost)
+                log_token_operation("CONSUME", user_id, int(cost), "SUCCESS")
 
             output = await asyncio.to_thread(
                 replicate.run, model_version, input=input_params
@@ -67,8 +69,12 @@ class ReplicateWrapper:
                 from app.services import UserService
                 try:
                     UserService.refund_tokens(db, user_id, cost)
+                    log_token_operation("REFUND", user_id, int(cost), "SUCCESS", f"after_error: {str(e)[:100]}")
                 except Exception as refund_err:
-                    print(f"[REFUND FAILED] {refund_err}")
+                    # CRITICAL: Token was lost!
+                    error_summary = f"Original error: {str(e)[:50]} | Refund error: {str(refund_err)[:50]}"
+                    log_refund_failure(user_id, int(cost), error_summary)
+                    logger.critical(f"TOKENS_LOST user_id={user_id} amount={cost} - user must be compensated manually!")
             raise Exception(f"Error executing model: {str(e)}")
 
     def list_models(self) -> list:
