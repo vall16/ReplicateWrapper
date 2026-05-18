@@ -1173,8 +1173,7 @@ export class DashboardComponent implements OnInit {
   t2iStyle = 'photorealistic';      // default
   t2iResolution = '1MP';            // default
   isBalanceHovered = false;
-
-
+  balanceLoading: boolean = true;
 
   constructor(
     private authService: AuthService,
@@ -1183,18 +1182,21 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getCurrentUser();
-    this.loadBalance();
+    this.fetchBalance();
     this.loadTransactions();
     this.loadPackages();
   }
 
-  loadBalance() {
+  fetchBalance() {
+    this.balanceLoading = true;
     this.authService.getBalance().subscribe(
-      (data) => {
-        this.balance = data;
+      (balance) => {
+        this.balance = balance;
+        this.balanceLoading = false;
       },
       (error) => {
-        console.error('Error loading balance', error);
+        console.error('Error fetching balance:', error);
+        this.balanceLoading = false;
       }
     );
   }

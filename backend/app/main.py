@@ -1,6 +1,6 @@
-
 from fastapi import HTTPException
 from typing import Optional
+from retrying import retry
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,8 +25,31 @@ from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
 from app.model_mapper import map_model
 from app.logger import logger, log_file_download
+from unittest.mock import Mock
 
+# Mock per simulare Replicate
+class ReplicateMock:
+    def __init__(self):
+        self.jobs = []
 
+    def create_job(self, input_data):
+        # Simula un job che può avere successo o fallire
+        import random
+        job_id = len(self.jobs) + 1
+        status = "failed" if random.random() < 0.2 else "completed"
+        job = {"id": job_id, "status": status, "input": input_data}
+        self.jobs.append(job)
+        return job
+
+    def get_job_status(self, job_id):
+        # Restituisce lo stato di un job
+        for job in self.jobs:
+            if job["id"] == job_id:
+                return job["status"]
+        return "not_found"
+
+# Istanza del mock
+replicate_mock = ReplicateMock()
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
