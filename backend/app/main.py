@@ -170,7 +170,11 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
     aspect_ratio = req.ratio if req.ratio in allowed_ratios else "16:9"
 
     try:
-        output = await replicate_wrapper.run_model(
+        async def _save_img(raw):
+            url = raw[0] if isinstance(raw, list) else raw
+            return await download_and_save_image(url)
+
+        local_image_url = await replicate_wrapper.run_model(
             model_version,
             input_params={
                 "prompt": prompt,
@@ -179,15 +183,9 @@ async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=D
             },
             user_id=user.id,
             db=db,
-            token_cost=token_cost
+            token_cost=token_cost,
+            save_func=_save_img
         )
-
-        if isinstance(output, list):
-            image_url_remote = output[0]
-        else:
-            image_url_remote = output
-
-        local_image_url = await download_and_save_image(image_url_remote)
 
         generated_image = GeneratedImage(
             user_id=user.id,
@@ -410,36 +408,25 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
     aspect_ratio = req.ratio if req.ratio in allowed_ratios else "16:9"
 
     try:
-        # Passa il costo token personalizzato al wrapper
-        output = await replicate_wrapper.run_model(
-            model_version,   # modello dinamico
+        async def _save_img(raw):
+            url = raw[0] if isinstance(raw, list) else raw
+            return await download_and_save_image(url)
+
+        local_image_url = await replicate_wrapper.run_model(
+            model_version,
 
             input_params={
                 "prompt": prompt,
-                # "image_size": "1K",
                 "aspect_ratio": aspect_ratio,
-                # "output_format": "jpeg",
                 "safety_filter_level": "block_medium_and_above"
 
             },
             user_id=user.id,
             db=db,
-            token_cost=token_cost  # Passa il costo token
+            token_cost=token_cost,
+            save_func=_save_img
         )
 
-        # 🔥 DEBUG (keep until it works)
-        print("OUTPUT RAW:", output)
-
-        # Estrazione URL dall’output (potrebbe essere stringa o lista)
-        if isinstance(output, list):
-            image_url_remote = output[0]
-        else:
-            image_url_remote = output
-
-        # Scarica e salva l’immagine su disco
-        local_image_url = await download_and_save_image(image_url_remote)
-
-        # Salva i metadata nel DB
         generated_image = GeneratedImage(
             user_id=user.id,
             prompt=req.description,
@@ -452,7 +439,6 @@ async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user),
         db.commit()
         db.refresh(generated_image)
 
-        # Recupera il saldo token aggiornato dell'utente
         from app.services import UserService
         updated_user = UserService.get_user(db, user.id)
 
@@ -557,46 +543,33 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
     """
     
     try:
-        # Seleziona modello completo (Pydantic already validated duration, resolution, model)
         model_version = VIDEO_MODEL_MAP[req.model]
         aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
         
-        # Ottieni il costo token per questo modello
         token_cost = VIDEO_MODEL_COSTS.get(req.model, 10)
         
-        # Prepara i parametri per Replicate
         video_input_params = {
             "prompt": req.prompt,
             "duration": req.duration,
             "aspect_ratio": aspect_ratio,
-            # "fps": 24,  # Frame per secondo
         }
         
-        # If the model is Kling, add specific parameters
         if req.model == "kling-video":
-            video_input_params["cfg_scale"] = 7.5  # Guidance scale
+            video_input_params["cfg_scale"] = 7.5
         
-        # Chiama Replicate per generare il video
-        output = await replicate_wrapper.run_model(
+        async def _save_vid(raw):
+            url = raw[0] if isinstance(raw, list) else raw
+            return await download_and_save_video(url)
+
+        local_video_url = await replicate_wrapper.run_model(
             model_version,
             input_params=video_input_params,
             user_id=user.id,
             db=db,
-            token_cost=token_cost  # Passa il costo token
+            token_cost=token_cost,
+            save_func=_save_vid
         )
         
-        print(f"OUTPUT VIDEO RAW: {output}")
-        
-        # Estrazione URL del video dall'output
-        if isinstance(output, list):
-            video_url_remote = output[0]
-        else:
-            video_url_remote = output
-        
-        # Scarica e salva il video su disco
-        local_video_url = await download_and_save_video(video_url_remote)
-        
-        # Salva i metadata nel DB
         generated_video = GeneratedVideo(
             user_id=user.id,
             prompt=req.prompt,
@@ -610,7 +583,6 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         db.commit()
         db.refresh(generated_video)
         
-        # Recupera il saldo token aggiornato dell'utente
         from app.services import UserService
         updated_user = UserService.get_user(db, user.id)
         

@@ -1,25 +1,15 @@
 import os
 import asyncio
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Callable
 import replicate
 from sqlalchemy.orm import Session
 from app.logger import logger, log_token_operation, log_refund_failure
-# the "engine" that generates the image.
-class ReplicateWrapper:
-    """
-    Wrapper class to handle Replicate.ai interactions with token system
-    """
 
-    # Token cost per call (1 token by default)
+class ReplicateWrapper:
+
     TOKEN_COST_PER_CALL = 1.0
 
     def __init__(self, api_token: Optional[str] = None):
-        """
-        Initialize the wrapper with the API token
-
-        Args:
-            api_token: Replicate API token (optional, uses environment variable if not provided)
-        """
         self.api_token = api_token or os.getenv("REPLICATE_API_TOKEN")
         if self.api_token:
             os.environ["REPLICATE_API_TOKEN"] = self.api_token
@@ -30,21 +20,9 @@ class ReplicateWrapper:
         input_params: Dict[str, Any],
         user_id: Optional[int] = None,
         db: Optional[Session] = None,
-        token_cost: Optional[float] = None
+        token_cost: Optional[float] = None,
+        save_func: Optional[Callable[[Any], Any]] = None
     ) -> Any:
-        """
-        Runs a model on Replicate with token checking
-
-        Args:
-            model_version: Model version (e.g. "owner/model:version")
-            input_params: Input parameters for the model
-            user_id: User ID (for token checking)
-            db: Database session (for balance updates)
-            token_cost: Custom token cost (default: TOKEN_COST_PER_CALL)
-
-        Returns:
-            Model output
-        """
         cost = token_cost if token_cost is not None else self.TOKEN_COST_PER_CALL
 
         if user_id and db:
@@ -63,6 +41,9 @@ class ReplicateWrapper:
                 replicate.run, model_version, input=input_params
             )
 
+            if save_func:
+                output = await save_func(output)
+
             return output
         except Exception as e:
             if user_id and db:
@@ -71,7 +52,6 @@ class ReplicateWrapper:
                     UserService.refund_tokens(db, user_id, cost)
                     log_token_operation("REFUND", user_id, int(cost), "SUCCESS", f"after_error: {str(e)[:100]}")
                 except Exception as refund_err:
-                    # CRITICAL: Token was lost!
                     error_summary = f"Original error: {str(e)[:50]} | Refund error: {str(refund_err)[:50]}"
                     log_refund_failure(user_id, int(cost), error_summary)
                     logger.critical(f"TOKENS_LOST user_id={user_id} amount={cost} - user must be compensated manually!")
