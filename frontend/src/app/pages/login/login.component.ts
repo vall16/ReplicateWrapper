@@ -30,7 +30,6 @@ import { environment } from '../../../environments/environments';
 
         <section class="login-panel">
           <div class="panel-glow"></div>
-          <div class="panel-border"></div>
           <header class="panel-header">
             <h2>Login</h2>
             <p>Sign in with your credentials to continue.</p>
@@ -113,7 +112,7 @@ import { environment } from '../../../environments/environments';
       display: block;
       min-height: 100vh;
       color: #e5e7eb;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
     .login-shell {
@@ -238,15 +237,38 @@ import { environment } from '../../../environments/environments';
 
     .login-panel {
       position: relative;
-      border-radius: 1.2rem;
+      border-radius: 1.25rem;
       padding: 2.5rem 2rem;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(124, 58, 237, 0.08) inset;
       overflow: hidden;
       max-width: 380px;
       margin-left: auto;
       animation: slideInUp 0.6s ease-out 0.1s backwards;
+    }
+
+    .login-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 10%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 90%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .login-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      pointer-events: none;
     }
 
     .panel-glow {
@@ -256,18 +278,6 @@ import { environment } from '../../../environments/environments';
       width: 200%;
       height: 200%;
       background: radial-gradient(circle at 30% 20%, rgba(124, 58, 237, 0.08), transparent 60%);
-      pointer-events: none;
-    }
-
-    .panel-border {
-      position: absolute;
-      inset: 0;
-      border-radius: 1.2rem;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.5), rgba(6, 182, 212, 0.3), rgba(124, 58, 237, 0.1));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
       pointer-events: none;
     }
 
@@ -310,13 +320,15 @@ import { environment } from '../../../environments/environments';
       width: 100%;
       padding: 0.65rem 0.75rem;
       border-radius: 8px;
-      border: 1px solid #334155;
-      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(2, 6, 23, 0.45);
       color: #e5e7eb;
       font-size: 0.9rem;
       transition: all 0.2s ease;
       position: relative;
       z-index: 1;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     input::placeholder {
@@ -325,8 +337,9 @@ import { environment } from '../../../environments/environments';
 
     input:focus {
       outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3), 0 0 20px rgba(99, 102, 241, 0.1);
+      border-color: #818cf8;
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.3), 0 0 24px rgba(99, 102, 241, 0.12);
+      background: rgba(2, 6, 23, 0.6);
     }
 
     .btn-primary {
@@ -411,8 +424,10 @@ import { environment } from '../../../environments/environments';
     }
 
     .feedback-error {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: #fca5a5;
     }
 
@@ -431,7 +446,11 @@ import { environment } from '../../../environments/environments';
       content: "";
       flex: 1;
       height: 1px;
-      background: #334155;
+      background: linear-gradient(90deg, transparent, rgba(148,163,184,0.2));
+    }
+
+    .oauth-divider::after {
+      background: linear-gradient(270deg, transparent, rgba(148,163,184,0.2));
     }
 
     .btn-google {
@@ -439,8 +458,10 @@ import { environment } from '../../../environments/environments';
       width: 100%;
       padding: 0.65rem 0.9rem;
       border-radius: 8px;
-      border: 1px solid #334155;
-      background: rgba(2, 6, 23, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(2, 6, 23, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: #cbd5e1;
       font-size: 0.88rem;
       font-weight: 500;
@@ -459,8 +480,8 @@ import { environment } from '../../../environments/environments';
     }
 
     .btn-google:hover {
-      background: rgba(30, 41, 59, 0.8);
-      border-color: #475569;
+      background: rgba(30, 41, 59, 0.6);
+      border-color: rgba(148, 163, 184, 0.3);
       transform: translateY(-1px);
     }
 
@@ -476,7 +497,7 @@ import { environment } from '../../../environments/environments';
 
     .btn-ghost {
       border-radius: 8px;
-      border: 1px solid #334155;
+      border: 1px solid rgba(148, 163, 184, 0.15);
       background: transparent;
       color: #cbd5e1;
       padding: 0.4rem 0.8rem;
@@ -490,7 +511,7 @@ import { environment } from '../../../environments/environments';
     }
 
     .btn-ghost:hover {
-      border-color: #6366f1;
+      border-color: #818cf8;
       color: #c4b5fd;
       transform: translateY(-1px);
     }
