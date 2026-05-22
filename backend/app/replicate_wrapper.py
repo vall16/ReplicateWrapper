@@ -31,10 +31,12 @@ class ReplicateWrapper:
             if not user:
                 raise Exception("User not found")
 
+        consumed = False
         try:
             if user_id and db:
                 from app.services import UserService
                 UserService.consume_tokens(db, user_id, cost)
+                consumed = True
                 log_token_operation("CONSUME", user_id, int(cost), "SUCCESS")
 
             output = await asyncio.to_thread(
@@ -46,7 +48,7 @@ class ReplicateWrapper:
 
             return output
         except Exception as e:
-            if user_id and db:
+            if user_id and db and consumed:
                 from app.services import UserService
                 try:
                     UserService.refund_tokens(db, user_id, cost)
