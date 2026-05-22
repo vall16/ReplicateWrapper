@@ -916,8 +916,17 @@ async def stripe_webhook(request: Request, db=Depends(get_db)):
             return JSONResponse({"status": "ignored"}, status_code=200)
 
         session_id = session.get("id", "")
-        UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
-        print(f"[WEBHOOK] Credited {tokens} tokens to {user_email} (user {user.id}, session {session_id})")
+        try:
+            UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
+            print(f"[WEBHOOK] Credited {tokens} tokens to {user_email} (user {user.id}, session {session_id})")
+        except Exception as e:
+            error_str = str(e)
+            if "already processed" in error_str:
+                print(f"[WEBHOOK] Session {session_id} already processed, skipping")
+            else:
+                print(f"[WEBHOOK] Error processing session {session_id}: {error_str}")
+                db.rollback()
+                return JSONResponse({"error": "Internal server error"}, status_code=500)
 
     return JSONResponse({"status": "ok"}, status_code=200)
 

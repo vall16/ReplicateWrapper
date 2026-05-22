@@ -111,7 +111,19 @@ def confirm_checkout(
         raise HTTPException(status_code=400, detail="Missing package information")
 
     # update the user (with session_id deduplication)
-    user = UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
+    try:
+        user = UserService.purchase_tokens(db, user.id, tokens, stripe_session_id=session_id)
+    except Exception as e:
+        error_str = str(e)
+        if "already processed" in error_str:
+            db.rollback()
+            current_user = UserService.get_user(db, user.id)
+            return {
+                "status": "already_credited",
+                "tokens_added": 0,
+                "new_balance": current_user.tokens
+            }
+        raise HTTPException(status_code=400, detail=error_str)
 
     return {
         "status": "success",

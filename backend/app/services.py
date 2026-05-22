@@ -49,7 +49,7 @@ class UserService:
         if stripe_session_id:
             exists = db.query(TokenTransaction).filter(
                 TokenTransaction.stripe_session_id == stripe_session_id
-            ).first()
+            ).with_for_update().first()
             if exists:
                 raise Exception(f"Session {stripe_session_id} already processed")
 
@@ -68,7 +68,12 @@ class UserService:
         )
 
         db.add(transaction)
-        db.commit()
+        try:
+            db.commit()
+        except Exception:
+            db.rollback()
+            raise
+
         db.refresh(user)
         return user
     
