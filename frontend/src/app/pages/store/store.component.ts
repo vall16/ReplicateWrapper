@@ -171,18 +171,25 @@ import { StripeService } from '../../services/stripe.service';
     :host {
       display: block;
       min-height: 100vh;
-      color: #1f2937;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(124, 58, 237, 0.25), transparent 40%),
+        radial-gradient(ellipse at 90% 100%, rgba(6, 182, 212, 0.2), transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.08), transparent 50%),
+        linear-gradient(180deg, #080c1a 0%, #03050c 100%);
+      transition: background 0.4s ease;
     }
-      :host-context(.dark-mode) {
-  color: #e5e7eb;
-}
 
-:host-context(.dark-mode) .glass-card {
-  background: #0f172a;
-  border: 1px solid #334155;
-  color: #e5e7eb;
-}
+    @keyframes store-borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    @keyframes store-shimmer {
+      0% { left: -50%; opacity: 0; }
+      50% { opacity: 1; }
+      100% { left: 150%; opacity: 0; }
+    }
 
     .store-shell {
       max-width: 1120px;
@@ -200,43 +207,63 @@ import { StripeService } from '../../services/stripe.service';
 
     .store-title {
       margin: 0;
-      font-size: 1.7rem;
-      font-weight: 600;
+      font-size: 1.8rem;
+      font-weight: 700;
       letter-spacing: 0.04em;
-      color: #cbd5e1;
+      background: linear-gradient(120deg, #f8fafc, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .store-subtitle {
       margin: 0.35rem 0 0;
-      font-size: 0.86rem;
-      color: #cbd5e1;;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
       max-width: 420px;
     }
 
     .btn-ghost {
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #4b5563;
-      padding: 0.42rem 0.9rem;
-      font-size: 0.8rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.5rem 1rem;
+      font-size: 0.78rem;
       cursor: pointer;
-      font-weight: 500;
-      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .btn-ghost:hover {
-      background: #f3f4f6;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      transform: translateY(-1px);
+      background: rgba(124, 58, 237, 0.1);
+      border-color: rgba(124, 58, 237, 0.3);
+      color: #c084fc;
+      transform: translateY(-2px);
     }
 
     .btn-link {
       background: transparent;
-      border: 1px solid #2563eb;
-      color: #2563eb;
-      padding: 0.3rem 0.6rem;
-      border-radius: 0.5rem;
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      color: #c084fc;
+      padding: 0.45rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .btn-link:hover {
+      background: rgba(124, 58, 237, 0.1);
+      border-color: #7c3aed;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+      transform: translateY(-2px);
     }
 
     .store-main {
@@ -247,16 +274,45 @@ import { StripeService } from '../../services/stripe.service';
 
     .glass-card {
       position: relative;
-      border-radius: 1.2rem;
-      padding: 1.25rem 1.3rem;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      border-radius: 1.25rem;
+      padding: 1.3rem 1.4rem;
+      background: rgba(12, 16, 32, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
       overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(20px);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(124, 58, 237, 0.25);
     }
 
     .glass-card::before {
-      display: none;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.1), transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.08), transparent 40%);
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .glass-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.4), rgba(6, 182, 212, 0.4), transparent);
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .glass-card:hover::after {
+      opacity: 0.8;
     }
 
     .glass-card > * {
@@ -276,14 +332,14 @@ import { StripeService } from '../../services/stripe.service';
       font-size: 1.1rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      font-weight: 600;
-      color: #dfe3e7ff;
+      font-weight: 700;
+      color: #f8fafc;
     }
 
     .hero-copy p {
       margin: 0.45rem 0 0.6rem;
       font-size: 0.85rem;
-      color: #3179d6;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .hero-list {
@@ -292,16 +348,16 @@ import { StripeService } from '../../services/stripe.service';
       margin: 0.35rem 0 0;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.3rem;
       font-size: 0.8rem;
-      color: #cbd5e1;;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .hero-list li::before {
-      content: "•";
+      content: "▸";
       display: inline-block;
       margin-right: 0.4rem;
-      color: #6366f1;
+      color: #c084fc;
     }
 
     .hero-security {
@@ -319,12 +375,15 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .security-chip {
-      padding: 0.25rem 0.6rem;
+      padding: 0.3rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid #d1d5db;
-      font-size: 0.72rem;
-      color: #374151;
-      background: #ffffff;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      font-size: 0.68rem;
+      color: #22d3ee;
+      background: rgba(6, 182, 212, 0.06);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
     }
 
     .security-lock {
@@ -332,32 +391,38 @@ import { StripeService } from '../../services/stripe.service';
       flex-direction: column;
       align-items: center;
       gap: 0.35rem;
-      font-size: 0.75rem;
-      color: #4b5563;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .lock-ring {
       width: 50px;
       height: 50px;
       border-radius: 999px;
-      background: conic-gradient(from 220deg, #10b981, #6366f1, #10b981);
+      background: conic-gradient(from 220deg, #10b981, #7c3aed, #06b6d4, #10b981);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+      animation: dash-float 6s ease-in-out infinite;
+    }
+
+    @keyframes dash-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     .lock-inner {
       width: 76%;
       height: 76%;
       border-radius: 999px;
-      background: #ffffff;
+      background: rgba(8, 12, 26, 0.95);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1rem;
       font-weight: 700;
-      color: #10b981;
+      color: #6ee7b7;
     }
 
     .packages-grid {
@@ -367,43 +432,41 @@ import { StripeService } from '../../services/stripe.service';
       margin: 0;
     }
 
-    /* ===== PACKAGE CARD STYLES ===== */
-    /* .package-card {
+    .package-card {
       position: relative;
       transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       flex-direction: column;
       gap: 1rem;
       padding: 1.6rem 1.4rem;
-      animation: slideInUp 0.6s ease-out forwards;
-      opacity: 0;
-      overflow: visible !important;
-
-    } */
-
-    .package-card {
-  position: relative;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.6rem 1.4rem;
-
-  opacity: 1;
-  animation: slideInUp 0.6s ease-out;
-}
+      animation: slideInUp 0.6s ease-out;
+      background: rgba(12, 16, 32, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 1.25rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
 
     .package-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.08), transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(6, 182, 212, 0.06), transparent 40%);
+      pointer-events: none;
+    }
+
+    .package-card::after {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
-      border-radius: 1.2rem;
-      pointer-events: none;
-      opacity: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), rgba(6, 182, 212, 0.3), transparent);
+      opacity: 0.3;
       transition: opacity 0.3s ease;
     }
 
@@ -413,35 +476,34 @@ import { StripeService } from '../../services/stripe.service';
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-      border-radius: 1.2rem;
-    }
-
-    .package-card:hover::before {
-      opacity: 1;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     }
 
     .package-card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
-      border-color: #6366f1;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(124, 58, 237, 0.12);
+      border-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .package-card:hover::after {
+      opacity: 0.7;
     }
 
     .package-featured {
-      border: 2px solid #f59e0b !important;
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
-      /* transform: scale(1.05); */
-      transform: scale(1.01);
+      border: 1px solid rgba(245, 158, 11, 0.3) !important;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(245, 158, 11, 0.08) !important;
+    }
 
+    .package-featured::after {
+      background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.4), transparent) !important;
     }
 
     .package-featured:hover {
-      transform: translateY(-8px) scale(1.07);
-      box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
+      transform: translateY(-8px) scale(1.04);
+      border-color: rgba(245, 158, 11, 0.5) !important;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 60px rgba(245, 158, 11, 0.15) !important;
     }
 
-    /* Badge Container */
     .badge-container {
       position: relative;
       margin-bottom: 0.25rem;
@@ -449,33 +511,32 @@ import { StripeService } from '../../services/stripe.service';
 
     .package-badge {
       display: inline-block;
-      padding: 0.4rem 0.9rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 999px;
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
       color: #ffffff;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
       position: relative;
       z-index: 2;
     }
 
     .badge-glow {
       position: absolute;
-      inset: -4px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 100%);
+      inset: -6px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 100%);
       border-radius: 999px;
       animation: store-pulse 2s ease-in-out infinite;
     }
 
     @keyframes store-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
 
-    /* Header Section */
     .package-header {
       display: flex;
       flex-direction: column;
@@ -498,12 +559,13 @@ import { StripeService } from '../../services/stripe.service';
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      border-radius: 12px;
       color: white;
       flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
     }
 
     .tier-icon svg {
@@ -514,109 +576,82 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .package-featured .tier-icon {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
     }
 
-    /* .package-name {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    } */
-
     .package-name {
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  color: #eceff5; /* chiaro e leggibile */
-  font-weight: 700;
-}
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #f8fafc;
+      letter-spacing: 0.03em;
+    }
 
     .package-featured .package-name {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      background: linear-gradient(135deg, #fcd34d, #f59e0b);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .package-description {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       line-height: 1.4;
-      color: #6b7280;
+      color: rgba(255, 255, 255, 0.4);
       font-weight: 500;
     }
 
-    .package-featured .package-description {
-      color: #92400e;
-    }
-
-    /* Value Section */
     .package-value-section {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
       padding: 1rem;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      border-radius: 0.8rem;
-      border: 1px solid #e5e7eb;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.08);
     }
 
     .package-featured .package-value-section {
-      background: linear-gradient(135deg, #fef3c7 0%, #fef9e7 100%);
-      border-color: #fcd34d;
+      background: rgba(245, 158, 11, 0.04);
+      border-color: rgba(245, 158, 11, 0.15);
     }
 
     .tokens-showcase {
       text-align: center;
-      padding: 0.5rem 0;
+      padding: 0.3rem 0;
     }
 
     .tokens-number {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.15rem;
     }
 
     .tokens-value {
       font-size: 2rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #c084fc, #22d3ee);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .package-featured .tokens-value {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(135deg, #fcd34d, #f59e0b);
     }
 
     .tokens-unit {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #9ca3af;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.3);
       font-weight: 600;
     }
 
-    .package-featured .tokens-unit {
-      color: #b45309;
-    }
-
-    /* Price Section */
     .price-section {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.3rem;
     }
 
     .price-display {
@@ -630,51 +665,50 @@ import { StripeService } from '../../services/stripe.service';
     .price-currency {
       font-size: 0.95rem;
       font-weight: 600;
-      color: #6366f1;
+      color: #c084fc;
     }
 
     .package-featured .price-currency {
-      color: #f59e0b;
+      color: #fcd34d;
     }
 
     .price-amount {
       font-size: 1.8rem;
       font-weight: 800;
-      color: #1f2937;
+      color: #f8fafc;
     }
 
     .package-featured .price-amount {
-      color: #d97706;
+      color: #f59e0b;
     }
 
     .unit-price {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.2rem;
     }
 
     .unit-label {
-      font-size: 0.72rem;
-      color: #9ca3af;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.3);
       font-weight: 500;
     }
 
-    .package-featured .unit-label {
-      color: #b45309;
-    }
-
     .value-tag {
-      font-size: 0.7rem;
-      color: #10b981;
+      font-size: 0.68rem;
+      color: #6ee7b7;
       font-weight: 700;
       display: inline-block;
+      background: rgba(16, 185, 129, 0.08);
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
     }
 
-    /* Value Indicator */
     .value-indicator {
       height: 4px;
-      background: #e5e7eb;
+      background: rgba(148, 163, 184, 0.1);
       border-radius: 999px;
       overflow: hidden;
       margin-top: 0.25rem;
@@ -682,69 +716,83 @@ import { StripeService } from '../../services/stripe.service';
 
     .indicator-bar {
       height: 100%;
-      background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
       border-radius: 999px;
       transition: width 0.6s ease-out;
     }
 
     .package-featured .indicator-bar {
-      background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+      background: linear-gradient(90deg, #f59e0b, #d97706);
     }
 
-    /* CTA Button */
     .btn-purchase {
       margin-top: 0.5rem;
       padding: 0.75rem 1rem;
-      border-radius: 8px;
+      border-radius: 10px;
       border: none;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      background: linear-gradient(45deg, #7c3aed, #06b6d4);
+      background-size: 200% 200%;
+      animation: gradientBG 4s ease infinite;
       color: white;
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
       position: relative;
       overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .btn-purchase::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      top: -50%;
+      left: -20%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: rotate(20deg);
+      transition: left 0.5s ease;
     }
 
     .btn-purchase:hover:not(:disabled)::before {
-      opacity: 1;
+      left: 120%;
     }
 
     .btn-purchase:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.6);
     }
 
     .btn-purchase:active:not(:disabled) {
-      transform: translateY(0);
+      transform: translateY(0) scale(0.98);
     }
 
     .btn-featured {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      background: linear-gradient(45deg, #f59e0b, #d97706) !important;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4) !important;
+      animation: gradientBG 4s ease infinite !important;
     }
 
     .btn-featured:hover:not(:disabled) {
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.6) !important;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .btn-purchase:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
@@ -760,7 +808,7 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .btn-purchase:hover:not(:disabled) .btn-arrow {
-      transform: translateX(4px);
+      transform: translateX(6px);
     }
 
     .btn-loading {
@@ -786,7 +834,7 @@ import { StripeService } from '../../services/stripe.service';
     .empty-state {
       text-align: center;
       font-size: 0.85rem;
-      color: #4b5563;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .feedback {
@@ -800,44 +848,42 @@ import { StripeService } from '../../services/stripe.service';
     }
 
     .feedback-error {
-      background: #fef2f2;
-      border: 1px solid #fca5a5;
-      color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
     }
 
     .feedback-success {
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
     }
 
-/* --- FAQ Section Base (Light Mode) --- */
-.faq-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-top: 1rem;
-}
+    .faq-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
 
-.faq-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 1.5rem;
-}
+    .faq-card {
+      padding: 1.5rem;
+    }
 
-.faq-card h3 {
-  margin: 0 0 0.6rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff; /* Grigio quasi nero per massima leggibilità */
-}
+    .faq-card h3 {
+      margin: 0 0 0.6rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: 0.03em;
+    }
 
-.faq-card p {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: #1248dd; /* Grigio scuro leggibile */
-}
+    .faq-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.45);
+    }
 
     @media (max-width: 900px) {
       .hero-card {
@@ -980,10 +1026,6 @@ import { StripeService } from '../../services/stripe.service';
         font-size: 1.3rem;
       }
 
-      .tokens-display {
-        font-size: 0.9rem;
-      }
-
       .tokens-unit {
         font-size: 0.7rem;
       }
@@ -1021,139 +1063,6 @@ import { StripeService } from '../../services/stripe.service';
         align-items: flex-start;
       }
     }
-  
-    :host-context(.dark-mode) {
-  color: #e5e7eb;
-}
-
-/* 🔥 FORZA TUTTI I TESTI LEGGIBILI */
-:host-context(.dark-mode) h1,
-:host-context(.dark-mode) h2,
-:host-context(.dark-mode) h3,
-:host-context(.dark-mode) p,
-:host-context(.dark-mode) span,
-:host-context(.dark-mode) small,
-:host-context(.dark-mode) li {
-  color: #e5e7eb !important;
-}
-
-/* testi secondari più soft */
-:host-context(.dark-mode) .store-subtitle,
-:host-context(.dark-mode) .hero-copy p,
-:host-context(.dark-mode) .package-description,
-:host-context(.dark-mode) .price-unit,
-:host-context(.dark-mode) .tokens-label,
-:host-context(.dark-mode) .faq-card p {
-  color: #94a3b8 !important;
-}
-
-/* card scure corrette */
-:host-context(.dark-mode) .glass-card {
-  background: #0f172a;
-  border: 1px solid #334155;
-}
-
-/* chip leggibili */
-:host-context(.dark-mode) .security-chip {
-  background: #111827;
-  border: 1px solid #334155;
-  color: #e5e7eb;
-}
-
-/* bottoni ghost leggibili */
-:host-context(.dark-mode) .btn-ghost {
-  background: transparent;
-  border: 1px solid #334155;
-  color: #e5e7eb;
-}
-
-:host-context(.dark-mode) .btn-ghost:hover {
-  background: #1e293b;
-}
-/* --- Dark Mode Overrides --- */
-:host-context(.dark-mode) .faq-card {
-  background: #1e293b !important; /* Blu scuro profondo invece di nero totale */
-  border: 1px solid #334155 !important;
-}
-
-:host-context(.dark-mode) .faq-card h3 {
-  color: #f8fafc !important; /* Bianco sporco brillante */
-}
-
-:host-context(.dark-mode) .faq-card p {
-  color: #cbd5e1 !important; /* Grigio chiaro con alto contrasto */
-}
-
-/* Fix per il contenitore generale in Dark Mode */
-:host-context(.dark-mode) .store-shell {
-  color: #f1f5f9;
-}
-
-/* Dark mode package cards */
-:host-context(.dark-mode) .package-card {
-  background: #1e293b;
-  border: 1px solid #334155;
-}
-
-:host-context(.dark-mode) .package-card:hover {
-  border-color: #6366f1;
-  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
-}
-
-:host-context(.dark-mode) .package-featured {
-  background: linear-gradient(135deg, #4b3409 0%, #5a3a1a 100%);
-  border-color: #f59e0b;
-}
-
-:host-context(.dark-mode) .package-name {
-  background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-:host-context(.dark-mode) .package-featured .package-name {
-  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-:host-context(.dark-mode) .package-description {
-  color: #94a3b8;
-}
-
-:host-context(.dark-mode) .package-featured .package-description {
-  color: #d4a574;
-}
-
-:host-context(.dark-mode) .package-value-section {
-  background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
-  border-color: #334155;
-}
-
-:host-context(.dark-mode) .package-featured .package-value-section {
-  background: linear-gradient(135deg, #6b3a0a 0%, #7c4a12 100%);
-  border-color: #f59e0b;
-}
-
-:host-context(.dark-mode) .tokens-unit,
-:host-context(.dark-mode) .unit-label {
-  color: #64748b;
-}
-
-:host-context(.dark-mode) .package-featured .tokens-unit,
-:host-context(.dark-mode) .package-featured .unit-label {
-  color: #d4a574;
-}
-
-:host-context(.dark-mode) .price-amount {
-  color: #f1f5f9;
-}
-
-:host-context(.dark-mode) .value-indicator {
-  background: #334155;
-}
   `]
 })
 export class StoreComponent implements OnInit {

@@ -1,6 +1,5 @@
 from fastapi import HTTPException
 from typing import Optional
-from retrying import retry
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
