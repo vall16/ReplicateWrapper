@@ -24,23 +24,10 @@ import { ThemeService } from './services/theme.service';
 
         <div class="header-right">
           <nav class="nav-links hide-mobile">
-            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-</svg>
-
- Home</a>
-            <a routerLink="/dashboard" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
-</svg>
- Dashboard</a>
-            <a routerLink="/gallery" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-</svg>
- Gallery</a>
-            <a routerLink="/store" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-</svg>
- Store</a>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><polygon points="12 2 22 7 22 17 12 22 2 17 2 7"/><circle cx="12" cy="12" r="2"/></svg> Home</a>
+            <a routerLink="/dashboard" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 6"/><path d="M12 7v2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Dashboard</a>
+            <a routerLink="/gallery" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 9l2 2 3-3 4 4 3-3"/></svg> Gallery</a>
+            <a routerLink="/store" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M2 8l10-5 10 5-10 5L2 8z"/><path d="M2 8v8l10 5 10-5V8"/><path d="M12 3v17"/></svg> Store</a>
           </nav>
 
           <div class="ai-switch hide-mobile">
@@ -357,11 +344,18 @@ import { ThemeService } from './services/theme.service';
     } */
 
     .nav-links a {
-  background: transparent;
-  font-weight: 500;
-  color: rgba(255,255,255,0.7);
-}
-
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      padding: 0.45rem 0.75rem;
+      border-radius: 8px;
+      background: transparent;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      transition: all 0.25s ease;
+    }
 
     .nav-links a:nth-child(1) { animation-delay: 0.1s; }
     .nav-links a:nth-child(2) { animation-delay: 0.2s; }
@@ -372,33 +366,55 @@ import { ThemeService } from './services/theme.service';
       content: '';
       position: absolute;
       bottom: -2px;
-      left: 0;
+      left: 50%;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end));
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+      border-radius: 2px;
     }
 
-    .nav-links a:hover { 
-      color: var(--color-text-primary);
-      background-color: var(--color-bg-tertiary);
+    .nav-links a:hover {
+      color: #c084fc;
+      background: rgba(124, 58, 237, 0.08);
       transform: translateY(-2px);
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
+    .nav-links a:hover .icon {
+      filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.5));
     }
 
-    .nav-links a.active { 
-      color: var(--color-gradient-end);
-      background-color: rgba(99, 102, 241, 0.08);
+    .nav-links a:hover::after {
+      width: 80%;
+    }
+
+    .nav-links a.active {
+      color: #c084fc;
+      background: rgba(124, 58, 237, 0.12);
+    }
+
+    .nav-links a.active .icon {
+      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.7)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.3));
     }
 
     .nav-links a.active::after {
-      width: 100%;
+      width: 80%;
     }
 
-    .icon { width: 1.4em; height: 1.4em; position: relative; top: 1px; }
+    .icon {
+      width: 1.25em;
+      height: 1.25em;
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-links a:hover .icon {
+      transform: scale(1.12);
+    }
+
+    .nav-links a.active .icon {
+      transform: scale(1.08);
+    }
     .cta-group { display: flex; align-items: center; gap: 0.75rem; }
     .auth-buttons { display: flex; align-items: center; gap: 0.75rem; margin-left: 1.5rem; }
 
