@@ -22,7 +22,7 @@ import { environment } from '../../../environments/environments';
               <div class="token-current">{{ displayTokens | number:'1.0-0' }}</div>
               <div class="token-label">Available Tokens</div>
               <div *ngIf="selectedModel" class="token-info">
-                This model will cost <span class="cost-highlight">{{ selectedModel.cost }} tokens</span>
+                This will cost <span class="cost-highlight">{{ totalCost }} tokens</span>
               </div>
             </div>
           </div>
@@ -507,6 +507,13 @@ export class VideoGenerateComponent {
 
   readonly availableDurations: (5 | 10 | 30 | 60)[] = [5, 10, 30, 60];
   readonly resolutionOptions: ('480p' | '720p' | '1080p')[] = ['480p', '720p', '1080p'];
+
+  get totalCost(): number {
+    if (!this.selectedModel) return 0;
+    const durationMultiplier = this.duration / 5;
+    const resMultiplier = this.resolution === '1080p' ? 3 : this.resolution === '720p' ? 1.5 : 1;
+    return Math.round(this.selectedModel.cost * durationMultiplier * resMultiplier);
+  }
 
 
   availableVideoModels = [
