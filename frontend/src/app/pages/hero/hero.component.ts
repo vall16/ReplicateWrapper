@@ -2785,25 +2785,28 @@ import { RouterModule } from '@angular/router';
   height: 80px;
 }
 
-.output-preview img {
+.output-preview img,
+.output-preview video {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.output-preview img {
   z-index: 2;
   animation: swapImg 6s infinite;
+  animation-fill-mode: backwards;
 }
 
 .output-preview video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   z-index: 1;
 }
 
 @keyframes swapImg {
-  0%, 45% { opacity: 1; }
+  0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
 
