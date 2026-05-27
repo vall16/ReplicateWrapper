@@ -1135,8 +1135,8 @@ import { RouterModule } from '@angular/router';
 
 .hero-step-model {
   position: relative;
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-  border-color: #34d399;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.06));
+  border-color: rgba(16, 185, 129, 0.35);
   overflow: hidden;
 }
 
@@ -2545,7 +2545,7 @@ import { RouterModule } from '@angular/router';
     .form-group label {
       font-size: 0.875rem;
       font-weight: 500;
-      color: #374151;
+      color: #cbd5e1;
       margin-bottom: 0.5rem;
     }
 
@@ -2665,7 +2665,7 @@ import { RouterModule } from '@angular/router';
   background: #3b82f6;
 }
 .step-1 h3 {
-  color: #1d4ed8;
+  color: #60a5fa;
 }
 
 /* STEP 2 - Viola */
@@ -2673,7 +2673,7 @@ import { RouterModule } from '@angular/router';
   background: #8b5cf6;
 }
 .step-2 h3 {
-  color: #6d28d9;
+  color: #a78bfa;
 }
 
 /* STEP 3 - Verde */
@@ -2681,7 +2681,7 @@ import { RouterModule } from '@angular/router';
   background: #10b981;
 }
 .step-3 h3 {
-  color: #047857;
+  color: #34d399;
 }
 
 .btn-product {
@@ -2717,10 +2717,9 @@ import { RouterModule } from '@angular/router';
 /* --- Stili per i Circoli Floating nella sezione Contatti --- */
 
 .contact-section {
-  position: relative; /* Necessario per i cerchi absolute */
-  padding: 80px 0;
-  overflow: hidden; /* Evita che i cerchi creino scrollbar */
-  background: #050816;
+  position: relative;
+  padding: 6rem 2rem;
+  overflow: hidden;
 }
 
 .contact-background {
