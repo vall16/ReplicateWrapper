@@ -172,7 +172,7 @@ import { RouterModule } from '@angular/router';
 
 
           <!-- OpenAI DALL-E -->
-          <div class="product-card" [class.visible]="visibleCards[3]" [style.--card-index]="3" style="--card-index: 3">
+          <div class="product-card" [class.visible]="visibleCards[2]" [style.--card-index]="2" style="--card-index: 2">
             <div class="badge-lightning">Creative & Expressive</div>
             <div class="product-logo">
               <img src="assets/openai.svg" alt="OpenAI" class="logo-img" />
