@@ -1248,7 +1248,7 @@ import { RouterModule } from '@angular/router';
 
     .section-header p {
       font-size: 1.3rem;
-      color: #074cd4;
+      color: #94a3b8;
     }
 
     .products-grid {
@@ -2024,7 +2024,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .price-sub {
-      color: #4b5563;
+      color: #94a3b8;
       font-size: 0.8rem;
       margin-bottom: 1.8rem;
       transition: all 0.3s ease;
