@@ -103,7 +103,7 @@ import { RouterModule } from '@angular/router';
 
                 <div class="output-preview">
                   <img src="assets/flux_example.png" />
-                  <video src="assets/video_example.mp4" autoplay muted loop></video>
+                  <video src="assets/video_example.mp4" autoplay muted loop playsinline preload="auto"></video>
                 </div>
 
 
@@ -2790,6 +2790,7 @@ import { RouterModule } from '@angular/router';
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 2;
   animation: swapImg 6s infinite;
 }
 
@@ -2798,18 +2799,12 @@ import { RouterModule } from '@angular/router';
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  animation: swapVideo 6s infinite;
+  z-index: 1;
 }
 
 @keyframes swapImg {
   0%, 45% { opacity: 1; }
   50%, 100% { opacity: 0; }
-}
-
-@keyframes swapVideo {
-  0%, 45% { opacity: 0; }
-  50%, 100% { opacity: 1; }
 }
 
 /* Animazione del movimento */
