@@ -2785,22 +2785,31 @@ import { RouterModule } from '@angular/router';
   height: 80px;
 }
 
-.output-preview img,
+.output-preview img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: swapImg 6s infinite;
+}
+
 .output-preview video {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: swapPreview 6s infinite;
-}
-
-.output-preview video {
   opacity: 0;
+  animation: swapVideo 6s infinite;
 }
 
-@keyframes swapPreview {
+@keyframes swapImg {
   0%, 45% { opacity: 1; }
   50%, 100% { opacity: 0; }
+}
+
+@keyframes swapVideo {
+  0%, 45% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 
 /* Animazione del movimento */
