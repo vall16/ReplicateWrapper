@@ -272,11 +272,40 @@ import { RouterModule } from '@angular/router';
 
             </div>
           </div>
+
+          <!-- Minimax -->
+          <div class="product-card" [class.visible]="visibleCards[8]" [style.--card-index]="8" style="--card-index: 8">
+            <div class="badge-lightning">High-Quality Video AI</div>
+            <div class="product-logo">
+              <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-img">
+                <rect width="120" height="40" rx="6" fill="#1a1a2e"/>
+                <text x="60" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="url(#mgrad)">M</text>
+                <defs>
+                  <linearGradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#a855f7"/>
+                    <stop offset="100%" stop-color="#06b6d4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <h3>Minimax</h3>
+            <p>High-quality text-to-video generation with smooth motion and cinematic results</p>
+            <ul class="product-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Cinematic video quality</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Text-to-video AI</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Fast generation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><line x1="12" y1="11" x2="12" y2="21"/></svg> Natural motion</li>
+            </ul>
+            <button class="btn btn-product" (click)="scrollTo('pricing')">Create Video</button>
+            <div class="product-preview">
+              <img src="https://replicate.delivery/pbxt/da97a28b59c9278ba1c73b77f4ecb9b169ba7d8f12972726a95f82e5e6bdf38d/output.mp4.jpg" alt="Minimax Preview" (click)="scrollTo('pricing')"/>
+            </div>
+          </div>
         </div>
 
-        <!-- Available Models Text for Mobile -->
+          <!-- Available Models Text for Mobile -->
         <div class="models-list-mobile">
-          <p><strong>Available Models:</strong> Flux AI, Stable Diffusion XL, OpenAI GPT-image-1.5, Kling Video, Seedream, and Qwen.</p>
+          <p><strong>Available Models:</strong> Flux AI, Stable Diffusion XL, OpenAI GPT-image-1.5, Kling Video, Seedream, Qwen, and Minimax.</p>
         </div>
       </section>
 
@@ -1275,6 +1304,11 @@ import { RouterModule } from '@angular/router';
       grid-row: span 1;
     }
 
+    .products-grid > .product-card:nth-child(9) {
+      grid-column: span 6;
+      grid-row: span 1;
+    }
+
     .product-card {
       background: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(148, 163, 184, 0.28);
@@ -1391,7 +1425,8 @@ import { RouterModule } from '@angular/router';
       .products-grid > .product-card:nth-child(6) {
         grid-column: span 2;
       }
-      .products-grid > .product-card:nth-child(8) {
+      .products-grid > .product-card:nth-child(8),
+      .products-grid > .product-card:nth-child(9) {
         grid-column: span 2;
       }
     }
@@ -1403,7 +1438,8 @@ import { RouterModule } from '@angular/router';
       .products-grid > .product-card,
       .products-grid > .product-card:nth-child(1),
       .products-grid > .product-card:nth-child(6),
-      .products-grid > .product-card:nth-child(8) {
+      .products-grid > .product-card:nth-child(8),
+      .products-grid > .product-card:nth-child(9) {
         grid-column: auto;
         grid-row: auto;
       }
@@ -2801,7 +2837,7 @@ import { RouterModule } from '@angular/router';
   `]
 })
 export class HeroComponent implements OnInit, OnDestroy {
-  visibleCards: boolean[] = [false, false, false, false, false, false, false, false];
+  visibleCards: boolean[] = [false, false, false, false, false, false, false, false, false];
   private intersectionObserver: IntersectionObserver | null = null;
 
   words = ['stunning AI images', 'cinematic videos', '3D masterpieces', 'epic artworks'];
