@@ -1040,11 +1040,8 @@ onBlurPrompt() {
     };
 
     const style = styleMap[this.model] || "moderno";
-    const finalPrompt = this.buildPrompt();
-    console.log("FINALPROMPT", finalPrompt)
 
-    // this.authService.generateImage2(finalPrompt, style, this.model).subscribe(  // <-- qui passiamo model
-    this.authService.generateImage(finalPrompt, style, this.model, this.ratio).subscribe(  // <-- passiamo model + ratio
+    this.authService.generateImage(this.prompt, style, this.model, this.ratio).subscribe(
 
       (res: any) => {
         this.loading = false;

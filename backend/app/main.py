@@ -117,7 +117,7 @@ def build_prompt(description: str, style: str, ratio: str = "16:9"):
         "21:9": "cinematic composition"
     }.get(ratio, "landscape composition")
 
-    return f"{description}, {style}, {ratio_description}"
+    return f"{description}, {style}, {ratio_description}, high quality, detailed"
 
 
 @app.post("/generate")

@@ -56,24 +56,20 @@ def login(credentials: UserLogin, response: Response, db: Session = Depends(get_
         httponly=True,
         secure=os.getenv("ENVIRONMENT", "development") == "production",
         samesite="strict",
-        max_age=30*60  # 30 minutes
+        max_age=3*60*60  # 3 hours
     )
     return {
-        "access_token": access_token,  # Still return for backward compatibility
+        "access_token": access_token,
         "token_type": "bearer",
         "user": UserResponse.model_validate(user)
     }
 
-# USER PROFILE
 @router.get("/profile", response_model=UserResponse)
 def get_profile(user = Depends(get_current_user)):
-    """Returns the current user's profile"""
     return UserResponse.model_validate(user)
 
-# TOKEN BALANCE
 @router.get("/balance")
 def get_balance(user = Depends(get_current_user)):
-    """Returns the user's token balance"""
     return {
         "tokens": user.tokens,
         "user_id": user.id,
@@ -81,7 +77,6 @@ def get_balance(user = Depends(get_current_user)):
         "message": f"🪙 You have {user.tokens} tokens available"
     }
 
-# TRANSACTION HISTORY
 @router.get("/transactions", response_model=List[TokenTransaction])
 def get_transactions(
     limit: int = 50,
@@ -164,11 +159,11 @@ def google_login(payload: GoogleLoginRequest, response: Response, db: Session = 
         httponly=True,
         secure=os.getenv("ENVIRONMENT", "development") == "production",
         samesite="strict",
-        max_age=30*60  # 30 minutes
+        max_age=3*60*60  # 3 hours
     )
 
     return {
-        "access_token": access_token,  # Still return for backward compatibility
+        "access_token": access_token,
         "token_type": "bearer",
         "user": UserResponse.model_validate(user),
     }
