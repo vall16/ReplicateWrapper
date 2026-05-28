@@ -17,9 +17,9 @@ import { environment } from '../../../environments/environments';
           <p>View all your generated images and videos. Filter by style, model, or prompt text.</p>
         </div>
         <div class="header-actions">
-          <button class="btn" (click)="goToGenerate()">Generate Image</button>
-          <button class="btn" (click)="goToVideoGenerate()">Generate Video</button>
-          <button class="btn btn-primary" (click)="loadImages()">Refresh</button>
+          <button class="btn btn-primary-loud" (click)="goToGenerate()">Generate Image</button>
+          <button class="btn btn-primary" (click)="goToVideoGenerate()">Generate Video</button>
+          <button class="btn btn-primary-quiet" (click)="loadImages()">Refresh</button>
         </div>
       </header>
 
@@ -192,6 +192,66 @@ import { environment } from '../../../environments/environments';
     .btn-primary:hover {
       box-shadow: 0 8px 30px rgba(124, 58, 237, 0.6);
       transform: translateY(-3px);
+      color: #fff;
+    }
+
+    .btn-primary-loud {
+      background: linear-gradient(45deg, #9333ea, #22d3ee);
+      background-size: 200% 200%;
+      animation: galleryGradient 4s ease infinite;
+      color: #fff;
+      border: none !important;
+      box-shadow: 0 4px 30px rgba(124, 58, 237, 0.6), 0 0 60px rgba(124, 58, 237, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary-loud::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: rotate(20deg);
+      transition: left 0.5s ease;
+    }
+    .btn-primary-loud:hover::before {
+      left: 120%;
+    }
+    .btn-primary-loud:hover {
+      box-shadow: 0 8px 40px rgba(124, 58, 237, 0.8), 0 0 80px rgba(124, 58, 237, 0.3);
+      transform: translateY(-3px);
+      color: #fff;
+    }
+
+    .btn-primary-quiet {
+      background: linear-gradient(45deg, rgba(124, 58, 237, 0.5), rgba(6, 182, 212, 0.4));
+      background-size: 200% 200%;
+      animation: galleryGradient 4s ease infinite;
+      color: rgba(255, 255, 255, 0.7);
+      border: none !important;
+      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary-quiet::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transform: rotate(20deg);
+      transition: left 0.5s ease;
+    }
+    .btn-primary-quiet:hover::before {
+      left: 120%;
+    }
+    .btn-primary-quiet:hover {
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+      transform: translateY(-2px);
       color: #fff;
     }
 
