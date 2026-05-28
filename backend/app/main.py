@@ -22,33 +22,7 @@ from app.database import get_db, GeneratedImage, GeneratedVideo
 from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
-from app.model_mapper import map_model
 from app.logger import logger, log_file_download
-from unittest.mock import Mock
-
-# Mock per simulare Replicate
-class ReplicateMock:
-    def __init__(self):
-        self.jobs = []
-
-    def create_job(self, input_data):
-        # Simula un job che può avere successo o fallire
-        import random
-        job_id = len(self.jobs) + 1
-        status = "failed" if random.random() < 0.2 else "completed"
-        job = {"id": job_id, "status": status, "input": input_data}
-        self.jobs.append(job)
-        return job
-
-    def get_job_status(self, job_id):
-        # Restituisce lo stato di un job
-        for job in self.jobs:
-            if job["id"] == job_id:
-                return job["status"]
-        return "not_found"
-
-# Istanza del mock
-replicate_mock = ReplicateMock()
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -115,13 +89,6 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(token_router)
 
-# style mapping
-STYLE_MAP = {
-    "moderno": "modern italian apartment, minimal design, bright light",
-    "lusso": "luxury italian apartment, marble, elegant, high-end furniture",
-    "scandinavo": "scandinavian interior, wood, cozy, soft light"
-}
-
 class ImageRequest(BaseModel):
     description: str
     style: str = "moderno"
@@ -140,7 +107,6 @@ def _error_status(error_msg: str) -> int:
 
 
 def build_prompt(description: str, style: str, ratio: str = "16:9"):
-    base_style = STYLE_MAP.get(style, STYLE_MAP["moderno"])
     ratio_description = {
         "1:1": "square composition",
         "16:9": "landscape composition",
@@ -151,12 +117,7 @@ def build_prompt(description: str, style: str, ratio: str = "16:9"):
         "21:9": "cinematic composition"
     }.get(ratio, "landscape composition")
 
-    return f"""
-    {description},
-    {base_style},
-    {ratio_description},
-    real estate photography, wide angle, ultra realistic, 4k
-    """
+    return f"{description}, {style}, {ratio_description}"
 
 
 @app.post("/generate")
@@ -547,7 +508,9 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         model_version = VIDEO_MODEL_MAP[req.model]
         aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
         
-        token_cost = VIDEO_MODEL_COSTS.get(req.model, 10)
+        duration_multiplier = req.duration / 5
+        res_multiplier = 3 if req.resolution == "1080p" else (1.5 if req.resolution == "720p" else 1)
+        token_cost = round(VIDEO_MODEL_COSTS.get(req.model, 10) * duration_multiplier * res_multiplier)
         
         video_input_params = {
             "prompt": req.prompt,

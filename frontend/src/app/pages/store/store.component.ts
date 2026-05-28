@@ -1097,7 +1097,7 @@ export class StoreComponent implements OnInit {
               const user = this.authService.getCurrentUser();
               if (user) {
                 user.tokens = balance.tokens;
-                localStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.setItem('user', JSON.stringify(user));
               }
             });
 
