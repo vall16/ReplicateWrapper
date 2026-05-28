@@ -133,7 +133,7 @@ export class AuthService {
 
   // Purchase tokens
   purchaseTokens(amount: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/tokens/purchase`, 
+    return this.http.post(`${this.apiUrl}/tokens/purchase`,
       { amount },
       { withCredentials: true }
     ).pipe(
@@ -218,7 +218,7 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/generated-media${queryString}`, { withCredentials: true });
   }
 
-// CLICK DI GENERAZIONE
+  // CLICK DI GENERAZIONE
   generateImage(
     description: string,
     style: string = 'moderno',
