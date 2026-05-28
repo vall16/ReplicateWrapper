@@ -261,7 +261,8 @@ MODEL_MAP = {
 VIDEO_MODEL_MAP = {
     "kling-video": "kwaivgi/kling-v3-video",              # modello video principale
     "seedance-2": "bytedance/seedance-2.0",             # alternativa video
-    "pika-1": "pika-labs/pika-1.0"                      # alternativa pika
+    "pika-1": "pika-labs/pika-1.0",                      # alternativa pika
+    "minimax-video": "minimax/video-01"                  # text-to-video
 }
 
 # 💰 COSTI TOKEN PER MODELLO (immagini)
@@ -285,6 +286,7 @@ VIDEO_MODEL_COSTS = {
     "kling-video": 20,
     "seedance-2": 25,
     "pika-1": 30,
+    "minimax-video": 35,
 }
 
 # Security: Max file sizes and allowed MIME types

@@ -60,4 +60,4 @@ class VideoRequest(BaseModel):
     prompt: str = Field(..., min_length=10, max_length=1000)
     duration: Literal[5, 10, 30, 60] = Field(..., description="Duration in seconds")
     resolution: Literal["480p", "720p", "1080p"] = Field(..., description="Video resolution")
-    model: Literal["kling-video", "seedance-2", "pika-1"] = Field(..., description="Video model")
+    model: Literal["kling-video", "seedance-2", "pika-1", "minimax-video"] = Field(..., description="Video model")

@@ -622,7 +622,8 @@ export class GalleryComponent {
           { id: 'flux-schnell', name: 'FLUX Schnell' },
           { id: 'kling-video', name: 'Kling AI Video' },
           { id: 'runway-ml', name: 'Runway ML' },
-          { id: 'pika-1', name: 'Pika 1.0' }
+          { id: 'pika-1', name: 'Pika 1.0' },
+          { id: 'minimax-video', name: 'Minimax Video' }
         ];
       }
     );

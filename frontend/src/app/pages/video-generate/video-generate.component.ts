@@ -517,9 +517,10 @@ export class VideoGenerateComponent {
 
 
   availableVideoModels = [
-    { id: 'kling-video', name: 'Kwaivgi', cost: 20 },
-    { id: 'seedance-2', name: 'Bytedance', cost: 25 },
-    { id: 'pika-1', name: 'Pika 1.0', cost: 30 }
+    { id: 'kling-video', name: 'Kling AI Video', cost: 20 },
+    { id: 'seedance-2', name: 'Seedance 2.0', cost: 25 },
+    { id: 'pika-1', name: 'Pika 1.0', cost: 30 },
+    { id: 'minimax-video', name: 'Minimax Video', cost: 35 }
   ];
 
   constructor(
