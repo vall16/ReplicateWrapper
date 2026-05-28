@@ -1,5 +1,0 @@
-2026-05-28 11:09:23 - repli_api - INFO - TOKEN_OP user_id=1 op=CONSUME amount=20 status=SUCCESS
-2026-05-28 11:12:41 - repli_api - WARNING - FILE_DOWNLOAD user_id=None url=https://replicate.delivery/xezq/CujV4PLLWN5CBZG8DqZtLWxrf0WlJWGqYPoX2Hox9TeJkbpWA/tmptotx4rwh.mp4 status=FAILED error=Limits.__init__() got an unexpected keyword argument 'max_redirects'
-2026-05-28 11:12:41 - repli_api - INFO - TOKEN_OP user_id=1 op=REFUND amount=20 status=SUCCESS details=after_error: Error saving video: Limits.__init__() got an unexpected keyword argument 'max_redirects'
-2026-05-28 11:30:15 - repli_api - INFO - TOKEN_OP user_id=1 op=CONSUME amount=35 status=SUCCESS
-2026-05-28 11:33:09 - repli_api - INFO - FILE_DOWNLOAD user_id=None url=https://replicate.delivery/xezq/IVNo4bem8yyqdqfon20QkMUJ9z3opddtaamteviKpBoiu3StA/tmp2j0ovrir.mp4 status=SUCCESS
