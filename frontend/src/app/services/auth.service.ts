@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environments';
@@ -133,7 +133,7 @@ export class AuthService {
 
   // Purchase tokens
   purchaseTokens(amount: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/tokens/purchase`, 
+    return this.http.post(`${this.apiUrl}/tokens/purchase`,
       { amount },
       { withCredentials: true }
     ).pipe(
@@ -144,7 +144,7 @@ export class AuthService {
           if (user) {
             user.tokens = balance.tokens;
             this.currentUserSubject.next(user);
-            localStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('user', JSON.stringify(user));
           }
         });
       })
@@ -153,25 +153,8 @@ export class AuthService {
 
   // Verifica token
   checkTokens(): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get(`${this.apiUrl}/tokens/check`, { headers });
+    return this.http.get(`${this.apiUrl}/tokens/check`, { withCredentials: true });
   }
-
-  // Helper per ottenere headers
-  private getAuthHeaders(): Observable<HttpHeaders> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return new Observable(observer => {
-      observer.next(headers);
-      observer.complete();
-    });
-  }
-
 
   // Carica i modelli disponibili
   getAvailableModels(): Observable<any> {
@@ -180,11 +163,6 @@ export class AuthService {
 
   // Lista immagini generate dall'utente, con filtri
   getGeneratedImages(filters: { style?: string; model?: string; prompt?: string; limit?: number } = {}): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
     const params: string[] = [];
     if (filters.style) {
       params.push(`style=${encodeURIComponent(filters.style)}`);
@@ -200,16 +178,11 @@ export class AuthService {
     }
 
     const queryString = params.length ? `?${params.join('&')}` : '';
-    return this.http.get(`${this.apiUrl}/generated-images${queryString}`, { headers });
+    return this.http.get(`${this.apiUrl}/generated-images${queryString}`, { withCredentials: true });
   }
 
   // Lista video generati dall'utente, con filtri
   getGeneratedVideos(filters: { model?: string; prompt?: string; limit?: number } = {}): Observable<any> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
     const params: string[] = [];
     if (filters.model) {
       params.push(`model=${encodeURIComponent(filters.model)}`);
@@ -222,7 +195,7 @@ export class AuthService {
     }
 
     const queryString = params.length ? `?${params.join('&')}` : '';
-    return this.http.get(`${this.apiUrl}/generated-videos${queryString}`, { headers });
+    return this.http.get(`${this.apiUrl}/generated-videos${queryString}`, { withCredentials: true });
   }
 
   // Lista combinata immagini e video generati dall'utente, con filtri
@@ -245,20 +218,13 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/generated-media${queryString}`, { withCredentials: true });
   }
 
-// CLICK DI GENERAZIONE
+  // CLICK DI GENERAZIONE
   generateImage(
     description: string,
     style: string = 'moderno',
     model: string = 'stability-ai/sdxl:latest',
     ratio: string = '16:9'
   ): Observable<any> {
-    const token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
     return this.http.post<any>(
       `${this.apiUrl}/generate-paid`,
       {
@@ -267,7 +233,7 @@ export class AuthService {
         model,
         ratio
       },
-      { headers, withCredentials: true }
+      { withCredentials: true }
     );
   }
 
@@ -278,13 +244,6 @@ export class AuthService {
     resolution: string,
     model: string
   ): Observable<any> {
-    const token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
     return this.http.post<any>(
       `${this.apiUrl}/generate-video`,
       {
@@ -293,7 +252,7 @@ export class AuthService {
         resolution,
         model
       },
-      { headers, withCredentials: true }
+      { withCredentials: true }
     );
   }
 
