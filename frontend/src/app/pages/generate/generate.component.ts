@@ -1033,10 +1033,16 @@ onBlurPrompt() {
     const styleMap: any = {
       "flux-pro": "ultra realistic",
       "flux-dev": "realistic",
-      "sdxl": "digital art",
       "flux-schnell": "clean, modern, slightly stylized",
+      "sdxl": "digital art",
       "stable-diffusion-3": "photorealistic",
-      "dalle-3": "creative illustration"
+      "imagen-4": "photorealistic, detailed",
+      "imagen-4-fast": "photorealistic, fast",
+      "nano-banana": "clean, modern",
+      "nano-banana-pro": "high quality, detailed",
+      "gpt-image-1.5": "creative, expressive",
+      "qwen-image": "detailed, artistic",
+      "seedream-5-lite": "artistic, dreamlike"
     };
 
     const style = styleMap[this.model] || "moderno";
