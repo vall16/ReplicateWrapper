@@ -267,7 +267,7 @@ export class AuthService {
         model,
         ratio
       },
-      { headers }
+      { headers, withCredentials: true }
     );
   }
 
@@ -293,7 +293,7 @@ export class AuthService {
         resolution,
         model
       },
-      { headers }
+      { headers, withCredentials: true }
     );
   }
 

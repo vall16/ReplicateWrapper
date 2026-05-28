@@ -347,7 +347,7 @@ async def download_and_save_image(image_url: str) -> str:
         filepath = IMAGES_DIR / filename
 
         # Download the image with timeout
-        async with httpx.AsyncClient(follow_redirects=True, limits=httpx.Limits(max_redirects=5)) as client:
+        async with httpx.AsyncClient(follow_redirects=True, max_redirects=5) as client:
             response = await client.get(image_url, timeout=30.0)
             
         # Validate before saving
@@ -376,7 +376,7 @@ async def download_and_save_video(video_url: str) -> str:
         filepath = VIDEOS_DIR / filename
 
         # Download the video with longer timeout (heavier file)
-        async with httpx.AsyncClient(follow_redirects=True, limits=httpx.Limits(max_redirects=5)) as client:
+        async with httpx.AsyncClient(follow_redirects=True, max_redirects=5) as client:
             response = await client.get(video_url, timeout=120.0)
             
         # Validate before saving
