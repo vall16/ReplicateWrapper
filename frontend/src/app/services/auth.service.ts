@@ -123,7 +123,7 @@ export class AuthService {
 
   // Pacchetti token
   getTokenPackages(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/tokens/packages`);
+    return this.http.get(`${this.apiUrl}/tokens/packages`, { withCredentials: true });
   }
 
   // Confirm Stripe checkout

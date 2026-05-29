@@ -530,20 +530,6 @@ import { environment } from '../../../environments/environments';
       transition: transform 0.2s ease;
     }
 
-    /* This is the correct way to comment in CSS 
-    // .dropdown {
-    //   position: absolute;
-    //   top: calc(100% + 4px);
-    //   left: 0;
-    //   right: 0;
-    //   background: #fff;
-    //   border: 1px solid #e5e7eb;
-    //   border-radius: 6px;
-    //   max-height: 400px;
-    //   overflow-y: auto;
-    //   z-index: 10;
-    //   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-     }*/
 
     .dropdown {
       position: absolute;

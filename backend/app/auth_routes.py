@@ -11,7 +11,7 @@ from app.schemas import (
     GoogleLoginRequest,
 )
 from app.services import UserService
-from app.security import get_current_user
+from app.security import get_current_user, ACCESS_TOKEN_EXPIRE_MINUTES
 from typing import List
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -56,7 +56,7 @@ def login(credentials: UserLogin, response: Response, db: Session = Depends(get_
         httponly=True,
         secure=os.getenv("ENVIRONMENT", "development") == "production",
         samesite="strict",
-        max_age=3*60*60  # 3 hours
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
     return {
         "access_token": access_token,
@@ -159,7 +159,7 @@ def google_login(payload: GoogleLoginRequest, response: Response, db: Session = 
         httponly=True,
         secure=os.getenv("ENVIRONMENT", "development") == "production",
         samesite="strict",
-        max_age=3*60*60  # 3 hours
+        max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60
     )
 
     return {

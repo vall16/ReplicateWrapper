@@ -738,7 +738,6 @@ import { ThemeService } from './services/theme.service';
       transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-top: 60px;
     }
 
     .mobile-menu.active {
@@ -752,19 +751,7 @@ import { ThemeService } from './services/theme.service';
       justify-content: space-between;
       padding: 16px 20px;
       border-bottom: 1px solid var(--color-border);
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 80%;
-      max-width: 280px;
       background: var(--color-bg-primary);
-      z-index: 1000;
-      transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .mobile-menu.active ~ .mobile-menu-header,
-    .mobile-menu.active + .mobile-menu-header {
-      left: 0;
     }
 
     .mobile-menu-header h2 {
