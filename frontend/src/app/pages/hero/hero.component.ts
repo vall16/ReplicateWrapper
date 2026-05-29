@@ -119,6 +119,25 @@ import { RouterModule } from '@angular/router';
       </section>
 
       <!-- Sezione Prodotti -->
+      <div class="sunset-container">
+        <svg class="sunset-svg" viewBox="0 0 500 170" preserveAspectRatio="xMidYMid meet">
+          <path class="sunset-line sunset-word" d="M 15 38 C 50 38 50 56 30 56 C 15 56 15 76 50 82" />
+          <path class="sunset-line sunset-word sunset-d1" d="M 68 38 L 68 66 Q 68 82 88 82 L 108 82 Q 125 82 125 66 L 125 38" />
+          <path class="sunset-line sunset-word sunset-d2" d="M 140 38 L 140 82 L 180 44 L 180 82" />
+          <path class="sunset-line sunset-word sunset-d3" d="M 195 38 C 230 38 230 56 210 56 C 195 56 195 76 230 82" />
+          <path class="sunset-line sunset-word sunset-d4" d="M 248 38 L 285 38 L 285 46 L 248 46 L 248 55 L 285 55 L 285 63 L 248 63 L 248 72 L 285 72" />
+          <path class="sunset-line sunset-word sunset-d5" d="M 304 38 L 350 38 M 327 38 L 327 82" />
+          <path class="sunset-line sunset-word sunset-d6" d="M 327 82 Q 342 125 355 105" />
+          <path class="sunset-line sunset-sun sunset-d7" d="M 355 105 A 65 65 0 0 1 485 105" />
+          <path class="sunset-line sunset-horizon sunset-d7" d="M 485 105 L 5 105" />
+          <path class="sunset-line sunset-mtn1 sunset-d8" d="M 15 105 L 40 75 L 65 105 L 95 60 L 125 105 L 155 80 L 185 105" />
+          <path class="sunset-line sunset-mtn2 sunset-d8" d="M 200 105 L 235 70 L 270 105 L 305 85 L 340 105" />
+          <path class="sunset-line sunset-mtn3 sunset-d8" d="M 355 105 L 385 70 L 415 105 L 445 85 L 475 105" />
+          <path class="sunset-line sunset-sunray sunset-d8" d="M 415 40 L 415 24" />
+          <path class="sunset-line sunset-sunray sunset-d8" d="M 435 42 L 435 25" />
+          <path class="sunset-line sunset-sunray sunset-d8" d="M 455 50 L 468 35" />
+        </svg>
+      </div>
       <section class="products" id="features">
         <div class="section-header">
           <h2>Available Generative Models</h2>
@@ -1229,6 +1248,51 @@ import { RouterModule } from '@angular/router';
     }
 
     /* Products Section */
+    .sunset-container {
+      padding: 2rem 2rem 0 2rem;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .sunset-svg {
+      width: 100%;
+      max-width: 960px;
+      height: auto;
+      opacity: 0.85;
+    }
+
+    .sunset-line {
+      fill: none;
+      stroke: rgba(255,255,255,0.4);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: hero-sunset-draw 2s ease-out forwards;
+    }
+
+    .sunset-d1 { animation-delay: 0.3s; }
+    .sunset-d2 { animation-delay: 0.6s; }
+    .sunset-d3 { animation-delay: 0.9s; }
+    .sunset-d4 { animation-delay: 1.2s; }
+    .sunset-d5 { animation-delay: 1.5s; }
+    .sunset-d6 { animation-delay: 2s; }
+    .sunset-d7 { animation-delay: 2.5s; }
+    .sunset-d8 { animation-delay: 3s; }
+
+    .sunset-word { stroke: rgba(255, 255, 255, 0.9); }
+    .sunset-sun { stroke: #f97316; }
+    .sunset-sunray { stroke: #f97316; }
+    .sunset-horizon { stroke: #22d3ee; }
+    .sunset-mtn1 { stroke: #ec4899; }
+    .sunset-mtn2 { stroke: #a78bfa; }
+    .sunset-mtn3 { stroke: #22d3ee; }
+
+    @keyframes hero-sunset-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
     .products {
       max-width: 1120px;
       margin: 3.5rem auto;
