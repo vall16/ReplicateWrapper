@@ -7,3 +7,9 @@ __pycache__/
 dist/
 # Cache di Angular
 .angular/
+
+# Backend logs
+backend/logs/
+
+# Uploaded videos
+backend/uploads/videos/
