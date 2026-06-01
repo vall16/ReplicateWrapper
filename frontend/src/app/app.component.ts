@@ -22,14 +22,16 @@ import { ThemeService } from './services/theme.service';
           </div>
         </div>
 
-        <div class="header-right">
+        <div class="header-center">
           <nav class="nav-links hide-mobile">
             <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><polygon points="12 2 22 7 22 17 12 22 2 17 2 7"/><circle cx="12" cy="12" r="2"/></svg> Home</a>
             <a routerLink="/dashboard" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 6"/><path d="M12 7v2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg> Dashboard</a>
             <a routerLink="/gallery" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 9l2 2 3-3 4 4 3-3"/></svg> Gallery</a>
             <a routerLink="/store" routerLinkActive="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M2 8l10-5 10 5-10 5L2 8z"/><path d="M2 8v8l10 5 10-5V8"/><path d="M12 3v17"/></svg> Store</a>
           </nav>
+        </div>
 
+        <div class="header-right">
           <div class="ai-switch hide-mobile">
             <button [class.active]="activeCTA==='image'" (click)="setActiveCTA('image')" routerLink="/generate">
               ✨ Image
@@ -328,6 +330,7 @@ import { ThemeService } from './services/theme.service';
     .logo-subtitle { font-size: 0.75rem; color: var(--color-text-tertiary); }
     
     .header-left { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .header-center { flex: 1; display: flex; justify-content: center; padding-left: 3rem; }
     .header-right { display: flex; align-items: center; gap: 0.85rem; }
 
     .nav-links {
