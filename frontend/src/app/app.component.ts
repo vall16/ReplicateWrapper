@@ -37,6 +37,9 @@ import { ThemeService } from './services/theme.service';
             <button [class.active]="activeCTA==='video'" (click)="setActiveCTA('video')" routerLink="/video-generate">
               🎬 Video
             </button>
+            <button [class.active]="activeCTA==='img-video'" (click)="setActiveCTA('img-video')" routerLink="/img-video-generate">
+              🖼️→🎬 Img2Video
+            </button>
           </div>
 
           <div class="auth-buttons hide-mobile">
@@ -80,6 +83,11 @@ import { ThemeService } from './services/theme.service';
           <li>
             <button class="mobile-ai-switch" [class.video-active]="activeCTA==='video'" (click)="setActiveCTA('video'); closeMobileMenu()" routerLink="/video-generate">
               🎬 Video
+            </button>
+          </li>
+          <li>
+            <button class="mobile-ai-switch" [class.img-video-active]="activeCTA==='img-video'" (click)="setActiveCTA('img-video'); closeMobileMenu()" routerLink="/img-video-generate">
+              🖼️→🎬 Img2Video
             </button>
           </li>
           <li class="divider"></li>
@@ -849,7 +857,8 @@ import { ThemeService } from './services/theme.service';
     }
 
     .mobile-ai-switch.image-active,
-    .mobile-ai-switch.video-active {
+    .mobile-ai-switch.video-active,
+    .mobile-ai-switch.img-video-active {
       background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
       color: white;
     }
@@ -920,12 +929,12 @@ import { ThemeService } from './services/theme.service';
 })
 export class AppComponent {
   title = 'repli-frontend';
-  activeCTA: 'image' | 'video' | null = null;
+  activeCTA: 'image' | 'video' | 'img-video' | null = null;
   mobileMenuOpen = false;
 
   constructor(public themeService: ThemeService) {}
 
-  setActiveCTA(type: 'image' | 'video') {
+  setActiveCTA(type: 'image' | 'video' | 'img-video') {
     this.activeCTA = type;
   }
 

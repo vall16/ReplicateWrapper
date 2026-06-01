@@ -19,6 +19,7 @@ import { environment } from '../../../environments/environments';
         <div class="header-actions">
           <button class="btn btn-primary-loud" (click)="goToGenerate()">Generate Image</button>
           <button class="btn btn-primary" (click)="goToVideoGenerate()">Generate Video</button>
+          <button class="btn btn-primary" (click)="goToImgVideoGenerate()">Image to Video</button>
           <button class="btn btn-primary-quiet" (click)="loadImages()">Refresh</button>
         </div>
       </header>
@@ -697,6 +698,10 @@ export class GalleryComponent {
 
   goToVideoGenerate() {
     this.router.navigate(['/video-generate']);
+  }
+
+  goToImgVideoGenerate() {
+    this.router.navigate(['/img-video-generate']);
   }
 
   loadImages() {

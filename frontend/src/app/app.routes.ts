@@ -14,5 +14,6 @@ export const routes: Routes = [
   { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent), canActivate: [authGuard] },
   { path: 'generate', loadComponent: () => import('./pages/generate/generate.component').then(m => m.GenerateComponent), canActivate: [authGuard] },
   { path: 'video-generate', loadComponent: () => import('./pages/video-generate/video-generate.component').then(m => m.VideoGenerateComponent), canActivate: [authGuard] },
+  { path: 'img-video-generate', loadComponent: () => import('./pages/img-video-generate/img-video-generate.component').then(m => m.ImgVideoGenerateComponent), canActivate: [authGuard] },
   { path: 'gallery', loadComponent: () => import('./pages/gallery/gallery.component').then(m => m.GalleryComponent), canActivate: [authGuard] },
 ];

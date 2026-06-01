@@ -18,7 +18,7 @@ import replicate
 from app.auth_routes import router as auth_router
 from app.token_routes import router as token_router
 from app.security import get_current_user
-from app.database import get_db, GeneratedImage, GeneratedVideo
+from app.database import get_db, GeneratedImage, GeneratedVideo, GeneratedImgVideo
 from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
@@ -101,7 +101,7 @@ def _error_status(error_msg: str) -> int:
         return 402
     if error_msg.startswith("User not found"):
         return 404
-    if error_msg.startswith("Video model not supported") or error_msg.startswith("Duration not supported"):
+    if error_msg.startswith("Video model not supported") or error_msg.startswith("Duration not supported") or error_msg.startswith("Invalid image format"):
         return 400
     return 500
 
@@ -240,6 +240,22 @@ IMAGE_MODEL_COSTS = {
     "seedream-5-lite": 4,
     "sdxl": 3,
     "stable-diffusion-3": 5,
+}
+
+# 🎬 MODELLI IMAGE-TO-VIDEO
+IMG_VIDEO_MODEL_MAP = {
+    "kling-video": "kwaivgi/kling-v3-video",
+    "minimax-video": "minimax/video-01",
+    "stable-video": "stability-ai/stable-video-diffusion",
+    "luma-ray": "luma/ray"
+}
+
+# 💰 COSTI TOKEN PER MODELLO (image-to-video)
+IMG_VIDEO_MODEL_COSTS = {
+    "kling-video": 20,
+    "minimax-video": 35,
+    "stable-video": 15,
+    "luma-ray": 40,
 }
 
 # 💰 COSTI TOKEN PER MODELLO (video)
@@ -567,6 +583,113 @@ async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=D
         )
 
 
+# 🖼️➡️🎬 GENERAZIONE IMAGE-TO-VIDEO
+from fastapi import UploadFile, File, Form
+
+@app.post("/api/generate-img-video")
+async def generate_img_video(
+    image: UploadFile = File(...),
+    prompt: str = Form(...),
+    duration: int = Form(...),
+    resolution: str = Form(...),
+    model: str = Form(...),
+    user=Depends(get_current_user),
+    db=Depends(get_db)
+):
+    try:
+        # Validate image
+        if image.content_type not in ALLOWED_IMAGE_MIMES:
+            return JSONResponse(
+                status_code=400,
+                content={"error": f"Invalid image format: {image.content_type}. Allowed: {ALLOWED_IMAGE_MIMES}"}
+            )
+
+        # Save uploaded image
+        unique_id = str(uuid.uuid4())[:8]
+        ext = "png"
+        if image.content_type == "image/jpeg":
+            ext = "jpg"
+        elif image.content_type == "image/webp":
+            ext = "webp"
+        img_filename = f"{unique_id}.{ext}"
+        img_filepath = IMAGES_DIR / img_filename
+
+        contents = await image.read()
+        if len(contents) > MAX_IMAGE_SIZE_MB * 1024 * 1024:
+            return JSONResponse(
+                status_code=400,
+                content={"error": f"Image too large: {len(contents) / 1024 / 1024:.1f}MB (max: {MAX_IMAGE_SIZE_MB}MB)"}
+            )
+
+        with open(img_filepath, "wb") as f:
+            f.write(contents)
+
+        input_image_url = f"/images/{img_filename}"
+
+        # Calculate cost
+        model_version = IMG_VIDEO_MODEL_MAP[model]
+        duration_multiplier = duration / 5
+        res_multiplier = 3 if resolution == "1080p" else (1.5 if resolution == "720p" else 1)
+        token_cost = round(IMG_VIDEO_MODEL_COSTS.get(model, 20) * duration_multiplier * res_multiplier)
+        aspect_ratio = map_resolution_to_aspect_ratio(resolution)
+
+        video_input_params = {
+            "prompt": prompt,
+            "duration": duration,
+            "aspect_ratio": aspect_ratio,
+            "image": input_image_url,
+        }
+
+        if model == "kling-video":
+            video_input_params["cfg_scale"] = 7.5
+
+        async def _save_vid(raw):
+            url = raw[0] if isinstance(raw, list) else raw
+            return await download_and_save_video(url)
+
+        local_video_url = await replicate_wrapper.run_model(
+            model_version,
+            input_params=video_input_params,
+            user_id=user.id,
+            db=db,
+            token_cost=token_cost,
+            save_func=_save_vid
+        )
+
+        generated = GeneratedImgVideo(
+            user_id=user.id,
+            prompt=prompt,
+            model=model,
+            resolution=resolution,
+            duration=duration,
+            input_image_url=input_image_url,
+            video_url=local_video_url,
+            tokens_used=token_cost
+        )
+        db.add(generated)
+        db.commit()
+        db.refresh(generated)
+
+        from app.services import UserService
+        updated_user = UserService.get_user(db, user.id)
+
+        return {
+            "video_url": local_video_url,
+            "id": generated.id,
+            "tokens_used": token_cost,
+            "tokens_remaining": updated_user.tokens
+        }
+
+    except Exception as e:
+        error_msg = str(e)
+        print(f"Error generating image-to-video: {error_msg}")
+
+        return JSONResponse(
+            status_code=_error_status(error_msg),
+            content={"error": error_msg}
+        )
+
+
 @app.get("/")
 async def root():
     return {
@@ -703,6 +826,15 @@ def get_generated_media(
 
     videos = videos_query.order_by(GeneratedVideo.created_at.desc()).limit(limit).all()
 
+    # Recupera image-to-video
+    img_videos_query = db.query(GeneratedImgVideo).filter(GeneratedImgVideo.user_id == user.id)
+    if model:
+        img_videos_query = img_videos_query.filter(GeneratedImgVideo.model.ilike(f"%{model}%"))
+    if prompt:
+        img_videos_query = img_videos_query.filter(GeneratedImgVideo.prompt.ilike(f"%{prompt}%"))
+
+    img_videos = img_videos_query.order_by(GeneratedImgVideo.created_at.desc()).limit(limit).all()
+
     # Combina e ordina per data di creazione
     all_items = []
 
@@ -731,6 +863,20 @@ def get_generated_media(
             "tokens_used": vid.tokens_used,
             "created_at": vid.created_at.isoformat(),
             "type": "video"
+        })
+
+    # Aggiungi image-to-video
+    for iv in img_videos:
+        all_items.append({
+            "id": iv.id,
+            "prompt": iv.prompt,
+            "model": iv.model,
+            "resolution": iv.resolution,
+            "duration": iv.duration,
+            "media_url": iv.video_url,
+            "tokens_used": iv.tokens_used,
+            "created_at": iv.created_at.isoformat(),
+            "type": "img-video"
         })
 
     # Ordina per data decrescente e limita

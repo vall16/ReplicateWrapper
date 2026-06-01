@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
 
 @Component({
-  selector: 'app-video-generate',
+  selector: 'app-img-video-generate',
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="video-generate-shell">
+    <div class="img-video-shell">
       <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="section">
@@ -40,12 +40,36 @@ import { environment } from '../../../environments/environments';
           </div>
         </div>
 
+        <!-- Uploaded Image -->
+        <div class="section">
+          <div class="section-header">
+            <span>Input Image</span>
+          </div>
+          <div class="section-body">
+            <div class="upload-box" (click)="fileInput.click()">
+              <img *ngIf="inputImage" [src]="inputImage" class="upload-thumb" />
+              <div *ngIf="!inputImage" class="upload-placeholder">
+                <span>+</span>
+                <span class="upload-label">Upload Image</span>
+              </div>
+            </div>
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              style="display:none"
+              (change)="onFileSelected($event)"
+            />
+            <small *ngIf="!inputImage" style="color: #9ca3af;">Required: upload an image to animate</small>
+          </div>
+        </div>
+
         <div class="section">
           <div class="section-header">
             <span>Video Settings</span>
           </div>
           <div class="section-body">
-            <label>Text-to-Video Model</label>
+            <label>Image-to-Video Model</label>
             <div class="custom-select" (click)="toggleDropdown()" [class.disabled]="loadingModels">
               <div class="selected">
                 <span>{{ selectedModel?.name || 'Select model' }}</span>
@@ -54,7 +78,7 @@ import { environment } from '../../../environments/environments';
               <div class="dropdown" *ngIf="openDropdown">
                 <div
                   class="option"
-                  *ngFor="let item of availableVideoModels"
+                  *ngFor="let item of availableModels"
                   (click)="selectModel(item, $event)"
                 >
                   <span>{{ item.name }}</span>
@@ -100,20 +124,21 @@ import { environment } from '../../../environments/environments';
             controls
             class="video-player">
           </video>
-          <div *ngIf="!videoUrl" class="placeholder">
-            No video generated
+          <div *ngIf="!videoUrl && !inputImage" class="placeholder">
+            Upload an image and describe how it should animate
           </div>
+          <img *ngIf="!videoUrl && inputImage" [src]="inputImage" class="preview-image" />
         </div>
 
         <!-- PROMPT -->
         <div class="prompt-box">
           <textarea
             [(ngModel)]="prompt"
-            placeholder="Describe the video you want to generate..."
+            placeholder="Describe how the image should animate..."
           ></textarea>
 
           <div class="prompt-actions">
-            <button (click)="generate()" [disabled]="loading" class="generate-btn">
+            <button (click)="generate()" [disabled]="loading || !inputImage" class="generate-btn">
               <span *ngIf="!loading">Generate Video</span>
               <span *ngIf="loading" class="loading-indicator">
                 Generating
@@ -142,7 +167,7 @@ import { environment } from '../../../environments/environments';
       font-family: 'Inter', sans-serif;
     }
 
-    .video-generate-shell {
+    .img-video-shell {
       display: grid;
       grid-template-columns: 280px 1fr;
       height: 100%;
@@ -175,7 +200,6 @@ import { environment } from '../../../environments/environments';
       font-weight: 600;
       cursor: pointer;
       font-size: 0.875rem;
-      color: var(--color-text-primary);
     }
 
     .success-header {
@@ -255,6 +279,43 @@ import { environment } from '../../../environments/environments';
       font-weight: 700;
     }
 
+    /* UPLOAD */
+    .upload-box {
+      cursor: pointer;
+    }
+
+    .upload-placeholder {
+      border: 2px dashed #334155;
+      height: 80px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #64748b;
+      background: rgba(15, 23, 42, 0.5);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .upload-placeholder:hover {
+      border-color: #38bdf8;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .upload-label {
+      font-size: 0.7rem;
+      margin-top: 0.2rem;
+    }
+
+    .upload-thumb {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #334155;
+    }
+
     /* OPTION GRID (Resolution/Duration) */
     .option-grid {
       display: flex;
@@ -305,7 +366,6 @@ import { environment } from '../../../environments/environments';
       align-items: center;
       justify-content: space-between;
       font-size: 0.9rem;
-      color: var(--color-text-primary);
     }
 
     .selected .arrow {
@@ -376,9 +436,18 @@ import { environment } from '../../../environments/environments';
       max-height: 100%;
     }
 
+    .preview-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
     .placeholder {
       color: #9ca3af;
       font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
     }
 
     .prompt-box {
@@ -398,7 +467,6 @@ import { environment } from '../../../environments/environments';
       font-size: 0.9rem;
       padding: 0.5rem;
       background: transparent;
-      color: var(--color-text-primary);
     }
 
     .prompt-actions {
@@ -441,10 +509,10 @@ import { environment } from '../../../environments/environments';
 
     /* ANIMATIONS */
     .generate-btn:disabled {
-      animation: video-pulse 1.2s infinite;
+      animation: img-video-pulse 1.2s infinite;
     }
 
-    @keyframes video-pulse {
+    @keyframes img-video-pulse {
       0% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
       50% { box-shadow: 0 0 12px rgba(59, 130, 246, 0.7); }
       100% { box-shadow: 0 0 0 rgba(59, 130, 246, 0.5); }
@@ -463,19 +531,19 @@ import { environment } from '../../../environments/environments';
       height: 4px;
       background: white;
       border-radius: 50%;
-      animation: video-blink 1s infinite;
+      animation: img-video-blink 1s infinite;
     }
 
     .dots span:nth-child(2) { animation-delay: 0.2s; }
     .dots span:nth-child(3) { animation-delay: 0.4s; }
 
-    @keyframes video-blink {
+    @keyframes img-video-blink {
       0%, 80%, 100% { opacity: 0; transform: translateY(0); }
       40% { opacity: 1; transform: translateY(-2px); }
     }
 
     @media (max-width: 900px) {
-      .video-generate-shell {
+      .img-video-shell {
         grid-template-columns: 1fr;
       }
       .sidebar {
@@ -487,11 +555,15 @@ import { environment } from '../../../environments/environments';
     }
   `]
 })
-export class VideoGenerateComponent {
+export class ImgVideoGenerateComponent {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   prompt = '';
   duration: 5 | 10 | 30 | 60 = 5;
   resolution: '480p' | '720p' | '1080p' = '480p';
 
+  inputImage: string | null = null;
+  inputFile: File | null = null;
   videoUrl: string | null = null;
   error: string | null = null;
   loading = false;
@@ -517,12 +589,11 @@ export class VideoGenerateComponent {
     return Math.round(this.selectedModel.cost * durationMultiplier * resMultiplier);
   }
 
-
-  availableVideoModels = [
+  availableModels = [
     { id: 'kling-video', name: 'Kling AI Video', cost: 20 },
-    { id: 'seedance-2', name: 'Seedance 2.0', cost: 25 },
-    { id: 'pika-1', name: 'Pika 1.0', cost: 30 },
-    { id: 'minimax-video', name: 'Minimax Video', cost: 35 }
+    { id: 'minimax-video', name: 'Minimax Video', cost: 35 },
+    { id: 'stable-video', name: 'Stable Video Diffusion', cost: 15 },
+    { id: 'luma-ray', name: 'Luma Ray', cost: 40 }
   ];
 
   constructor(
@@ -531,7 +602,6 @@ export class VideoGenerateComponent {
   ) { }
 
   ngOnInit() {
-    // Carica il saldo token corrente
     this.authService.getBalance().subscribe(
       (res: any) => {
         this.currentTokens = res.tokens || 0;
@@ -543,13 +613,11 @@ export class VideoGenerateComponent {
       }
     );
 
-    // Select the first model as default
-    this.selectedModel = this.availableVideoModels[0];
+    this.selectedModel = this.availableModels[0];
   }
 
   animateTokens(target: number) {
-    const duration = 1800; // ms (velocità animazione)
-    const start = 0;
+    const duration = 1800;
     const startTime = performance.now();
 
     const step = (now: number) => {
@@ -566,6 +634,18 @@ export class VideoGenerateComponent {
     requestAnimationFrame(step);
   }
 
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.inputFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.inputImage = e.target?.result as string;
+      };
+      reader.readAsDataURL(this.inputFile);
+    }
+  }
+
   toggleDropdown() {
     if (this.loadingModels) return;
     this.openDropdown = !this.openDropdown;
@@ -578,7 +658,7 @@ export class VideoGenerateComponent {
   }
 
   generate() {
-    if (!this.prompt.trim()) return;
+    if (!this.prompt.trim() || !this.inputFile) return;
 
     this.loading = true;
     this.videoUrl = null;
@@ -586,16 +666,8 @@ export class VideoGenerateComponent {
     this.tokensUsed = 0;
     this.tokensRemaining = 0;
 
-    const payload = {
-      prompt: this.prompt,
-      duration: this.duration,
-      resolution: this.resolution,
-      model: this.selectedModel.id
-    };
-
-    console.log('Generando video con:', payload);
-
-    this.authService.generateVideo(
+    this.authService.generateImgVideo(
+      this.inputFile,
       this.prompt,
       this.duration,
       this.resolution,
@@ -613,10 +685,8 @@ export class VideoGenerateComponent {
         if (res.error) {
           this.error = res.error;
         } else if (res.video_url) {
-          // Concatena base URL con percorso video
           this.videoUrl = environment.apiBaseUrl + res.video_url;
 
-          // Show scaled tokens
           this.tokensUsed = res.tokens_used || 0;
           this.tokensRemaining = res.tokens_remaining || this.currentTokens - this.tokensUsed;
           this.currentTokens = this.tokensRemaining;
@@ -627,7 +697,7 @@ export class VideoGenerateComponent {
       (err: any) => {
         this.loading = false;
         this.error = err.error?.error || "Network error or server unreachable.";
-        console.error('Error generating video:', err);
+        console.error('Error generating image-to-video:', err);
       }
     );
   }

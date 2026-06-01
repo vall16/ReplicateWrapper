@@ -121,21 +121,24 @@ import { RouterModule } from '@angular/router';
       <!-- Sezione Prodotti -->
       <div class="sunset-container">
         <svg class="sunset-svg" viewBox="0 0 500 170" preserveAspectRatio="xMidYMid meet">
-          <path class="sunset-line sunset-word" d="M 15 38 C 50 38 50 56 30 56 C 15 56 15 76 50 82" />
-          <path class="sunset-line sunset-word sunset-d1" d="M 68 38 L 68 66 Q 68 82 88 82 L 108 82 Q 125 82 125 66 L 125 38" />
-          <path class="sunset-line sunset-word sunset-d2" d="M 140 38 L 140 82 L 180 44 L 180 82" />
-          <path class="sunset-line sunset-word sunset-d3" d="M 195 38 C 230 38 230 56 210 56 C 195 56 195 76 230 82" />
-          <path class="sunset-line sunset-word sunset-d4" d="M 248 38 L 285 38 L 285 46 L 248 46 L 248 55 L 285 55 L 285 63 L 248 63 L 248 72 L 285 72" />
-          <path class="sunset-line sunset-word sunset-d5" d="M 304 38 L 350 38 M 327 38 L 327 82" />
-          <path class="sunset-line sunset-word sunset-d6" d="M 327 82 Q 342 125 355 105" />
+          <!-- SUNSET in Microgramma style - geometric, wide, squared -->
+          <path class="sunset-line sunset-word" d="M 54 38 L 14 38 L 6 56 L 36 56 L 50 78 L 14 78" />
+          <path class="sunset-line sunset-word sunset-d1" d="M 68 38 L 68 78 L 114 78 L 114 38" />
+          <path class="sunset-line sunset-word sunset-d2" d="M 124 78 L 124 38 L 168 78 L 168 38" />
+          <path class="sunset-line sunset-word sunset-d3" d="M 222 38 L 182 38 L 174 56 L 204 56 L 218 78 L 182 78" />
+          <path class="sunset-line sunset-word sunset-d4" d="M 236 38 L 278 38 L 278 44 L 236 44 L 236 56 L 278 56 L 278 62 L 236 62 L 236 78 L 278 78" />
+          <path class="sunset-line sunset-word sunset-d5" d="M 292 38 L 348 38 M 320 38 L 320 78" />
+          <!-- connector: cold word → warm creative scene -->
+          <path class="sunset-line sunset-word sunset-d6" d="M 320 78 Q 338 125 355 105" />
+          <!-- sunset scene -->
           <path class="sunset-line sunset-sun sunset-d7" d="M 355 105 A 65 65 0 0 1 485 105" />
           <path class="sunset-line sunset-horizon sunset-d7" d="M 485 105 L 5 105" />
           <path class="sunset-line sunset-mtn1 sunset-d8" d="M 15 105 L 40 75 L 65 105 L 95 60 L 125 105 L 155 80 L 185 105" />
           <path class="sunset-line sunset-mtn2 sunset-d8" d="M 200 105 L 235 70 L 270 105 L 305 85 L 340 105" />
           <path class="sunset-line sunset-mtn3 sunset-d8" d="M 355 105 L 385 70 L 415 105 L 445 85 L 475 105" />
-          <path class="sunset-line sunset-sunray sunset-d8" d="M 415 40 L 415 24" />
-          <path class="sunset-line sunset-sunray sunset-d8" d="M 435 42 L 435 25" />
-          <path class="sunset-line sunset-sunray sunset-d8" d="M 455 50 L 468 35" />
+          <path class="sunset-line sunset-sunray sunset-ray1" d="M 415 40 L 415 24" />
+          <path class="sunset-line sunset-sunray sunset-ray2" d="M 435 42 L 435 25" />
+          <path class="sunset-line sunset-sunray sunset-ray3" d="M 455 50 L 468 35" />
         </svg>
       </div>
       <section class="products" id="features">
@@ -1281,9 +1284,18 @@ import { RouterModule } from '@angular/router';
     .sunset-d7 { animation-delay: 2.5s; }
     .sunset-d8 { animation-delay: 3s; }
 
-    .sunset-word { stroke: rgba(255, 255, 255, 0.9); }
+    .sunset-word { stroke: rgba(255, 255, 255, 0.9); stroke-linejoin: miter; stroke-linecap: butt; }
     .sunset-sun { stroke: #f97316; }
-    .sunset-sunray { stroke: #f97316; }
+    .sunset-sunray {
+      stroke: #f97316;
+      animation:
+        hero-sunset-draw 2s ease-out forwards,
+        ray-pulse 2.5s ease-in-out infinite;
+      animation-delay: 3s, 5s;
+    }
+    .sunset-ray1 { animation-delay: 3s, 5s; }
+    .sunset-ray2 { animation-delay: 3s, 5.3s; }
+    .sunset-ray3 { animation-delay: 3s, 5.6s; }
     .sunset-horizon { stroke: #22d3ee; }
     .sunset-mtn1 { stroke: #ec4899; }
     .sunset-mtn2 { stroke: #a78bfa; }
@@ -1291,6 +1303,11 @@ import { RouterModule } from '@angular/router';
 
     @keyframes hero-sunset-draw {
       to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes ray-pulse {
+      0%, 100% { opacity: 0.3; stroke-width: 2.5; }
+      50% { opacity: 1; stroke-width: 4; }
     }
 
     .products {

@@ -237,6 +237,27 @@ export class AuthService {
     );
   }
 
+  // GENERAZIONE IMAGE-TO-VIDEO
+  generateImgVideo(
+    image: File,
+    prompt: string,
+    duration: number,
+    resolution: string,
+    model: string
+  ): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('prompt', prompt);
+    formData.append('duration', duration.toString());
+    formData.append('resolution', resolution);
+    formData.append('model', model);
+    return this.http.post<any>(
+      `${this.apiUrl}/generate-img-video`,
+      formData,
+      { withCredentials: true }
+    );
+  }
+
   // GENERAZIONE VIDEO
   generateVideo(
     prompt: string,
