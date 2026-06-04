@@ -13,3 +13,5 @@ stripe==7.4.0
 pymysql==1.1.0
 google-auth==2.35.0
 python-multipart==0.0.9
+detoxify==0.5.1
+torch>=2.0.0
