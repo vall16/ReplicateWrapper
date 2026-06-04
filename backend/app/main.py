@@ -23,6 +23,7 @@ from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
 from app.logger import logger, log_file_download
+from app.prompt_filter import check_and_log_prompt, filter_prompt
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -123,6 +124,11 @@ def build_prompt(description: str, style: str, ratio: str = "16:9"):
 @app.post("/generate")
 async def generate_image(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style, req.ratio)
+    if check_and_log_prompt(prompt, user.id, db, endpoint="/generate"):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Prompt contains blocked content"}
+        )
     token_cost = IMAGE_MODEL_COSTS.get(req.model, 3)
     model_version = MODEL_MAP.get(req.model, "stability-ai/sdxl:7762fd07")
 
@@ -372,6 +378,11 @@ async def download_and_save_video(video_url: str) -> str:
 @app.post("/api/generate-paid")
 async def generate_image_paid(req: ImageRequest, user=Depends(get_current_user), db=Depends(get_db)):
     prompt = build_prompt(req.description, req.style, req.ratio)
+    if check_and_log_prompt(prompt, user.id, db, endpoint="/api/generate-paid"):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Prompt contains blocked content"}
+        )
 
     # fallback se model non passato
     model_to_use = req.model or "stability-ai/sdxl:latest"
@@ -506,20 +517,12 @@ def map_resolution_to_aspect_ratio(resolution: str) -> str:
 # 🎬 GENERAZIONE DEL VIDEO
 @app.post("/api/generate-video")
 async def generate_video(req: VideoRequest, user=Depends(get_current_user), db=Depends(get_db)):
-    """
-    Endpoint per generare video AI.
-    
-    Parametri:
-    - prompt: Descrizione del video da generare
-    - duration: Durata in secondi (5, 10, 30, 60)
-    - resolution: Risoluzione (480p, 720p)
-    - model: Modello video (kling-video, runway-ml, pika-1)
-    
-    Ritorna:
-    - video_url: URL locale del video generato
-    - id: ID della generazione nel DB
-    """
-    
+    if check_and_log_prompt(req.prompt, user.id, db, endpoint="/api/generate-video"):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Prompt contains blocked content"}
+        )
+
     try:
         model_version = VIDEO_MODEL_MAP[req.model]
         aspect_ratio = map_resolution_to_aspect_ratio(req.resolution)
@@ -596,6 +599,12 @@ async def generate_img_video(
     user=Depends(get_current_user),
     db=Depends(get_db)
 ):
+    if check_and_log_prompt(prompt, user.id, db, endpoint="/api/generate-img-video"):
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Prompt contains blocked content"}
+        )
+
     try:
         # Validate image
         if image.content_type not in ALLOWED_IMAGE_MIMES:

@@ -126,6 +126,19 @@ class GeneratedVideo(Base):
     user = relationship("User")
 
 
+class BlockedPrompt(Base):
+    __tablename__ = "blocked_prompts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    prompt = Column(String(500))
+    matched_pattern = Column(String(255))
+    endpoint = Column(String(100))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User")
+
+
 class GeneratedImgVideo(Base):
     __tablename__ = "generated_img_videos"
 
