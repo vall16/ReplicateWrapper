@@ -23,7 +23,7 @@ from app.replicate_wrapper import ReplicateWrapper
 from app.schemas import VideoRequest
 from fastapi.responses import JSONResponse
 from app.logger import logger, log_file_download
-from app.prompt_filter import check_and_log_prompt, filter_prompt
+from app.prompt_filter import check_and_log_prompt
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
