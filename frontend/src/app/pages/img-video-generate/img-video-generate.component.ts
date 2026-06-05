@@ -169,7 +169,7 @@ import { environment } from '../../../environments/environments';
 
     .img-video-shell {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 360px 1fr;
       height: 100%;
       width: 100%;
       gap: 1rem;
