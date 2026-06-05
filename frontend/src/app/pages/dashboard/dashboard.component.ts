@@ -161,25 +161,20 @@ import { FormsModule } from '@angular/forms';
             </div>
           </div>
 
-          <div class="glass-card stats-card">
+          <div class="glass-card chart-card">
             <div class="card-header">
               <div>
-                <h2>Usage Overview</h2>
-                <p class="card-subtitle">Summary of recent activity</p>
+                <h2>Consumption (7 days)</h2>
+                <p class="card-subtitle">Daily token usage</p>
               </div>
             </div>
-            <div class="stats-grid">
-              <div class="stat-chip">
-                <span class="stat-label">Total Transactions</span>
-                <span class="stat-value">{{ transactions.length }}</span>
-              </div>
-              <div class="stat-chip">
-                <span class="stat-label">Tokens Consumed</span>
-                <span class="stat-value negative">{{ totalConsumed }}</span>
-              </div>
-              <div class="stat-chip">
-                <span class="stat-label">Tokens Purchased</span>
-                <span class="stat-value positive">{{ totalPurchased }}</span>
+            <div class="chart-grid">
+              <div class="chart-col" *ngFor="let day of dailyConsumption">
+                <div class="chart-bar-track">
+                  <div class="chart-bar-fill" [style.height.%]="day.pct"></div>
+                </div>
+                <span class="chart-label">{{ day.label }}</span>
+                <span class="chart-value">{{ day.value }}</span>
               </div>
             </div>
           </div>
@@ -1045,6 +1040,66 @@ import { FormsModule } from '@angular/forms';
       color: #6ee7b7;
     }
 
+    .chart-card {
+      min-height: 200px;
+    }
+
+    .chart-grid {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.4rem;
+      height: 130px;
+      padding: 0.5rem 0.2rem 0;
+      justify-content: space-between;
+    }
+
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      height: 100%;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .chart-bar-track {
+      width: 100%;
+      max-width: 32px;
+      flex: 1;
+      border-radius: 999px 999px 4px 4px;
+      background: rgba(148, 163, 184, 0.06);
+      position: relative;
+      overflow: hidden;
+      min-height: 4px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .chart-bar-fill {
+      width: 100%;
+      border-radius: 999px 999px 4px 4px;
+      background: linear-gradient(180deg, #7c3aed, #06b6d4);
+      transition: height 0.8s ease;
+      min-height: 4px;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .chart-label {
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .chart-value {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #c084fc;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
     .transactions-card {
       min-height: 220px;
     }
@@ -1354,6 +1409,7 @@ export class DashboardComponent implements OnInit {
   t2iResolution = '1MP';            // default
   isBalanceHovered = false;
   balanceLoading: boolean = true;
+  dailyConsumption: { label: string; value: number; pct: number }[] = [];
 
   constructor(
     private authService: AuthService,
@@ -1417,6 +1473,39 @@ export class DashboardComponent implements OnInit {
         this.totalPurchased += tx.amount;
       }
     });
+
+    this.calculateDailyConsumption();
+  }
+
+  calculateDailyConsumption() {
+    const days: { label: string; date: string; value: number }[] = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      days.push({
+        label: d.toLocaleDateString('en', { weekday: 'short' }),
+        date: dateStr,
+        value: 0
+      });
+    }
+
+    this.transactions.forEach(tx => {
+      if (tx.transaction_type === 'consume') {
+        const txDate = tx.created_at?.split('T')[0];
+        const day = days.find(d => d.date === txDate);
+        if (day) {
+          day.value += Math.abs(tx.amount);
+        }
+      }
+    });
+
+    const max = Math.max(...days.map(d => d.value), 1);
+    this.dailyConsumption = days.map(d => ({
+      label: d.label,
+      value: d.value,
+      pct: (d.value / max) * 100
+    }));
   }
 
   goToStore() {
