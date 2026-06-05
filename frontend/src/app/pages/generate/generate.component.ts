@@ -43,6 +43,24 @@ import { environment } from '../../../environments/environments';
           </div>
         </div>
 
+        <!-- Model Examples (prominent) -->
+        <div class="section" *ngIf="selectedModel">
+          <div class="section-header" (click)="toggleSection('examples')" style="font-size:0.8rem;">
+            <span>{{ selectedModel.name }}</span>
+            <span class="arrow">{{ openSections.examples ? '▲' : '▼' }}</span>
+          </div>
+          <div class="section-body" *ngIf="openSections.examples">
+            <div class="model-examples">
+              <div class="example-desc">{{ currentModelExamples?.description }}</div>
+              <div class="example-grid">
+                <div class="example-card" *ngFor="let img of currentModelExamples?.images || []">
+                  <img [src]="img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- General Settings -->
         <div class="section">
           <!-- <div class="section-header" (click)="toggleSection('general')">
@@ -128,18 +146,6 @@ import { environment } from '../../../environments/environments';
           </div>
         </div>
 
-        <!-- Reference Images -->
-        <div class="section">
-          <div class="section-header" (click)="toggleSection('refs')">
-            <span>Reference Images ({{ referenceImages.length }}/4)</span>
-            <span class="arrow">{{ openSections.refs ? '▲' : '▼' }}</span>
-          </div>
-          <div class="section-body" *ngIf="openSections.refs">
-            <div class="upload-box" (click)="addReferenceImage()">
-              <div class="upload-placeholder">+</div>
-            </div>
-          </div>
-        </div>
       </aside>
 
       <!-- MAIN -->
@@ -197,7 +203,7 @@ import { environment } from '../../../environments/environments';
 
     .generate-shell {
       display: grid;
-      grid-template-columns: 280px 1fr; /* puoi anche ridurre la sidebar, es. 240px */
+      grid-template-columns: 360px 1fr;
       height: 100%;
       width: 100%;
       gap: 1rem;
@@ -210,14 +216,14 @@ import { environment } from '../../../environments/environments';
     .sidebar {
       background: var(--color-bg-secondary);
       border-radius: 12px;
-      /* bordo più marcato e ombra più profonda */
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
       padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 2rem);
     }
 
     .section {
@@ -310,22 +316,6 @@ import { environment } from '../../../environments/environments';
       padding: 0.4rem;
       border-radius: 6px;
       border: 1px solid #e5e7eb;
-    }
-
-    .upload-box {
-      margin-top: 0.5rem;
-    }
-
-    .upload-placeholder {
-      border: 2px dashed #d1d5db;
-      height: 80px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      color: #9ca3af;
-      cursor: pointer;
     }
 
     /* MAIN */
@@ -430,9 +420,9 @@ import { environment } from '../../../environments/environments';
   background: #020617;
   color: #cbd5e1;
 
-  padding: 0.35rem 0.55rem;
-  border-radius: 0.45rem;
-  font-size: 0.78rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
   cursor: pointer;
 
   transition: all 0.18s ease;
@@ -460,9 +450,9 @@ import { environment } from '../../../environments/environments';
   background: #020617;
   color: #cbd5e1;
 
-  padding: 0.35rem 0.6rem;
-  border-radius: 0.45rem;
-  font-size: 0.78rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
   cursor: pointer;
 
   transition: all 0.18s ease;
@@ -776,6 +766,47 @@ import { environment } from '../../../environments/environments';
       }
     }
 
+    .model-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.example-desc {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.example-grid {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+
+.example-card {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #334155;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.example-card:hover {
+  transform: scale(1.05);
+  border-color: #38bdf8;
+}
+
+.example-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
     @media (max-width: 900px) {
       .generate-shell {
         grid-template-columns: 1fr;
@@ -801,15 +832,14 @@ export class GenerateComponent {
   openDropdown = false;
   selectedModel: any = null;
 
-  isPromptFocused = false;
 
 
-  referenceImages: string[] = [];
+
   availableModels: any[] = [];
   availableModelGroups: any[] = [];
   openSections = {
     general: true,
-    refs: true
+    examples: false,
   };
 
   style = '';
@@ -835,6 +865,109 @@ export class GenerateComponent {
     { label: '3D Render', value: '3d render, octane render, realistic lighting' },
     { label: 'Minimal', value: 'minimalist, simple shapes, clean design' }
   ];
+
+  modelExamples: Record<string, { description: string; images: string[] }> = {
+    'flux-pro': {
+      description: 'Extreme photorealism, impeccable detail. Best for portraits, products, realistic scenes.',
+      images: [
+        'https://picsum.photos/seed/flux1/400/400',
+        'https://picsum.photos/seed/flux2/400/400',
+        'https://picsum.photos/seed/flux3/400/400'
+      ]
+    },
+    'flux-dev': {
+      description: 'Versatile and balanced: good quality, medium speed. Great for general use.',
+      images: [
+        'https://picsum.photos/seed/dev1/400/400',
+        'https://picsum.photos/seed/dev2/400/400',
+        'https://picsum.photos/seed/dev3/400/400'
+      ]
+    },
+    'flux-schnell': {
+      description: 'Ultra-fast, more stylized output. Perfect for drafts and quick iterations.',
+      images: [
+        'https://picsum.photos/seed/schnell1/400/400',
+        'https://picsum.photos/seed/schnell2/400/400',
+        'https://picsum.photos/seed/schnell3/400/400'
+      ]
+    },
+    'imagen-4': {
+      description: 'Google-style photorealism, excellent for landscapes and architecture.',
+      images: [
+        'https://picsum.photos/seed/imagen1/400/400',
+        'https://picsum.photos/seed/imagen2/400/400',
+        'https://picsum.photos/seed/imagen3/400/400'
+      ]
+    },
+    'imagen-4-fast': {
+      description: 'Fast, good quality. Quick results without sacrificing too much.',
+      images: [
+        'https://picsum.photos/seed/imagenf1/400/400',
+        'https://picsum.photos/seed/imagenf2/400/400',
+        'https://picsum.photos/seed/imagenf3/400/400'
+      ]
+    },
+    'nano-banana': {
+      description: 'Clean modern style, great for graphic design and illustrations.',
+      images: [
+        'https://picsum.photos/seed/nano1/400/400',
+        'https://picsum.photos/seed/nano2/400/400',
+        'https://picsum.photos/seed/nano3/400/400'
+      ]
+    },
+    'nano-banana-pro': {
+      description: 'Superior quality, refined details. For professional results.',
+      images: [
+        'https://picsum.photos/seed/nanopro1/400/400',
+        'https://picsum.photos/seed/nanopro2/400/400',
+        'https://picsum.photos/seed/nanopro3/400/400'
+      ]
+    },
+    'gpt-image-1.5': {
+      description: 'Creative and expressive, OpenAI style. Great for artistic concepts.',
+      images: [
+        'https://picsum.photos/seed/gpt1/400/400',
+        'https://picsum.photos/seed/gpt2/400/400',
+        'https://picsum.photos/seed/gpt3/400/400'
+      ]
+    },
+    'qwen-image': {
+      description: 'Detailed artistic style, good for illustrations and concept art.',
+      images: [
+        'https://picsum.photos/seed/qwen1/400/400',
+        'https://picsum.photos/seed/qwen2/400/400',
+        'https://picsum.photos/seed/qwen3/400/400'
+      ]
+    },
+    'seedream-5-lite': {
+      description: 'Dreamlike atmospheres, surreal artistic style. For creative imagery.',
+      images: [
+        'https://picsum.photos/seed/seedream1/400/400',
+        'https://picsum.photos/seed/seedream2/400/400',
+        'https://picsum.photos/seed/seedream3/400/400'
+      ]
+    },
+    'sdxl': {
+      description: 'The stability/quality benchmark. Great for digital art and illustrations.',
+      images: [
+        'https://picsum.photos/seed/sdxl1/400/400',
+        'https://picsum.photos/seed/sdxl2/400/400',
+        'https://picsum.photos/seed/sdxl3/400/400'
+      ]
+    },
+    'stable-diffusion-3': {
+      description: 'Latest Stability AI gen: photorealism, complex compositions.',
+      images: [
+        'https://picsum.photos/seed/sd31/400/400',
+        'https://picsum.photos/seed/sd32/400/400',
+        'https://picsum.photos/seed/sd33/400/400'
+      ]
+    }
+  };
+
+  get currentModelExamples() {
+    return this.modelExamples[this.model] || null;
+  }
 
   constructor(
     private authService: AuthService,
@@ -918,6 +1051,7 @@ export class GenerateComponent {
 
     this.model = this.availableModelGroups[0].models[0].id;
     this.selectedModel = this.availableModelGroups[0].models[0];
+    this.openSections.examples = true;
     this.loadingModels = false;
 
     // Avvia comunque fallback per modelli dal backend (popola un gruppo generico)
@@ -969,13 +1103,7 @@ export class GenerateComponent {
   requestAnimationFrame(step);
 }
 
-onBlurPrompt() {
-  setTimeout(() => {
-    this.isPromptFocused = false;
-  }, 150);
-}
-
-  toggleSection(section: 'general' | 'refs') {
+  toggleSection(section: 'general' | 'examples') {
     this.openSections[section] = !this.openSections[section];
   }
 
@@ -994,17 +1122,13 @@ onBlurPrompt() {
     this.model = item.id;
     this.selectedModel = item;
     this.openDropdown = false;
+    this.openSections.examples = true;
   }
 
   isSvgPath(icon: string): boolean {
     return typeof icon === 'string' && (icon.endsWith('.svg') || icon.includes('assets/'));
   }
 
-  addReferenceImage() {
-    if (this.referenceImages.length < 4) {
-      this.referenceImages.push('dummy.png');
-    }
-  }
 
 
   generate() {
