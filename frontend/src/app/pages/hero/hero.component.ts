@@ -62,16 +62,16 @@ import { RouterModule } from '@angular/router';
           </div>
           <div class="hero-stats">
             <div class="stat-chip">
-              <span class="stat-label">Active Teams</span>
-              <span class="stat-value">10K+</span>
+              <span class="stat-label">In Beta Since</span>
+              <span class="stat-value">2026</span>
             </div>
             <div class="stat-chip">
-              <span class="stat-label">Plug-and-play Models</span>
-              <span class="stat-value">50+</span>
+              <span class="stat-label">Available Models</span>
+              <span class="stat-value">14</span>
             </div>
             <div class="stat-chip">
-              <span class="stat-label">Uptime</span>
-              <span class="stat-value">99.9%</span>
+              <span class="stat-label">Token Cost Start</span>
+              <span class="stat-value">€2</span>
             </div>
           </div>
         </div>
@@ -3017,20 +3017,14 @@ export class HeroComponent implements OnInit, OnDestroy {
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    const contactData = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      subject: formData.get('subject'),
-      message: formData.get('message')
-    };
+    const name = formData.get('name') || '';
+    const email = formData.get('email') || '';
+    const subject = formData.get('subject') || '';
+    const message = formData.get('message') || '';
 
-    // Here you would typically send the data to your backend
-    console.log('Contact form submitted:', contactData);
+    const body = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`;
+    window.location.href = `mailto:wvallone@gmail.com?subject=${encodeURIComponent(String(subject))}&body=${encodeURIComponent(body)}`;
 
-    // For now, just show a success message
-    alert('Grazie per il tuo messaggio! Ti risponderemo presto.');
-
-    // Reset the form
     form.reset();
   }
 }
