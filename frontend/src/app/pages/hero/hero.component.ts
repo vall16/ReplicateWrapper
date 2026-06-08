@@ -49,7 +49,7 @@ import { RouterModule } from '@angular/router';
           </p>
           <div class="hero-buttons">
             <button class="btn btn-primary-large game-btn" (click)="navigateTo('register')">
-              Start Free
+              Get Started
             </button>
             <button class="btn btn-secondary-large game-btn-secondary" (click)="scrollTo('features')">
               See What You Can Do →
@@ -241,12 +241,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/google.png" alt="Google" class="logo-img" />
             </div>
             <h3>Google Nano-banana</h3>
-            <p>Google's multimodal power with advanced context understanding</p>
+            <p>Fast and lightweight image generation by Google — ideal for quick creative iterations</p>
             <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Advanced intelligence</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Multimodal understanding</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Integrated search</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Fast and accurate answers</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Clean, modern visual style</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Blazing fast generation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Perfect for graphic design</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Budget-friendly (2 tokens)</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Explore</button>
             <div class="product-preview">
@@ -281,12 +281,12 @@ import { RouterModule } from '@angular/router';
               <img src="assets/qwen.jpg" alt="Qwen" class="logo-img" />
             </div>
             <h3>Qwen</h3>
-            <p>Advanced language model with excellent language understanding</p>
+            <p>Qwen's image model delivers detailed artistic visuals and concept art with strong prompt fidelity</p>
             <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Excellent understanding</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Multilingual support</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Advanced reasoning</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> In-depth knowledge</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Detailed artistic quality</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Strong prompt adherence</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Great for concept art</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Low cost (3 tokens)</li>
             </ul>
             <button class="btn btn-product" (click)="scrollTo('pricing')">Discover</button>
             <div class="product-preview">
@@ -327,7 +327,7 @@ import { RouterModule } from '@angular/router';
 
           <!-- Available Models Text for Mobile -->
         <div class="models-list-mobile">
-          <p><strong>Available Models:</strong> Flux AI, Stable Diffusion XL, OpenAI GPT-image-1.5, Kling Video, Seedream, Qwen, and Minimax.</p>
+          <p><strong>Available Models:</strong> Flux AI (Pro, Dev, Schnell), Google (Imagen 4, Nano-banana), OpenAI GPT-image-1.5, Stability AI (SDXL, SD3), ByteDance Seedream, Qwen Image, Kling Video, Minimax Video, and more.</p>
         </div>
       </section>
 
@@ -353,7 +353,7 @@ import { RouterModule } from '@angular/router';
             <div class="step-icon">◉</div>
             <div class="step-number">2</div>
             <h3>Get Your Tokens</h3>
-            <p>Pick a pack that fits your vibe, no strings attached. Pay once, create forever</p>
+            <p>Pick a pack that fits your vibe, no strings attached. Buy tokens as you need — no subscriptions, no surprises</p>
             <span class="time-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align:middle;margin-right:2px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Instant</span>
           </div>
           <div class="step-arrow">→</div>

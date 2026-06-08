@@ -51,9 +51,9 @@ import { environment } from '../../../environments/environments';
           </div>
           <div class="section-body" *ngIf="openSections.examples">
             <div class="model-examples">
-              <div class="example-desc">{{ currentModelExamples?.description }}</div>
+              <div class="example-desc">{{ currentModelExamples.description }}</div>
               <div class="example-grid">
-                <div class="example-card" *ngFor="let img of currentModelExamples?.images || []">
+                <div class="example-card" *ngFor="let img of currentModelExamples.images || []">
                   <img [src]="img" />
                 </div>
               </div>
