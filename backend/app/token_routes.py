@@ -8,7 +8,7 @@ import stripe
 
 router = APIRouter(prefix="/api/tokens", tags=["Tokens"])
 
-# ACQUISTA TOKEN
+# ACQUISTA TOKEN. prova
 # Endpoint disabilitato: l'acquisto deve passare esclusivamente tramite Stripe Checkout
 # (/api/create-checkout-session → pagamento → /api/tokens/checkout/confirm)
 @router.post("/purchase", response_model=StatusResponse)

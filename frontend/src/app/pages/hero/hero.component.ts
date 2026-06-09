@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router';
         <div class="nav-container">
           <div class="logo">
             <!-- <span class="logo-icon">🚀</span>
-            <span class="logo-text">Repli</span> -->
+            <span class="logo-text">ReplicateXpress</span> -->
           </div>
           <ul class="nav-menu">
             <li><a href="#features">Products</a></li>
@@ -37,7 +37,7 @@ import { RouterModule } from '@angular/router';
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-content">
-          <!-- <div class="hero-label">AI Credit Console · Replicate</div> -->
+          <!-- <div class="hero-label">ReplicateXpress · Replicate</div> -->
           <h1 class="hero-title">
             Create <br/>
             <span class="gradient-text dynamic-text">{{ currentWord }}</span><span class="cursor">_</span>
@@ -411,7 +411,7 @@ import { RouterModule } from '@angular/router';
       <!-- CTA Section -->
       <section class="cta">
         <h2>Ready to Get Started?</h2>
-        <p>Join thousands of developers using Repli</p>
+        <p>Join thousands of developers using ReplicateXpress</p>
         <button class="btn btn-primary-large" (click)="navigateTo('register')">
           Sign Up Free Today
         </button>
@@ -446,7 +446,7 @@ import { RouterModule } from '@angular/router';
   <div class="legal-container">
     <h2>Terms of Service</h2>
     <p>
-      By using Repli you agree to the following terms.
+      By using ReplicateXpress you agree to the following terms.
     </p>
 
     <ul>
@@ -463,7 +463,7 @@ import { RouterModule } from '@angular/router';
   <div class="legal-container">
     <h2>Terms of Service</h2>
     <p>
-      By using Repli you agree to the following terms.
+      By using ReplicateXpress you agree to the following terms.
     </p>
 
     <ul>

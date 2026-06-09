@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 
         <h1>Security & Data Protection</h1>
         <p class="intro">
-          Data and API security is an absolute priority for Repli.
+          Data and API security is an absolute priority for ReplicateXpress.
           We operate as a secure wrapper for accessing AI models from Replicate.ai,
           ensuring protection, isolation and complete control of requests.
         </p>
@@ -69,7 +69,7 @@ import { Router } from '@angular/router';
         <section>
           <h2>🔎 Responsibility</h2>
           <p>
-            Repli acts as a technical intermediary for accessing AI models.
+            ReplicateXpress acts as a technical intermediary for accessing AI models.
             Generated content is the responsibility of the end user.
             We collaborate with Replicate.ai to ensure compliance and security.
           </p>

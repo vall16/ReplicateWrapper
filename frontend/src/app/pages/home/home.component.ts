@@ -12,10 +12,10 @@ import { AuthService, User } from '../../services/auth.service';
       <!-- Left rail -->
       <aside class="sidebar">
         <div class="brand">
-          <div class="brand-logo">RW</div>
+          <div class="brand-logo">RX</div>
           <div class="brand-text">
-            <span class="brand-title">AI Credit Console</span>
-            <!-- <span class="brand-subtitle">AI Credit Console</span> -->
+            <span class="brand-title">ReplicateXpress</span>
+            <!-- <span class="brand-subtitle">ReplicateXpress</span> -->
           </div>
         </div>
 
@@ -71,7 +71,7 @@ import { AuthService, User } from '../../services/auth.service';
               <span class="gradient-text">Into Ready-to-Use Experiences</span>
             </h2>
             <p class="hero-subtitle">
-              Repli lets you quickly connect Replicate models to your products:
+              ReplicateXpress lets you quickly connect Replicate models to your products:
               clean prompts, saved parameters, and consistent previews in one interface.
             </p>
             <div class="hero-actions">
